@@ -155,8 +155,9 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
         if t == "lede":
             text = zh_of(n)
             if text:
-                out.append(f"> {text}")
-                out.append("")
+                # A class, not a blockquote: the source sets the standfirst as italic
+                # prose with no rule down the side, and a `>` renders as a quote with one.
+                out.append(f'<p class="lede">{text}</p>')
             bump("lede")
             continue
 
@@ -212,10 +213,8 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
                 last_was_figure = False
                 continue
             if note:
-                out.append(":::note")
-                out.append(note)
-                out.append(":::")
-                out.append("")
+                # Aside: a tinted panel in the source, not a quotation.
+                out.append(f'<aside class="note">{note}</aside>')
             bump("small")
             last_was_figure = False
             continue

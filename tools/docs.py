@@ -62,6 +62,34 @@ ASSETS_ROOT = "/_assets"
 LANG_FIX = {"textproto": "protobuf", "prototext": "protobuf", "plaintext": "txt"}
 
 
+# Letter-spaced headings in the sources, and how they actually read.
+#
+# The parser returns one space for both the letter tracking and the word gaps, so
+# `W H Y  I T  M A T T E R S` and `W H A T  T H I S  M E A N S  F O R  Y O U` are the same
+# shape and no spacing heuristic can tell them apart. There are eight of them across both
+# books, so the real words are listed rather than guessed.
+TRACKED_HEADINGS = {
+    "C O R E R U L E": "Core rule",
+    "F O O T G U N": "Footgun",
+    "R U L E O F T H U M B": "Rule of thumb",
+    "V E R I F Y": "Verify",
+    "W H A T T H I S M E A N S F O R Y O U": "What this means for you",
+    "W H Y I T M A T T E R S": "Why it matters",
+}
+TRACKED_HEAD = re.compile(
+    r"(?P<pre>^(?:#{1,6}\s+)|(?<=sec-alt\">))"
+    r"(?P<spaced>(?:[A-Z0-9]\s+){3,}[A-Z0-9])"
+    r"(?P<post>(?=</p>)|$|<)", re.M)
+
+
+def untrack_headings(body: str) -> str:
+    """Rewrite letter-spaced capitals in a heading using `TRACKED_HEADINGS`."""
+    def fix(m):
+        pre, spaced, post = m.groups()
+        return pre + TRACKED_HEADINGS.get(spaced, spaced) + post
+    return TRACKED_HEAD.sub(fix, body)
+
+
 def rewrite_langs(body: str) -> str:
     """Remap unbundled fence languages at the opening fence only.
 
@@ -168,6 +196,62 @@ def asset_prefix(bdir: Path, slug: str) -> str:
     return f"{base_prefix()}{ASSETS_ROOT}/{bdir.name}/{slug}/"
 
 
+CJK = re.compile(r"[一-鿿]")
+
+
+def is_page_furniture(name: str) -> bool:
+    """True for images that are page furniture rather than content.
+
+    Pi Technical Manual has no bitmaps atall — every figure is vector — so when the
+    parser renders the page it also rasterises the decorative parts. The big tinted
+    chapter numeral in the header is one of those, and shipping it puts a 380x290 dark
+    square in the middle of chapter 1. The originals are small and near-solid, which is
+    what distinguishes them from a diagram.
+
+    Kept as an explicit list rather than a size threshold: seven files qualify, and a
+    threshold would also drop a genuinely small diagram the day one appears.
+    """
+    return name in PAGE_FURNITURE
+
+
+# Rasterised header/footer decoration from Pi Technical Manual, not figures.
+PAGE_FURNITURE = {
+    "e6f26104eb453e2b55b900f324b44da14eec4d64a5a680ad5eb71ad4614af91a.jpg",  # "01"
+}
+
+
+def _is_bilingual(text: str) -> bool:
+    """True when the translation interleaves English and Chinese paragraph by paragraph.
+
+    Pi Manual does; Pi Durable's IR is Chinese-only. The ratio is a rough test and only
+    has to be decisive, not exact.
+    """
+    paras = [p for p in text.split("\n\n") if p.strip() and not p.startswith(("#", "<", "!", "|", "```"))]
+    if len(paras) < 8:
+        return False
+    cjk = sum(1 for p in paras if _has_cjk(p))
+    return 0.2 < cjk / len(paras) < 0.8
+
+
+def mark_translations(body: str) -> str:
+    """Tag the Chinese half of a bilingual pair so the stylesheet can set it apart."""
+    out = []
+    for block in body.split("\n\n"):
+        s = block.strip()
+        # leave code, tables, images and generated markup alone
+        if (s.startswith(("```", "<", "!", "|", "#"))
+                or not _has_cjk(s)
+                or s.startswith("p.lede")):
+            out.append(block)
+            continue
+        out.append(f'<p class="zh">{s}</p>')
+    return "\n\n".join(out)
+
+
+def _has_cjk(text: str) -> bool:
+    return bool(CJK.search(text))
+
+
 def base_prefix() -> str:
     """Read the deploy base out of astro.config.mjs.
 
@@ -206,16 +290,72 @@ def sync_one(bdir: Path, verbose=True) -> list:
                 print(f"  skip {bid}/{slug} (no markdown)")
             continue
 
-        body = md.read_text(encoding="utf-8")
-        # Normalise every image reference to the public asset path. The two books arrive
-        # with different link syntax (`![](images/x.jpg)` vs `<img src="../_assets/x.png">`),
-        # so both forms are rewritten to the same root-absolute URL.
+        source = md.read_text(encoding="utf-8")
+        body = source
+        # Split the bilingual title pair into a number line and a title line.
+        #
+        # The source opens a chapter with a small letter-spaced number, then a large
+        # title beneath it. The two books arrive differently — Pi Manual has
+        # `## 1.1 English` / `## 1.1 中文` as siblings, Pi Durable has
+        # `## 1.1 中文` only — so both are normalised to
+        # `<p class="sec-num">1.1</p>` + `## 中文`, and the English title is kept as a
+        # subtitle so the original wording is still one click away in the source.
+        body = re.sub(
+            r"^##\s+(\d+(?:\.\d+)*)\s+([^\n]+?)\s*\n+\s*##\s+\1\s+([^\n]+?)\s*$",
+            lambda m: f'<p class="sec-num">{m.group(1)}</p>\n\n'
+                      f'## {m.group(3)}\n\n<p class="sec-alt">{m.group(2)}</p>',
+            body, flags=re.M)
+        body = re.sub(
+            r"^##\s+(\d+(?:\.\d+)*)\s+([^\n]+?)\s*$",
+            lambda m: f'<p class="sec-num">{m.group(1)}</p>\n\n## {m.group(2)}',
+            body, flags=re.M)
+
+        # Unnumbered headings: Pi Manual pairs `## English` with `## 中文`. Keep the
+        # Chinese as the heading and demote the English to a quiet subtitle, the same
+        # treatment the numbered pair gets. Done by position, since the two lines are
+        # otherwise indistinguishable.
+        lines = body.split("\n")
+        for i in range(len(lines) - 2):
+            en, blank, zh = lines[i], lines[i + 1], lines[i + 2]
+            if (blank.strip() == ""
+                    and re.match(r"^##\s+\S", en)
+                    and re.match(r"^##\s+\S", zh)
+                    and not re.match(r"^##\s+[\d.]", en)
+                    and _has_cjk(zh) and not _has_cjk(en)):
+                lines[i] = f'<p class="sec-alt">{en[3:].strip()}</p>'
+                lines[i + 1] = ""
+                lines[i + 2] = f"## {zh[3:].strip()}"
+        body = "\n".join(lines)
+        # Normalise images to an explicit <img> tag.
+        #
+        # Markdown image syntax does not survive this pipeline: with an empty alt text
+        # (`![](…)`) Starlight's MDX renderer escapes the whole thing to literal text,
+        # so the page shows the raw path instead of the figure. Durable already used an
+        # <img> tag and rendered fine, so both books are converted to the same form —
+        # which also gives a stable place to hang the caption styling.
         prefix = asset_prefix(bdir, slug)
-        body = re.sub(r"!\[[^\]]*\]\((?:\.\./_assets/|images/)([^)\s]+)\)",
-                      lambda m: f"![{prefix}{m.group(1)}]", body)
-        body = re.sub(r"<img src=\"\.\./_assets/([^\"]+)\"",
-                      lambda m: f'<img src="{prefix}{m.group(1)}"', body)
+
+        def to_img(m):
+            alt, name = m.group(1), m.group(2)
+            if is_page_furniture(name):
+                return ""            # drop it, and the blank line with it
+            return f'<img src="{prefix}{name}" alt="{alt}" loading="lazy">'
+
+        body = re.sub(r"!\[([^\]]*)\]\((?:\.\./_assets/|images/)?([^)\s]+)\)", to_img, body)
+        body = re.sub(r'<img src="\.\./_assets/([^"]+)"',
+                      lambda m: "" if is_page_furniture(m.group(1))
+                      else f'<img src="{prefix}{m.group(1)}"', body)
+        body = re.sub(r"\n{3,}", "\n\n", body)
+        # Mark the translation in a bilingual pair.
+        #
+        # Pi Manual's translation is interleaved — English paragraph, then Chinese, then
+        # the next English one. Without a marker the reader cannot tell which is which,
+        # because both are set in the same face. Pi Durable's IR carries Chinese only, so
+        # nothing there is marked and its pages read as ordinary prose.
+        if _is_bilingual(source):
+            body = mark_translations(body)
         body = rewrite_langs(body)
+        body = untrack_headings(body)
 
         meta = part_meta(cfg, part)
         meta["sidebar"]["label"] = f"{part['num_zh']} {part['label_zh']}"
