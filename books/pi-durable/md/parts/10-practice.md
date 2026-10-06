@@ -68,6 +68,18 @@ added: [ 'write', 'edit', 'bash' ], removed: [ 'submit_plan' ] }
 
 每种输入都有自己的时机。表格回答产品团队问的第一个问题：如果我现在改这个，谁会看到它？
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>a settings getter every use at the next decision; nothing is written</td><td></td><td></td></tr>
+<tr><td>configure() model, tools, sections before each model request at the next request; the current one keeps its prompt</td><td></td><td></td></tr>
+<tr><td>configure({ cwd }) env() at each use at the next tool call, even one the model already made</td><td>的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。<code>configure({ cwd })</code>｜</td><td></td></tr>
+<tr><td>installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code</td><td></td><td></td></tr>
+<tr><td>a process restart after you reinstall stored names bind to the newly installed code</td><td></td><td></td></tr>
+<tr><td>From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">代码放注册表，共享策略放设置，按会话的选择放 `pi.agent`。会话需要跨重启记住的其他任何东西，都放进你自己的文档。重新打开之前先安装每个扩展；脱离代码的存储名字毫无用处。</aside>
+<aside class="note">Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts; src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload</aside>
 <a id="sec-10-2"></a>
 
 ## 10.2 会咬人的契约
@@ -178,6 +190,26 @@ effects in order: ["charged charge-d"]
 
 一个扩展要么整体被选中，要么完全不被选中，因此守卫只在选中它的会话里运行。子会话在创建时复制一次它的选择（每个会话的 agent（p. 106））。
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>Include guards in every list an explicit extension list that leaves out a permissions extension runs without it</td><td></td><td></td></tr>
+<tr><td>Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead</td><td></td><td></td></tr>
+<tr><td>Copies happen once later changes to the parent never reach a task-owned child configure the child directly</td><td></td><td></td></tr>
+<tr><td>a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory</td><td></td><td></td></tr>
+<tr><td>Reruns use today’s directory (9.5 (p. 155))</td><td></td><td></td></tr>
+<tr><td>Default changes cost cache (7.5 (p. 115))</td><td></td><td></td></tr>
+<tr><td>Keep prompt text stable (7.5 (p. 115))</td><td></td><td></td></tr>
+<tr><td>Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end</td><td></td><td></td></tr>
+<tr><td>Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension</td><td></td><td></td></tr>
+<tr><td>Does any await inside a commit callback leave the process?</td><td></td><td></td></tr>
+<tr><td>Does any code write to a conversation whose run it does not own?</td><td></td><td></td></tr>
+<tr><td>Does any consumer change a value it read, or depend on seeing every update?</td><td></td><td></td></tr>
+</table>
+
+```
+Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6
+```
+
 <img src="/pi-lessons/_assets/pi-durable/10-practice/fig-10.4.png" alt="INSIDE AND OUTSIDE THE GUARANTEE COMPARISON" loading="lazy">
 
 *Harness 保证的是它存储中已提交的东西；它周边的一切都归宿主所有。每一行都把一项保证与它留下的工作配在一起。出自 spec §2.2、§5.2、§11.3、§13、README §Storage 与 `src/harness/types.ts`。*
@@ -204,7 +236,6 @@ Pi Durable 让已提交的内部状态在进程崩溃后依然存在。外部效
 <tr><td>Session-kernel semantic event journal agent events are derived from commits, not stored (8.3 (p. 133))</td><td></td><td></td></tr>
 <tr><td>session-scoped rewindable documents rewindable exists only for conversation scope (4.1 (p. 50))</td><td></td><td></td></tr>
 <tr><td>automatic checkpoint heuristic a document stores a base only when checkpointWhen() says so (4.3 (p. 56))</td><td></td><td></td></tr>
-<tr><td>automatic third-party view mounting the view mounts the built-in documents only; read yours with snapshot(), documentState() or watchDoc()</td><td></td><td></td></tr>
 <tr><td>CRDT/offline multi-writer merge one writer per storage; no merge of concurrent histories</td><td></td><td></td></tr>
 <tr><td>SQL translation of Chord operations SQLite stores operations as records, not as SQL updates (9.2 (p. 144))</td><td></td><td></td></tr>
 <tr><td>JSONL global compaction or repair main.jsonl only grows; corruption fails the open (9.3 (p. 148))</td><td></td><td></td></tr>
@@ -239,7 +270,6 @@ Pi Durable「并不取代 Pi 编码智能体。它是一个用来构建任何智
 <tr><td>Extension state custom entries with customType and data typed documents with scope, history and fork policy</td><td></td><td></td></tr>
 <tr><td>Queued messages</td><td></td><td></td></tr>
 <tr><td>Work in flight no entry type records a running response or tool call pi.generation and pi.tool tasks with checkpoints</td><td></td><td></td></tr>
-<tr><td>Left: coding-agent docs and src/core/session-manager.ts. Right: src/types.ts, src/entries.ts and spec §2–§8.</td><td></td><td></td></tr>
 </table>
 
 ### 需要你自己动手的部分
@@ -249,38 +279,3 @@ Pi Durable「并不取代 Pi 编码智能体。它是一个用来构建任何智
 ```
 Sources: spec §2.2, §5.2, §11.3, §13; README §Storage; CHANGELOG 1.0.3; research/capture/crash-reopen-tasks.txt; coding-agent docs/session-format.md, src/core/session-manager.ts; earendil.com/posts/pi-durable
 ```
-
-<table>
-<tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>a settings getter every use at the next decision; nothing is written</td><td></td><td></td></tr>
-<tr><td>configure() model, tools, sections before each model request at the next request; the current one keeps its prompt</td><td></td><td></td></tr>
-<tr><td>configure({ cwd }) env() at each use at the next tool call, even one the model already made</td><td>的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。<code>configure({ cwd })</code>｜</td><td></td></tr>
-<tr><td>installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code</td><td></td><td></td></tr>
-<tr><td>a process restart after you reinstall stored names bind to the newly installed code</td><td></td><td></td></tr>
-<tr><td>From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process</td><td></td><td></td></tr>
-<tr><td>offers no tools until it installs the extension (reload while running (p. 118)).</td><td></td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>Put code in the registry, shared policy in settings, and per-conversation choices in pi.agent.</td><td></td><td></td></tr>
-<tr><td>Anything else a conversation must remember across restarts goes in your own document.</td><td></td><td></td></tr>
-<tr><td>Install every extension before reopening; stored names are useless without their code.</td><td></td><td></td></tr>
-<tr><td>Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts;</td><td></td><td></td></tr>
-<tr><td>src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload</td><td></td><td></td></tr>
-<tr><td>Include guards in every list an explicit extension list that leaves out a permissions extension runs without it</td><td></td><td></td></tr>
-<tr><td>Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead</td><td></td><td></td></tr>
-<tr><td>Copies happen once later changes to the parent never reach a task-owned child configure the child directly</td><td></td><td></td></tr>
-<tr><td>a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory</td><td></td><td></td></tr>
-<tr><td>Reruns use today’s directory (9.5 (p. 155))</td><td></td><td></td></tr>
-<tr><td>Default changes cost cache (7.5 (p. 115))</td><td></td><td></td></tr>
-<tr><td>Keep prompt text stable (7.5 (p. 115))</td><td></td><td></td></tr>
-<tr><td>Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end</td><td></td><td></td></tr>
-<tr><td>Rows paraphrase spec §12 in its order within each group; “Do instead” is the spec’s own fix where it gives one.</td><td></td><td></td></tr>
-<tr><td>N O S A F E T Y N E T</td><td></td><td></td></tr>
-<tr><td>Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension</td><td></td><td></td></tr>
-<tr><td>src/harness/registry.ts. Reserved names, kind collisions and immutability are up to your tests and review.</td><td>这其中几乎没有任何一项在运行时被检查。注册表只检查片段键，以及工具名在同一个扩展内是否唯一 <code>src/harness/registry.ts</code>。保留名、kind 冲突和不可变性都靠你的测试与评审。</td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>Three questions catch most of these in code review. A yes to any is a bug, even if every test passes, because it shows only under load, concurrency or a crash.</td><td></td><td></td></tr>
-<tr><td>Does any await inside a commit callback leave the process?</td><td></td><td></td></tr>
-<tr><td>Does any code write to a conversation whose run it does not own?</td><td></td><td></td></tr>
-<tr><td>Does any consumer change a value it read, or depend on seeing every update?</td><td></td><td></td></tr>
-<tr><td>Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6</td><td></td><td></td></tr>
-</table>

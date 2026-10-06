@@ -192,6 +192,85 @@
    "zh": "每种输入都有自己的时机。表格回答产品团队问的第一个问题：如果我现在改这个，谁会看到它？"
   },
   {
+   "type": "table-row",
+   "page": 162,
+   "_y": 194.3,
+   "cells": [
+    "a settings getter every use at the next decision; nothing is written"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 210.6,
+   "cells": [
+    "configure() model, tools, sections before each model request at the next request; the current one keeps its prompt"
+   ],
+   "is_header": false,
+   "_sig": "configure",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 227.1,
+   "cells": [
+    "configure({ cwd }) env() at each use at the next tool call, even one the model already made"
+   ],
+   "is_header": false,
+   "_sig": "configure",
+   "zh": "`configure()` 的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。`configure({ cwd })`｜"
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 244.5,
+   "cells": [
+    "installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code"
+   ],
+   "is_header": false,
+   "_sig": "installing",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 259.7,
+   "cells": [
+    "a process restart after you reinstall stored names bind to the newly installed code"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 279.0,
+   "cells": [
+    "From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process"
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "Put code in the registry, shared policy in settings, and per-conversation choices in pi.agent. Anything else a conversation must remember across restarts goes in your own document. Install every extension before reopening; stored names are useless without their code.",
+   "page": 162,
+   "_y": 337.3,
+   "zh": "代码放注册表，共享策略放设置，按会话的选择放 `pi.agent`。会话需要跨重启记住的其他任何东西，都放进你自己的文档。重新打开之前先安装每个扩展；脱离代码的存储名字毫无用处。"
+  },
+  {
+   "type": "small",
+   "text": "Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts; src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload",
+   "page": 162,
+   "_y": 403.4
+  },
+  {
    "type": "chapter-title",
    "text": "1 0 . 2 Contracts that bite",
    "page": 163,
@@ -750,6 +829,152 @@
    "zh": "一个扩展要么整体被选中，要么完全不被选中，因此守卫只在选中它的会话里运行。子会话在创建时复制一次它的选择（每个会话的 agent（p. 106））。"
   },
   {
+   "type": "table-row",
+   "page": 167,
+   "_y": 83.6,
+   "cells": [
+    "Include guards in every list an explicit extension list that leaves out a permissions extension runs without it",
+    "include guards in every list"
+   ],
+   "is_header": false,
+   "_sig": "Include",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 110.9,
+   "cells": [
+    "Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead",
+    "build the full list from the resolved agent"
+   ],
+   "is_header": false,
+   "_sig": "Edits",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 138.0,
+   "cells": [
+    "Copies happen once later changes to the parent never reach a task-owned child configure the child directly"
+   ],
+   "is_header": false,
+   "_sig": "Copies",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 154.0,
+   "cells": [
+    "a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 155.3,
+   "cells": [
+    "Reruns use today’s directory (9.5 (p. 155))"
+   ],
+   "is_header": false,
+   "_sig": "Reruns",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 182.6,
+   "cells": [
+    "Default changes cost cache (7.5 (p. 115))",
+    "changing settings or installs adds pi.system entries and misses the prompt cache",
+    "expect one system change and one cache miss per change"
+   ],
+   "is_header": false,
+   "_sig": "Default",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 209.6,
+   "cells": [
+    "Keep prompt text stable (7.5 (p. 115))",
+    "a section that embeds the time changes every request and defeats caching",
+    "render only real changes"
+   ],
+   "is_header": false,
+   "_sig": "Keep",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 235.7,
+   "cells": [
+    "Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end"
+   ],
+   "is_header": false,
+   "_sig": "Dispose",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 297.0,
+   "cells": [
+    "Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension"
+   ],
+   "is_header": false,
+   "_sig": "Almost",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 397.3,
+   "cells": [
+    "Does any await inside a commit callback leave the process?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 410.8,
+   "cells": [
+    "Does any code write to a conversation whose run it does not own?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 425.1,
+   "cells": [
+    "Does any consumer change a value it read, or depend on seeing every update?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6"
+   ],
+   "page": 167,
+   "_y": 461.9
+  },
+  {
    "type": "figure",
    "number": "10.4",
    "file": "figures/fig-10.4.png",
@@ -861,17 +1086,6 @@
    "_y": 150.6,
    "cells": [
     "automatic checkpoint heuristic a document stores a base only when checkpointWhen() says so (4.3 (p. 56))"
-   ],
-   "is_header": false,
-   "_sig": "automatic",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 169,
-   "_y": 167.1,
-   "cells": [
-    "automatic third-party view mounting the view mounts the built-in documents only; read yours with snapshot(), documentState() or watchDoc()"
    ],
    "is_header": false,
    "_sig": "automatic",
@@ -1099,17 +1313,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 170,
-   "_y": 403.0,
-   "cells": [
-    "Left: coding-agent docs and src/core/session-manager.ts. Right: src/types.ts, src/entries.ts and spec §2–§8."
-   ],
-   "is_header": false,
-   "_sig": "Left",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "What to build yourself",
    "page": 170,
@@ -1128,353 +1331,6 @@
    ],
    "page": 170,
    "_y": 714.6
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 194.3,
-   "cells": [
-    "a settings getter every use at the next decision; nothing is written"
-   ],
-   "is_header": false,
-   "_sig": "a",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 210.6,
-   "cells": [
-    "configure() model, tools, sections before each model request at the next request; the current one keeps its prompt"
-   ],
-   "is_header": false,
-   "_sig": "configure",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 227.1,
-   "cells": [
-    "configure({ cwd }) env() at each use at the next tool call, even one the model already made"
-   ],
-   "is_header": false,
-   "_sig": "configure",
-   "zh": "`configure()` 的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。`configure({ cwd })`｜"
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 244.5,
-   "cells": [
-    "installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code"
-   ],
-   "is_header": false,
-   "_sig": "installing",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 259.7,
-   "cells": [
-    "a process restart after you reinstall stored names bind to the newly installed code"
-   ],
-   "is_header": false,
-   "_sig": "a",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 279.0,
-   "cells": [
-    "From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process"
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 289.0,
-   "cells": [
-    "offers no tools until it installs the extension (reload while running (p. 118))."
-   ],
-   "is_header": false,
-   "_sig": "offers",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 324.1,
-   "cells": [
-    "W H A T T H I S M E A N S F O R Y O U"
-   ],
-   "is_header": true,
-   "_sig": "W",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 337.3,
-   "cells": [
-    "Put code in the registry, shared policy in settings, and per-conversation choices in pi.agent."
-   ],
-   "is_header": false,
-   "_sig": "Put",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 352.3,
-   "cells": [
-    "Anything else a conversation must remember across restarts goes in your own document."
-   ],
-   "is_header": false,
-   "_sig": "Anything",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 367.3,
-   "cells": [
-    "Install every extension before reopening; stored names are useless without their code."
-   ],
-   "is_header": false,
-   "_sig": "Install",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 403.4,
-   "cells": [
-    "Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts;"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 162,
-   "_y": 414.0,
-   "cells": [
-    "src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload"
-   ],
-   "is_header": true,
-   "_sig": "src",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 83.6,
-   "cells": [
-    "Include guards in every list an explicit extension list that leaves out a permissions extension runs without it",
-    "include guards in every list"
-   ],
-   "is_header": false,
-   "_sig": "Include",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 110.9,
-   "cells": [
-    "Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead",
-    "build the full list from the resolved agent"
-   ],
-   "is_header": false,
-   "_sig": "Edits",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 138.0,
-   "cells": [
-    "Copies happen once later changes to the parent never reach a task-owned child configure the child directly"
-   ],
-   "is_header": false,
-   "_sig": "Copies",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 154.0,
-   "cells": [
-    "a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory"
-   ],
-   "is_header": false,
-   "_sig": "a",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 155.3,
-   "cells": [
-    "Reruns use today’s directory (9.5 (p. 155))"
-   ],
-   "is_header": false,
-   "_sig": "Reruns",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 182.6,
-   "cells": [
-    "Default changes cost cache (7.5 (p. 115))",
-    "changing settings or installs adds pi.system entries and misses the prompt cache",
-    "expect one system change and one cache miss per change"
-   ],
-   "is_header": false,
-   "_sig": "Default",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 209.6,
-   "cells": [
-    "Keep prompt text stable (7.5 (p. 115))",
-    "a section that embeds the time changes every request and defeats caching",
-    "render only real changes"
-   ],
-   "is_header": false,
-   "_sig": "Keep",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 235.7,
-   "cells": [
-    "Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end"
-   ],
-   "is_header": false,
-   "_sig": "Dispose",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 255.0,
-   "cells": [
-    "Rows paraphrase spec §12 in its order within each group; “Do instead” is the spec’s own fix where it gives one."
-   ],
-   "is_header": false,
-   "_sig": "Rows",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 284.3,
-   "cells": [
-    "N O S A F E T Y N E T"
-   ],
-   "is_header": true,
-   "_sig": "N",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 297.0,
-   "cells": [
-    "Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension"
-   ],
-   "is_header": false,
-   "_sig": "Almost",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 309.0,
-   "cells": [
-    "src/harness/registry.ts. Reserved names, kind collisions and immutability are up to your tests and review."
-   ],
-   "is_header": false,
-   "_sig": "src",
-   "zh": "这其中几乎没有任何一项在运行时被检查。注册表只检查片段键，以及工具名在同一个扩展内是否唯一 `src/harness/registry.ts`。保留名、kind 冲突和不可变性都靠你的测试与评审。"
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 351.1,
-   "cells": [
-    "W H A T T H I S M E A N S F O R Y O U"
-   ],
-   "is_header": true,
-   "_sig": "W",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 364.3,
-   "cells": [
-    "Three questions catch most of these in code review. A yes to any is a bug, even if every test passes, because it shows only under load, concurrency or a crash."
-   ],
-   "is_header": false,
-   "_sig": "Three",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 397.3,
-   "cells": [
-    "Does any await inside a commit callback leave the process?"
-   ],
-   "is_header": false,
-   "_sig": "Does",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 410.8,
-   "cells": [
-    "Does any code write to a conversation whose run it does not own?"
-   ],
-   "is_header": false,
-   "_sig": "Does",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 425.1,
-   "cells": [
-    "Does any consumer change a value it read, or depend on seeing every update?"
-   ],
-   "is_header": false,
-   "_sig": "Does",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 167,
-   "_y": 461.9,
-   "cells": [
-    "Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
   }
  ]
 }

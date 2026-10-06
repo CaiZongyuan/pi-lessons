@@ -79,7 +79,6 @@ Harness 用三个内置任务来回应输入。`pi.generation` 准备提示词�
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
 <tr><td>Conversation handles</td><td></td><td></td></tr>
-<tr><td>Submissions submissions.ts, inbox.ts admission of inputs and writes, the per-conversation inbox, and the waiters behind wait()</td><td></td><td></td></tr>
 <tr><td>Task scheduler scheduler.ts an in-memory mirror of every live task; reserving, running and aborting them</td><td></td><td></td></tr>
 <tr><td>Views view.ts, task-graph.ts, events.ts</td><td></td><td></td></tr>
 </table>
@@ -92,11 +91,6 @@ Harness 用三个内置任务来回应输入。`pi.generation` 准备提示词�
 
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>models the pi-ai Models interface; generation calls models.streamSimple() generation (p. 91)</td><td></td><td></td></tr>
-<tr><td>registry the installed extensions: tools, prompt sections, hooks, wraps and tasks the registry (p. 103)</td><td></td><td></td></tr>
-<tr><td>settings run policy read at every use and never stored settings and defaults (p. 180)</td><td>：每次使用时读取、从不存储的运行策略｜设置与默认值（p. 180）｜</td><td></td></tr>
-<tr><td>env builds the ExecutionEnv for each tool call and prompt render the environment (p. 155)</td><td>：为每次工具调用和提示词渲染构建</td><td></td></tr>
-<tr><td>conversationCreated runs in every commit that creates or forks a conversation access and creation (p. 53)</td><td>：在每次创建或分叉会话的提交中运行｜访问与创建（p. 53）｜</td><td></td></tr>
 <tr><td>now, onReport the clock, and a sink for errors the harness reports but survives —</td><td></td><td></td></tr>
 </table>
 
@@ -119,6 +113,22 @@ Harness 用三个内置任务来回应输入。`pi.generation` 准备提示词�
 ### 入口点
 
 这个包暴露十条导入路径。依赖 Node 的代码位于以 `/node` 结尾的路径之后；可移植的 `SQLite` 与 `JSONL` 核心也能在 Bun 或 Cloudflare Durable Objects 上运行 `README §Storage`。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>@earendil-works/pi-durable Harness, createRegistry, defineExtension, defineTool, defineTask, defineDoc, entry tokens, built-in docs and tasks, MemoryStorage, createSession</td><td></td><td></td></tr>
+<tr><td>…/storage/sqlite/node, …/storage/sqlite</td><td></td><td></td></tr>
+<tr><td>…/storage/jsonl/node, …/storage/jsonl</td><td></td><td></td></tr>
+<tr><td>…/storage/memory MemoryStorage on its own</td><td></td><td></td></tr>
+<tr><td>…/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv</td><td></td><td></td></tr>
+<tr><td>…/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four</td><td></td><td></td></tr>
+<tr><td>…/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">你的代码只与 Harness 及其会话句柄对话，从不直接接触存储。任何重启后还需要的东西，都必须存在于某次提交中；内存只是缓存。句柄不持有状态。重启之后，用 `harness.conversation(id, context)` 重新取一个。</aside>
+```
+Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts
+```
 
 <img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.3.png" alt="THE COMMIT AS THE ONLY DOOR FLOW" loading="lazy">
 
@@ -250,29 +260,7 @@ const settled = await submission.wait(context);
 
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>@earendil-works/pi-durable Harness, createRegistry, defineExtension, defineTool, defineTask, defineDoc, entry tokens, built-in docs and tasks, MemoryStorage, createSession</td><td></td><td></td></tr>
-<tr><td>…/storage/sqlite/node, …/storage/sqlite</td><td></td><td></td></tr>
-<tr><td>…/storage/jsonl/node, …/storage/jsonl</td><td></td><td></td></tr>
-<tr><td>…/storage/memory MemoryStorage on its own</td><td></td><td></td></tr>
-<tr><td>…/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv</td><td></td><td></td></tr>
-<tr><td>…/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four</td><td></td><td></td></tr>
-<tr><td>…/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks</td><td></td><td></td></tr>
-<tr><td>From the exports map of package.json. The package requires Node 22.19.0 or later.</td><td></td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>Your code talks to the Harness and its conversation handles, never to storage.</td><td></td><td></td></tr>
-<tr><td>Anything you need after a restart must be in a commit; memory is a cache.</td><td></td><td></td></tr>
-<tr><td>Handles hold no state. After a restart, get a new one with harness.conversation(id, context).</td><td></td><td></td></tr>
-<tr><td>Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts</td><td></td><td></td></tr>
-<tr><td>1 One commit is atomic across all record and document writes. a tool call stored without its task</td><td></td><td></td></tr>
-<tr><td>2 A document update is published only after its storage commit succeeds. a screen shows state a crash erases</td><td></td><td></td></tr>
-<tr><td>3 All visible progress is durable; no volatile publication path. streamed text that never existed after reopen</td><td></td><td></td></tr>
-<tr><td>4 External effects do not run inside the mutation transaction. one slow call stalls every conversation</td><td></td><td></td></tr>
-<tr><td>5 Entries and IDs are immutable and never reused. references point at the wrong record</td><td></td><td></td></tr>
-<tr><td>6 Drafts are revoked when the callback settles; values are copied, strict JSON. writes that bypass the commit</td><td></td><td></td></tr>
-<tr><td>7 The line is held through settlement and adoption; user callbacks run later, off it. a commit built on unadopted state</td><td></td><td></td></tr>
-<tr><td>8 An uncertain storage failure is fatal to the open Session. memory and disk silently diverge</td><td></td><td></td></tr>
 <tr><td>1 conversation 1 create 2–6 root()</td><td></td><td></td></tr>
-<tr><td>2 entry 7 pi.user; submission 8 placed; task 9 pending pi.live submit()</td><td></td><td></td></tr>
 <tr><td>3 task 9 running · prepare — scheduler</td><td></td><td></td></tr>
 <tr><td>4 entry 10 pi.system; task 9 · request — generation 9</td><td></td><td></td></tr>
 <tr><td>5 — pi.live generation 9</td><td></td><td></td></tr>
@@ -287,11 +275,22 @@ const settled = await submission.wait(context);
 <tr><td>15 task 14 · request — generation 14</td><td></td><td></td></tr>
 <tr><td>16 — pi.live generation 14</td><td></td><td></td></tr>
 <tr><td>17 entry 15 pi.assistant; submission 8 done; task 14 terminal pi.live, pi.usage generation 14</td><td></td><td></td></tr>
-<tr><td>Every commit of research/capture/sqlite-commits.txt; the JSONL run has the same seventeen.</td><td></td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>The user’s text is safe from commit 2; a resubmit with the same requestId cannot duplicate it.</td><td></td><td></td></tr>
-<tr><td>A tool’s intent is committed (commit 8) before any of its code runs, so recovery always knows a call may have started.</td><td></td><td></td></tr>
-<tr><td>No commit leaves an answer without its submission settled, or a tool call without a task. Kill the process after any row and it reopens knowing what to do next.</td><td></td><td></td></tr>
-<tr><td>Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);</td><td></td><td></td></tr>
-<tr><td>src/harness/generation.ts (prepare, request, startToolRound, finishToolRound, answer, startRun); src/harness/tool.ts (call, execute); src/harness/scheduler.ts (#reserve); src/session/session.ts (#runCommit)</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">从提交 2 起，用户的文本就是安全的；用相同的 `requestId` 重新提交，不会把它复制一份。工具的意图在任何工具代码运行之前就已被提交（提交 8），因此恢复时总能知道某次调用可能已经开始。没有哪次提交会让答案悬在提交项未结算的状态，也没有哪次提交会让工具调用没有任务。在任何一行之后杀掉进程，重开时它都知道下一步该做什么。</aside>
+```
+Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);
+src/harness/generation.ts (prepare, request, startToolRound, finishToolRound, answer, startRun); src/harness/tool.ts (call, execute); src/harness/scheduler.ts (#reserve); src/session/session.ts (#runCommit)
+```
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>1 One commit is atomic across all record and document writes. a tool call stored without its task</td><td></td><td></td></tr>
+<tr><td>2 A document update is published only after its storage commit succeeds. a screen shows state a crash erases</td><td></td><td></td></tr>
+<tr><td>3 All visible progress is durable; no volatile publication path. streamed text that never existed after reopen</td><td></td><td></td></tr>
+<tr><td>4 External effects do not run inside the mutation transaction. one slow call stalls every conversation</td><td></td><td></td></tr>
+<tr><td>5 Entries and IDs are immutable and never reused. references point at the wrong record</td><td></td><td></td></tr>
+<tr><td>6 Drafts are revoked when the callback settles; values are copied, strict JSON. writes that bypass the commit</td><td></td><td></td></tr>
+<tr><td>7 The line is held through settlement and adoption; user callbacks run later, off it. a commit built on unadopted state</td><td></td><td></td></tr>
+<tr><td>8 An uncertain storage failure is fatal to the open Session. memory and disk silently diverge</td><td></td><td></td></tr>
 </table>

@@ -266,17 +266,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 28,
-   "_y": 168.8,
-   "cells": [
-    "From spec §2 and the field comments in src/types.ts."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
    "type": "small",
    "text": "An ID is unique across all record types, but the number does not say which type it is. Keep the type with it, and let the brands catch mix-ups. Expect gaps. A failed commit burns the IDs it minted, and that is normal. Use parent to ask “where did this history come from” and owner to ask “which task made this”.",
    "page": 28,
@@ -381,6 +370,50 @@
    "caption": "Thelineisheldfromadmissionuntilthepublicationisenqueued ; callbacksruna ft er . Theaquabaristheheldline . A ft ersrc / session / session . tsand src / session / transaction . ts .",
    "page": 30,
    "zh_caption": "这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 83.6,
+   "cells": [
+    "Table reads",
+    "conversation, entry, task, scanConversations, scanEntries, latestHeadMarker, scanTasks, submissionByRequest",
+    "only before the first table write"
+   ],
+   "is_header": false,
+   "_sig": "Table",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 111.4,
+   "cells": [
+    "Table writes",
+    "createConversation, forkConversation, appendEntry, createTask, createSubmission, settleSubmission, placeSubmission",
+    "return the created record or ID"
+   ],
+   "is_header": false,
+   "_sig": "Table",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 136.7,
+   "cells": [
+    "Docs doc (get or create), retireDoc usable before and after table writes"
+   ],
+   "is_header": false,
+   "_sig": "Docs",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts.",
+   "page": 30,
+   "_y": 606.6,
+   "zh": "这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
   },
   {
    "type": "p",
@@ -700,65 +733,6 @@
    ],
    "page": 35,
    "_y": 706.5
-  },
-  {
-   "type": "table-row",
-   "page": 30,
-   "_y": 83.6,
-   "cells": [
-    "Table reads",
-    "conversation, entry, task, scanConversations, scanEntries, latestHeadMarker, scanTasks, submissionByRequest",
-    "only before the first table write"
-   ],
-   "is_header": false,
-   "_sig": "Table",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 30,
-   "_y": 111.4,
-   "cells": [
-    "Table writes",
-    "createConversation, forkConversation, appendEntry, createTask, createSubmission, settleSubmission, placeSubmission",
-    "return the created record or ID"
-   ],
-   "is_header": false,
-   "_sig": "Table",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 30,
-   "_y": 136.7,
-   "cells": [
-    "Docs doc (get or create), retireDoc usable before and after table writes"
-   ],
-   "is_header": false,
-   "_sig": "Docs",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 30,
-   "_y": 166.5,
-   "cells": [
-    "The Tx interface in src/types.ts; the rules are spec §4."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 30,
-   "_y": 606.6,
-   "cells": [
-    "The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
   }
  ]
 }

@@ -27,17 +27,12 @@ await root.commit(async (tx) => {
 
 *作用域决定所有者与存续期；只有 conversation 文档才选择 history 和 fork。`src/types.ts` 中的联合类型 `DocumentSemantics`；fork 来自 `spec §3.7`。右列列出使用该组合的内置文档。*
 
+<aside class="note">`kind` string 存储时使用的名字。它是公开协议的一部分，不能改名。 `version` 正整数 值的形状版本；随每次改动一起存储。 `scope` `"session"` · `"conversation"` · `"task"` 谁拥有它、它存续多久。 `history` `"latest"` · `"rewindable"` 仅 conversation。旧值是否仍可读。 `fork` `"current"` · `"initial"` · `"asOf"` 仅 conversation。分叉副本从什么开始。</aside>
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>kind string The stored name. It is part of the public protocol and cannot be renamed.</td><td>string 存储时使用的名字。它是公开协议的一部分，不能改名。</td><td></td></tr>
-<tr><td>version positive integer Version of the value’s shape; stored with every change.</td><td>正整数 值的形状版本；随每次改动一起存储。</td><td></td></tr>
-<tr><td>scope "session" · "conversation" · "task" Who owns it and how long it lives.</td><td><code>"session"</code> · <code>"conversation"</code> · <code>"task"</code> 谁拥有它、它存续多久。</td><td></td></tr>
-<tr><td>history "latest" · "rewindable" Conversation only. Whether old values stay readable.</td><td>与</td><td></td></tr>
-<tr><td>fork "current" · "initial" · "asOf" Conversation only. What a fork’s copy starts with.</td><td></td><td></td></tr>
 <tr><td>initial() () =&gt; T The value of a new document; must be a JSON object.</td><td></td><td></td></tr>
 <tr><td>migrate? (value, fromVersion) =&gt; T Upgrades an older stored value when it is read (4.3 (p. 56)).</td><td></td><td></td></tr>
 <tr><td>checkpointWhen? (value, ops, info) =&gt; boolean When to store the whole value instead of the edits (4.3 (p. 56)).</td><td></td><td></td></tr>
-<tr><td>The definition fields, from src/types.ts (CommonDocDefinition, DocumentSemantics).</td><td></td><td></td></tr>
 </table>
 
 ### 作用域、`history` 与 `fork`
@@ -86,6 +81,11 @@ Sources: src/documents.ts; src/types.ts; spec §1, §3.1, §3.2, §3.3, §3.7, �
 
 在一次提交内部，`tx.doc()` 返回一个草稿：仅对本次提交有效的文档可编辑视图。如果文档还不存在，同一个调用会把它创建出来。参数取决于词元的 scope：
 
+<aside class="note">session `tx.doc(Doc)` `tx.doc(Doc, key, seed)`；conversation `tx.doc(Doc, conversationId)` `tx.doc(Doc, conversationId, key, seed)`；task `tx.doc(Doc, taskId)` `tx.doc(Doc, taskId, key, seed)`。以上是 `src/types.ts` 中的 `Tx.doc` 重载。读取传入同样的所有者与 key，不带 seed，外加一个 `Context`。</aside>
+```
+Creation is a write: the first tx.doc() of a missing document stores its whole value in that commit. From src/session/transaction.ts; ID 4, seq 2 and the value are from research/capture/extra-p4/documents.txt.
+```
+
 这幅图跟完一次创建。`Session` 找不到当前文档（步骤 2–3），于是运行 `initial()`，向存储要一个新 ID，并把一个草稿交给你的代码（步骤 4–7）。在同一次提交里再要一次会拿到同一个草稿 `spec §3.3`。你的编辑进入草稿（步骤 8）。回调返回时草稿关闭，提交存下整个最终值 `{"items": ["write docs"]}`，而不是那个空的初始值（步骤 9–10）。其他读者要等提交成功后才看得到（提交（p. 29））。
 
 <img src="/pi-lessons/_assets/pi-durable/04-documents/fig-4.3.png" alt="THREE SCOPES OVER ONE STORAGE TIMELINE" loading="lazy">
@@ -105,7 +105,6 @@ Sources: src/documents.ts; src/types.ts; spec §1, §3.1, §3.2, §3.3, §3.7, �
 <tr><td>snapshotAsOf() the value when an entry was written; rewindable documents only</td><td>某个条目写入时的值，仅可回溯的文档可用；</td><td></td></tr>
 <tr><td>documentState() a read-only live state (8.1 (p. 125))</td><td>只读的实时状态（8.1（p. 125））；</td><td></td></tr>
 <tr><td>watchDoc() a stream of committed changes (8.2 (p. 129))</td><td>已提交改动的流（8.2（p. 129））。以上是读取方法。<code>snapshot()</code> 和 <code>snapshotAsOf()</code> 在</td><td></td></tr>
-<tr><td>The read methods. snapshot() and snapshotAsOf() are available on the Session, the Harness, tasks, tools and hooks (src/types.ts, src/harness/types.ts).</td><td></td><td></td></tr>
 </table>
 
 ### 什么会终结一个文档
@@ -225,13 +224,22 @@ documents.ts)
 <tr><td>pi.live what is running now latest · initial nothing runs 6.2 (p. 88)</td><td></td><td></td></tr>
 <tr><td>pi.inbox queued inputs latest · initial the inbox is empty 6.1 (p. 84)</td><td></td><td></td></tr>
 <tr><td>pi.usage tokens and cost latest · initial every change 6.6 (p. 100)</td><td></td><td></td></tr>
-<tr><td>From the definitions in src/harness/agent.ts, provider.ts, live.ts, inbox.ts and usage.ts. All five are version 1.</td><td></td><td></td></tr>
 </table>
 
 ### 出生时与分叉时
 
 每个新 conversation 都在创建它的那次提交里拿到全部五个。其中四个永远以同样的方式开始。只有 `pi.agent` 取决于 conversation 是怎么来的 `spec §2.2`；`src/harness/agent.ts`（`createAgent`）：
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>pi.agent {} a copy of the owner conversation’s agent the parent’s agent as of E</td><td></td><td></td></tr>
+<tr><td>pi.provider a new UUIDv7, never copied</td><td></td><td></td></tr>
+<tr><td>pi.live {}: nothing running</td><td></td><td></td></tr>
+<tr><td>pi.inbox { items: [] }: nothing queued</td><td></td><td></td></tr>
+<tr><td>pi.usage { models: {}, tools: {} }: zero spend</td><td>模型、工具、指令</td><td></td></tr>
+</table>
+
+<aside class="note">副本只有一次：「所有者后来的改动不会传到它那里」 `spec §12`。</aside>
 ### 每个文档
 
 `pi.agent` —— 为这个 conversation 选定的内容：模型、思考级别、扩展、工具、指令和工作目录。它存的是名称，从不存代码 `src/harness/types.ts`（`AgentState`）。`configure()` 修改它，工具结果也可以增删工具。名称如何变成一个运行中的智能体，见「每个 conversation 的智能体」（p. 106）。
@@ -250,17 +258,3 @@ Other fields of each line are omitted. At seq 6 the tool was still pending, so n
 
 <aside class="note">从视图的 `docs` 块构建 UI 状态：加载指示用 `pi.live`，队列用 `pi.inbox`，开销用 `pi.usage`。只通过 `configure()` 修改 `pi.agent`。另外四个不要写；它们归 `Harness` 所有。</aside>
 <aside class="note">Sources: src/harness/agent.ts; src/harness/provider.ts; src/harness/live.ts; src/harness/inbox.ts; src/harness/usage.ts; src/harness/harness.ts; src/harness/types.ts (AgentState); src/index.ts; spec §2.2, §6, §8.2, §8.6, §12; CHANGELOG.md 1.0.2; research/capture/view-final.json, jsonl-dir-midrun/doc-2.jsonl, jsonl-dir/doc-2.jsonl</aside>
-<table>
-<tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>session tx.doc(Doc) tx.doc(Doc, key, seed)</td><td></td><td></td></tr>
-<tr><td>conversation tx.doc(Doc, conversationId) tx.doc(Doc, conversationId, key, seed)</td><td></td><td></td></tr>
-<tr><td>task tx.doc(Doc, taskId) tx.doc(Doc, taskId, key, seed)</td><td></td><td></td></tr>
-<tr><td>The Tx.doc overloads in src/types.ts. Reads take the same owner and key, without the seed, plus a Context.</td><td></td><td></td></tr>
-<tr><td>Creation is a write: the first tx.doc() of a missing document stores its whole value in that commit. From src/session/transaction.ts; ID 4, seq 2 and the value are from research/capture/extra-p4/documents.txt.</td><td></td><td></td></tr>
-<tr><td>pi.agent {} a copy of the owner conversation’s agent the parent’s agent as of E</td><td></td><td></td></tr>
-<tr><td>pi.provider a new UUIDv7, never copied</td><td></td><td></td></tr>
-<tr><td>pi.live {}: nothing running</td><td></td><td></td></tr>
-<tr><td>pi.inbox { items: [] }: nothing queued</td><td></td><td></td></tr>
-<tr><td>pi.usage { models: {}, tools: {} }: zero spend</td><td>模型、工具、指令</td><td></td></tr>
-<tr><td>Copies are one-time: “later owner changes do not reach it” spec §12.</td><td></td><td></td></tr>
-</table>

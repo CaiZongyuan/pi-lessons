@@ -32,7 +32,6 @@ Session 提交的一切最终都进入存储：一个 SQLite 文件、一个文�
 <tr><td>document.copy record, source: { id, at } a new incarnation that starts from the source’s committed value</td><td></td><td></td></tr>
 <tr><td>document.change id, content (base or delta) one more revision</td><td></td><td></td></tr>
 <tr><td>document.retire id the incarnation, stamped retiredAt</td><td></td><td></td></tr>
-<tr><td>The StorageWrite union in src/types.ts. A base is a document’s complete value; a delta is a batch of Chord operations on top of the previous revision.</td><td></td><td></td></tr>
 </table>
 
 ### 读取：按键查找与分页扫描
@@ -57,7 +56,6 @@ Session 提交的一切最终都进入存储：一个 SQLite 文件、一个文�
 <tr><td>scanSubmissions(query) page by conversation, status; ascending ID</td><td>→ page —— 按会话、status；ID 升序 /</td><td></td></tr>
 <tr><td>scanDocuments(query) page one scope, optional kind; ascending ID</td><td>→ page —— 一个作用域，可选 kind；ID 升序 /</td><td></td></tr>
 <tr><td>close() — releases resources; every later call fails</td><td>—— 释放资源；之后所有调用都失败。每个方法还接受最后一个 context 参数。</td><td></td></tr>
-<tr><td>Every method also takes a final context. src/types.ts and spec §10.</td><td></td><td></td></tr>
 </table>
 
 <aside class="note">你很少自己调用存储。挑一个后端，打开它，交给 Harness。除 `StorageRejected` 之外的提交错误会毒化 Session。把它关掉再重新打开存储；重新打开后的状态才是真相。要写一个后端？把一致性测试套件传进去（9.4，见第 152 页）。</aside>
@@ -80,7 +78,6 @@ SQLite 把整个 Session 装在一个文件里。任何必须跨重启存活的�
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
 <tr><td>walAutoCheckpointPages 1,000 WAL auto-checkpoint threshold in pages; 0 disables it</td><td>1,000 —— WAL 自动检查点阈值，单位为页；0 表示关闭 /</td><td></td></tr>
-<tr><td>busyTimeoutMs 5,000 how long to wait for another connection’s lock (SQLite’s own default is 0)</td><td>5,000 —— 等待其他连接释放锁的时长（SQLite 自身的默认值是 0）。</td><td></td></tr>
 <tr><td>NodeSqliteStorageOptions, src/storage/sqlite/node.ts.</td><td></td><td></td></tr>
 </table>
 
@@ -196,7 +193,6 @@ fsync 选项决定什么能存活，默认为 false。不开启它，JSONL 能�
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
 <tr><td>two new documents append ×2, append main append ×2, flush ×2, append main</td><td></td><td></td></tr>
 <tr><td>task finishes append main, remove sidecar append main, flush main, remove sidecar</td><td></td><td></td></tr>
-<tr><td>File operations per commit, from test/jsonl-storage.test.ts.</td><td></td><td></td></tr>
 </table>
 
 ### 恢复
@@ -280,7 +276,6 @@ await closeMyStorage(storage);
 <tr><td>memory nothing heap grows with the store tests, examples, short sessions</td><td></td><td></td></tr>
 <tr><td>SQLite process crashes slower reads; small heap; fast open anything long-lived</td><td></td><td></td></tr>
 <tr><td>JSONL process crashes; power loss stays consistent with fsync slow commits; whole store in memory; replays at open debugging, readable files</td><td></td><td></td></tr>
-<tr><td>Summary of this section and the two before it.</td><td></td><td></td></tr>
 </table>
 
 <aside class="note">默认用 SQLite；测试中用内存；想读文件时用 JSONL。无论选哪个，一个存储只跑一个进程。没有后端会针对第二个进程加锁。自定义后端必须通过那 23 个用例，外加自己的崩溃测试。</aside>
@@ -345,7 +340,6 @@ id 指明文件命名空间：「相同的 id 无论 cwd 是什么，都看到�
 <tr><td>directories fileInfo, listDir, openDirReader, createDir, remove</td><td></td><td></td></tr>
 <tr><td>temporary createTempDir, createTempFile, cleanup</td><td></td><td></td></tr>
 <tr><td>changes watch</td><td></td><td></td></tr>
-<tr><td>src/env/index.ts. truncateFile and flushFile exist for JSONL storage.</td><td>identity id、cwd / paths absolutePath、joinPath、canonicalPath、exists / read readTextFile、readTextLines、openTextLineReader、readBinaryFile、openBinaryReader / write writeFile、appendFile、truncateFile、flushFile、renameFile / directories fileInfo、listDir、openDirReader、createDir、remove / temporary createTempDir、createTempFile、cleanup / changes watch　<code>src/env/index.ts</code>。truncateFile 和 flushFile 是为 JSONL 存储准备的。</td><td></td></tr>
 </table>
 
 ### 运行命令

@@ -47,7 +47,6 @@ registry.install(Permissions);
 <tr><td>hooks handlers the built-in tasks call task name 7.3 (p. 109)</td><td>内置任务调用的处理器 任务名 7.3（p. 109）</td><td></td></tr>
 <tr><td>wraps decorators for another extension’s tool or section tool name or section key 7.2 (p. 106)</td><td>另一个扩展的工具或小节的装饰器 工具名或小节键 7.2（p. 106）</td><td></td></tr>
 <tr><td>tasks your own durable task definitions task name 5.4 (p. 73)</td><td>你自己的持久任务定义 任务名 5.4（p. 73）</td><td></td></tr>
-<tr><td>The Extension interface, src/harness/types.ts.</td><td></td><td></td></tr>
 </table>
 
 ### 存储里是名字，内存里是代码
@@ -91,7 +90,6 @@ registry.install(Permissions);
 <tr><td>tools a list of names, or { remove } every tool of the selected extensions</td><td></td><td></td></tr>
 <tr><td>instructions a string none; when set, rendered as the last prompt section</td><td></td><td></td></tr>
 <tr><td>cwd a path none; passed to the host’s environment factory (9.5 (p. 155))</td><td></td><td></td></tr>
-<tr><td>AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent().</td><td></td><td></td></tr>
 </table>
 
 <aside class="note">先 configure，再读回来 ex 07 · `research/runs/07-configuration.txt` `TS`</aside>
@@ -142,7 +140,6 @@ registry.uninstall(Files); // files uninstalled: [ 'grep' ] registry.install(Fil
 <tr><td>a tool round parallel or sequential execution once per round</td><td></td><td></td></tr>
 <tr><td>an input boundary steering and follow-up queue modes at each boundary</td><td></td><td></td></tr>
 <tr><td>tools and prompt sections the environment for the current cwd at each use</td><td></td><td></td></tr>
-<tr><td>Condensed from spec §7.1, “Who resolves what, and when”.</td><td></td><td></td></tr>
 </table>
 
 ### 创建时的副本
@@ -480,5 +477,4 @@ Sources: spec §7.3, §5.4, §12; README §Abort and Subagents; ex 22, 23 and ru
 <tr><td>afterTool tool replace the result, handler by handler reported, ignored</td><td>tool：替换结果，逐个处理器进行。已上报，被忽略。</td><td></td></tr>
 <tr><td>beforeCompact compaction decline, or supply a summary; the first decision wins reported, ignored</td><td>compaction：拒绝，或提供一份摘要；第一个决定胜出。已上报，被忽略。</td><td></td></tr>
 <tr><td>GenerationHooks, ToolHooks and CompactionHooks, src/harness/types.ts; spec §7.2; src/harness/tool.ts. “Reported” means passed to</td><td></td><td></td></tr>
-<tr><td>HarnessOptions.onReport. Handlers run in extension order. A throwing guard blocks: it fails closed.</td><td>。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。</td><td></td></tr>
 </table>

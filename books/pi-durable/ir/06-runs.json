@@ -153,17 +153,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 85,
-   "_y": 484.5,
-   "cells": [
-    "From src/harness/submissions.ts and the admission table of spec §6. A write that would undo a reset is the one exception; see Details below."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "The inbox",
    "page": 85,
@@ -243,17 +232,6 @@
    ],
    "is_header": false,
    "_sig": "time",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 86,
-   "_y": 209.3,
-   "cells": [
-    "behind them and runs a final boundary at once (src/harness/submissions.ts)."
-   ],
-   "is_header": false,
-   "_sig": "behind",
    "zh": null
   },
   {
@@ -476,6 +454,74 @@
    "zh": "详解：谁设置并清除每个字段"
   },
   {
+   "type": "table-row",
+   "page": 90,
+   "_y": 314.3,
+   "cells": [
+    "run a run starts the run ends, on every path"
+   ],
+   "is_header": false,
+   "_sig": "run",
+   "zh": "`run` 驱动繁忙指示，用"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 330.8,
+   "cells": [
+    "generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends"
+   ],
+   "is_header": false,
+   "_sig": "generation",
+   "zh": "`generation` 和"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 348.0,
+   "cells": [
+    "tools the model asks for tools the round finishes, or the run ends"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": "`tools` 驱动流式视图。在缓慢或远程的存储上，调高"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 364.6,
+   "cells": [
+    "compactions a compaction starts it finishes"
+   ],
+   "is_header": false,
+   "_sig": "compactions",
+   "zh": "`compactions`：一次压缩开始时设置；结束时清除。spec §8.2；"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 382.5,
+   "cells": [
+    "spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)),"
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "Drive your busy indicator from run and your streaming view from generation and tools. On slow or remote storage, raise settings.progress intervals. A crash loses uncommitted progress, with no fixed time bound, while the saved run survives.",
+   "page": 90,
+   "_y": 440.8,
+   "zh": "用 `run` 驱动繁忙指示，用 `generation` 和 `tools` 驱动流式视图。在缓慢或远程的存储上，调高 `settings.progress` 的间隔。崩溃丢失未提交的进展，没有固定的时间上界，而保存下来的 `run` 依然存在。"
+  },
+  {
+   "type": "small",
+   "text": "Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts; src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt",
+   "page": 90,
+   "_y": 506.9
+  },
+  {
    "type": "figure",
    "number": "6.4",
    "file": "figures/fig-6.4.png",
@@ -549,20 +595,16 @@
    "zh": "每个响应都作为一条 `pi.assistant` 条目被追加，并记录它的开销（用量（p. 100）），失败也不例外。后续请求会把失败和被中止的消息排除在外（从记录到上下文（p. 40））。停止原因决定下一步。"
   },
   {
+   "type": "small",
+   "text": "tool calls (toolUse) run the tool round (tool calls (p. 94)) an answer (stop or length) answer the inputs; run the final boundary an error: context too long compact once, then prepare again an error the provider may recover from wait, then retry any other error, or aborted inputs settle unanswered with model_error; the run fails",
+   "page": 92,
+   "_y": 360.0,
+   "zh": "工具调用（`toolUse`）：运行工具轮（工具调用（p. 94））。一个答案（`stop` 或 `length`）：回答这些输入；运行 final 边界。"
+  },
+  {
    "type": "p",
    "text": "An answer can be extended. Before it settles the inputs, onYield hooks may return { continue } with more user content. The run then goes on with that message, and the inputs stay open. This applies only when no queued user message or reset is landing at the same boundary.",
    "zh": "一个答案可以被延长。在它让输入落定之前，`onYield` 钩子可以返回 `{ continue }`，带上更多用户内容。运行随后带着那条消息继续，输入保持未落定。只有当同一个边界上没有排队用户消息或重置要落地时，这才适用。"
-  },
-  {
-   "type": "table-row",
-   "page": 92,
-   "_y": 360.0,
-   "cells": [
-    "tool calls (toolUse) run the tool round (tool calls (p. 94))"
-   ],
-   "is_header": false,
-   "_sig": "tool",
-   "zh": null
   },
   {
    "type": "table-row",
@@ -732,28 +774,6 @@
    "is_header": false,
    "_sig": "retry",
    "zh": "`retry` 或"
-  },
-  {
-   "type": "table-row",
-   "page": 93,
-   "_y": 387.8,
-   "cells": [
-    "tools the end of the round (tool rounds (p. 94))"
-   ],
-   "is_header": false,
-   "_sig": "tools",
-   "zh": "`tools`：这一轮的结束（工具轮（p. 94））。"
-  },
-  {
-   "type": "table-row",
-   "page": 93,
-   "_y": 404.5,
-   "cells": [
-    "test/harness-generation-recovery.test.ts and test/harness-tools-recovery.test.ts. If the pinned model is gone after a restart, the run fails with no_model."
-   ],
-   "is_header": false,
-   "_sig": "test",
-   "zh": "`test/harness-generation-recovery.test.ts` 和 `test/harness-tools-recovery.test.ts`。如果重启后钉住的模型已经不在，运行以"
   },
   {
    "type": "small",
@@ -944,6 +964,96 @@
    "type": "p",
    "text": "terminate — end the run without another model call, but only if every call in the round asks for it. handoff — reset the context to a handoff text and end the run (reset and handoff (p. 46)). addTools — offer more tools from the next turn. Otherwise a postTools boundary runs and a new generation takes the run. If the run is aborted mid-round, calls that never started get an aborted result. Details: the error results the Harness writes",
    "zh": "`terminate`——不再发起模型调用就结束运行，但只有当这一轮里每个调用都这么要求时。`handoff`——把上下文重置为一段交接文本并结束运行（重置与交接（p. 46））。`addTools`——从下一轮起提供更多工具。否则运行一次 `postTools` 边界，由一个新的生成接管这次运行。如果运行在轮中途被中止，从未开始的调用会得到一个 `aborted` 结果。详解：Harness 写入的错误结果"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 466.0,
+   "cells": [
+    "tool_unavailable the tool was not offered, or no longer exists completed"
+   ],
+   "is_header": false,
+   "_sig": "tool_unavailable",
+   "zh": "`tool_unavailable`：该工具没有被提供，或已不存在"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 482.5,
+   "cells": [
+    "invalid_arguments the arguments fail the schema, before or after beforeTool completed"
+   ],
+   "is_header": false,
+   "_sig": "invalid_arguments",
+   "zh": "`invalid_arguments`：参数不符合 schema，在"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 501.1,
+   "cells": [
+    "blocked a beforeTool hook blocks or throws completed"
+   ],
+   "is_header": false,
+   "_sig": "blocked",
+   "zh": "`blocked`：一个 `beforeTool` 钩子阻止或抛出 `completed`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 517.4,
+   "cells": [
+    "tool_error execute() throws, or its environment cannot be built failed"
+   ],
+   "is_header": false,
+   "_sig": "tool_error",
+   "zh": "`tool_error`："
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 534.8,
+   "cells": [
+    "interrupted a crash mid-call without a safe policy failed"
+   ],
+   "is_header": false,
+   "_sig": "interrupted",
+   "zh": "`interrupted`：调用中途崩溃且没有安全策略 `failed`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 551.3,
+   "cells": [
+    "aborted the call is aborted aborted"
+   ],
+   "is_header": false,
+   "_sig": "aborted",
+   "zh": "`aborted`：调用被中止 `aborted`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 569.3,
+   "cells": [
+    "src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also"
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "Mark a tool replay: \"safe\" only if running it twice is harmless. Report progress with output as you go: it is what the model sees if the call is interrupted. A beforeTool hook that must decide the same way after a crash should store its decision in a memo (memos (p. 67)).",
+   "page": 96,
+   "_y": 627.6,
+   "zh": "只有在跑两次无害时，才把工具标记为 `replay: \"safe\"`。用 `output` 边走边报告进展：调用被中断时，模型看到的就是它。一个在崩溃后也必须做出同样决定的 `beforeTool` 钩子，应当把它的决定存进备忘（备忘（p. 67））。"
+  },
+  {
+   "type": "small",
+   "text": "Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts (ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt",
+   "page": 96,
+   "_y": 693.6
   },
   {
    "type": "chapter-title",
@@ -1249,138 +1359,6 @@
   },
   {
    "type": "table-row",
-   "page": 90,
-   "_y": 314.3,
-   "cells": [
-    "run a run starts the run ends, on every path"
-   ],
-   "is_header": false,
-   "_sig": "run",
-   "zh": "`run` 驱动繁忙指示，用"
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 330.8,
-   "cells": [
-    "generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends"
-   ],
-   "is_header": false,
-   "_sig": "generation",
-   "zh": "`generation` 和"
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 348.0,
-   "cells": [
-    "tools the model asks for tools the round finishes, or the run ends"
-   ],
-   "is_header": false,
-   "_sig": "tools",
-   "zh": "`tools` 驱动流式视图。在缓慢或远程的存储上，调高"
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 364.6,
-   "cells": [
-    "compactions a compaction starts it finishes"
-   ],
-   "is_header": false,
-   "_sig": "compactions",
-   "zh": "`compactions`：一次压缩开始时设置；结束时清除。spec §8.2；"
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 382.5,
-   "cells": [
-    "spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)),"
-   ],
-   "is_header": false,
-   "_sig": "spec",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 393.8,
-   "cells": [
-    "the same commit settles its inputs unanswered and clears its fields."
-   ],
-   "is_header": false,
-   "_sig": "the",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 427.6,
-   "cells": [
-    "W H A T T H I S M E A N S F O R Y O U"
-   ],
-   "is_header": true,
-   "_sig": "W",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 440.8,
-   "cells": [
-    "Drive your busy indicator from run and your streaming view from generation and tools."
-   ],
-   "is_header": false,
-   "_sig": "Drive",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 455.8,
-   "cells": [
-    "On slow or remote storage, raise settings.progress intervals."
-   ],
-   "is_header": false,
-   "_sig": "On",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 470.8,
-   "cells": [
-    "A crash loses uncommitted progress, with no fixed time bound, while the saved run survives."
-   ],
-   "is_header": false,
-   "_sig": "A",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 506.9,
-   "cells": [
-    "Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts;"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 90,
-   "_y": 517.5,
-   "cells": [
-    "src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt"
-   ],
-   "is_header": true,
-   "_sig": "src",
-   "zh": "`src/harness/live.ts`、`generation.ts`、"
-  },
-  {
-   "type": "table-row",
    "page": 91,
    "_y": 629.3,
    "cells": [
@@ -1432,171 +1410,6 @@
    ],
    "is_header": false,
    "_sig": "tools",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 91,
-   "_y": 714.8,
-   "cells": [
-    "The GenerationCheckpoint union in src/harness/generation.ts. Every task starts at { phase: \"prepare\", attempt: 1 }."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 466.0,
-   "cells": [
-    "tool_unavailable the tool was not offered, or no longer exists completed"
-   ],
-   "is_header": false,
-   "_sig": "tool_unavailable",
-   "zh": "`tool_unavailable`：该工具没有被提供，或已不存在"
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 482.5,
-   "cells": [
-    "invalid_arguments the arguments fail the schema, before or after beforeTool completed"
-   ],
-   "is_header": false,
-   "_sig": "invalid_arguments",
-   "zh": "`invalid_arguments`：参数不符合 schema，在"
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 501.1,
-   "cells": [
-    "blocked a beforeTool hook blocks or throws completed"
-   ],
-   "is_header": false,
-   "_sig": "blocked",
-   "zh": "`blocked`：一个 `beforeTool` 钩子阻止或抛出 `completed`。"
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 517.4,
-   "cells": [
-    "tool_error execute() throws, or its environment cannot be built failed"
-   ],
-   "is_header": false,
-   "_sig": "tool_error",
-   "zh": "`tool_error`："
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 534.8,
-   "cells": [
-    "interrupted a crash mid-call without a safe policy failed"
-   ],
-   "is_header": false,
-   "_sig": "interrupted",
-   "zh": "`interrupted`：调用中途崩溃且没有安全策略 `failed`。"
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 551.3,
-   "cells": [
-    "aborted the call is aborted aborted"
-   ],
-   "is_header": false,
-   "_sig": "aborted",
-   "zh": "`aborted`：调用被中止 `aborted`。"
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 569.3,
-   "cells": [
-    "src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also"
-   ],
-   "is_header": false,
-   "_sig": "src",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 580.5,
-   "cells": [
-    "aborts any conversations the call owns (ownership (p. 76))."
-   ],
-   "is_header": false,
-   "_sig": "aborts",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 614.3,
-   "cells": [
-    "W H A T T H I S M E A N S F O R Y O U"
-   ],
-   "is_header": true,
-   "_sig": "W",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 627.6,
-   "cells": [
-    "Mark a tool replay: \"safe\" only if running it twice is harmless."
-   ],
-   "is_header": false,
-   "_sig": "Mark",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 642.6,
-   "cells": [
-    "Report progress with output as you go: it is what the model sees if the call is interrupted."
-   ],
-   "is_header": false,
-   "_sig": "Report",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 656.1,
-   "cells": [
-    "A beforeTool hook that must decide the same way after a crash should store its decision in a memo (memos (p. 67))."
-   ],
-   "is_header": false,
-   "_sig": "A",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 693.6,
-   "cells": [
-    "Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 96,
-   "_y": 704.3,
-   "cells": [
-    "(ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt"
-   ],
-   "is_header": true,
-   "_sig": "",
    "zh": null
   },
   {
@@ -1696,17 +1509,6 @@
    ],
    "is_header": false,
    "_sig": "a",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 100,
-   "_y": 723.8,
-   "cells": [
-    "spec §8.6; src/harness/usage.ts, called from generation.ts, tool.ts and compaction.ts."
-   ],
-   "is_header": false,
-   "_sig": "spec",
    "zh": null
   }
  ]

@@ -113,26 +113,11 @@
    "zh_caption": "一个任务有五种状态；你的代码提交检查点、等待和 outcome，剩下的由 Harness 完成。边取自 `src/harness/scheduler.ts`。一个带中止标记的 waiting 任务也会提前离开 waiting 去运行它的中止处理器；一个带中止标记、又没有任何代码能接手的 pending 或 waiting 任务则最终落到 orphaned。"
   },
   {
-   "type": "table-row",
+   "type": "small",
+   "text": "name The task’s kind, stored in every record. Renaming it strands stored tasks of the old name. version Stored with every record. A newer definition must migrate older records (the scheduler (p. 73)). initial(input) The first checkpoint, committed when the task is created. phases One handler per phase name. Each handler sees the task narrowed to its own phase. abort Runs after an abort and must commit a final outcome (abort, fault and orphan (p. 80)). migrate? Upgrades the input and checkpoint stored by an older version. hooks? Hooks other extensions may attach to this task (hooks (p. 109)). TaskDefinition in src/types.ts. Its type parameters are the input I, the checkpoint S, the result R and the hooks H.",
    "page": 64,
    "_y": 97.5,
-   "cells": [
-    "name The task’s kind, stored in every record. Renaming it strands stored tasks of the old name."
-   ],
-   "is_header": false,
-   "_sig": "name",
-   "zh": "`name` 任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 114.8,
-   "cells": [
-    "version Stored with every record. A newer definition must migrate older records (the scheduler (p. 73))."
-   ],
-   "is_header": false,
-   "_sig": "version",
-   "zh": "`version` 与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。"
+   "zh": "`name` 任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。`version` 与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。`initial(input)` 第一个检查点，在任务创建时提交。`phases` 每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。`abort` 在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。`migrate?` 升级旧版本存储的输入和检查点。`hooks?` 其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。"
   },
   {
    "type": "table-row",
@@ -144,61 +129,6 @@
    "is_header": false,
    "_sig": "initial",
    "zh": "`initial(input)` 第一个检查点，在任务创建时提交。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 147.8,
-   "cells": [
-    "phases One handler per phase name. Each handler sees the task narrowed to its own phase."
-   ],
-   "is_header": false,
-   "_sig": "phases",
-   "zh": "`phases` 每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 163.7,
-   "cells": [
-    "abort Runs after an abort and must commit a final outcome (abort, fault and orphan (p. 80))."
-   ],
-   "is_header": false,
-   "_sig": "abort",
-   "zh": "`abort` 在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 181.4,
-   "cells": [
-    "migrate? Upgrades the input and checkpoint stored by an older version."
-   ],
-   "is_header": false,
-   "_sig": "migrate",
-   "zh": "`migrate?` 升级旧版本存储的输入和检查点。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 198.6,
-   "cells": [
-    "hooks? Hooks other extensions may attach to this task (hooks (p. 109))."
-   ],
-   "is_header": false,
-   "_sig": "hooks",
-   "zh": "`hooks?` 其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。"
-  },
-  {
-   "type": "table-row",
-   "page": 64,
-   "_y": 216.8,
-   "cells": [
-    "TaskDefinition in src/types.ts. Its type parameters are the input I, the checkpoint S, the result R and the hooks H."
-   ],
-   "is_header": false,
-   "_sig": "TaskDefinition",
-   "zh": "`TaskDefinition`。它的类型参数分别是输入 I、检查点 S、结果 R 和钩子 H。"
   },
   {
    "type": "h2",
@@ -335,17 +265,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 66,
-   "_y": 195.8,
-   "cells": [
-    "TaskOutcome<R> in src/types.ts. Every error is plain JSON, { message, detail? }, never a runtime Error."
-   ],
-   "is_header": false,
-   "_sig": "TaskOutcome",
-   "zh": "`TaskOutcome<R>`。每个 error 都是纯 JSON，形如 `{ message, detail? }`，绝不是运行时的"
-  },
-  {
    "type": "h2",
    "text": "What a phase can call",
    "page": 66,
@@ -361,17 +280,6 @@
    "type": "p",
    "text": "runtime.commit() is the one way to commit. Your callback receives a transaction and the current record. It may append entries, write documents and create child tasks, and it may return the task’s next state. All of it lands in one atomic commit, so a checkpoint can never disagree with the data it describes. Entries committed this way record the task as their author (byTaskId) spec §5.1. The commit rejects if the run has ended, the Harness is closing, the task is no longer running, or the task carries an abort mark.",
    "zh": "`runtime.commit()` 是唯一的提交方式。你的回调会收到一个事务和当前记录。它可以追加条目、写入文档、创建子任务，也可以返回任务的下一种状态。所有这些都落在同一次原子提交里，所以检查点永远不会和它所描述的数据不一致。以这种方式提交的条目会把该任务记为它们的作者（`byTaskId`）（spec §5.1）。如果这次运行已经结束、Harness 正在关闭、任务已不在 running，或任务带有中止标记，提交都会被拒绝。"
-  },
-  {
-   "type": "table-row",
-   "page": 66,
-   "_y": 300.6,
-   "cells": [
-    "Commit commit(change, context), memo(name, candidate, context)"
-   ],
-   "is_header": false,
-   "_sig": "Commit",
-   "zh": null
   },
   {
    "type": "table-row",
@@ -393,28 +301,6 @@
    ],
    "is_header": false,
    "_sig": "Wait",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 66,
-   "_y": 351.6,
-   "cells": [
-    "Environment agent(), hooks, registry, settings, models, env(), conversation()"
-   ],
-   "is_header": false,
-   "_sig": "Environment",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 66,
-   "_y": 368.1,
-   "cells": [
-    "Identity and clock taskId, conversationId, signal, now(), report()"
-   ],
-   "is_header": false,
-   "_sig": "Identity",
    "zh": null
   },
   {
@@ -955,17 +841,6 @@
    "zh": "`migration_failed` 代码更新，但 migrate 缺失或抛出 → 注册一个不同的定义。出自 spec §5.4 与"
   },
   {
-   "type": "table-row",
-   "page": 74,
-   "_y": 135.0,
-   "cells": [
-    "From spec §5.4 and src/harness/scheduler.ts."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "After a crash: reopening",
    "page": 74,
@@ -976,6 +851,167 @@
    "type": "p",
    "text": "When you open a Harness on existing storage, the scheduler makes one cleanup commit. Every task left running goes back to pending with the same checkpoint and memos. Nothing runs yet: the open “dispatches nothing” src/harness/scheduler.ts. Handlers start after resume(), or after a call that needs progress such as waitForTask() or submit() spec §2.2. Open also schedules a second commit that applies any abort marks and final outcomes a crash left half done.",
    "zh": "当你在已有存储上打开一个 Harness 时，调度器会做一次清理提交。每个留在 running 的任务都带着同样的检查点和 memos 退回 pending。此时还不会有什么运行：打开阶段「不分发任何东西」（`src/harness/scheduler.ts`）。处理器在 `resume()` 之后启动，或者在需要进展的调用之后启动，比如 `waitForTask()` 或 `submit()`（spec §2.2）。打开时还会安排第二次提交，应用崩溃留下的任何中止标记和最终结果。"
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 444.2,
+   "cells": [
+    "pending nothing starts after resume"
+   ],
+   "is_header": false,
+   "_sig": "pending",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 462.8,
+   "cells": [
+    "running pending; checkpoint, memos and mark kept reruns from the checkpoint"
+   ],
+   "is_header": false,
+   "_sig": "running",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 479.3,
+   "cells": [
+    "waiting nothing resumes when its on is finished"
+   ],
+   "is_header": false,
+   "_sig": "waiting",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 495.8,
+   "cells": [
+    "completing nothing finishes once its work below is done"
+   ],
+   "is_header": false,
+   "_sig": "completing",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 513.1,
+   "cells": [
+    "terminal nothing never runs again"
+   ],
+   "is_header": false,
+   "_sig": "terminal",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 559.1,
+   "cells": [
+    "a pi.tool task after SIGKILL, then after open research/capture/crash-reopen-tasks.txt JSON"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 582.8,
+   "cells": [
+    "// the SQLite row left by the killed process"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 593.6,
+   "cells": [
+    "{ \"id\": 24, \"kind\": \"pi.tool\", \"owner\": 18, …"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 604.8,
+   "cells": [
+    "\"state\": { \"status\": \"running\","
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 615.3,
+   "cells": [
+    "\"checkpoint\": { \"phase\": \"execute\", \"arguments\": { \"target\": \"weekly\" },"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 626.6,
+   "cells": [
+    "\"replay\": \"safe\" } } }"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 648.8,
+   "cells": [
+    "// after Harness.open(), before resume(): only the status changed"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 659.6,
+   "cells": [
+    "\"state\": { \"status\": \"pending\", \"checkpoint\": { … unchanged … } }"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 681.8,
+   "cells": [
+    "// its owner, generation 18, stays \"waiting\" with \"on\": [24]"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "The process was killed mid-tool. Elided (…): conversationId, version, input, background and abortRequested, all unchanged by open.",
+   "page": 74,
+   "_y": 706.5,
+   "zh": "进程在工具执行中途被杀掉。已省略（……）：`conversationId`、`version`、`input`、`background` 和 `abortRequested`，它们都没有被打开改变。"
   },
   {
    "type": "h2",
@@ -1446,17 +1482,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 82,
-   "_y": 262.7,
-   "cells": [
-    "The task crash recovery suite. An abort handler can run more than once, so it must be safe to repeat, like any effect phase (the effect sandwich (p. 70))."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
    "type": "small",
    "text": "Write abort handlers that are safe to run twice. A crash can make them run again. Always commit a final outcome from the abort handler; returning without one faults the task. Compensate inline, or through background tasks. An abort handler cannot create child tasks or wait on them. Treat orphaned and faulted as “nothing cleaned up”. Check the outside world yourself.",
    "page": 82,
@@ -1529,182 +1554,6 @@
   },
   {
    "type": "table-row",
-   "page": 74,
-   "_y": 444.2,
-   "cells": [
-    "pending nothing starts after resume"
-   ],
-   "is_header": false,
-   "_sig": "pending",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 462.8,
-   "cells": [
-    "running pending; checkpoint, memos and mark kept reruns from the checkpoint"
-   ],
-   "is_header": false,
-   "_sig": "running",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 479.3,
-   "cells": [
-    "waiting nothing resumes when its on is finished"
-   ],
-   "is_header": false,
-   "_sig": "waiting",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 495.8,
-   "cells": [
-    "completing nothing finishes once its work below is done"
-   ],
-   "is_header": false,
-   "_sig": "completing",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 513.1,
-   "cells": [
-    "terminal nothing never runs again"
-   ],
-   "is_header": false,
-   "_sig": "terminal",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 531.0,
-   "cells": [
-    "From src/harness/scheduler.ts and spec §5.1, §5.5."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 559.1,
-   "cells": [
-    "a pi.tool task after SIGKILL, then after open research/capture/crash-reopen-tasks.txt JSON"
-   ],
-   "is_header": false,
-   "_sig": "a",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 582.8,
-   "cells": [
-    "// the SQLite row left by the killed process"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 593.6,
-   "cells": [
-    "{ \"id\": 24, \"kind\": \"pi.tool\", \"owner\": 18, …"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 604.8,
-   "cells": [
-    "\"state\": { \"status\": \"running\","
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 615.3,
-   "cells": [
-    "\"checkpoint\": { \"phase\": \"execute\", \"arguments\": { \"target\": \"weekly\" },"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 626.6,
-   "cells": [
-    "\"replay\": \"safe\" } } }"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 648.8,
-   "cells": [
-    "// after Harness.open(), before resume(): only the status changed"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 659.6,
-   "cells": [
-    "\"state\": { \"status\": \"pending\", \"checkpoint\": { … unchanged … } }"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 681.8,
-   "cells": [
-    "// its owner, generation 18, stays \"waiting\" with \"on\": [24]"
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 74,
-   "_y": 706.5,
-   "cells": [
-    "The process was killed mid-tool. Elided (…): conversationId, version, input, background and abortRequested, all unchanged by open."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
-   "type": "table-row",
    "page": 78,
    "_y": 522.8,
    "cells": [
@@ -1760,17 +1609,6 @@
   },
   {
    "type": "table-row",
-   "page": 78,
-   "_y": 608.3,
-   "cells": [
-    "Scenario A, research/capture/task-transitions.txt."
-   ],
-   "is_header": false,
-   "_sig": "Scenario",
-   "zh": null
-  },
-  {
-   "type": "table-row",
    "page": 81,
    "_y": 602.3,
    "cells": [
@@ -1801,17 +1639,6 @@
    "is_header": false,
    "_sig": "faulted",
    "zh": "`faulted` 某个阶段抛出或没有进展，或者中止处理器没有提交结果。"
-  },
-  {
-   "type": "table-row",
-   "page": 81,
-   "_y": 654.0,
-   "cells": [
-    "From spec §5.4. failed is not here: it is an outcome the task chose, like completed."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
   }
  ]
 }

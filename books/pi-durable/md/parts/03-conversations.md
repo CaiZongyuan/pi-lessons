@@ -26,7 +26,6 @@
 <tr><td>head? the first entry of the model’s context from now on the writer; "self" means this entry</td><td>？模型上下文从此刻起的第一个条目，<code>writer</code> 为 <code>"self"</code> 表示该条目自身；</td><td></td></tr>
 <tr><td>edits? hide or replace earlier entries, in context only the writer</td><td>？仅在上下文里隐藏或替换较早的条目；<code>writer</code> 是否为</td><td></td></tr>
 <tr><td>byTaskId? the task whose commit appended it the Session</td><td>？其提交追加了它的任务；<code>Session</code>　以上是</td><td></td></tr>
-<tr><td>The fields of EntryRecord, paraphrased from its field comments in src/types.ts.</td><td></td><td></td></tr>
 </table>
 
 ### 内置种类
@@ -163,7 +162,6 @@ Sources: spec §2.1, §2.2 (ContextView), §5.4, §8.1; src/harness/context.ts; 
 <tr><td>harness.createConversation(options, context) a new, empty conversation; ownership is required</td><td>会话 1，首次调用时创建；之后的调用不写入任何东西</td><td></td></tr>
 <tr><td>conversation.fork(at, options, context) a branch that shares history up to entry at</td><td></td><td></td></tr>
 <tr><td>tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s</td><td></td><td></td></tr>
-<tr><td>From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init.</td><td></td><td></td></tr>
 </table>
 
 ### 分叉
@@ -200,7 +198,6 @@ grand.fork(#9) -> Entry 9 is not visible from conversation 17 From research/capt
 <tr><td>live state, inbox, usage empty</td><td></td><td></td></tr>
 <tr><td>tasks and task documents never copied</td><td></td><td></td></tr>
 <tr><td>Session documents shared, not copied</td><td>live state、inbox、usage 为空；任务和任务文档绝不复制；<code>Session</code> 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。</td><td></td></tr>
-<tr><td>From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50).</td><td></td><td></td></tr>
 </table>
 
 ### 被拥有的会话

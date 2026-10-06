@@ -525,17 +525,6 @@
    "zh": "`listener_error` —— 你的监听器抛错，带有"
   },
   {
-   "type": "table-row",
-   "page": 131,
-   "_y": 375.8,
-   "cells": [
-    "src/types.ts (WatchEnd). The first reason wins. A watch opened inside a task or a tool also stops when that invocation ends (src/harness/scheduler.ts)."
-   ],
-   "is_header": false,
-   "_sig": "src",
-   "zh": "`src/types.ts`（"
-  },
-  {
    "type": "h2",
    "text": "Slow and late consumers",
    "page": 131,
@@ -907,17 +896,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 137,
-   "_y": 542.3,
-   "cells": [
-    "src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63)."
-   ],
-   "is_header": false,
-   "_sig": "src",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "How the graph moves",
    "page": 137,
@@ -1195,17 +1173,6 @@
   },
   {
    "type": "table-row",
-   "page": 133,
-   "_y": 671.3,
-   "cells": [
-    "research/capture/watch-ops.txt (20 frames) and agent-events.txt (18 batches), one run of test/capture/view-ops.ts."
-   ],
-   "is_header": false,
-   "_sig": "research",
-   "zh": "`research/capture/watch-ops.txt`（20 帧）与"
-  },
-  {
-   "type": "table-row",
    "page": 134,
    "_y": 499.4,
    "cells": [
@@ -1390,17 +1357,6 @@
    ],
    "is_header": false,
    "_sig": "ready",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 138,
-   "_y": 562.7,
-   "cells": [
-    "src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration."
-   ],
-   "is_header": false,
-   "_sig": "src",
    "zh": null
   }
  ]

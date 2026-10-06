@@ -143,7 +143,6 @@ A view frame is the commit’s document changes, then its new entries, rewritten
 <tr><td>session_closed The Session began closing</td><td>—— Session 开始关闭；</td><td></td></tr>
 <tr><td>retired The null frame of a retired document was delivered</td><td>—— 已退役文档的 null 帧被投递；</td><td></td></tr>
 <tr><td>listener_error Your listener threw; carries error, and only this watch ends</td><td>—— 你的监听器抛错，带有</td><td></td></tr>
-<tr><td>src/types.ts (WatchEnd). The first reason wins. A watch opened inside a task or a tool also stops when that invocation ends (src/harness/scheduler.ts).</td><td>（</td><td></td></tr>
 </table>
 
 ### 缓慢与迟到的消费者
@@ -270,7 +269,6 @@ Sources: spec §9.4; README §Agent Events (Experimental); src/harness/events.ts
 <tr><td>running phase Picked up by the scheduler in this process</td><td></td><td></td></tr>
 <tr><td>waiting phase, on, policy The stored wait, exactly as committed</td><td>的任务。</td><td></td></tr>
 <tr><td>completing outcome Finished, holding its outcome until its owned work ends</td><td></td><td></td></tr>
-<tr><td>src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63).</td><td></td><td></td></tr>
 </table>
 
 ### 任务图如何变化
@@ -329,7 +327,6 @@ Sources: spec §9.4; README §Agent Events (Experimental); src/harness/events.ts
 <tr><td>16 attempt 1 begins none</td><td></td><td></td></tr>
 <tr><td>17–19 the answer streams in message_start, message_update ×2</td><td></td><td></td></tr>
 <tr><td>20 answer committed; the run ends message_end, turn_end, run_end, submission, usage_changed</td><td></td><td></td></tr>
-<tr><td>research/capture/watch-ops.txt (20 frames) and agent-events.txt (18 batches), one run of test/capture/view-ops.ts.</td><td>（20 帧）与</td><td></td></tr>
 <tr><td>run_start / run_end starts or ends a run. Steering input that joins a running run is not a new run</td><td>/</td><td></td></tr>
 <tr><td>turn_start / turn_end moves the run to a new generation / commits a generation’s outcome</td><td>/</td><td></td></tr>
 <tr><td>message_start / message_end commits an attempt’s first streamed partial, or a message entry that had none / appends an entry with model messages</td><td>/</td><td></td></tr>
@@ -347,5 +344,4 @@ Sources: spec §9.4; README §Agent Events (Experimental); src/harness/events.ts
 <tr><td>waiting, on The live tasks it still waits for</td><td></td><td></td></tr>
 <tr><td>blocked, reason No installed definition can run it: missing_task, task_too_old, or migration_failed (with error)</td><td></td><td></td></tr>
 <tr><td>ready, migrates The next scheduling pass picks it up; migrates when a newer definition will migrate it first</td><td></td><td></td></tr>
-<tr><td>src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration.</td><td></td><td></td></tr>
 </table>

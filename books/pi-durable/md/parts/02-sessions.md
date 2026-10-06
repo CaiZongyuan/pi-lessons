@@ -70,7 +70,6 @@ owner 边「不是访问控制能力」spec §2；它记录是谁创建了这个
 <tr><td>Controls inherited entries and historical documents attribution, subtree abort, idle traversal</td><td></td><td></td></tr>
 <tr><td>Caller supplies the parent conversation and entry only the task ID; the Session derives the conversation</td><td></td><td></td></tr>
 <tr><td>After the task ends — stays recorded</td><td></td><td></td></tr>
-<tr><td>From spec §2 and the field comments in src/types.ts.</td><td></td><td></td></tr>
 </table>
 
 <aside class="note">ID 在所有记录类型之间都是唯一的，但数字本身不说明它是哪种类型。把类型一起带上，让 brand 去抓混用。要预期有间隔。一次失败的提交会烧掉它铸出的 ID，这是正常的。用 `parent` 问「这段历史从哪里来」，用 `owner` 问「是哪个任务做的」。</aside>
@@ -113,6 +112,14 @@ ownership: { kind: "conversation" }, conversationId,
 
 *这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。*
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>Table reads</td><td></td><td></td></tr>
+<tr><td>Table writes</td><td></td><td></td></tr>
+<tr><td>Docs doc (get or create), retireDoc usable before and after table writes</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。</aside>
 文档的做法不同。`tx.doc()` 返回一个草稿，一份可以像普通对象那样编辑的可变副本，而且它能看到你自己的改动。你赋的值「按值复制，且必须是严格 `JSON`」；`undefined` 或 `Date` 会在任何东西被存储之前让提交失败 spec §1（不变式 6）；`test/session-documents.test.ts`。回调落定时，每个草稿都被撤销。留在回调之外的草稿下一次使用时就会抛出，而调用得太晚的 `tx` 方法会以 `Transaction has settled` 拒绝。步骤 5 与 6 之间：检查批次 —— 你的回调返回时，`Session` 把它的工作变成一批并检查它。漏掉的 `await` 最先被抓住：仍在等待的 `tx` 调用会让提交失败，报 `Session commit callback settled before its pending Tx operations`。接着草稿变成最终值，批次被校验，例如每个 owner 任务都存在且仍然存活。这里任何失败都会回滚整次提交（提交失败时（第 33 页））。没有写入的批次根本不会到达存储：什么都不存，也什么都不发布。步骤 6–8：先存储，然后才是其他人 —— `Storage.commit(writes)` 原子地存储这一批并返回它的 `Seq`。提交一旦开始，取消你的上下文就不再能停下它：「调用方的取消不会中断存储落定，也不会撤销提交」spec §4。存储成功后，`Session` 换上新的文档值，并构造一份发布 `{ seq, changes }`。它把这份发布交给每个 `subscribeCommits()` 监听者，此时仍在变更线上。下面是其中一条，来自模型请求工具的那个轮次：
 
 <aside class="note">提交 seq 6，提交观察者看到的样子　`research/capture/sqlite-commits.txt`　TEXT　commit seq=6 entry 11 kind=pi.assistant byTask=9 task 9 pi.generation status=waiting phase=tools on=[12] policy=allSettled task 12 pi.tool status=pending phase=call document pi.live (2) 2 op(s) document pi.usage (4) 1 op(s)</aside>
@@ -195,12 +202,3 @@ Notify —— `subscribeClose()` 监听者同步运行。`Harness` 在这里停�
 src/session/transaction.ts (failure and success settlement, batch assembly); src/errors.ts; src/storage/sqlite/storage.ts (document copy rejection); test/session-documents.test.ts (rollback and poison tests); test/session-forks.test.ts (StorageRejected rollback);
 research/capture/extra-p23/commit-failures.txt; research/capture/NOTES.md (notes 1 and 6)
 ```
-
-<table>
-<tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>Table reads</td><td></td><td></td></tr>
-<tr><td>Table writes</td><td></td><td></td></tr>
-<tr><td>Docs doc (get or create), retireDoc usable before and after table writes</td><td></td><td></td></tr>
-<tr><td>The Tx interface in src/types.ts; the rules are spec §4.</td><td></td><td></td></tr>
-<tr><td>The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts.</td><td></td><td></td></tr>
-</table>

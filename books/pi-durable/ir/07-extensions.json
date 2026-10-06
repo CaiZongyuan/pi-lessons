@@ -165,17 +165,6 @@
    "zh": "`tasks` 你自己的持久任务定义 任务名 5.4（p. 73）"
   },
   {
-   "type": "table-row",
-   "page": 104,
-   "_y": 168.8,
-   "cells": [
-    "The Extension interface, src/harness/types.ts."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Names in storage, code in memory",
    "page": 104,
@@ -345,17 +334,6 @@
    ],
    "is_header": false,
    "_sig": "cwd",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 106,
-   "_y": 444.8,
-   "cells": [
-    "AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent()."
-   ],
-   "is_header": false,
-   "_sig": "AgentState",
    "zh": null
   },
   {
@@ -529,17 +507,6 @@
    ],
    "is_header": false,
    "_sig": "tools",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 108,
-   "_y": 185.3,
-   "cells": [
-    "Condensed from spec §7.1, “Who resolves what, and when”."
-   ],
-   "is_header": false,
-   "_sig": "Condensed",
    "zh": null
   },
   {
@@ -1527,17 +1494,6 @@
    "is_header": false,
    "_sig": "GenerationHooks",
    "zh": "`GenerationHooks`、"
-  },
-  {
-   "type": "table-row",
-   "page": 109,
-   "_y": 546.8,
-   "cells": [
-    "HarnessOptions.onReport. Handlers run in extension order. A throwing guard blocks: it fails closed."
-   ],
-   "is_header": false,
-   "_sig": "HarnessOptions",
-   "zh": "`HarnessOptions.onReport`。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。"
   }
  ]
 }

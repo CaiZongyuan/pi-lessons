@@ -172,17 +172,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 142,
-   "_y": 314.5,
-   "cells": [
-    "The StorageWrite union in src/types.ts. A base is a document’s complete value; a delta is a batch of Chord operations on top of the previous revision."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Reads: keyed lookups and paged scans",
    "page": 142,
@@ -354,17 +343,6 @@
    "zh": "`close()` —— 释放资源；之后所有调用都失败。每个方法还接受最后一个 context 参数。"
   },
   {
-   "type": "table-row",
-   "page": 143,
-   "_y": 320.3,
-   "cells": [
-    "Every method also takes a final context. src/types.ts and spec §10."
-   ],
-   "is_header": false,
-   "_sig": "Every",
-   "zh": null
-  },
-  {
    "type": "small",
    "text": "You rarely call storage yourself. Choose a backend, open it, and pass it to the Harness. A commit error other than StorageRejected poisons the Session. Close it and reopen the storage; the reopened state is the truth. Writing a backend? Pass the conformance suite (9.4 (p. 152)).",
    "page": 143,
@@ -428,17 +406,6 @@
    "is_header": false,
    "_sig": "walAutoCheckpointPages",
    "zh": "`walAutoCheckpointPages` 1,000 —— WAL 自动检查点阈值，单位为页；0 表示关闭 /"
-  },
-  {
-   "type": "table-row",
-   "page": 144,
-   "_y": 330.0,
-   "cells": [
-    "busyTimeoutMs 5,000 how long to wait for another connection’s lock (SQLite’s own default is 0)"
-   ],
-   "is_header": false,
-   "_sig": "busyTimeoutMs",
-   "zh": "`busyTimeoutMs` 5,000 —— 等待其他连接释放锁的时长（SQLite 自身的默认值是 0）。"
   },
   {
    "type": "table-row",
@@ -786,17 +753,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 150,
-   "_y": 615.8,
-   "cells": [
-    "File operations per commit, from test/jsonl-storage.test.ts."
-   ],
-   "is_header": false,
-   "_sig": "File",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Recovery",
    "page": 150,
@@ -1047,17 +1003,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 154,
-   "_y": 516.8,
-   "cells": [
-    "Summary of this section and the two before it."
-   ],
-   "is_header": false,
-   "_sig": "Summary",
-   "zh": null
-  },
-  {
    "type": "small",
    "text": "Default to SQLite; use memory in tests, and JSONL when you want to read the files. Whatever you choose, run one process per storage. No backend locks against a second. A custom backend must pass the 23-case suite, plus its own crash tests.",
    "page": 154,
@@ -1269,17 +1214,6 @@
    "is_header": false,
    "_sig": "changes",
    "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 156,
-   "_y": 585.8,
-   "cells": [
-    "src/env/index.ts. truncateFile and flushFile exist for JSONL storage."
-   ],
-   "is_header": false,
-   "_sig": "src",
-   "zh": "identity id、cwd / paths absolutePath、joinPath、canonicalPath、exists / read readTextFile、readTextLines、openTextLineReader、readBinaryFile、openBinaryReader / write writeFile、appendFile、truncateFile、flushFile、renameFile / directories fileInfo、listDir、openDirReader、createDir、remove / temporary createTempDir、createTempFile、cleanup / changes watch　`src/env/index.ts`。truncateFile 和 flushFile 是为 JSONL 存储准备的。"
   },
   {
    "type": "h2",

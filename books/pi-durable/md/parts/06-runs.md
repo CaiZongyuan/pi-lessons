@@ -36,7 +36,6 @@ whenBusy?: "steer" | "followUp" | "reject" }
 <tr><td>busy, or other items already queued the submission is queued in the inbox</td><td></td><td></td></tr>
 <tr><td>busy, with whenBusy: "reject" nothing is written; submit() throws ConversationBusy</td><td>或已有其他项排队：提交项在收件箱中排队。</td><td></td></tr>
 <tr><td>a requestId already used nothing is written; you get the existing submission back</td><td></td><td></td></tr>
-<tr><td>From src/harness/submissions.ts and the admission table of spec §6. A write that would undo a reset is the one exception; see Details below.</td><td></td><td></td></tr>
 </table>
 
 ### 收件箱
@@ -59,7 +58,6 @@ whenBusy?: "steer" | "followUp" | "reject" }
 <tr><td>final all the first the first start one new run</td><td>：<code>all</code> 全部接收／取第一个／第一个开启一次新运行。spec §6；</td><td></td></tr>
 <tr><td>spec §6; src/harness/inbox.ts. Set steeringMode or followUpMode to "all" to take every item of that mode instead of the first (both default to "one-at-a-</td><td></td><td></td></tr>
 <tr><td>time"). A queued reset turns a postTools boundary into a final one (see Details below). A submit to an idle conversation that still has items waiting queues</td><td></td><td></td></tr>
-<tr><td>behind them and runs a final boundary at once (src/harness/submissions.ts).</td><td></td><td></td></tr>
 </table>
 
 <aside class="note">一个 `postTools` 边界接收写入和 steer；只有 final 边界接收 follow-up。一次工具调用占住第一次运行，同时一个 follow-up、一个 steer 和一条备注在排队；每条连接线把一个排队项连到它变成的条目。回答 21 与 final 边界在同一次提交里被追加，而不是从收件箱取出。ID、序号和 `pi.live.run` 取值来自 `research/capture/inbox-steps.txt`。</aside>
@@ -138,6 +136,17 @@ compactions?: CompactionStatus[]; // see 6.5
 
 详解：谁设置并清除每个字段
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>run a run starts the run ends, on every path</td><td>驱动繁忙指示，用</td><td></td></tr>
+<tr><td>generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends</td><td>和</td><td></td></tr>
+<tr><td>tools the model asks for tools the round finishes, or the run ends</td><td>驱动流式视图。在缓慢或远程的存储上，调高</td><td></td></tr>
+<tr><td>compactions a compaction starts it finishes</td><td>：一次压缩开始时设置；结束时清除。spec §8.2；</td><td></td></tr>
+<tr><td>spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)),</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">用 `run` 驱动繁忙指示，用 `generation` 和 `tools` 驱动流式视图。在缓慢或远程的存储上，调高 `settings.progress` 的间隔。崩溃丢失未提交的进展，没有固定的时间上界，而保存下来的 `run` 依然存在。</aside>
+<aside class="note">Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts; src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt</aside>
 <img src="/pi-lessons/_assets/pi-durable/06-runs/fig-6.4.png" alt="THE PHASES OF PI . GENERATION STATE" loading="lazy">
 
 *一次生成依次准备、调用模型、对响应分类，然后结束或循环。取自 `src/harness/generation.ts`。琥珀色方框是任务的各个阶段；`request` 和 `poll` 调用供应商。白色方框是任务的结束方式。虚线方框是任务在等待它自己拥有的一次压缩，之后它以同一个 attempt 重新准备。工具轮之后任务完成，由一个新的生成接管这次运行。未画出：中止，它可以结束任何阶段中的任务；以及缺失的模型，它会在 `prepare`、`request` 或 `poll` 中让任务以 `no_model` 失败。*
@@ -166,11 +175,11 @@ prepare builds the system prompt and tool list; checks the compaction budgets th
 
 每个响应都作为一条 `pi.assistant` 条目被追加，并记录它的开销（用量（p. 100）），失败也不例外。后续请求会把失败和被中止的消息排除在外（从记录到上下文（p. 40））。停止原因决定下一步。
 
+<aside class="note">工具调用（`toolUse`）：运行工具轮（工具调用（p. 94））。一个答案（`stop` 或 `length`）：回答这些输入；运行 final 边界。</aside>
 一个答案可以被延长。在它让输入落定之前，`onYield` 钩子可以返回 `{ continue }`，带上更多用户内容。运行随后带着那条消息继续，输入保持未落定。只有当同一个边界上没有排队用户消息或重置要落地时，这才适用。
 
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>tool calls (toolUse) run the tool round (tool calls (p. 94))</td><td></td><td></td></tr>
 <tr><td>an answer (stop or length) answer the inputs; run the final boundary</td><td></td><td></td></tr>
 <tr><td>an error: context too long compact once, then prepare again</td><td></td><td></td></tr>
 <tr><td>an error the provider may recover from wait, then retry</td><td></td><td></td></tr>
@@ -205,8 +214,6 @@ seq 9 entry 11 pi.assistant; submission 8 done; task 9 completed Run with settin
 <tr><td>request, nothing streamed yet the saved context, model and options; request hooks run again</td><td></td><td></td></tr>
 <tr><td>request, partial answer committed the partial becomes an aborted entry; the saved context is rebuilt and request hooks run again</td><td>：分片答案已提交——该分片变成一条</td><td></td></tr>
 <tr><td>retry or poll the rest of the wait</td><td>或</td><td></td></tr>
-<tr><td>tools the end of the round (tool rounds (p. 94))</td><td>：这一轮的结束（工具轮（p. 94））。</td><td></td></tr>
-<tr><td>test/harness-generation-recovery.test.ts and test/harness-tools-recovery.test.ts. If the pinned model is gone after a restart, the run fails with no_model.</td><td>和 <code>test/harness-tools-recovery.test.ts</code>。如果重启后钉住的模型已经不在，运行以</td><td></td></tr>
 </table>
 
 <aside class="note">重发保留保存下来的模型和选项，但会重新运行请求钩子。如果你需要完全相同的消息，就让钩子的输出保持稳定。调整 `settings.retry`；`maxRetries` 计的是第一次尝试之后的重试次数。为「请求中途崩溃后偶发的双重计费」留出预算。</aside>
@@ -273,6 +280,19 @@ seq 9 entry 11 pi.assistant; submission 8 done; task 9 completed Run with settin
 
 `terminate`——不再发起模型调用就结束运行，但只有当这一轮里每个调用都这么要求时。`handoff`——把上下文重置为一段交接文本并结束运行（重置与交接（p. 46））。`addTools`——从下一轮起提供更多工具。否则运行一次 `postTools` 边界，由一个新的生成接管这次运行。如果运行在轮中途被中止，从未开始的调用会得到一个 `aborted` 结果。详解：Harness 写入的错误结果
 
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>tool_unavailable the tool was not offered, or no longer exists completed</td><td>：该工具没有被提供，或已不存在</td><td></td></tr>
+<tr><td>invalid_arguments the arguments fail the schema, before or after beforeTool completed</td><td>：参数不符合 schema，在</td><td></td></tr>
+<tr><td>blocked a beforeTool hook blocks or throws completed</td><td>：一个 <code>beforeTool</code> 钩子阻止或抛出 <code>completed</code>。</td><td></td></tr>
+<tr><td>tool_error execute() throws, or its environment cannot be built failed</td><td>：</td><td></td></tr>
+<tr><td>interrupted a crash mid-call without a safe policy failed</td><td>：调用中途崩溃且没有安全策略 <code>failed</code>。</td><td></td></tr>
+<tr><td>aborted the call is aborted aborted</td><td>：调用被中止 <code>aborted</code>。</td><td></td></tr>
+<tr><td>src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also</td><td></td><td></td></tr>
+</table>
+
+<aside class="note">只有在跑两次无害时，才把工具标记为 `replay: "safe"`。用 `output` 边走边报告进展：调用被中断时，模型看到的就是它。一个在崩溃后也必须做出同样决定的 `beforeTool` 钩子，应当把它的决定存进备忘（备忘（p. 67））。</aside>
+<aside class="note">Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts (ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt</aside>
 <a id="sec-6-5"></a>
 
 ## 6.5 压缩
@@ -382,38 +402,11 @@ compaction.test.ts; research/capture/extra-p6/live-run.txt
 
 <table>
 <tr><th>导出</th><th>译文</th><th>参见</th></tr>
-<tr><td>run a run starts the run ends, on every path</td><td>驱动繁忙指示，用</td><td></td></tr>
-<tr><td>generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends</td><td>和</td><td></td></tr>
-<tr><td>tools the model asks for tools the round finishes, or the run ends</td><td>驱动流式视图。在缓慢或远程的存储上，调高</td><td></td></tr>
-<tr><td>compactions a compaction starts it finishes</td><td>：一次压缩开始时设置；结束时清除。spec §8.2；</td><td></td></tr>
-<tr><td>spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)),</td><td></td><td></td></tr>
-<tr><td>the same commit settles its inputs unanswered and clears its fields.</td><td></td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>Drive your busy indicator from run and your streaming view from generation and tools.</td><td></td><td></td></tr>
-<tr><td>On slow or remote storage, raise settings.progress intervals.</td><td></td><td></td></tr>
-<tr><td>A crash loses uncommitted progress, with no fixed time bound, while the saved run survives.</td><td></td><td></td></tr>
-<tr><td>Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts;</td><td></td><td></td></tr>
-<tr><td>src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt</td><td><code>generation.ts</code>、</td><td></td></tr>
 <tr><td>prepare builds the system prompt and tool list; checks the compaction budgets the attempt number</td><td></td><td></td></tr>
 <tr><td>request calls the model and streams the answer the model, thinking level, stream options and cutoff</td><td></td><td></td></tr>
 <tr><td>retry waits out the backoff the time to wake, until</td><td></td><td></td></tr>
 <tr><td>poll waits for a provider that answers later the provider’s handle and pollAt</td><td></td><td></td></tr>
 <tr><td>tools waits for the round’s tool calls the assistant entry and the tool task IDs</td><td></td><td></td></tr>
-<tr><td>The GenerationCheckpoint union in src/harness/generation.ts. Every task starts at { phase: "prepare", attempt: 1 }.</td><td></td><td></td></tr>
-<tr><td>tool_unavailable the tool was not offered, or no longer exists completed</td><td>：该工具没有被提供，或已不存在</td><td></td></tr>
-<tr><td>invalid_arguments the arguments fail the schema, before or after beforeTool completed</td><td>：参数不符合 schema，在</td><td></td></tr>
-<tr><td>blocked a beforeTool hook blocks or throws completed</td><td>：一个 <code>beforeTool</code> 钩子阻止或抛出 <code>completed</code>。</td><td></td></tr>
-<tr><td>tool_error execute() throws, or its environment cannot be built failed</td><td>：</td><td></td></tr>
-<tr><td>interrupted a crash mid-call without a safe policy failed</td><td>：调用中途崩溃且没有安全策略 <code>failed</code>。</td><td></td></tr>
-<tr><td>aborted the call is aborted aborted</td><td>：调用被中止 <code>aborted</code>。</td><td></td></tr>
-<tr><td>src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also</td><td></td><td></td></tr>
-<tr><td>aborts any conversations the call owns (ownership (p. 76)).</td><td></td><td></td></tr>
-<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
-<tr><td>Mark a tool replay: "safe" only if running it twice is harmless.</td><td></td><td></td></tr>
-<tr><td>Report progress with output as you go: it is what the model sees if the call is interrupted.</td><td></td><td></td></tr>
-<tr><td>A beforeTool hook that must decide the same way after a crash should store its decision in a memo (memos (p. 67)).</td><td></td><td></td></tr>
-<tr><td>Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts</td><td></td><td></td></tr>
-<tr><td>(ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt</td><td></td><td></td></tr>
 <tr><td>you, with Conversation.compact() manual no as a write submission</td><td></td><td></td></tr>
 <tr><td>generation, background budget threshold no as a write submission</td><td></td><td></td></tr>
 <tr><td>generation, blocking budget threshold yes appended directly</td><td></td><td></td></tr>
@@ -423,5 +416,4 @@ compaction.test.ts; research/capture/extra-p6/live-run.txt
 <tr><td>a partial answer committed before a crash or abort models</td><td></td><td></td></tr>
 <tr><td>every summary attempt, even one that fails or ends stale models</td><td></td><td></td></tr>
 <tr><td>a tool result that reports usage tools[name]</td><td></td><td></td></tr>
-<tr><td>spec §8.6; src/harness/usage.ts, called from generation.ts, tool.ts and compaction.ts.</td><td></td><td></td></tr>
 </table>

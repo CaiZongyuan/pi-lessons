@@ -206,6 +206,28 @@ def split_caption_lines(nodes):
                                  "page": n.get("page")})
 
 
+POINTER_ONLY = re.compile(r"^[\d.]+\s*(\(p\.\s*\d+\))?$")
+
+
+def looks_like_caption(text: str) -> bool:
+    """Prose set below a table, not an entry in it.
+
+    The reference tables are followed by a small-print note — one or two English sentences
+    explaining a caveat, often naming the source files. It is set at almost the same size
+    as a row and lands inside the table's vertical span, so without this it is picked up as
+    an entry with no signature, and then the translation check fails on prose the project
+    never set out to translate.
+    """
+    if len(text) < 40 or not text.endswith((".", ")")):
+        return False
+    # an entry leads with its identifier, and carries a section reference
+    if re.match(r"^[A-Za-z_][\w.]*\s*[\(,]", text):
+        return False
+    if POINTER_ONLY.match(text.strip()) or re.search(r"\d+\.\d+\s*\(p\.\s*\d+\)", text):
+        return False
+    return True
+
+
 def is_table_header(text: str, size: float) -> bool:
     """A reference table's header row: small, upper case, and *not* letter-spaced.
 
@@ -266,7 +288,13 @@ def detect_column_tables(pages):
             if size >= 9.0:          # a heading or a paragraph ends the table
                 in_table = False
                 continue
-            if not in_table:
+            if not in_table or size < 7.2:
+                # Smaller than a row: a `Sources:` footnote or a diagram caption that
+                # happens to sit between the last entry and the next heading. Taking it as
+                # a row turns a citation into an entry with no signature, and the
+                # translation check then fails on a node that was never prose.
+                continue
+            if looks_like_caption(text):
                 continue
 
             # The section pointer is set in two pieces when it does not fit: `3.3` hard

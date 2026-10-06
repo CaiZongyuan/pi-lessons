@@ -155,17 +155,6 @@
    "zh": "`byTaskId`？其提交追加了它的任务；`Session`　以上是"
   },
   {
-   "type": "table-row",
-   "page": 38,
-   "_y": 219.0,
-   "cells": [
-    "The fields of EntryRecord, paraphrased from its field comments in src/types.ts."
-   ],
-   "is_header": false,
-   "_sig": "The",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "The built-in kinds",
    "page": 38,
@@ -625,17 +614,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 43,
-   "_y": 333.8,
-   "cells": [
-    "From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Forks",
    "page": 43,
@@ -795,17 +773,6 @@
    "is_header": false,
    "_sig": "Session",
    "zh": "live state、inbox、usage 为空；任务和任务文档绝不复制；`Session` 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。"
-  },
-  {
-   "type": "table-row",
-   "page": 44,
-   "_y": 571.5,
-   "cells": [
-    "From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50)."
-   ],
-   "is_header": false,
-   "_sig": "From",
-   "zh": null
   },
   {
    "type": "h2",

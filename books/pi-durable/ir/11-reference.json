@@ -236,7 +236,7 @@
    "_y": 212.1,
    "cells": [
     "inspect (ctx) HarnessInspection: unfinished tasks and submissions; writes nothing",
-    "8.4 (p. 137)"
+    "8.4"
    ],
    "is_header": false,
    "_sig": "inspect",
@@ -313,7 +313,7 @@
    "page": 174,
    "_y": 334.4,
    "cells": [
-    "usage (ctx) UsageState: token and cost totals of all conversations 6.6 (p. 100)"
+    "usage (ctx) UsageState: token and cost totals of all conversations 6.6"
    ],
    "is_header": false,
    "_sig": "usage",
@@ -324,7 +324,7 @@
    "page": 174,
    "_y": 361.4,
    "cells": [
-    "taskGraph (ctx) live, read-only tree of unfinished tasks; dispose when done 8.4 (p. 137)"
+    "taskGraph (ctx) live, read-only tree of unfinished tasks; dispose when done 8.4"
    ],
    "is_header": false,
    "_sig": "taskGraph",
@@ -335,7 +335,7 @@
    "page": 174,
    "_y": 388.4,
    "cells": [
-    "watchTaskGraph (ctx) TaskGraphWatch 8.4 (p. 137)"
+    "watchTaskGraph (ctx) TaskGraphWatch 8.4"
    ],
    "is_header": false,
    "_sig": "watchTaskGraph",
@@ -347,6 +347,101 @@
    "page": 174,
    "_y": 430.5,
    "zh": "`Session` 方法（`Harness` 继承）"
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 473.1,
+   "cells": [
+    "commit (change: (tx) => T, ctx) T, once the commit is stored 2.2 (p. 29)"
+   ],
+   "is_header": false,
+   "_sig": "commit",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 489.6,
+   "cells": [
+    "close (ctx) stop new work, wait for running code, close storage 2.3 (p. 33)"
+   ],
+   "is_header": false,
+   "_sig": "close",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 506.9,
+   "cells": [
+    "subscribeCommits (listener) unsubscribe function; listener sees every commit, synchronously 2.2 (p. 29)"
+   ],
+   "is_header": false,
+   "_sig": "subscribeCommits",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 523.4,
+   "cells": [
+    "subscribeClose (listener) unsubscribe function; called when close begins 2.2 (p. 29)"
+   ],
+   "is_header": false,
+   "_sig": "subscribeClose",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 540.6,
+   "cells": [
+    "snapshot (token, owner?, key?, ctx) current committed value, read-only, or undefined 4.2 (p. 53)"
+   ],
+   "is_header": false,
+   "_sig": "snapshot",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 557.1,
+   "cells": [
+    "snapshotAsOf (token, conversationId, key?, at, ctx) value as of an entry; rewindable documents only 4.3 (p. 56)"
+   ],
+   "is_header": false,
+   "_sig": "snapshotAsOf",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 574.4,
+   "cells": [
+    "documentState (token, owner?, key?, ctx) live read-only value that follows commits; dispose when done 8.1 (p. 125)"
+   ],
+   "is_header": false,
+   "_sig": "documentState",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 174,
+   "_y": 590.9,
+   "cells": [
+    "watchDoc (token, owner?, key?, ctx) DocumentWatch | undefined: one callback per change 8.1 (p. 125)"
+   ],
+   "is_header": false,
+   "_sig": "watchDoc",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "The owner argument is a conversation ID or task ID by the token’s scope, absent for Session scope; key applies to families.",
+   "page": 174,
+   "_y": 609.0,
+   "zh": "`owner` 参数按词元的作用域是会话 ID 或任务 ID，`Session` 作用域下不存在；`key` 只对族有效。"
   },
   {
    "type": "h2",
@@ -540,7 +635,7 @@
    "page": 176,
    "_y": 144.6,
    "cells": [
-    "scanConversations (query, limit, cursor?) one page of conversations, filtered by owner 7.7 (p. 121)"
+    "scanConversations (query, limit, cursor?) one page of conversations, filtered by owner 7.7"
    ],
    "is_header": false,
    "_sig": "scanConversations",
@@ -894,22 +989,52 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 179,
-   "_y": 519.0,
-   "cells": [
-    "checkpointWhen; between copies only changes are stored."
-   ],
-   "is_header": false,
-   "_sig": "checkpointWhen",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Task kinds",
    "page": 179,
    "_y": 547.5,
    "zh": "任务 kind"
+  },
+  {
+   "type": "table-row",
+   "page": 179,
+   "_y": 590.1,
+   "cells": [
+    "pi.generation prepare, request, retry, poll, tools build the prompt, call the model, retry, start the tool calls 6.3 (p. 91)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 179,
+   "_y": 606.6,
+   "cells": [
+    "pi.tool call, execute check arguments, run hooks, commit intent, run the tool, commit the result 6.4 (p. 94)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 179,
+   "_y": 623.9,
+   "cells": [
+    "pi.compaction select, summarize, retry pick old entries, summarize them, add the summary 6.5 (p. 97)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": "`pi.agent`"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: src/entries.ts; src/harness/agent.ts, provider.ts, live.ts, inbox.ts, usage.ts (document definitions); src/harness/generation.ts, tool.ts, compaction.ts (phases); src/harness/registry.ts (BUILTIN_TASKS); spec §2.2, §8, §8.1"
+   ],
+   "page": 179,
+   "_y": 668.9
   },
   {
    "type": "chapter-title",
@@ -950,7 +1075,7 @@
    "_y": 117.8,
    "cells": [
     "extensions every installed extension, install order",
-    "extensions a conversation uses unless it picks its own 7.2 (p. 106)"
+    "extensions a conversation uses unless it picks its own 7.2"
    ],
    "is_header": false,
    "_sig": "extensions",
@@ -1123,17 +1248,6 @@
    "zh": null
   },
   {
-   "type": "table-row",
-   "page": 181,
-   "_y": 403.5,
-   "cells": [
-    "spec’s HarnessSettings listing omits progress; the source and CHANGELOG 1.0.3 include it."
-   ],
-   "is_header": false,
-   "_sig": "spec",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "stream options",
    "page": 181,
@@ -1141,11 +1255,214 @@
    "zh": "stream 选项"
   },
   {
+   "type": "table-row",
+   "page": 181,
+   "_y": 474.8,
+   "cells": [
+    "transport pi-ai transport"
+   ],
+   "is_header": false,
+   "_sig": "transport",
+   "zh": "`transport`"
+  },
+  {
+   "type": "table-row",
+   "page": 181,
+   "_y": 491.3,
+   "cells": [
+    "timeoutMs request timeout"
+   ],
+   "is_header": false,
+   "_sig": "timeoutMs",
+   "zh": "`timeoutMs` 请求超时"
+  },
+  {
+   "type": "table-row",
+   "page": 181,
+   "_y": 508.5,
+   "cells": [
+    "maxRetries, maxRetryDelayMs provider/SDK retries inside one attempt, unlike retry"
+   ],
+   "is_header": false,
+   "_sig": "maxRetries",
+   "zh": "`maxRetries`、"
+  },
+  {
+   "type": "table-row",
+   "page": 181,
+   "_y": 525.0,
+   "cells": [
+    "headers, metadata forwarded request headers and metadata"
+   ],
+   "is_header": false,
+   "_sig": "headers",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 181,
+   "_y": 541.5,
+   "cells": [
+    "cacheRetention pi-ai prompt-cache retention"
+   ],
+   "is_header": false,
+   "_sig": "cacheRetention",
+   "zh": "`cacheRetention` `pi-ai` 提示词缓存保留策略"
+  },
+  {
+   "type": "table-row",
+   "page": 181,
+   "_y": 558.6,
+   "cells": [
+    "deferred boolean or { window: \"15m\" | \"1h\" | \"24h\" }"
+   ],
+   "is_header": false,
+   "_sig": "deferred",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "Absent fields use pi-ai defaults (ConversationStreamOptions, src/harness/types.ts).",
+   "page": 181,
+   "_y": 576.8,
+   "zh": "缺失的字段使用 `pi-ai` 的默认值（`ConversationStreamOptions`，`src/harness/types.ts`）。"
+  },
+  {
    "type": "h2",
    "text": "Other defaults",
    "page": 182,
    "_y": 75.0,
    "zh": "其他默认值"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 116.9,
+   "cells": [
+    "tool replay \"unsafe\" src/harness/tool.ts 6.4 (p. 94)"
+   ],
+   "is_header": false,
+   "_sig": "tool",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 134.3,
+   "cells": [
+    "tool executionMode the settings’ toolExecution src/harness/types.ts 6.4 (p. 94)"
+   ],
+   "is_header": false,
+   "_sig": "tool",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 150.6,
+   "cells": [
+    "tool outputLimits 50 KB, 2000 lines, retain: \"head\" src/harness/tool.ts, src/truncate.ts 7.4 (p. 112)"
+   ],
+   "is_header": false,
+   "_sig": "tool",
+   "zh": "`tool`"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 167.9,
+   "cells": [
+    "bash output retain: \"tail\" src/tools/bash.ts 7.4 (p. 112)"
+   ],
+   "is_header": false,
+   "_sig": "bash",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 184.4,
+   "cells": [
+    "section tag true: <key>…</key> src/harness/types.ts 7.5 (p. 115)"
+   ],
+   "is_header": false,
+   "_sig": "section",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 201.6,
+   "cells": [
+    "agent thinkingLevel \"off\" src/harness/agent.ts 7.2 (p. 106)"
+   ],
+   "is_header": false,
+   "_sig": "agent",
+   "zh": "`agent`"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 218.1,
+   "cells": [
+    "input whenBusy \"followUp\" spec §2.2 6.1 (p. 84)"
+   ],
+   "is_header": false,
+   "_sig": "input",
+   "zh": "`input`"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 234.8,
+   "cells": [
+    "watch pending frames 100, then one full-value frame src/session/observation.ts 8.2 (p. 129)"
+   ],
+   "is_header": false,
+   "_sig": "watch",
+   "zh": "`watch`"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 252.0,
+   "cells": [
+    "JSONL fsync false src/storage/jsonl/storage.ts 9.3 (p. 148)"
+   ],
+   "is_header": false,
+   "_sig": "JSONL",
+   "zh": "`JSONL`"
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 268.4,
+   "cells": [
+    "SQLite walAutoCheckpointPages 1000 src/storage/sqlite/node.ts 9.2 (p. 144)"
+   ],
+   "is_header": false,
+   "_sig": "SQLite",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 182,
+   "_y": 285.6,
+   "cells": [
+    "SQLite busyTimeoutMs 5000 src/storage/sqlite/node.ts 9.2 (p. 144)"
+   ],
+   "is_header": false,
+   "_sig": "SQLite",
+   "zh": "`SQLite`"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: src/harness/types.ts (HarnessOptions, HarnessSettings, Settings, ConversationStreamOptions, ToolRegistration, PromptSection); src/harness/agent.ts; src/harness/harness.ts:180; src/harness/tool.ts:88, :176; src/truncate.ts; src/tools/bash.ts;",
+    "src/session/observation.ts:15; src/storage/jsonl/storage.ts; src/storage/sqlite/node.ts; spec §2.2; CHANGELOG 1.0.3"
+   ],
+   "page": 182,
+   "_y": 315.6
   },
   {
    "type": "chapter-title",
@@ -1220,7 +1537,7 @@
    "page": 183,
    "_y": 336.8,
    "cells": [
-    "JsonlCorruptionError opening found committed data missing or damaged restore from backup 9.3 (p. 148)"
+    "JsonlCorruptionError opening found committed data missing or damaged restore from backup 9.3"
    ],
    "is_header": false,
    "_sig": "JsonlCorruptionError",
@@ -1231,7 +1548,7 @@
    "page": 183,
    "_y": 363.8,
    "cells": [
-    "JsonlStoragePoisonedError a write failed and may or may not have landed; “must be reopened” reopen 9.3 (p. 148)"
+    "JsonlStoragePoisonedError a write failed and may or may not have landed; “must be reopened” reopen 9.3"
    ],
    "is_header": false,
    "_sig": "JsonlStoragePoisonedError",
@@ -1242,7 +1559,7 @@
    "page": 183,
    "_y": 391.4,
    "cells": [
-    "FileError environment file operations; code such as not_found per code 9.5 (p. 155)"
+    "FileError environment file operations; code such as not_found per code 9.5"
    ],
    "is_header": false,
    "_sig": "FileError",
@@ -1253,7 +1570,7 @@
    "page": 183,
    "_y": 418.5,
    "cells": [
-    "ExecutionError environment exec; code such as timeout, aborted per code 9.5 (p. 155)"
+    "ExecutionError environment exec; code such as timeout, aborted per code 9.5"
    ],
    "is_header": false,
    "_sig": "ExecutionError",
@@ -1290,17 +1607,6 @@
    ],
    "is_header": false,
    "_sig": "plain",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 183,
-   "_y": 491.3,
-   "cells": [
-    "The first three are exported from the package root, the JSONL errors from …/storage/jsonl, the environment errors from …/env."
-   ],
-   "is_header": false,
-   "_sig": "The",
    "zh": null
   },
   {
@@ -1417,22 +1723,108 @@
    "zh": "`model_error`、"
   },
   {
-   "type": "table-row",
-   "page": 184,
-   "_y": 270.0,
-   "cells": [
-    "Blocked reasons are derived at inspection, never stored, until an abort turns one into an orphaned reason."
-   ],
-   "is_header": false,
-   "_sig": "Blocked",
-   "zh": null
-  },
-  {
    "type": "h2",
    "text": "Tool diagnostics and watch ends",
    "page": 184,
    "_y": 298.5,
    "zh": "工具诊断与 watch 结束"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 339.2,
+   "cells": [
+    "tool_unavailable diagnostic the tool was not offered or no longer resolves 6.4 (p. 94)"
+   ],
+   "is_header": false,
+   "_sig": "tool_unavailable",
+   "zh": "`tool_unavailable` diagnostic 该工具未被提供，或已无法解析 6.4 (p. 94)"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 357.6,
+   "cells": [
+    "invalid_arguments diagnostic arguments failed TypeBox validation 7.4 (p. 112)"
+   ],
+   "is_header": false,
+   "_sig": "invalid_arguments",
+   "zh": "`invalid_arguments` diagnostic 参数未通过 TypeBox 校验 7.4 (p. 112)"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 374.3,
+   "cells": [
+    "blocked diagnostic a beforeTool hook blocked the call 7.3 (p. 109)"
+   ],
+   "is_header": false,
+   "_sig": "blocked",
+   "zh": "`blocked` diagnostic 一个"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 391.5,
+   "cells": [
+    "interrupted diagnostic an unsafe tool was cut by a crash or close 6.4 (p. 94)"
+   ],
+   "is_header": false,
+   "_sig": "interrupted",
+   "zh": "`interrupted` diagnostic 一个不安全的工具被崩溃或 close 切断 6.4 (p. 94)"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 407.9,
+   "cells": [
+    "truncated, full_output diagnostic output was cut; full output spilled to a file 7.4 (p. 112)"
+   ],
+   "is_header": false,
+   "_sig": "truncated",
+   "zh": "`truncated`、"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 425.1,
+   "cells": [
+    "stopped, cancelled WatchEnd.reason stop() called; the observed cancellation signal aborted 8.1 (p. 125)"
+   ],
+   "is_header": false,
+   "_sig": "stopped",
+   "zh": "`stopped`、"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 441.6,
+   "cells": [
+    "session_closed, retired WatchEnd.reason the Session closed; the document was retired 8.1 (p. 125)"
+   ],
+   "is_header": false,
+   "_sig": "session_closed",
+   "zh": "`session_closed`、"
+  },
+  {
+   "type": "table-row",
+   "page": 184,
+   "_y": 458.1,
+   "cells": [
+    "listener_error WatchEnd.reason the listener threw; carries error 8.1 (p. 125)"
+   ],
+   "is_header": false,
+   "_sig": "listener_error",
+   "zh": "`listener_error` WatchEnd.reason listener 抛出；携带 error 8.1 (p. 125)"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "src/session/observation.ts; src/harness/submissions.ts; src/harness/inbox.ts; src/harness/generation.ts; src/harness/live.ts:171; src/harness/scheduler.ts:769–813; src/harness/tool.ts; src/tools/read.ts; src/tools/bash.ts; src/types.ts (TaskOutcome, WatchEnd);",
+    "spec §5.4, §6, §8.3; research/capture/crash-after.txt; research/capture/inbox-steps.txt"
+   ],
+   "page": 184,
+   "_y": 498.8
   },
   {
    "type": "chapter-title",
@@ -1506,15 +1898,11 @@
    "zh": "文档与源码"
   },
   {
-   "type": "table-row",
+   "type": "small",
+   "text": "docs/spec.md spec §N the normative specification (internal name Pico5) README.md README §X package guide CHANGELOG.md CHANGELOG 1.0.N releases 1.0.0 to 1.0.3 docs/pico-v5-handoff.md handoff implementation plan docs/pico-v5-chord-usage.md chord usage how the package uses Chord docs/chord-delta-findings.md delta findings Chord delta notes src/index.ts, src/types.ts, src/errors.ts src/… public surface, record and storage types, errors src/session/ src/session/… Session, transactions, forks, observation src/harness/ src/harness/… Harness, scheduler, built-in tasks and documents, views, events src/storage/ src/storage/… Memory, SQLite and JSONL backends src/env/, src/tools/ src/env/…, src/tools/… execution environment; built-in tools src/testing/ src/testing/… storage and env conformance suites test/*.test.ts test/… behaviour tests research/pi/packages/coding-agent/docs/ session-format.md, sessions.md, how-pi-works.md original Pi session format",
    "page": 187,
    "_y": 249.6,
-   "cells": [
-    "docs/spec.md spec §N the normative specification (internal name Pico5)"
-   ],
-   "is_header": false,
-   "_sig": "docs",
-   "zh": null
+   "zh": "`docs/spec.md` spec §N 规范说明（内部名 Pico5） `README.md` README §X 包指南 `CHANGELOG.md` CHANGELOG 1.0.N 1.0.0 到 1.0.3 的发布记录 `docs/pico-v5-handoff.md` 交接 实现计划 `docs/pico-v5-chord-usage.md` chord 用法 这个包如何使用 Chord `docs/chord-delta-findings.md` 增量发现 Chord 增量笔记 `src/index.ts`、`src/types.ts`、`src/errors.ts` `src/…` 公开接口面、记录与存储类型、错误 `src/session/` `src/session/…` `Session`、事务、分叉、观察 `src/harness/` `src/harness/…` `Harness`、调度器、内置任务与文档、视图、事件 `src/storage/` `src/storage/…` Memory、SQLite 与 JSONL 后端 `src/env/`、`src/tools/` `src/env/…`、`src/tools/…` 执行环境；内置工具 `src/testing/` `src/testing/…` 存储与环境一致性测试套件 `test/*.test.ts` `test/…` 行为测试 `research/pi/packages/coding-agent/docs/` `session-format.md`、`sessions.md`、`how-pi-works.md` 最初的 Pi 会话格式"
   },
   {
    "type": "table-row",
@@ -1838,7 +2226,7 @@
    "_y": 264.6,
    "cells": [
     "Harness.open (storage, options, ctx) open a Harness on a storage; throws if the registry lacks the built-in tasks",
-    "1.2 (p. 13)"
+    "1.2"
    ],
    "is_header": false,
    "_sig": "Harness",
@@ -1849,7 +2237,7 @@
    "page": 172,
    "_y": 292.4,
    "cells": [
-    "createRegistry () a new registry; it already holds the built-in tasks 7.1 (p. 103)"
+    "createRegistry () a new registry; it already holds the built-in tasks 7.1"
    ],
    "is_header": false,
    "_sig": "createRegistry",
@@ -1861,7 +2249,7 @@
    "_y": 319.4,
    "cells": [
     "createSession (storage) a bare Session: storage and commits, no agent machinery",
-    "2.2 (p. 29)"
+    "2.2"
    ],
    "is_header": false,
    "_sig": "createSession",
@@ -1872,7 +2260,7 @@
    "page": 172,
    "_y": 347.1,
    "cells": [
-    "MemoryStorage new MemoryStorage() in-memory storage, lost on exit; good for tests 9.4 (p. 152)"
+    "MemoryStorage new MemoryStorage() in-memory storage, lost on exit; good for tests 9.4"
    ],
    "is_header": false,
    "_sig": "MemoryStorage",
@@ -1883,7 +2271,7 @@
    "page": 172,
    "_y": 374.1,
    "cells": [
-    "defineDoc (definition) declare a document kind (one per owner) 4.1 (p. 50)"
+    "defineDoc (definition) declare a document kind (one per owner) 4.1"
    ],
    "is_header": false,
    "_sig": "defineDoc",
@@ -1894,7 +2282,7 @@
    "page": 172,
    "_y": 401.1,
    "cells": [
-    "defineDocFamily (definition) declare a document kind with many keyed members 4.2 (p. 53)"
+    "defineDocFamily (definition) declare a document kind with many keyed members 4.2"
    ],
    "is_header": false,
    "_sig": "defineDocFamily",
@@ -1905,7 +2293,7 @@
    "page": 172,
    "_y": 428.9,
    "cells": [
-    "defineEntry (kind) declare an entry kind, with an is() type check 3.1 (p. 37)"
+    "defineEntry (kind) declare an entry kind, with an is() type check 3.1"
    ],
    "is_header": false,
    "_sig": "defineEntry",
@@ -1916,7 +2304,7 @@
    "page": 172,
    "_y": 455.9,
    "cells": [
-    "defineTask (definition) declare a durable task; register it through an extension 5.1 (p. 63)"
+    "defineTask (definition) declare a durable task; register it through an extension 5.1"
    ],
    "is_header": false,
    "_sig": "defineTask",
@@ -1927,7 +2315,7 @@
    "page": 172,
    "_y": 483.6,
    "cells": [
-    "defineExtension (extension) declare an extension (adds types only) 7.1 (p. 103)"
+    "defineExtension (extension) declare an extension (adds types only) 7.1"
    ],
    "is_header": false,
    "_sig": "defineExtension",
@@ -1938,7 +2326,7 @@
    "page": 172,
    "_y": 510.6,
    "cells": [
-    "defineTool (tool) declare a tool; args are typed from parameters 7.4 (p. 112)"
+    "defineTool (tool) declare a tool; args are typed from parameters 7.4"
    ],
    "is_header": false,
    "_sig": "defineTool",
@@ -1960,7 +2348,7 @@
    "page": 172,
    "_y": 538.5,
    "cells": [
-    "7.5 (p. 115)"
+    "7.5"
    ],
    "is_header": false,
    "_sig": "",
@@ -1972,7 +2360,7 @@
    "_y": 565.4,
    "cells": [
     "hook (task, handlers) attach handlers to a built-in or custom task, matched by name",
-    "7.3 (p. 109)"
+    "7.3"
    ],
    "is_header": false,
    "_sig": "hook",
@@ -1994,7 +2382,7 @@
    "page": 172,
    "_y": 592.5,
    "cells": [
-    "7.4 (p. 112)"
+    "7.4"
    ],
    "is_header": false,
    "_sig": "",
@@ -2005,7 +2393,7 @@
    "page": 172,
    "_y": 620.1,
    "cells": [
-    "wrapSection (key, wrapper) wrap the section with that key 7.5 (p. 115)"
+    "wrapSection (key, wrapper) wrap the section with that key 7.5"
    ],
    "is_header": false,
    "_sig": "wrapSection",
@@ -2018,7 +2406,7 @@
    "cells": [
     "configure (tx, conversationId, change)",
     "change a conversation’s agent inside a commit you already have",
-    "7.2 (p. 106)"
+    "7.2"
    ],
    "is_header": false,
    "_sig": "configure",
@@ -2031,7 +2419,7 @@
    "cells": [
     "watchEvents (harness, conversationId, ctx)",
     "stream of agent events (runs, turns, messages, tool calls); experimental",
-    "8.3 (p. 133)"
+    "8.3"
    ],
    "is_header": false,
    "_sig": "watchEvents",
@@ -2043,7 +2431,7 @@
    "_y": 702.0,
    "cells": [
     "ReadAfterWrite, StorageRejected, ConversationBusy",
-    "error classes see errors and reasons (p. 183) 2.3 (p. 33)"
+    "error classes see errors and reasons (p. 183) 2.3"
    ],
    "is_header": false,
    "_sig": "ReadAfterWrite",
@@ -2054,7 +2442,7 @@
    "page": 173,
    "_y": 325.4,
    "cells": [
-    "…/env ExecutionEnv, FileSystem, Shell, FileError, ExecutionError, line-scan helpers 9.5 (p. 155)"
+    "…/env ExecutionEnv, FileSystem, Shell, FileError, ExecutionError, line-scan helpers 9.5"
    ],
    "is_header": false,
    "_sig": "",
@@ -2065,7 +2453,7 @@
    "page": 173,
    "_y": 353.1,
    "cells": [
-    "…/env/node NodeExecutionEnv 9.5 (p. 155)"
+    "…/env/node NodeExecutionEnv 9.5"
    ],
    "is_header": false,
    "_sig": "",
@@ -2076,7 +2464,7 @@
    "page": 173,
    "_y": 380.1,
    "cells": [
-    "…/tools CodingTools, createReadTool, createWriteTool, createEditTool, createBashTool 7.4 (p. 112)"
+    "…/tools CodingTools, createReadTool, createWriteTool, createEditTool, createBashTool 7.4"
    ],
    "is_header": false,
    "_sig": "",
@@ -2087,7 +2475,7 @@
    "page": 173,
    "_y": 407.1,
    "cells": [
-    "…/storage/memory MemoryStorage 9.4 (p. 152)"
+    "…/storage/memory MemoryStorage 9.4"
    ],
    "is_header": false,
    "_sig": "",
@@ -2098,7 +2486,7 @@
    "page": 173,
    "_y": 434.9,
    "cells": [
-    "…/storage/sqlite SqliteStorage, SqliteDatabase, applySqliteMigrations, SQLITE_MIGRATIONS 9.2 (p. 144)"
+    "…/storage/sqlite SqliteStorage, SqliteDatabase, applySqliteMigrations, SQLITE_MIGRATIONS 9.2"
    ],
    "is_header": false,
    "_sig": "",
@@ -2109,7 +2497,7 @@
    "page": 173,
    "_y": 461.9,
    "cells": [
-    "…/storage/sqlite/node openNodeSqliteStorage, openNodeSqliteDatabase 9.2 (p. 144)"
+    "…/storage/sqlite/node openNodeSqliteStorage, openNodeSqliteDatabase 9.2"
    ],
    "is_header": false,
    "_sig": "",
@@ -2120,7 +2508,7 @@
    "page": 173,
    "_y": 489.6,
    "cells": [
-    "…/storage/jsonl JsonlStorage, JsonlCorruptionError, JsonlStoragePoisonedError 9.3 (p. 148)"
+    "…/storage/jsonl JsonlStorage, JsonlCorruptionError, JsonlStoragePoisonedError 9.3"
    ],
    "is_header": false,
    "_sig": "",
@@ -2131,7 +2519,7 @@
    "page": 173,
    "_y": 516.6,
    "cells": [
-    "…/storage/jsonl/node openNodeJsonlStorage(directory, ctx, { fsync }?) 9.3 (p. 148)"
+    "…/storage/jsonl/node openNodeJsonlStorage(directory, ctx, { fsync }?) 9.3"
    ],
    "is_header": false,
    "_sig": "",
@@ -2153,120 +2541,10 @@
    "page": 173,
    "_y": 544.5,
    "cells": [
-    "9.4 (p. 152)"
+    "9.4"
    ],
    "is_header": false,
    "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 173,
-   "_y": 573.0,
-   "cells": [
-    "… stands for @earendil-works/pi-durable. From package.json exports and each subpath’s index file."
-   ],
-   "is_header": false,
-   "_sig": "",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 473.1,
-   "cells": [
-    "commit (change: (tx) => T, ctx) T, once the commit is stored 2.2 (p. 29)"
-   ],
-   "is_header": false,
-   "_sig": "commit",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 489.6,
-   "cells": [
-    "close (ctx) stop new work, wait for running code, close storage 2.3 (p. 33)"
-   ],
-   "is_header": false,
-   "_sig": "close",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 506.9,
-   "cells": [
-    "subscribeCommits (listener) unsubscribe function; listener sees every commit, synchronously 2.2 (p. 29)"
-   ],
-   "is_header": false,
-   "_sig": "subscribeCommits",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 523.4,
-   "cells": [
-    "subscribeClose (listener) unsubscribe function; called when close begins 2.2 (p. 29)"
-   ],
-   "is_header": false,
-   "_sig": "subscribeClose",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 540.6,
-   "cells": [
-    "snapshot (token, owner?, key?, ctx) current committed value, read-only, or undefined 4.2 (p. 53)"
-   ],
-   "is_header": false,
-   "_sig": "snapshot",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 557.1,
-   "cells": [
-    "snapshotAsOf (token, conversationId, key?, at, ctx) value as of an entry; rewindable documents only 4.3 (p. 56)"
-   ],
-   "is_header": false,
-   "_sig": "snapshotAsOf",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 574.4,
-   "cells": [
-    "documentState (token, owner?, key?, ctx) live read-only value that follows commits; dispose when done 8.1 (p. 125)"
-   ],
-   "is_header": false,
-   "_sig": "documentState",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 590.9,
-   "cells": [
-    "watchDoc (token, owner?, key?, ctx) DocumentWatch | undefined: one callback per change 8.1 (p. 125)"
-   ],
-   "is_header": false,
-   "_sig": "watchDoc",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 174,
-   "_y": 609.0,
-   "cells": [
-    "The owner argument is a conversation ID or task ID by the token’s scope, absent for Session scope; key applies to families."
-   ],
-   "is_header": false,
-   "_sig": "The",
    "zh": null
   },
   {
@@ -2348,17 +2626,6 @@
   },
   {
    "type": "table-row",
-   "page": 175,
-   "_y": 528.2,
-   "cells": [
-    "A ConversationHandle comes from runtime.conversation() or api.conversation() and rejects after the invocation ends."
-   ],
-   "is_header": false,
-   "_sig": "A",
-   "zh": null
-  },
-  {
-   "type": "table-row",
    "page": 176,
    "_y": 468.8,
    "cells": [
@@ -2428,7 +2695,7 @@
    "page": 177,
    "_y": 355.5,
    "cells": [
-    "taskId, conversationId, callId properties the tool task, its conversation, and the model’s call ID 7.4 (p. 112)"
+    "taskId, conversationId, callId properties the tool task, its conversation, and the model’s call ID 7.4"
    ],
    "is_header": false,
    "_sig": "taskId",
@@ -2439,7 +2706,7 @@
    "page": 177,
    "_y": 382.5,
    "cells": [
-    "registry property the registry as of this call 7.6 (p. 118)"
+    "registry property the registry as of this call 7.6"
    ],
    "is_header": false,
    "_sig": "registry",
@@ -2450,7 +2717,7 @@
    "page": 177,
    "_y": 409.4,
    "cells": [
-    "agent (ctx) the calling conversation’s agent 7.2 (p. 106)"
+    "agent (ctx) the calling conversation’s agent 7.2"
    ],
    "is_header": false,
    "_sig": "agent",
@@ -2461,7 +2728,7 @@
    "page": 177,
    "_y": 437.3,
    "cells": [
-    "env property built for this call, or undefined 9.5 (p. 155)"
+    "env property built for this call, or undefined 9.5"
    ],
    "is_header": false,
    "_sig": "env",
@@ -2472,7 +2739,7 @@
    "page": 177,
    "_y": 464.1,
    "cells": [
-    "output (chunk, skipped?) stream output to the UI while running 7.4 (p. 112)"
+    "output (chunk, skipped?) stream output to the UI while running 7.4"
    ],
    "is_header": false,
    "_sig": "output",
@@ -2484,7 +2751,7 @@
    "_y": 490.7,
    "cells": [
     "outputWindow property how much output tail is kept and how often it is committed, or undefined",
-    "9.5 (p. 155)"
+    "9.5"
    ],
    "is_header": false,
    "_sig": "outputWindow",
@@ -2495,7 +2762,7 @@
    "page": 177,
    "_y": 518.9,
    "cells": [
-    "diagnostic (diagnostic) add a note the model sees with the result 7.4 (p. 112)"
+    "diagnostic (diagnostic) add a note the model sees with the result 7.4"
    ],
    "is_header": false,
    "_sig": "diagnostic",
@@ -2506,7 +2773,7 @@
    "page": 177,
    "_y": 546.6,
    "cells": [
-    "details (value, ctx) replace the structured details shown while running 7.4 (p. 112)"
+    "details (value, ctx) replace the structured details shown while running 7.4"
    ],
    "is_header": false,
    "_sig": "details",
@@ -2517,7 +2784,7 @@
    "page": 177,
    "_y": 573.6,
    "cells": [
-    "commit (change, ctx) a commit made on behalf of this tool call 7.4 (p. 112)"
+    "commit (change, ctx) a commit made on behalf of this tool call 7.4"
    ],
    "is_header": false,
    "_sig": "commit",
@@ -2562,7 +2829,7 @@
    "page": 177,
    "_y": 662.1,
    "cells": [
-    "conversation (id, ctx) ConversationHandle | undefined 7.7 (p. 121)"
+    "conversation (id, ctx) ConversationHandle | undefined 7.7"
    ],
    "is_header": false,
    "_sig": "conversation",
@@ -2574,7 +2841,7 @@
    "_y": 689.3,
    "cells": [
     "snapshot, snapshotAsOf, watchDoc",
-    "as on Session committed values 8.1 (p. 125)"
+    "as on Session committed values 8.1"
    ],
    "is_header": false,
    "_sig": "snapshot",
@@ -2659,83 +2926,6 @@
   },
   {
    "type": "table-row",
-   "page": 178,
-   "_y": 248.1,
-   "cells": [
-    "Sources: src/index.ts; src/types.ts (Tx, Session, TaskRuntime, Storage); src/harness/types.ts (Conversation, Harness, Submission,"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 178,
-   "_y": 258.8,
-   "cells": [
-    "ConversationHandle, ToolExecutionApi, Registry); src/harness/harness.ts (Harness.open); src/harness/define.ts; src/harness/registry.ts; package.json exports; spec §2.2"
-   ],
-   "is_header": true,
-   "_sig": "ConversationHandle",
-   "zh": "`ConversationHandle`、"
-  },
-  {
-   "type": "table-row",
-   "page": 179,
-   "_y": 590.1,
-   "cells": [
-    "pi.generation prepare, request, retry, poll, tools build the prompt, call the model, retry, start the tool calls 6.3 (p. 91)"
-   ],
-   "is_header": false,
-   "_sig": "pi",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 179,
-   "_y": 606.6,
-   "cells": [
-    "pi.tool call, execute check arguments, run hooks, commit intent, run the tool, commit the result 6.4 (p. 94)"
-   ],
-   "is_header": false,
-   "_sig": "pi",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 179,
-   "_y": 623.9,
-   "cells": [
-    "pi.compaction select, summarize, retry pick old entries, summarize them, add the summary 6.5 (p. 97)"
-   ],
-   "is_header": false,
-   "_sig": "pi",
-   "zh": "`pi.agent`"
-  },
-  {
-   "type": "table-row",
-   "page": 179,
-   "_y": 642.0,
-   "cells": [
-    "Every registry holds these three tasks; they cannot be removed or replaced."
-   ],
-   "is_header": false,
-   "_sig": "Every",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 179,
-   "_y": 668.9,
-   "cells": [
-    "Sources: src/entries.ts; src/harness/agent.ts, provider.ts, live.ts, inbox.ts, usage.ts (document definitions); src/harness/generation.ts, tool.ts, compaction.ts (phases); src/harness/registry.ts (BUILTIN_TASKS); spec §2.2, §8, §8.1"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
    "page": 180,
    "_y": 250.5,
    "cells": [
@@ -2813,226 +3003,6 @@
   },
   {
    "type": "table-row",
-   "page": 181,
-   "_y": 474.8,
-   "cells": [
-    "transport pi-ai transport"
-   ],
-   "is_header": false,
-   "_sig": "transport",
-   "zh": "`transport`"
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 491.3,
-   "cells": [
-    "timeoutMs request timeout"
-   ],
-   "is_header": false,
-   "_sig": "timeoutMs",
-   "zh": "`timeoutMs` 请求超时"
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 508.5,
-   "cells": [
-    "maxRetries, maxRetryDelayMs provider/SDK retries inside one attempt, unlike retry"
-   ],
-   "is_header": false,
-   "_sig": "maxRetries",
-   "zh": "`maxRetries`、"
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 525.0,
-   "cells": [
-    "headers, metadata forwarded request headers and metadata"
-   ],
-   "is_header": false,
-   "_sig": "headers",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 541.5,
-   "cells": [
-    "cacheRetention pi-ai prompt-cache retention"
-   ],
-   "is_header": false,
-   "_sig": "cacheRetention",
-   "zh": "`cacheRetention` `pi-ai` 提示词缓存保留策略"
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 558.6,
-   "cells": [
-    "deferred boolean or { window: \"15m\" | \"1h\" | \"24h\" }"
-   ],
-   "is_header": false,
-   "_sig": "deferred",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 181,
-   "_y": 576.8,
-   "cells": [
-    "Absent fields use pi-ai defaults (ConversationStreamOptions, src/harness/types.ts)."
-   ],
-   "is_header": false,
-   "_sig": "Absent",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 116.9,
-   "cells": [
-    "tool replay \"unsafe\" src/harness/tool.ts 6.4 (p. 94)"
-   ],
-   "is_header": false,
-   "_sig": "tool",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 134.3,
-   "cells": [
-    "tool executionMode the settings’ toolExecution src/harness/types.ts 6.4 (p. 94)"
-   ],
-   "is_header": false,
-   "_sig": "tool",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 150.6,
-   "cells": [
-    "tool outputLimits 50 KB, 2000 lines, retain: \"head\" src/harness/tool.ts, src/truncate.ts 7.4 (p. 112)"
-   ],
-   "is_header": false,
-   "_sig": "tool",
-   "zh": "`tool`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 167.9,
-   "cells": [
-    "bash output retain: \"tail\" src/tools/bash.ts 7.4 (p. 112)"
-   ],
-   "is_header": false,
-   "_sig": "bash",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 184.4,
-   "cells": [
-    "section tag true: <key>…</key> src/harness/types.ts 7.5 (p. 115)"
-   ],
-   "is_header": false,
-   "_sig": "section",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 201.6,
-   "cells": [
-    "agent thinkingLevel \"off\" src/harness/agent.ts 7.2 (p. 106)"
-   ],
-   "is_header": false,
-   "_sig": "agent",
-   "zh": "`agent`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 218.1,
-   "cells": [
-    "input whenBusy \"followUp\" spec §2.2 6.1 (p. 84)"
-   ],
-   "is_header": false,
-   "_sig": "input",
-   "zh": "`input`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 234.8,
-   "cells": [
-    "watch pending frames 100, then one full-value frame src/session/observation.ts 8.2 (p. 129)"
-   ],
-   "is_header": false,
-   "_sig": "watch",
-   "zh": "`watch`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 252.0,
-   "cells": [
-    "JSONL fsync false src/storage/jsonl/storage.ts 9.3 (p. 148)"
-   ],
-   "is_header": false,
-   "_sig": "JSONL",
-   "zh": "`JSONL`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 268.4,
-   "cells": [
-    "SQLite walAutoCheckpointPages 1000 src/storage/sqlite/node.ts 9.2 (p. 144)"
-   ],
-   "is_header": false,
-   "_sig": "SQLite",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 285.6,
-   "cells": [
-    "SQLite busyTimeoutMs 5000 src/storage/sqlite/node.ts 9.2 (p. 144)"
-   ],
-   "is_header": false,
-   "_sig": "SQLite",
-   "zh": "`SQLite`"
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 315.6,
-   "cells": [
-    "Sources: src/harness/types.ts (HarnessOptions, HarnessSettings, Settings, ConversationStreamOptions, ToolRegistration, PromptSection); src/harness/agent.ts; src/harness/harness.ts:180; src/harness/tool.ts:88, :176; src/truncate.ts; src/tools/bash.ts;"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 182,
-   "_y": 335.3,
-   "cells": [
-    "src/session/observation.ts:15; src/storage/jsonl/storage.ts; src/storage/sqlite/node.ts; spec §2.2; CHANGELOG 1.0.3"
-   ],
-   "is_header": true,
-   "_sig": "src",
-   "zh": "`src/harness/agent.ts` 7.2 (p. 106)"
-  },
-  {
-   "type": "table-row",
    "page": 183,
    "_y": 562.5,
    "cells": [
@@ -3107,127 +3077,6 @@
    "is_header": false,
    "_sig": "missing_task",
    "zh": "`missing_task`、"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 339.2,
-   "cells": [
-    "tool_unavailable diagnostic the tool was not offered or no longer resolves 6.4 (p. 94)"
-   ],
-   "is_header": false,
-   "_sig": "tool_unavailable",
-   "zh": "`tool_unavailable` diagnostic 该工具未被提供，或已无法解析 6.4 (p. 94)"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 357.6,
-   "cells": [
-    "invalid_arguments diagnostic arguments failed TypeBox validation 7.4 (p. 112)"
-   ],
-   "is_header": false,
-   "_sig": "invalid_arguments",
-   "zh": "`invalid_arguments` diagnostic 参数未通过 TypeBox 校验 7.4 (p. 112)"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 374.3,
-   "cells": [
-    "blocked diagnostic a beforeTool hook blocked the call 7.3 (p. 109)"
-   ],
-   "is_header": false,
-   "_sig": "blocked",
-   "zh": "`blocked` diagnostic 一个"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 391.5,
-   "cells": [
-    "interrupted diagnostic an unsafe tool was cut by a crash or close 6.4 (p. 94)"
-   ],
-   "is_header": false,
-   "_sig": "interrupted",
-   "zh": "`interrupted` diagnostic 一个不安全的工具被崩溃或 close 切断 6.4 (p. 94)"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 407.9,
-   "cells": [
-    "truncated, full_output diagnostic output was cut; full output spilled to a file 7.4 (p. 112)"
-   ],
-   "is_header": false,
-   "_sig": "truncated",
-   "zh": "`truncated`、"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 425.1,
-   "cells": [
-    "stopped, cancelled WatchEnd.reason stop() called; the observed cancellation signal aborted 8.1 (p. 125)"
-   ],
-   "is_header": false,
-   "_sig": "stopped",
-   "zh": "`stopped`、"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 441.6,
-   "cells": [
-    "session_closed, retired WatchEnd.reason the Session closed; the document was retired 8.1 (p. 125)"
-   ],
-   "is_header": false,
-   "_sig": "session_closed",
-   "zh": "`session_closed`、"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 458.1,
-   "cells": [
-    "listener_error WatchEnd.reason the listener threw; carries error 8.1 (p. 125)"
-   ],
-   "is_header": false,
-   "_sig": "listener_error",
-   "zh": "`listener_error` WatchEnd.reason listener 抛出；携带 error 8.1 (p. 125)"
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 488.1,
-   "cells": [
-    "Sources: src/errors.ts; src/storage/jsonl/storage.ts:81–94; src/env/index.ts:35–75; src/session/session.ts:539–546;"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 498.8,
-   "cells": [
-    "src/session/observation.ts; src/harness/submissions.ts; src/harness/inbox.ts; src/harness/generation.ts; src/harness/live.ts:171; src/harness/scheduler.ts:769–813; src/harness/tool.ts; src/tools/read.ts; src/tools/bash.ts; src/types.ts (TaskOutcome, WatchEnd);"
-   ],
-   "is_header": true,
-   "_sig": "src",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 184,
-   "_y": 517.5,
-   "cells": [
-    "spec §5.4, §6, §8.3; research/capture/crash-after.txt; research/capture/inbox-steps.txt"
-   ],
-   "is_header": true,
-   "_sig": "spec",
-   "zh": null
   },
   {
    "type": "table-row",
@@ -3627,17 +3476,6 @@
   },
   {
    "type": "table-row",
-   "page": 186,
-   "_y": 266.9,
-   "cells": [
-    "Sources: spec §1 (terms); README §Concepts; src/types.ts; src/harness/types.ts; AUTHORING.md canonical terms"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
-   "zh": null
-  },
-  {
-   "type": "table-row",
    "page": 187,
    "_y": 573.8,
    "cells": [
@@ -3755,17 +3593,6 @@
    ],
    "is_header": false,
    "_sig": "Earendil",
-   "zh": null
-  },
-  {
-   "type": "table-row",
-   "page": 188,
-   "_y": 365.1,
-   "cells": [
-    "Sources: package.json; README §Examples, §Design Documents; research/capture/README.md; research/runs/"
-   ],
-   "is_header": true,
-   "_sig": "Sources",
    "zh": null
   }
  ]

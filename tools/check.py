@@ -37,8 +37,35 @@ def check_book(bdir: Path, require_html: bool):
             continue
 
         nodes = json.loads(ir_path.read_text(encoding="utf-8"))["nodes"]
-        missing = [n["type"] for n in nodes
-                   if n["type"] in TRANSLATABLE
+        # `small` covers two things: prose notes, which must be translated, and captions
+        # and `Sources:` citations, which are English by design — the figure they annotate
+        # is the untranslated original. Counting the latter as missing made every part
+        # BAD over captions the project never intended to translate.
+        def needs_translation(i, n):
+            """Whether this node is prose the project owes a Chinese translation for.
+
+            `small` is one node type covering three unrelated things: prose notes (which
+            must be translated), `Sources:` file citations, and figure/table captions. The
+            last two annotate artefacts that are themselves the untranslated original, and
+            the project has never translated them. Counting them made every part BAD over
+            content that was never in scope.
+            """
+            if n["type"] != "small":
+                return n["type"] in TRANSLATABLE
+            text = n.get("text", "")
+            if text.startswith(("Sources:", "//", "#", "$")):
+                return False
+            # a caption sets out what a figure or table shows; an entry in a reference
+            # table leads with its identifier and carries a section reference, so those two
+            # shapes are the ones that are genuinely prose
+            if re.match(r"^[A-Za-z_][\w.]*\s*\(", text):
+                return True
+            if re.search(r"\d+\.\d+\s*\(p\.\s*\d+\)", text):
+                return True
+            return False
+
+        missing = [n["type"] for i, n in enumerate(nodes)
+                   if needs_translation(i, n)
                    and not (n.get("zh") or n.get("zh_caption"))]
 
         notes, fatal = [], []
