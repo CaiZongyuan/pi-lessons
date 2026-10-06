@@ -60,9 +60,16 @@ jobs:
         run: python tools/docs.py check
 
       # ---- site build -----------------------------------------------------
+      # `npm install`, not `npm ci`: the lock file in this repo was generated on Windows
+      # and carries only the win32 optional-dependency variants (rollup, sharp, esbuild).
+      # `npm ci` installs exactly those and then fails on Linux with
+      # "Cannot find module @rollup/rollup-linux-x64-gnu". `npm install` resolves the
+      # optional deps for the runner's platform while still honouring the lock for
+      # everything else. Regenerating the lock on Linux would fix `npm ci` but would
+      # then break local installs on Windows — the site is built on both.
       - name: Install dependencies
         working-directory: docs
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund
 
       - name: Astro check
         working-directory: docs
