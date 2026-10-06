@@ -18,29 +18,69 @@ def load(p: Path):
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-def part_summary(ir_path: Path, meta: dict) -> str:
-    """The part standfirst: meta if a translator filled it, else the h2 after the title."""
+def ir_path(bdir: Path, slug: str) -> Path:
+    return bdir / "ir" / f"{slug}.json"
+
+
+def md_path(bdir: Path, slug: str) -> Path:
+    return bdir / "md" / "parts" / f"{slug}.md"
+
+
+def chapters_of(bdir: Path, slug: str):
+    """Chapter titles, from whichever representation the book is translated in.
+
+    pi-durable keeps its translation in an IR JSON; pi-manual in Markdown. Reading both
+    means the landing page counts chapters correctly for either.
+    """
+    ir = ir_path(bdir, slug)
+    if ir.exists():
+        out = []
+        for n in load(ir)["nodes"]:
+            if n["type"] == "chapter-title":
+                zh = n.get("zh") or n.get("text", "")
+                m = re.match(r"([\d.R]+)\s+(.*)", zh)
+                out.append((m.group(1), m.group(2)) if m else ("", zh))
+        return out
+
+    md = md_path(bdir, slug)
+    if md.exists():
+        out = []
+        lines = md.read_text(encoding="utf-8").split("\n")
+        for i, line in enumerate(lines):
+            m = re.match(r"^##\s+(\d+\.\d+)\s+(.+?)\s*$", line.strip())
+            if not m:
+                continue
+            num, en = m.group(1), m.group(2)
+            zh = en
+            j = i + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            if j < len(lines):
+                m2 = re.match(r"^##\s+\d+\.\d+\s+(.+?)\s*$", lines[j].strip())
+                if m2:
+                    zh = m2.group(1)
+            out.append((num, zh))
+        return out
+    return []
+
+
+def part_summary(bdir: Path, slug: str, meta: dict) -> str:
+    """The part standfirst: meta if a translator filled it, else the first paragraph."""
     if meta.get("part_sub_zh"):
         return meta["part_sub_zh"]
-    if not ir_path.exists():
+    md = md_path(bdir, slug)
+    if md.exists():
+        for line in md.read_text(encoding="utf-8").split("\n"):
+            s = line.strip()
+            if s and not s.startswith(("#", "!", "<", "|")) and not s.startswith("一 "):
+                return ""
+    if not ir_path(bdir, slug).exists():
         return ""
-    d = load(ir_path)
+    d = load(ir_path(bdir, slug))
     for n in d["nodes"][1:3]:
         if n["type"] == "h2":
             return n.get("zh") or n.get("text", "")
     return ""
-
-
-def chapters_of(ir_path: Path):
-    if not ir_path.exists():
-        return []
-    out = []
-    for n in load(ir_path)["nodes"]:
-        if n["type"] == "chapter-title":
-            zh = n.get("zh") or n.get("text", "")
-            m = re.match(r"([\d.R]+)\s+(.*)", zh)
-            out.append((m.group(1), m.group(2)) if m else ("", zh))
-    return out
 
 
 def main():
@@ -63,10 +103,9 @@ def main():
 
         for p in cfg["parts"]:
             total_parts += 1
-            ir = b / "ir" / f"{p['slug']}.json"
             meta_p = b / "ir" / f"{p['slug']}.meta.json"
             meta = load(meta_p) if meta_p.exists() else {}
-            chs = chapters_of(ir)
+            chs = chapters_of(b, p["slug"])
             ch_total += len(chs)
             total_ch += len(chs)
 
@@ -81,13 +120,15 @@ def main():
                 lis = ('\n    <p class="todo">待翻译 · '
                        f'{p["first_page"]}–{p["last_page"]} 页</p>\n')
 
+            note = part_summary(b, p["slug"], meta)
+            note_html = f'\n    <p class="part-note">{esc(note)}</p>' if note else ""
+
             book_blocks.append(f"""  <details class="toc-part">
     <summary>
       <span class="part-badge">第 {p['num_zh']} 部分</span>
       <span class="part-name">{esc(p['title_zh'])}</span>
       <span class="part-count">{len(chs)} 章</span>
-    </summary>
-    <p class="part-note">{esc(part_summary(ir, meta))}</p>{lis}  </details>""")
+    </summary>{note_html}{lis}  </details>""")
 
         subtitle = cfg.get("subtitle_zh", "")
         sections.append(f"""<section class="book" id="{cfg['id']}">

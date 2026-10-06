@@ -36,7 +36,17 @@ jobs:
       - name: Validate translations
         run: python tools/check.py
 
-      - name: Render every book that has translations
+      # Books translated as Markdown (pi-manual) render through a different path than the
+      # IR-based ones (pi-durable), so both steps run and each is a no-op if unused.
+      - name: Check Markdown structure against the English baseline
+        if: hashFiles('books/pi-manual/md/parts/*.md') != ''
+        run: python tools/check_md.py
+
+      - name: Render Markdown books
+        if: hashFiles('books/pi-manual/md/parts/*.md') != ''
+        run: python tools/md2html.py books/pi-manual/md/parts site/pi-manual
+
+      - name: Render IR books
         run: |
           for id in $(python tools/book.py list --ids); do
             echo "::group::render $id"
