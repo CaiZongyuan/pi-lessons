@@ -21,6 +21,22 @@ ROOT = Path(__file__).resolve().parent.parent
 SKIP_DIRS = {".git", "__pycache__", ".workbuddy", "work", "node_modules", "src"}
 
 
+def html_pages(out: Path):
+    """Every HTML file in the build, minus anything inside a skip directory.
+
+    The comparison is on the path *relative to the output directory*. Testing the absolute
+    path looks correct and is not: a GitHub runner's checkout lives under
+    `/home/runner/work/…`, so a `work` entry in SKIP_DIRS silently filtered out every page
+    of the build — and the verifier reported "no HTML pages found" for a build that had
+    just reported success.
+    """
+    for page in out.rglob("*.html"):
+        rel = page.relative_to(out)
+        if any(part in SKIP_DIRS for part in rel.parts):
+            continue
+        yield page
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("out", nargs="?", default=str(ROOT / "docs" / "dist"),
@@ -33,12 +49,18 @@ def main():
 
     out = Path(a.out).resolve()
     if not out.exists():
+        here = Path.cwd()
+        listing = sorted(p.name for p in here.iterdir())[:15] if here.is_dir() else []
         print(f"output directory does not exist: {out}")
+        print(f"  cwd: {here}")
+        print(f"  contains: {listing}")
         return 1
 
-    pages = [p for p in out.rglob("*.html") if not any(s in p.parts for s in SKIP_DIRS)]
+    pages = list(html_pages(out))
     if not pages:
-        print("no HTML pages found — was the build run?")
+        print(f"no HTML pages found under {out}")
+        for sub in sorted(p for p in out.iterdir() if p.is_dir()):
+            print(f"  {sub.name}/: {sum(1 for _ in sub.rglob('*'))} entries")
         return 1
 
     problems = []
