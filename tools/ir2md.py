@@ -40,6 +40,8 @@ import re
 import sys
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parent.parent
+
 LANG_HINTS = [
     (re.compile(r"^\s*[{[]"), "json"),
     (re.compile(r"\b(const|await|async|function|return|export|import)\b"), "ts"),
@@ -225,6 +227,26 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
     return md, stats
 
 
+def deploy_base() -> str:
+    """Read the deploy base from docs/astro.config.mjs.
+
+    Figure paths must carry the base: the site is served from a sub-path, and Astro does
+    not rewrite absolute URLs inside Markdown. Reading it here rather than taking it from
+    the caller means `ir2md.py` produces correct output whether it is run by hand, by
+    `docs.py sync --ir-to-md`, or by CI — an earlier version relied on the caller passing
+    `--asset-prefix` and silently emitted base-less paths whenever nobody did.
+    """
+    cfg = ROOT / "docs" / "astro.config.mjs"
+    if not cfg.exists():
+        return ""
+    text = cfg.read_text(encoding="utf-8")
+    const = re.search(r"""const\s+BASE\s*=\s*['"]([^'"]+)['"]""", text)
+    if const:
+        return const.group(1).rstrip("/")
+    m = re.search(r"""base:\s*['"]([^'"]+)['"]""", text)
+    return m.group(1).rstrip("/") if m else ""
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ir_dir", type=Path)
@@ -232,8 +254,9 @@ def main():
     ap.add_argument("--part", help="only convert this slug")
     ap.add_argument("--bilingual", action="store_true",
                     help="keep the English source above the translation")
-    ap.add_argument("--asset-prefix", default="",
-                    help="prefix for figure src, e.g. /_assets/<book>/<part>/")
+    ap.add_argument("--asset-prefix", default=None,
+                    help="override the figure src prefix; default derives it from the "
+                         "deploy base in docs/astro.config.mjs")
     a = ap.parse_args()
 
     a.out.mkdir(parents=True, exist_ok=True)
@@ -244,7 +267,10 @@ def main():
         slug = ir.stem
         if a.part and slug != a.part:
             continue
-        md, stats = convert(ir, a.bilingual, a.asset_prefix)
+        prefix = a.asset_prefix
+        if prefix is None:
+            prefix = f"{deploy_base()}/_assets/{a.ir_dir.parent.name}/{slug}/"
+        md, stats = convert(ir, a.bilingual, prefix)
         (a.out / f"{slug}.md").write_text(md, encoding="utf-8")
         total += 1
         print(f"{slug:18s} {len(md)//1024:4d} KB  "
