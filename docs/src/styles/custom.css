@@ -1,0 +1,221 @@
+/* Pi Lessons — reading experience tweaks on top of Starlight.
+   Restrained on purpose: no gradients, few colours, typography first. */
+
+:root {
+  /* Reading width. Starlight's default is comfortable; a touch narrower reads better for
+     long Chinese paragraphs with inline code. */
+  --sl-content-width: 46rem;
+
+  /* Accent: a muted ink blue that stays legible on both light and dark backgrounds. */
+  --sl-color-accent: #2a5f88;
+  --sl-color-accent-high: #1d4a6b;
+  --sl-color-accent-low: #b8cede;
+  --sl-color-accent-2: #10707a;
+  --sl-color-accent-3: #7a5b96;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #e6e9ef;
+  --sl-color-gray-2: #c3c9d4;
+  --sl-color-gray-3: #878e97;
+  --sl-color-gray-4: #4b5563;
+  --sl-color-gray-5: #2a3140;
+  --sl-color-gray-6: #1a1f2b;
+  --sl-color-black: #10141c;
+
+  --sl-font: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --sl-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent: #2a5f88;
+  --sl-color-accent-high: #163d5c;
+  --sl-color-accent-low: #ccdae6;
+  --sl-color-text: #161d27;
+  --sl-color-text-accent: #2a5f88;
+  --sl-color-background: #fdfcfb;
+  --sl-color-background-nav: #f7f6f3;
+  --sl-color-background-sidebar: #faf9f7;
+  --sl-color-background-hairline: #e3e1dc;
+  --sl-color-inline-code: #f0eeea;
+  --sl-color-inline-code-text: #1a3f5c;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent: #7fb4d8;
+  --sl-color-accent-high: #a9cfe8;
+  --sl-color-accent-low: #234055;
+  --sl-color-text: #e2e6ec;
+  --sl-color-text-accent: #7fb4d8;
+  --sl-color-background: #12151c;
+  --sl-color-background-nav: #171b23;
+  --sl-color-background-sidebar: #1a1e27;
+  --sl-color-background-hairline: #2c323d;
+  --sl-color-inline-code: #232833;
+  --sl-color-inline-code-text: #d5e3ee;
+}
+
+/* ---------------------------------------------------------------- typography */
+.sl-markdown-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: 0.003em;
+}
+
+.sl-markdown-content p {
+  margin-block: 1.05em;
+}
+
+/* Inline code: these pages are dense with identifiers, so it must stay quiet. Starlight
+   ships its own `code` styling, so override the variables it reads rather than the
+   properties directly — otherwise the theme keeps winning. */
+.sl-markdown-content :not(pre) > code {
+  font-size: 0.855em;
+  padding: 0.1em 0.34em;
+  border-radius: 4px;
+  background: var(--sl-color-inline-code);
+  color: var(--sl-color-inline-code-text, var(--sl-color-text));
+  border: 1px solid var(--sl-color-background-hairline);
+  white-space: nowrap;
+}
+
+/* Astro/Starlight wrap code in `.astro-code`, whose text colour must not be forced dark
+   in dark mode. */
+.sl-markdown-content code {
+  color: inherit;
+}
+
+.sl-markdown-content h2 {
+  margin-top: 2.4em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--sl-color-background-hairline);
+  font-size: 1.5em;
+  letter-spacing: -0.01em;
+}
+
+.sl-markdown-content h3 {
+  margin-top: 1.9em;
+  font-size: 1.2em;
+  letter-spacing: -0.005em;
+}
+
+/* ---------------------------------------------------------------- tables */
+.sl-markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.sl-markdown-content th,
+.sl-markdown-content td {
+  padding: 0.55em 0.75em;
+  border: 1px solid var(--sl-color-background-hairline);
+  text-align: left;
+  vertical-align: top;
+}
+
+.sl-markdown-content th {
+  background: var(--sl-color-gray-1);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sl-markdown-content tbody tr:nth-child(2n) {
+  background: color-mix(in srgb, var(--sl-color-gray-1) 45%, transparent);
+}
+
+/* ---------------------------------------------------------------- figures */
+.sl-markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid var(--sl-color-background-hairline);
+}
+
+.sl-markdown-content figure img {
+  cursor: zoom-in;
+}
+
+/* Figures are wrapped in a bare <img> by the IR adapter; give it room to breathe. */
+.sl-markdown-content img + p em,
+.sl-markdown-content p em:only-child {
+  display: block;
+  margin-top: -0.35em;
+  font-size: 0.85em;
+  color: var(--sl-color-gray-3);
+}
+
+/* ---------------------------------------------------------------- notes */
+.sl-markdown-content .starlight-aside {
+  font-size: 0.92em;
+}
+
+/* The `:::note` blocks the adapter emits render as plain paragraphs; give them the
+   callout treatment Starlight uses for asides. */
+.sl-markdown-content blockquote {
+  margin-inline: 0;
+  padding: 0.15em 0 0.15em 1em;
+  border-inline-start: 3px solid var(--sl-color-accent-low);
+  color: var(--sl-color-gray-4);
+  font-style: normal;
+}
+
+/* ---------------------------------------------------------------- sidebar */
+/* Collapsible by default: 19 chapters across two books is a long list, and the reader
+   usually wants the current section, not the whole tree. */
+.sidebar-content {
+  font-size: 0.9rem;
+}
+
+.sidebar-content details > summary {
+  font-weight: 600;
+}
+
+/* Make the current page's part obvious. */
+.sidebar-content a[aria-current='page'] {
+  font-weight: 600;
+  background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------- right TOC */
+/* On large screens Starlight shows a right-hand table of contents; keep it always
+   visible so a reader can see where they are in a long chapter. */
+@media (min-width: 72rem) {
+  .sidebar-pane {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.right-sidebar-panel {
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------------- home cards */
+.sl-markdown-content .card {
+  border-radius: 8px;
+}
+
+.book-meta {
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-3);
+  margin-block: 0.4em;
+}
+
+/* ---------------------------------------------------------------- anchors */
+.sl-markdown-content :is(h2, h3, h4) {
+  scroll-margin-top: 5rem;
+}
+
+/* ---------------------------------------------------------------- mobile */
+@media (max-width: 50rem) {
+  .sl-markdown-content table {
+    font-size: 0.8rem;
+  }
+  .sl-markdown-content :not(pre) > code {
+    white-space: normal;
+  }
+}

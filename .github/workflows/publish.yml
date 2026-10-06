@@ -1,17 +1,17 @@
-name: publish
+name: Publish docs
 
-# The render stage needs no source PDF: it consumes the translated IR that is committed
-# under books/<id>/ir/. That keeps CI fast and lets the copyrighted PDFs stay out of the
-# repository. Re-run `book.py extract` locally when a new PDF revision lands, commit the
-# refreshed IR, and this workflow publishes it.
+# Two pipelines meet in this workflow:
+#
+#   books/ ──▶ Python content tools ──▶ docs/src/content/docs/ ──▶ Astro ──▶ dist/ ──▶ Pages
+#
+# The Python side owns content (IR extraction, IR→Markdown, translation validation); Astro
+# owns presentation. The steps stay explicit rather than hidden behind a composite action,
+# because a content build and a site build fail for different reasons and the log should
+# say which.
 
 on:
   push:
     branches: [main]
-    paths:
-      - "books/**"
-      - "tools/**"
-      - ".github/workflows/publish.yml"
   workflow_dispatch:
 
 permissions:
@@ -19,6 +19,7 @@ permissions:
   pages: write
   id-token: write
 
+# A newer push supersedes an in-flight deploy; two deploys must never race.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -31,43 +32,63 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          python-version: '3.12'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      # ---- content validation ---------------------------------------------
+      # Runs before the Node toolchain is installed so a broken translation fails in
+      # seconds rather than after a full dependency install.
       - name: Validate translations
-        run: python tools/check.py
-
-      # Books translated as Markdown (pi-manual) render through a different path than the
-      # IR-based ones (pi-durable), so both steps run and each is a no-op if unused.
-      - name: Check Markdown structure against the English baseline
-        if: hashFiles('books/pi-manual/md/parts/*.md') != ''
-        run: python tools/check_md.py
-
-      - name: Render Markdown books
-        if: hashFiles('books/pi-manual/md/parts/*.md') != ''
-        run: python tools/md2html.py books/pi-manual/md/parts site/pi-manual
-
-      - name: Render IR books
         run: |
-          for id in $(python tools/book.py list --ids); do
-            echo "::group::render $id"
-            python tools/book.py render "$id"
-            echo "::endgroup::"
-          done
+          python tools/check.py
+          python tools/check_md.py
 
-      - name: Regenerate landing page
-        run: python tools/book.py index
-
-      # Second pass, now that HTML exists: every translated part must have produced a
-      # page, and that page must be self-contained.
-      - name: Validate rendered output
+      # ---- content sync ---------------------------------------------------
+      # books/ is the source of truth. The content collection is generated from it and
+      # is gitignored, so a clean checkout reproduces the site exactly.
+      - name: Generate Starlight content
         run: |
-          CHECK_REQUIRE_HTML=1 python tools/check.py
-          python tools/verify_site.py
+          python tools/ir2md.py books/pi-durable/ir --out books/pi-durable/md/parts
+          python tools/docs.py sync
+
+      - name: Confirm generated content is current
+        run: python tools/docs.py check
+
+      # ---- site build -----------------------------------------------------
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci --no-audit --no-fund
+
+      - name: Astro check
+        working-directory: docs
+        run: npx astro check
+
+      - name: Build site
+        working-directory: docs
+        run: npm run build
+
+      # ---- verify before publishing ----------------------------------------
+      # A half-built site must never go live: the deploy job only runs if this passes.
+      - name: Verify built site
+        run: |
+          python tools/verify_site.py docs/dist \
+            --expect index.html \
+            --expect 404.html \
+            --expect sitemap-index.xml \
+            --expect pi-manual/01-model/index.html \
+            --expect pi-manual/08-reference/index.html \
+            --expect pi-durable/01-model/index.html \
+            --expect pi-durable/11-reference/index.html
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: docs/dist
 
   deploy:
     needs: build

@@ -51,3 +51,23 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# Astro / Starlight
+docs/node_modules/
+docs/dist/
+docs/.astro/
+docs/preview-site/
+docs/prev2/
+docs/prev3/
+docs/dist-public-preview/
+# generated from books/ by `npm run sync` — never edit
+docs/src/content/docs/pi-manual/
+docs/src/content/docs/pi-durable/
+docs/public/_assets/
+docs/public/sitemap/
+docs/public/sitemap-index.xml
+docs/node_modules*/
+docs/pnpm-lock.yaml
+docs/pnpm-workspace.yaml
+docs/fix_deps.py
+docs/src/components/BookCards.astro

@@ -1,0 +1,7 @@
+dist/
+node_modules/
+.astro/
+# generated from books/ by `pnpm sync` — never edit
+src/content/docs/pi-manual/
+src/content/docs/pi-durable/
+public/_assets/
