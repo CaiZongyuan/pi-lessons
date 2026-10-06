@@ -30,6 +30,22 @@ PLATFORM = re.compile(r"-(win32|darwin|linux|android|freebsd)(-(x64|arm64|arm|ia
                       r"(-(gnu|musl|gnueabihf|musleabihf|eabi))?$")
 
 
+def resolve_version(spec: str) -> str | None:
+    """Turn a dependency range into a concrete version.
+
+    `optionalDependencies` in a lock file may hold either an exact version or a range
+    (`~2.3.2`). npm rejects a range where a version is expected — "Invalid Version:
+    ~2.3.2" — so a range is resolved against whatever the lock already pinned for the same
+    package on another platform.
+    """
+    spec = (spec or "").strip()
+    if re.fullmatch(r"\d+\.\d+\.\d+([-+].*)?", spec):
+        return spec
+    base = spec.lstrip("^~>=< ")
+    m = re.match(r"(\d+\.\d+\.\d+)", base)
+    return m.group(1) if m else None
+
+
 def main():
     if not LOCK.exists():
         raise SystemExit(f"no lock file at {LOCK}")
@@ -45,12 +61,25 @@ def main():
 
     # fill os/cpu from any entry we already have, then clone for the missing platforms
     known = {k: v for k, v in packages.items() if PLATFORM.search(k)}
+    # name -> pinned version, so a range can be resolved from a sibling platform entry
+    pinned: dict[str, str] = {}
+    for key, meta in packages.items():
+        name = key.split("node_modules/")[-1]
+        v = meta.get("version")
+        if v and re.fullmatch(r"\d+\.\d+\.\d+([-+].*)?", str(v)):
+            pinned.setdefault(name, str(v))
+
     additions: dict[str, dict] = {}
+    skipped: list[str] = []
     for name, meta in packages.items():
         for dep, spec in (meta.get("optionalDependencies") or {}).items():
-            if f"node_modules/{dep}" in packages or f"node_modules/{dep}" in additions:
+            key = f"node_modules/{dep}"
+            if key in packages or key in additions:
                 continue
-            # find a sibling variant already present to copy cpu from
+            version = resolve_version(spec) or pinned.get(dep)
+            if not version:
+                skipped.append(dep)
+                continue
             prefix = dep.rsplit("-", 1)[0]
             sample = next(
                 (v for k, v in known.items()
@@ -58,15 +87,16 @@ def main():
                 None,
             )
             entry = {
-                "version": spec,
-                "resolved": f"https://registry.npmjs.org/{dep}/-/{dep.split('/')[-1]}-{spec}.tgz",
+                "version": version,
+                "resolved": (f"https://registry.npmjs.org/{dep}/-/"
+                             f"{dep.split('/')[-1]}-{version}.tgz"),
                 "cpu": (sample or {}).get("cpu"),
                 "optional": True,
             }
             m = PLATFORM.search(dep)
             if m:
                 entry["os"] = m.group(1)
-            additions[f"node_modules/{dep}"] = entry
+            additions[key] = entry
 
     packages.update(additions)
     added = len(additions)
