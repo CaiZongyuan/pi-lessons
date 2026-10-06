@@ -7,6 +7,7 @@ any problem.
 """
 
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -20,7 +21,7 @@ TAGS = ["html", "head", "body", "main", "section", "figure", "figcaption",
         "ul", "ol", "li", "pre", "code", "span", "p", "h1", "h2", "h3", "a", "div", "details"]
 
 
-def check_book(bdir: Path, only: str | None):
+def check_book(bdir: Path, require_html: bool):
     cfg = json.loads((bdir / "book.json").read_text(encoding="utf-8"))
     book = cfg["id"]
     problems = []
@@ -32,7 +33,7 @@ def check_book(bdir: Path, only: str | None):
         html_path = SITE / book / slug / "index.html"
 
         if not ir_path.exists():
-            rows.append((slug, "-", "-", "not translated"))
+            rows.append((slug, "-", "-", "not translated", False))
             continue
 
         nodes = json.loads(ir_path.read_text(encoding="utf-8"))["nodes"]
@@ -40,9 +41,10 @@ def check_book(bdir: Path, only: str | None):
                    if n["type"] in TRANSLATABLE
                    and not (n.get("zh") or n.get("zh_caption"))]
 
-        notes = []
+        notes, fatal = [], []
         if missing:
             notes.append(f"UNTRANSLATED {len(missing)}: {missing[:4]}")
+            fatal.extend(notes)          # a half-translated part must block publishing
 
         if html_path.exists():
             s = html_path.read_text(encoding="utf-8")
@@ -50,39 +52,45 @@ def check_book(bdir: Path, only: str | None):
                 o = len(re.findall(r"<" + t + r"[ >]", s))
                 c = s.count("</" + t + ">")
                 if o != c:
-                    notes.append(f"TAG {t}:{o}/{c}")
-            # every referenced local asset must exist next to the page
+                    fatal.append(f"TAG {t}:{o}/{c}")
             for ref in set(re.findall(r'(?:src|href)="([^"#:]+)"', s)):
                 if ref.startswith(("http", "mailto", "#")):
                     continue
                 if not (html_path.parent / ref).exists():
-                    notes.append(f"MISSING ASSET {ref}")
-            status = "ok" if not notes else "BAD"
+                    fatal.append(f"MISSING ASSET {ref}")
+            status = "ok" if not fatal else "BAD"
+            notes = fatal
         else:
             status = "-"
-            notes.append("html not built")
+            if require_html:
+                # only a real problem once the render step should have produced output
+                fatal.append("html not built")
+                notes.append("html not built")
 
-        rows.append((slug, len(nodes), len(missing), status + ("; " + "; ".join(notes) if notes else "")))
-        problems.extend(notes)
+        rows.append((slug, len(nodes), len(missing), status, fatal))
+        problems.extend(fatal)
 
     return book, rows, problems
 
 
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None
+    # Before the render step a clean checkout legitimately has no HTML yet, so a missing
+    # page is reported but not treated as a failure. `verify_site.py` covers the case
+    # where a page is expected and its assets are missing.
+    require_html = os.environ.get("CHECK_REQUIRE_HTML") == "1"
+
     total = 0
     print(f"{'part':20s} {'nodes':>6s} {'miss':>5s}  status")
     for bdir in sorted(BOOKS.iterdir()):
         if not (bdir / "book.json").exists():
             continue
-        book, rows, problems = check_book(bdir, only)
+        book, rows, problems = check_book(bdir, require_html)
         if only and book != only:
             continue
         print(f"\n== {book}")
-        for slug, n, m, note in rows:
-            ns = n if isinstance(n, str) else str(n)
-            ms = m if isinstance(m, str) else str(m)
-            print(f"{slug:20s} {ns:>6s} {ms:>5s}  {note}")
+        for slug, n, m, note, _ in rows:
+            print(f"{slug:20s} {str(n):>6s} {str(m):>5s}  {note}")
         total += len(problems)
 
     print(f"\nPROBLEMS: {total}")

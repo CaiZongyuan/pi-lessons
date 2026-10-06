@@ -33,7 +33,7 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Validate IR and translations
+      - name: Validate translations
         run: python tools/check.py
 
       - name: Render every book that has translations
@@ -47,8 +47,12 @@ jobs:
       - name: Regenerate landing page
         run: python tools/book.py index
 
-      - name: Verify no broken asset references
-        run: python tools/verify_site.py
+      # Second pass, now that HTML exists: every translated part must have produced a
+      # page, and that page must be self-contained.
+      - name: Validate rendered output
+        run: |
+          CHECK_REQUIRE_HTML=1 python tools/check.py
+          python tools/verify_site.py
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
