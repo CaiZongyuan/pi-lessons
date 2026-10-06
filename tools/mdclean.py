@@ -52,10 +52,56 @@ def fix_escaped(text: str) -> str:
 
 
 def fix_split_words(text: str) -> str:
-    """Rejoin words broken by an inline image or a stray tag boundary."""
-    # "core t\n\nthat" style: a single capitalised fragment followed by a lowercase word
-    text = re.sub(r"\b([a-z])\s*\n+\s*([a-z]{2,})\b", r"\1\2", text)
+    """Rejoin words the parser fused or broke.
+
+    Two artefacts recur: a line break inside a word ("of\nnamed" -> "of named"), and a
+    dropped space where a run was recombined ("swapped of" for "swapped off" is content,
+    but "ofnamed" is a join artefact). Only the fused form is repaired here — inserting a
+    space needs the dictionary, not a regex.
+    """
+    text = re.sub(r"([a-z])\n([a-z]{2,})", r"\1 \2", text)
+    # a lowercase run immediately followed by a capitalized one lost its space
+    text = re.sub(r"\b([a-z]{3,})([A-Z][a-z]{2,})\b", r"\1 \2", text)
     return text
+
+
+CODE_HINT = re.compile(r"[$§]|\b(?:const|let|await|async|function|return|export|import)\b"
+                       r"|=>|^\s*[<\[(]|\b\w+\s*:\s*\w")
+
+
+def demote_pseudo_headings(text: str) -> str:
+    """Turn code comments back into comments.
+
+    MinerU sometimes reads a leading `# …` line inside a fenced code block as a Markdown
+    heading, so a code block gets chopped up and its comments surface as document headings.
+    The giveaway is that these lines look like code: they mention `$`/`§` markers, a
+    keyword, an arrow, or a type annotation.
+    """
+    out = []
+    for line in text.split("\n"):
+        m = re.match(r"^(#{1,6})\s+(.*)$", line)
+        if m and CODE_HINT.search(m.group(2)):
+            line = "#" + line          # one more hash => code comment inside a fence
+        out.append(line)
+    return "\n".join(out)
+
+
+def fix_heading_spacing(text: str) -> str:
+    """`## TheModel` -> `## The Model`; tracked caps leave words glued together.
+
+    Acronyms must survive intact: splitting on the case boundary alone turns "WireAPIs"
+    into "Wire AP Is" and "APIs" into "AP Is". So a boundary only counts as a word break
+    when the following capital is followed by a *lowercase* letter (the "APIs" in
+    "WireAPIs" → "Wire APIs"), or when the pair sits either side of a digit run.
+    """
+    def sp(m):
+        title = m.group(2)
+        # split "APIs" style boundaries only: capital + (Cap)(lower)
+        t = re.sub(r"(?<=[a-z0-9])(?=[A-Z][a-z])", " ", title)
+        # split "TheModel" style boundaries: lower/digit + Capital + Capitals
+        t = re.sub(r"(?<=[a-z0-9])(?=[A-Z](?=[A-Z]))", " ", t)
+        return f"{m.group(1)} {t.strip()}"
+    return re.sub(r"^(#{1,6})\s+(.+)$", sp, text, flags=re.M)
 
 
 def tidy(text: str) -> str:
@@ -63,13 +109,13 @@ def tidy(text: str) -> str:
     text = fix_escaped(text)
     text = fix_doubled_letters(text)
     text = fix_split_words(text)
-    # sup removal leaves "t h e" style runs in headings like "W H Y I T M A T T E R S"
+    text = demote_pseudo_headings(text)
+    text = fix_heading_spacing(text)
+    # a heading that is one tracked-caps run: "W H Y I T M A T T E R S"
     text = re.sub(r"^(#{1,6})\s*((?:[A-Z]\s+){3,}[A-Z])\s*$",
                   lambda m: f"{m.group(1)} {re.sub(r'\\s+', ' ', m.group(2)).title()}",
                   text, flags=re.M)
-    # collapse runs of blank lines left behind
     text = re.sub(r"\n{3,}", "\n\n", text)
-    # trailing spaces before a newline
     text = re.sub(r"[ \t]+\n", "\n", text)
     return text.strip() + "\n"
 

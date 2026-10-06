@@ -8,7 +8,12 @@
     "note": "源 PDF 不入库。本地重跑抽取时用 --pdf 指向它，或设环境变量 PI_PDF。",
     "pages": 221
   },
-  "status": "待翻译",
+  "status": "英文已转 Markdown，中文翻译待开始",
+  "markdown": {
+    "source": "MinerU 精准 API（v4）",
+    "images": "md/images/",
+    "parts": "md/parts/"
+  },
   "parts": [
     { "slug": "01-model",        "first_page": 6,   "last_page": 22,  "num_zh": "一", "label_zh": "模型",           "title_zh": "模型" },
     { "slug": "02-provider",     "first_page": 23,  "last_page": 47,  "num_zh": "二", "label_zh": "供应商层",       "title_zh": "供应商层" },
