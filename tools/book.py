@@ -36,8 +36,19 @@ PY = sys.executable
 
 
 # ---------------------------------------------------------------- discovery
+# Pi before Durable: it is the primary tutorial, Durable is the follow-up deep dive.
+BOOK_ORDER = {"pi-manual": 0, "pi-durable": 1}
+
+
 def find_books():
-    return sorted(p for p in BOOKS.iterdir() if (p / "book.json").exists())
+    """All book directories, primary tutorial first."""
+    def key(p):
+        try:
+            bid = json.loads((p / "book.json").read_text(encoding="utf-8"))["id"]
+        except Exception:
+            return 99
+        return (BOOK_ORDER.get(bid, 50), bid)
+    return sorted((p for p in BOOKS.iterdir() if (p / "book.json").exists()), key=key)
 
 
 def load_config(book_id: str) -> dict:

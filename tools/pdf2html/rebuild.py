@@ -1,29 +1,37 @@
+#!/usr/bin/env python
 """
-Re-run extraction + normalisation for every part while *preserving* existing
-translations, then re-render.
+Re-run extraction + normalisation for a book while *preserving* translations.
 
-Normalisation rules change as we learn more about the source (caption/code
-separation, line merging, list detection). Without this, a rule fix would wipe the
-translated `zh` fields. Translations are matched to nodes by (type, page, english
-text) so they survive the rebuild.
+Normalisation rules improve as we learn more about the source (caption/code separation,
+line merging, list detection). Re-running would wipe every translated `zh` field, so
+translations are matched back onto the rebuilt nodes by progressively looser keys.
 
-Usage:  python rebuild.py            # all parts
-        python rebuild.py 05tasks    # just one
+    python tools/pdf2html/rebuild.py pi-durable
+    python tools/pdf2html/rebuild.py pi-manual --part 01-model
 """
 
+import argparse
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-HERE = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent.parent
+BOOKS = ROOT / "books"
+PIPELINE = Path(__file__).resolve().parent
 PY = sys.executable
-sys.path.insert(0, str(HERE))
-from parts import PARTS, part_dir  # noqa: E402
+
+sys.path.insert(0, str(ROOT / "tools"))
 
 
 def snapshot(path: Path):
-    """Map several keys -> translation payload, for progressively looser matching."""
+    """Translation payloads keyed by progressively looser identity.
+
+    A rule change can alter a node's *type* as well as its boundaries — a caption used to
+    be classed as `code` and is now `small` — so the type is deliberately excluded from
+    the loosest keys. Without that, a genuine reclassification silently orphans the
+    translation.
+    """
     if not path.exists():
         return {}
     d = json.loads(path.read_text(encoding="utf-8"))
@@ -37,13 +45,13 @@ def snapshot(path: Path):
         if not payload:
             continue
         text = n.get("text", "")
-        out[("full", n["type"], n.get("page"), text)] = payload
-        # looser keys let a translation survive a rule change that re-merged or
-        # re-split neighbouring lines
         norm = " ".join(text.split())
+        out[("full", n["type"], n.get("page"), text)] = payload
         out[("norm", n["type"], n.get("page"), norm)] = payload
-        if len(norm) > 24:
-            out[("stem", n["type"], n.get("page"), norm[:24])] = payload
+        # type-free keys: survive a node being reclassified
+        if len(norm) >= 24:
+            out[("anytype", norm)] = payload
+            out[("anystem", norm[:40])] = payload
     return out
 
 
@@ -53,62 +61,70 @@ def _lookup(snap, n):
     for key in (
         ("full", n["type"], n.get("page"), text),
         ("norm", n["type"], n.get("page"), norm),
-        ("stem", n["type"], n.get("page"), norm[:24]),
+        ("anytype", norm),
+        ("anystem", norm[:40]),
     ):
         if key in snap:
             return snap[key]
     return None
 
 
-def restore(path: Path, snap):
+def restore(path: Path, snap) -> int:
     if not snap:
-        return 0, 0
+        return 0
     d = json.loads(path.read_text(encoding="utf-8"))
-    hits = exact = 0
+    hits = 0
     for n in d["nodes"]:
         if n["type"] == "code":
             continue
         if n.get("zh") or n.get("zh_caption"):
-            exact += 1
+            hits += 1
             continue
         payload = _lookup(snap, n)
         if payload:
             n.update(payload)
             hits += 1
     path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
-    return exact + hits, hits
+    return hits
 
 
 def main():
-    targets = sys.argv[1:] or [p[0] for p in PARTS]
-    for slug in targets:
-        d = part_dir(slug)
-        ir = d / "ir.json"
-        # stash the previous IR so a failed run never loses the translations
-        bak = d / "ir.prev.json"
+    ap = argparse.ArgumentParser()
+    ap.add_argument("book")
+    ap.add_argument("--part")
+    ap.add_argument("--pdf", help="source PDF (or set PI_PDF)")
+    ap.add_argument("--dpi", type=int, default=200)
+    args = ap.parse_args()
+
+    bdir = BOOKS / args.book
+    cfg = json.loads((bdir / "book.json").read_text(encoding="utf-8"))
+
+    from book import locate_pdf          # same PDF resolution rules as book.py
+    pdf = locate_pdf(cfg, args.pdf)
+
+    for part in cfg["parts"]:
+        slug = part["slug"]
+        if args.part and slug != args.part:
+            continue
+        out = bdir / "ir" / slug
+        ir = out / "ir.json"
+        if not ir.exists():
+            print(f"skip {slug} (never extracted)")
+            continue
+
         snap = snapshot(ir)
-        before = len({k for k in snap})
-        if ir.exists():
-            bak.write_text(ir.read_text(encoding="utf-8"), encoding="utf-8")
+        (out / "ir.prev.json").write_text(ir.read_text(encoding="utf-8"), encoding="utf-8")
 
-        subprocess.run([PY, str(HERE / "extract.py"), *_pages(slug), str(d)],
+        subprocess.run([PY, str(PIPELINE / "extract.py"),
+                        "--pdf", str(pdf), "--config", str(bdir / "book.json"),
+                        "--part", slug, "--out", str(out), "--dpi", str(args.dpi)],
                        check=True, capture_output=True)
-        subprocess.run([PY, str(HERE / "normalize.py"), str(d)],
+        subprocess.run([PY, str(PIPELINE / "normalize.py"), str(out)],
                        check=True, capture_output=True)
 
-        total_nodes, kept = restore(ir, snap)
+        kept = restore(ir, snap)
         total = len(json.loads(ir.read_text(encoding="utf-8"))["nodes"])
-        d = part_dir(slug)
-        (d / "style.css").write_text((HERE / "style.css").read_text(encoding="utf-8"),
-                                     encoding="utf-8")
-        subprocess.run([PY, str(HERE / "render.py"), str(d), str(d / "index.html")],
-                       check=True, capture_output=True)
-        print(f"{slug:18s} nodes={total:4d}  translated={kept:4d}  (backup: ir.prev.json)")
-
-
-def _pages(slug):
-    _, a, b, *_ = next(p for p in PARTS if p[0] == slug)
-    return str(a), str(b)
+        print(f"{slug:18s} nodes={total:4d}  translated={kept:4d}")
 
 
 if __name__ == "__main__":

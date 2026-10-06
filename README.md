@@ -1,125 +1,83 @@
+<div align="center">
+
 # Pi Lessons
 
-把英文技术手册翻译成可在线阅读的简体中文版，保留原版排版、矢量图表与代码格式。
+**Pi 的中文教程**
 
-在线阅读：<https://caizongyuan.github.io/pi-lessons/>
+把英文技术手册翻译成可在线阅读的中文版，保留原版结构、图表与代码格式。
 
-## 仓库结构
+[在线阅读](https://caizongyuan.github.io/pi-lessons/) · [Pi 技术手册](https://caizongyuan.github.io/pi-lessons/#pi-manual) · [Pi Durable 技术手册](https://caizongyuan.github.io/pi-lessons/#pi-durable)
 
-```
-books/
-  pi-durable/           Pi Durable 技术手册（190 页，已完成）
-    book.json             页码范围、章节中文名
-    GLOSSARY.md           术语表 —— 翻译时必须遵守
-    ir/
-      01-model.json       译文（唯一需要手工维护的内容）
-      01-model.meta.json  部分元数据
-      01-model/figures/   图表裁切（PNG）
-      ...
-  pi-manual/           Pi 技术手册（221 页，待翻译）
-tools/
-  book.py                 统一入口：list / extract / render / build / check / index
-  check.py                校验译文完整性与 HTML 结构
-  verify_site.py          发布前检查站内链接与资源
-  pdf2html/
-    extract.py            PDF → 文本块 + 图表裁切
-    normalize.py          文本块 → 语义 IR
-    render.py             IR → HTML
-    rebuild.py            改抽取规则后重跑并保住译文
-    bookindex.py          生成 site/index.html
-    style.css             唯一样式来源
-site/                     构建产物（不入库，由 CI 生成并发布）
-```
+</div>
 
-## 常用命令
+---
 
-```bash
-python tools/book.py list                    # 查看各书与各部分的翻译/构建状态
-python tools/book.py render pi-durable       # IR → HTML（不需要 PDF）
-python tools/book.py extract pi-manual       # PDF → IR + 图表裁切（需要 PDF）
-python tools/book.py check                   # 校验
-```
+## 教程
 
-## 关于源 PDF
+### 📘 [Pi 技术手册](https://caizongyuan.github.io/pi-lessons/)
 
-**源 PDF 不入库**（版权原因）。需要重跑抽取时，把 PDF 放到本地任一目录，然后：
+> 原文：[Pi Technical Manual](https://x.com/calebfahlgren/status/2107199330926899652) · 221 页 · 8 部分
 
-```bash
-# Windows
-set PI_PDF=C:\path\to\pdfs
-python tools/book.py extract pi-durable
+从模型调用到智能体循环，读懂 Pi 的核心设计与扩展点。
 
-# macOS / Linux
-export PI_PDF=/path/to/pdfs
-python tools/book.py extract pi-durable
-```
+| 部分 | 内容 |
+|---|---|
+| 1 · 模型 | Pi 要解决什么、单仓库一页纸、一次提示词的一生 |
+| 2 · 供应商层 | 供应商与模型、流式事件协议、跨供应商转交、鉴权与成本 |
+| 3 · 智能体循环 | 循环本体、智能体事件、`AgentSession` 接线、从 `prompt()` 到 `agent_settled` |
+| 4 · 编码智能体 | 系统提示词构建、内置工具、JSONL 会话树、压缩与分支摘要 |
+| 5 · 配置与扩展性 | 配置与鉴权、上下文文件与技能、扩展加载与 API、扩展事件、运行模式、RPC 与 SDK |
+| 6 · 集成与界面 | MCP、Codemode、`pi-tui` 终端界面框架 |
+| 7 · 实验特性与运维 | 实验特性栈、安全模型、遥测与评测 |
+| 附录 | 环境变量、CLI 参考、斜杠命令、设置参考、源码索引、术语表 |
 
-也可以直接指定：`--pdf /path/to/Pi-Technical-Manual.pdf`
+**状态**：英文原文已转 Markdown，中文翻译进行中。
 
-| 书 | 文件名 | 页数 |
-|---|---|---|
-| Pi Durable 技术手册 | `Pi-Durable-Technical-Manual.pdf` | 190 |
-| Pi 技术手册 | `Pi-Technical-Manual.pdf` | 221 |
+### 📗 [Pi Durable 技术手册](https://caizongyuan.github.io/pi-lessons/)
 
-## 流水线为什么这样切分
+> 原文：[Pi Durable Technical Manual](https://x.com/lucataco/status/2107230736403013653) · 190 页 · 11 部分 · **已完译**
 
-```
-PDF ──extract──> content.json ──normalize──> ir.json ──翻译──> ir.json+zh
-                                                              │
-                                                        render │
-                                                              ▼
-                                                          HTML ──> site/
-```
+Pi Durable 是 Pi 的会话与提交内核：让智能体每一个可见步骤都成为已存储的提交。
 
-关键点：**`render` 阶段完全不需要 PDF**。它只读译文 IR、图表裁切和样式表。
-这带来两个好处：
+| 部分 | 内容 |
+|---|---|
+| 1 · 模型 | 核心规则与八条不变式 |
+| 2 · Session 与提交 | 变更线、原子提交、`Seal`/`Notify`/`Join`/`Settle` |
+| 3 · 会话与上下文 | 条目、内置种类、分叉与交接 |
+| 4 · 文档 | 存储契约、作用域、化身与存续期 |
+| 5 · 任务 | 任务即状态机、阶段与进度、调度器、结构化并发、中止与孤儿 |
+| 6 · 运行 | 收件箱、生成与压缩、工具轮 |
+| 7 · 扩展与 Agent | 注册表、七种钩子、边运行边重载 |
+| 8 · 观察 | Chord、视图状态、智能体事件流、任务图 |
+| 9 · 存储与环境 | 存储契约、SQLite、JSONL、执行环境 |
+| 10 · 实践 | 构建真实智能体、会咬人的契约、刻意不做的事 |
+| 附录 | Harness 与会话 API、内置 kind、设置默认值、错误与原因、术语表 |
 
-1. CI 跑得快（不用重跑 190 页抽取）
-2. 译文与源 PDF 解耦 —— PDF 更新时只需本地重跑抽取、提交新的 IR，CI 自动重新发布
+<div align="center">
 
-## 翻译流程
+[开始阅读 Pi 手册 →](https://caizongyuan.github.io/pi-lessons/#pi-manual)
 
-1. `book.py extract <book>` 产出 IR
-2. 起 subagent 并行翻译各部分，遵守 `books/<id>/GLOSSARY.md`
-3. 译文写回 IR 的 `zh` 字段（`figure` 节点写 `zh_caption`，`code` 节点不动）
-4. `book.py check <book>` 确认 `missing: 0`
-5. `book.py render <book>` + `book.py index`
+</div>
 
-详见 skill：`~/.workbuddy/skills/pdf-to-zh-html/SKILL.md`
+---
 
-## 新增一本书
+## 原文来源
 
-```bash
-mkdir -p books/<id>/ir
-cp books/pi-durable/GLOSSARY.md books/<id>/GLOSSARY.md
-$EDITOR books/<id>/book.json      # 填页码范围与章节名
-python tools/book.py extract <id> # 需要先设好 PI_PDF
-```
+两本手册的原始 PDF 由作者公开发布，本仓库只提供中文翻译：
 
-`book.json` 里 `parts` 的页码范围可以用这段脚本从 PDF 反查（大字号标题即章节起点）：
+- **Pi Technical Manual** — <https://x.com/calebfahlgren/status/2107199330926899652>
+- **Pi Durable Technical Manual** — <https://x.com/lucataco/status/2107230736403013653>
 
-```bash
-python - <<'PY'
-import fitz
-d = fitz.open("<your.pdf>")
-for p in range(len(d)):
-    for b in d[p].get_text("dict")["blocks"]:
-        if b["type"]: continue
-        mx = max((s["size"] for l in b["lines"] for s in l["spans"]), default=0)
-        if mx >= 19:
-            t = "".join(s["text"] for l in b["lines"] for s in l["spans"]).strip()
-            if t: print(p + 1, round(mx, 1), t[:60])
-PY
-```
+原 PDF 不随本仓库分发。翻译内容版权归原作者所有，此处仅作学习交流。
 
-## 技术说明
+---
 
-两本手册都由同一个 "TechManual engine"（Paged.js + Chrome）生成，这决定了流水线必须这样写：
+## 参与翻译
 
-- **没有一张位图**，所有图表都是矢量 → 按坐标裁切为 200 DPI PNG
-- **字体全是 Type3 子集** → 文本能提取，但字体名在系统上不存在
-- **图注是字距展开的全大写**，PyMuPDF 返回 `F I G . 1 . 4` → 靠**空格字符自身的宽度**区分字距（1.3pt）与真实词间空格（3.8pt）
-- **每个文本块只有一行** → 按垂直间距重组为段落；正文左边距 57.6、列表项 71.6，据此区分段落与列表
-- **图注会重复出现**（截断版作为 `figure.caption`，完整版作为紧随的 `small`）→ 用最长公共子串覆盖率去重
+译文以 Markdown 为单位维护在 `books/<书名>/`，每部分一个文件。术语表见
+`books/pi-durable/GLOSSARY.md` —— 新增章节请先对照它保持术语一致：`Session`、
+`Harness`、`Chord` 这类代码里的类名保留英文，`pending`、`running` 这类状态值不译。
 
-`svgfig.py` 曾尝试导出带文字的 SVG 以便翻译图内标签，但 Type3 字体缺失导致回退字体重排、跨列文字重叠，已放弃。图表文字的翻译由下方中文图注承载。
+## 许可
+
+本仓库的翻译与编排代码遵循 MIT；原手册内容遵循原作者的许可。

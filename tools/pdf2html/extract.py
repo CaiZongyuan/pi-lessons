@@ -134,14 +134,33 @@ CODE_SIZES_MAX = 8.0
 
 
 def is_codeish(block) -> bool:
-    """Code lives in tinted panels: small type and code punctuation density."""
+    """Code lives in tinted panels: small type and code punctuation density.
+
+    Size alone is not enough — figure captions are set at a similar size and mention
+    code, so a caption like "Two inline state literals are hoisted into ... Run 12
+    prints { status: 'completed' }" trips every naive signal. The reliable giveaways
+    are that code lines start with an indent or a lowercase identifier and usually end
+    in a bracket or semicolon, whereas prose starts with a capital and reads as English.
+    """
     if max_size(block) > CODE_SIZES_MAX:
         return False
-    txt = block_text(block)
-    if not txt.strip():
+    txt = block_text(block).strip()
+    if not txt:
         return False
+
+    lines = [ln for ln in txt.split("\n") if ln.strip()]
+    if not lines:
+        return False
+
+    # prose giveaways
+    if lines[0][:1].isupper() and len(lines) == 1:
+        return False
+    alpha_words = sum(1 for w in " ".join(lines).split() if w.isalpha() and len(w) > 3)
+    if alpha_words / max(len(" ".join(lines).split()), 1) > 0.45:
+        return False
+
     signals = 0
-    if re.search(r"[;{}]\s*$", txt.strip()):
+    if re.search(r"[;{}]\s*$", txt):
         signals += 1
     if re.search(r"[=:]\s", txt):
         signals += 1

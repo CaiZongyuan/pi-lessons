@@ -47,7 +47,14 @@ def main():
     SITE.mkdir(exist_ok=True)
     sections, total_parts, total_ch = [], 0, 0
 
-    for b in sorted(BOOKS.iterdir()):
+    # Pi before Durable: it is the primary tutorial, Durable is the follow-up deep dive
+    order = {"pi-manual": 0, "pi-durable": 1}
+    book_dirs = sorted(BOOKS.iterdir(),
+                       key=lambda p: order.get(
+                           json.loads((p / "book.json").read_text(encoding="utf-8"))["id"]
+                           if (p / "book.json").exists() else "", 99))
+
+    for b in book_dirs:
         cfg_path = b / "book.json"
         if not cfg_path.exists():
             continue
@@ -83,7 +90,7 @@ def main():
     <p class="part-note">{esc(part_summary(ir, meta))}</p>{lis}  </details>""")
 
         subtitle = cfg.get("subtitle_zh", "")
-        sections.append(f"""<section class="book">
+        sections.append(f"""<section class="book" id="{cfg['id']}">
   <header class="book-head">
     <h2>{esc(cfg['title_zh'])}</h2>
     <p class="sub">{esc(subtitle)}</p>
@@ -118,7 +125,7 @@ def main():
 .masthead .meta {{
   font-family: var(--sans); font-size: 12.5px; color: var(--faint); letter-spacing: .08em;
 }}
-.book {{ margin: 0 0 52px; }}
+.book {{ margin: 0 0 52px; scroll-margin-top: 24px; }}
 .book-head {{ margin: 0 0 22px; }}
 .book-head h2 {{ font-size: 30px; margin: 0 0 8px; font-weight: 700; }}
 .book-head .sub {{ margin: 0 0 8px; font-size: 15.5px; color: var(--muted); font-style: italic; }}
