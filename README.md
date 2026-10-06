@@ -74,9 +74,38 @@ Pi Durable 是 Pi 的会话与提交内核：让智能体每一个可见步骤�
 
 ## 参与翻译
 
-译文以 Markdown 为单位维护在 `books/<书名>/`，每部分一个文件。术语表见
+译文以 Markdown 为单位维护在 `books/<书名>/md/parts/`，每部分一个文件，原文在上、
+译文在下逐段对照。术语表见 `books/pi-manual/GLOSSARY.md` 与
 `books/pi-durable/GLOSSARY.md` —— 新增章节请先对照它保持术语一致：`Session`、
 `Harness`、`Chord` 这类代码里的类名保留英文，`pending`、`running` 这类状态值不译。
+
+Pi Durable 的译文源是 `books/pi-durable/ir/*.json`，由 `tools/ir2md.py` 转成 Markdown
+供网站使用；修改译文请改 IR，不要改生成出来的 Markdown。
+
+## 本地运行
+
+网站用 Astro + Starlight 构建，依赖 `books/` 里的内容：
+
+```bash
+pip install pymupdf requests        # 只在需要重跑 PDF 抽取时装
+python tools/ir2md.py books/pi-durable/ir --out books/pi-durable/md/parts
+python tools/docs.py sync           # 生成 docs/src/content/docs/ 下的页面
+
+cd docs
+npm install
+npm run dev                         # http://localhost:4321/pi-lessons/
+```
+
+校验：
+
+```bash
+python tools/check.py               # 译文完整性
+python tools/check_md.py            # Markdown 与英文原文的结构一致性
+python tools/verify_site.py docs/dist
+```
+
+`books/` 是内容的唯一来源，`docs/src/content/docs/{pi-manual,pi-durable}/` 与
+`docs/dist/` 都是生成产物，不入库。
 
 ## 许可
 
