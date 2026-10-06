@@ -1,0 +1,8 @@
+{
+ "css": "style.css",
+ "part_label": "第二部分 · Session 与提交",
+ "part_title_zh": "Session 与提交",
+ "part_sub_zh": "一次只走一条变更线、一次原子提交，在存储确认写入之前不发布任何东西。",
+ "part_num_zh": "二",
+ "toc": true
+}

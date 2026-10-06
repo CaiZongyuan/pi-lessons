@@ -1,0 +1,24 @@
+{
+  "id": "pi-durable",
+  "title_zh": "Pi Durable 技术手册",
+  "title_en": "Pi Durable Technical Manual",
+  "subtitle_zh": "把智能体的每一步变成可存储、可重放、可恢复的提交。",
+  "source": {
+    "filename": "Pi-Durable-Technical-Manual.pdf",
+    "note": "源 PDF 不入库。本地重跑抽取时用 --pdf 指向它，或设环境变量 PI_PDF。",
+    "pages": 190
+  },
+  "parts": [
+    { "slug": "01-model",      "first_page": 9,   "last_page": 23,  "num_zh": "一", "label_zh": "模型",           "title_zh": "模型" },
+    { "slug": "02-sessions",   "first_page": 24,  "last_page": 35,  "num_zh": "二", "label_zh": "Session 与提交", "title_zh": "Session 与提交" },
+    { "slug": "03-conversations", "first_page": 36, "last_page": 48, "num_zh": "三", "label_zh": "会话与上下文",   "title_zh": "会话与上下文" },
+    { "slug": "04-documents",  "first_page": 49,  "last_page": 61,  "num_zh": "四", "label_zh": "文档",           "title_zh": "文档" },
+    { "slug": "05-tasks",      "first_page": 62,  "last_page": 82,  "num_zh": "五", "label_zh": "任务",           "title_zh": "任务" },
+    { "slug": "06-runs",       "first_page": 83,  "last_page": 101, "num_zh": "六", "label_zh": "运行",           "title_zh": "运行" },
+    { "slug": "07-extensions", "first_page": 102, "last_page": 123, "num_zh": "七", "label_zh": "扩展与 Agent",   "title_zh": "扩展与 Agent" },
+    { "slug": "08-watching",   "first_page": 124, "last_page": 139, "num_zh": "八", "label_zh": "观察",           "title_zh": "观察" },
+    { "slug": "09-storage",    "first_page": 140, "last_page": 157, "num_zh": "九", "label_zh": "存储与环境",     "title_zh": "存储与环境" },
+    { "slug": "10-practice",   "first_page": 158, "last_page": 170, "num_zh": "十", "label_zh": "实践",           "title_zh": "实践" },
+    { "slug": "11-reference",  "first_page": 171, "last_page": 190, "num_zh": "附", "label_zh": "参考",           "title_zh": "参考" }
+  ]
+}

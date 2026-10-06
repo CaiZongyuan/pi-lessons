@@ -1,0 +1,8 @@
+{
+  "css": "style.css",
+  "part_label": "第三部分 · 会话与上下文",
+  "part_title_zh": "会话与上下文",
+  "part_sub_zh": "一份由不可变条目组成的记录；头指针、编辑和分叉决定模型实际看到什么。",
+  "part_num_zh": "三",
+  "toc": true
+}

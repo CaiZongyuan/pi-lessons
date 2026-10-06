@@ -1,0 +1,8 @@
+{
+ "css": "style.css",
+ "part_label": "第七部分 · 扩展与 Agent",
+ "part_title_zh": "扩展与 Agent",
+ "part_sub_zh": "代码存放在进程自己拥有的注册表里；会话只存名字，因此代码可以在智能体运行期间改变。",
+ "part_num_zh": "七",
+ "toc": true
+}

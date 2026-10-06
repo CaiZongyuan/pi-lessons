@@ -1,0 +1,22 @@
+{
+  "id": "pi-manual",
+  "title_zh": "Pi 技术手册",
+  "title_en": "Pi Technical Manual",
+  "subtitle_zh": "从模型调用到智能体循环：Pi 的核心、扩展点与运行方式。",
+  "source": {
+    "filename": "Pi-Technical-Manual.pdf",
+    "note": "源 PDF 不入库。本地重跑抽取时用 --pdf 指向它，或设环境变量 PI_PDF。",
+    "pages": 221
+  },
+  "status": "待翻译",
+  "parts": [
+    { "slug": "01-model",        "first_page": 6,   "last_page": 22,  "num_zh": "一", "label_zh": "模型",           "title_zh": "模型" },
+    { "slug": "02-provider",     "first_page": 23,  "last_page": 47,  "num_zh": "二", "label_zh": "供应商层",       "title_zh": "供应商层" },
+    { "slug": "03-agent-loop",   "first_page": 48,  "last_page": 73,  "num_zh": "三", "label_zh": "智能体循环",     "title_zh": "智能体循环" },
+    { "slug": "04-coding-agent", "first_page": 74,  "last_page": 97,  "num_zh": "四", "label_zh": "编码智能体",     "title_zh": "编码智能体" },
+    { "slug": "05-config",       "first_page": 98,  "last_page": 142, "num_zh": "五", "label_zh": "配置与扩展性",   "title_zh": "配置与扩展性" },
+    { "slug": "06-integrations", "first_page": 143, "last_page": 164, "num_zh": "六", "label_zh": "集成与界面",     "title_zh": "集成与界面" },
+    { "slug": "07-operations",   "first_page": 165, "last_page": 183, "num_zh": "七", "label_zh": "实验特性与运维", "title_zh": "实验特性与运维" },
+    { "slug": "08-reference",    "first_page": 184, "last_page": 221, "num_zh": "附", "label_zh": "参考",           "title_zh": "参考" }
+  ]
+}

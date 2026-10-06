@@ -1,0 +1,8 @@
+{
+ "css": "style.css",
+ "part_label": "第一部分 · 模型",
+ "part_title_zh": "模型",
+ "part_sub_zh": "智能体每一个可见的步骤都是一次已存储的提交，因此进程在轮次中途崩溃只是一次暂停，而非丢失。",
+ "toc": true,
+ "part_num_zh": "一"
+}

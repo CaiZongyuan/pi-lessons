@@ -1,0 +1,654 @@
+{
+ "nodes": [
+  {
+   "type": "part-title",
+   "text": "P A R T 3 Conversations and Context",
+   "page": 36,
+   "zh": "会话与上下文"
+  },
+  {
+   "type": "h2",
+   "text": "A transcript of immutable entries; heads, edits and forks decide what the model actually sees.",
+   "page": 36,
+   "zh": "一份由不可变条目组成的记录；头指针、编辑和分叉决定模型实际看到什么。"
+  },
+  {
+   "type": "figure",
+   "number": "3.1",
+   "file": "figures/fig-3.1.png",
+   "title": "ANATOMY OF AN ENTRY\nA N A T O M Y",
+   "caption": "An entry keeps what the model sees, what the application sees and where context starts apart. Entry 20 of research/capture/context.txt, written by a manual compaction; the summary text is cut after three words.",
+   "page": 37,
+   "zh_caption": "一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。"
+  },
+  {
+   "type": "chapter-title",
+   "text": "3 . 1 Entries and the built-in kinds",
+   "page": 37,
+   "zh": "3.1 条目与内置种类"
+  },
+  {
+   "type": "lede",
+   "text": "An entry is one immutable line of the transcript, with separate fields for what the model reads, what your code reads and where the model’s context starts.",
+   "page": 37,
+   "zh": "条目是记录中一行不可变的数据，其中为模型读取的内容、为你的代码读取的内容以及模型上下文的起点分别设了独立字段。"
+  },
+  {
+   "type": "p",
+   "text": "A chat transcript is a list of things that happened: a question, an answer, a tool result. Pi Durable stores each one as an entry and never edits it afterwards. After this section you can read any stored entry, tell who wrote it, and add your own entry kinds.",
+   "zh": "聊天记录就是一份发生过的事情的清单：一个提问、一次回答、一个工具结果。Pi Durable 把每一项都存成条目，之后绝不修改。读完本节，你就能读取任意已存条目、判断它是谁写入的，并添加自己的条目种类。"
+  },
+  {
+   "type": "h2",
+   "text": "One record, three readers",
+   "page": 37,
+   "zh": "一条记录，三个读者"
+  },
+  {
+   "type": "p",
+   "text": "A conversation is one transcript, and an entry is “an immutable transcript record” in it spec §1. Each entry is read by three different parts of the system, and each reads its own field: The model reads model: the messages this entry adds to the next request. Your code reads data: JSON the model never sees. Context building reads head and edits: where the model’s context starts, and which earlier entries to hide or replace. Nothing stored is rewritten.",
+   "zh": "一个会话就是一份记录，而条目是其中「一条不可变的记录条目」（规范 §1）。每个条目由系统的三个不同部分读取，各自读自己的字段：模型读取 `model`：这条条目为下一次请求添加的消息。你的代码读取 `data`：模型永远看不到的 JSON。上下文构建读取 `head` 和 `edits`：模型的上下文从哪里开始，以及哪些较早的条目要隐藏或替换。已存储的内容不会被改写。"
+  },
+  {
+   "type": "small",
+   "text": "An entry keeps what the model sees, what the application sees and where context starts apart. Entry 20 of research/capture/context.txt, written by a manual compaction; the summary text is cut after three words.",
+   "page": 37,
+   "zh": "一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。"
+  },
+  {
+   "type": "small",
+   "text": "id an EntryId, ordered across the whole Session the Session conversationId the conversation it belongs to the Session kind a string naming what the entry is the writer model? messages for the model; absent for display or bookkeeping the writer data? JSON for views, extensions and your code the writer head? the first entry of the model’s context from now on the writer; \"self\" means this entry edits? hide or replace earlier entries, in context only the writer byTaskId? the task whose commit appended it the Session The fields of EntryRecord, paraphrased from its field comments in src/types.ts.",
+   "page": 38,
+   "zh": "`id` 一个 `EntryId`，在整个 `Session` 内有序；`conversationId` 该条目所属的会话；`Session` `kind` 指明条目是什么的字符串；`writer` 是否为 `model`？面向模型的消息，用于展示或记账时不存在；`writer` 是否为 `data`？面向视图、扩展和你的代码的 JSON；`writer` 是否为 `head`？模型上下文从此刻起的第一个条目，`writer` 为 `\"self\"` 表示该条目自身；`edits`？仅在上下文里隐藏或替换较早的条目；`writer` 是否为 `byTaskId`？其提交追加了它的任务；`Session`　以上是 `EntryRecord` 的字段，改写自 src/types.ts 中的字段注释。"
+  },
+  {
+   "type": "p",
+   "text": "Entries are written in a commit, an atomic save: everything in it is stored together, or nothing is. You never set id, conversationId or byTaskId. tx.appendEntry() fills them in, and turns head: \"self\" into the new ID. byTaskId is therefore a reliable record of which task wrote the entry. Entries you append from the host with Conversation.commit() have none.",
+   "zh": "条目在一次提交中写入，也就是一次原子保存：其中的内容要么一起存下，要么都不存。你永远不需要设置 `id`、`conversationId` 或 `byTaskId`。`tx.appendEntry()` 会填好它们，并把 `head: \"self\"` 换成新的 ID。因此 `byTaskId` 是记录哪个任务写了该条目的可靠依据。你从宿主用 `Conversation.commit()` 追加的条目没有这些字段。"
+  },
+  {
+   "type": "h2",
+   "text": "The built-in kinds",
+   "page": 38,
+   "zh": "内置种类"
+  },
+  {
+   "type": "p",
+   "text": "The Harness writes six kinds. Each is exported as a typed Entry token src/entries.ts. Only two of them carry data spec §8.1.",
+   "zh": "`Harness` 会写入六种种类。每一种都作为带类型的 Entry token 导出（src/entries.ts）。其中只有两种携带 `data`（规范 §8.1）。"
+  },
+  {
+   "type": "small",
+   "text": "pi.user one user message — submissions pi.assistant one assistant message, any stop reason — generation pi.system one system message, as a change — generation, before a request pi.tool-result one tool result message { diagnostics } tool tasks pi.reset none, or the handoff as a user message — reset(), a tool’s handoff pi.compaction the summary as a user message { reason } compaction From spec §8.1 and src/entries.ts. The tokens are UserEntry, AssistantEntry, SystemEntry, ToolResultEntry, ResetEntry and CompactionEntry.",
+   "page": 38,
+   "zh": "`pi.user` 一条用户消息 —— 提交项；`pi.assistant` 一条助手消息，任意停止原因 —— 生成；`pi.system` 一条系统消息，作为一次变更 —— 生成，位于请求之前；`pi.tool-result` 一条工具结果消息 `{ diagnostics }` 工具任务；`pi.reset` 无内容，或作为用户消息的交接 —— `reset()`、某个工具的交接；`pi.compaction` 作为用户消息的摘要 `{ reason }` 压缩。来自规范 §8.1 和 src/entries.ts。对应的 token 是 `UserEntry`、`AssistantEntry`、`SystemEntry`、`ToolResultEntry`、`ResetEntry` 和 `CompactionEntry`。"
+  },
+  {
+   "type": "p",
+   "text": "pi.assistant records every response, failures included: “answers, failed attempts with their error text and usage, and converted partials with stop reason aborted” spec §8.1. The transcript hides nothing, so every token spent stays visible. Context building then leaves the failed ones out of later requests (context derivation (p. 40)). System entries are changes, not a header A pi.system entry does not hold the whole prompt. It holds a change to the prompt and the tool list, at a point in the transcript. Here is the first one of a captured run:",
+   "zh": "`pi.assistant` 记录每一次回复，包括失败：「回答、带着错误文本和用量的失败尝试，以及被转换的、停止原因为 `aborted` 的部分回复」（规范 §8.1）。记录不隐藏任何东西，所以花掉的每个 token 都仍然可见。上下文构建随后会把失败的那些排除在后续请求之外（上下文推导（第 40 页））。系统条目是变更，不是头部　一个 `pi.system` 条目并不保存整份提示词。它保存的是在记录的某个位置上对提示词和工具列表的一次变更。下面是某次被捕获运行的第一个："
+  },
+  {
+   "type": "small",
+   "text": "entry 10, the first pi.system of a conversation research/capture/sqlite-rows.txt JSON",
+   "page": 39,
+   "zh": "条目 10，某会话的第一个 `pi.system`　research/capture/sqlite-rows.txt JSON"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "{",
+    "\"kind\": \"pi.system\",",
+    "\"model\": [{",
+    "\"role\": \"system\", \"content\": \"\",",
+    "\"sections\": { \"preamble\": \"You are a terse assistant.\" },",
+    "\"toolsAdded\": [{ \"name\": \"count\", \"description\": \"Count from 1 to n, …\", … }],",
+    "\"timestamp\": 1791211974788 }],",
+    "\"id\": 10, \"conversationId\": 1, \"byTaskId\": 9",
+    "}"
+   ],
+   "page": 39
+  },
+  {
+   "type": "small",
+   "text": "Reordered and joined; the tool’s description and parameter schema are cut.",
+   "page": 39,
+   "zh": "重新排序并合并；该工具的描述和参数 schema 已被截去。"
+  },
+  {
+   "type": "p",
+   "text": "Each named section is added or replaced, and null removes one. Tools are removed and added the same way. Replaying every system entry in order gives the current prompt and tool set spec §2. The Harness writes a new pi.system entry only when the prompt or tools actually change, so a stable conversation has just one. The full story is in the system prompt (p. 115).",
+   "zh": "每个具名 section 会被新增或替换，`null` 则移除某个 section。工具的增删方式相同。按顺序重放所有系统条目，就得到当前的提示词和工具集合（规范 §2）。`Harness` 只在提示词或工具真正发生变化时才写入新的 `pi.system` 条目，所以一个稳定的会话只有一个。完整故事见系统提示词（第 115 页）。"
+  },
+  {
+   "type": "h2",
+   "text": "Your own kinds",
+   "page": 39,
+   "zh": "你自己的种类"
+  },
+  {
+   "type": "p",
+   "text": "Any non-empty string is a valid kind. defineEntry() turns it into a typed token, and the token types data when you append and read:",
+   "zh": "任何非空字符串都是合法的种类。`defineEntry()` 把它变成一个带类型的 token，当你追加和读取时，这个 token 会为 `data` 提供类型："
+  },
+  {
+   "type": "small",
+   "text": "a typed application entry src/entries.ts · src/types.ts (Tx) TS",
+   "page": 39,
+   "zh": "一个带类型的应用条目　src/entries.ts · src/types.ts (Tx) TS"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "const NoteEntry = defineEntry<{ text: string }>(\"app.note\");"
+   ],
+   "page": 39
+  },
+  {
+   "type": "small",
+   "text": "// No `model`, so the model never sees it.",
+   "page": 39,
+   "zh": "// 没有 `model`，所以模型永远看不到它。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "await root.commit(",
+    "(tx) => tx.appendEntry(NoteEntry, root.id, { data: { text: \"user pinned b.md\" } }), context,",
+    ");"
+   ],
+   "page": 39
+  },
+  {
+   "type": "small",
+   "text": "// Undefined when entry `id` is absent or has another kind.",
+   "page": 39,
+   "zh": "// 当条目 `id` 不存在或属于其他种类时为 undefined。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "const note = await harness.commit((tx) => tx.entry(NoteEntry, id), context);"
+   ],
+   "page": 39
+  },
+  {
+   "type": "small",
+   "text": "app.note is this book’s example kind. The token’s is() guard narrows any entry by its kind.",
+   "page": 39,
+   "zh": "`app.note` 是本书的示例种类。该 token 的 `is()` 守卫按种类收窄任意条目。"
+  },
+  {
+   "type": "p",
+   "text": "Choose fields by reader. What the model must see goes in model; what only your code needs goes in data. An entry with only edits is common: the captured app.correction replaces an earlier answer in context and adds no message of its own research/capture/context.txt, stage 5.",
+   "zh": "按读者选择字段。模型必须看到的放进 `model`；只有你的代码需要的放进 `data`。只有 `edits` 的条目很常见：捕获到的 `app.correction` 在上下文里替换了一条较早的回答，自身不添加任何消息（research/capture/context.txt，第 5 阶段）。"
+  },
+  {
+   "type": "small",
+   "text": "Put model-facing text in model and everything else in data. Never change an entry. Append a new one with edits instead. Use byTaskId to see which task wrote an entry when you debug. While a run is active, add entries with a write submission, not a raw append spec §12 (submissions (p. 84)).",
+   "page": 39,
+   "zh": "面向模型的文本放进 `model`，其余一切放进 `data`。永远不要修改条目，而是追加一条新的并带上 `edits`。调试时用 `byTaskId` 看哪个任务写了某个条目。运行进行中时，用写提交项添加条目，而不是裸 `append`（规范 §12（提交项（第 84 页）））。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: spec §1, §2, §8.1, §12; src/types.ts (EntryRecord, EntryDraft, Tx.appendEntry, Tx.entry); src/entries.ts; src/harness/types.ts (CompactionReason); src/session/transaction.ts; research/capture/context.txt; research/capture/sqlite-rows.txt"
+   ],
+   "page": 39
+  },
+  {
+   "type": "chapter-title",
+   "text": "3 . 2 From transcript to model context",
+   "page": 40,
+   "zh": "3.2 从记录到模型上下文"
+  },
+  {
+   "type": "lede",
+   "text": "The transcript records everything that happened; nine fixed rules turn it into a request the provider will accept, without rewriting anything stored.",
+   "page": 40,
+   "zh": "记录保存了发生过的一切；九条固定规则把它变成供应商会接受的请求，而不重写任何已存储的内容。"
+  },
+  {
+   "type": "p",
+   "text": "A real transcript is messy. A reply was cut off by a crash. A tool call never got its result. Two results arrived out of order, with a user message between them. Sent as is, a provider would reject it. After this section you can predict, message by message, how committed history becomes model context, before request hooks change it.",
+   "zh": "真实的记录是杂乱的。一条回复被崩溃截断。某个工具调用从未拿到结果。两个结果乱序到达，中间还夹着一条用户消息。原样发出去，供应商会拒绝它。读完本节，你就能在请求钩子改动之前，逐条预测已提交的历史如何变成模型上下文。"
+  },
+  {
+   "type": "h2",
+   "text": "Two readings of one transcript",
+   "page": 40,
+   "zh": "一份记录的两种读法"
+  },
+  {
+   "type": "p",
+   "text": "The stored transcript only grows. The context is what the model sees, and it is computed from that history every time. Conversation.context() shows both readings side by side src/harness/types.ts (ContextView): entries — the raw entries in the active range. A UI shows these. messages — messages derived from committed history, before preparation updates and request hooks. head — the entry that decides where the range starts, if any. contributions — what each entry adds, before tool results are reordered. Useful when you debug.",
+   "zh": "已存储的记录只会增长。上下文是模型看到的东西，每次都从那段历史重新计算。`Conversation.context()` 并排展示两种读法（src/harness/types.ts（`ContextView`））：`entries` —— 活跃范围内的原始条目，UI 展示这些。`messages` —— 从已提交历史推导出的消息，位于准备阶段的更新和请求钩子之前。`head` —— 决定范围起点的条目，如果有的话。`contributions` —— 每个条目各自添加了什么，位于工具结果被重排之前。调试时很有用。"
+  },
+  {
+   "type": "h2",
+   "text": "The nine rules",
+   "page": 40,
+   "zh": "九条规则"
+  },
+  {
+   "type": "p",
+   "text": "The spec defines the derivation as nine ordered rules spec §2.1. The right column points into the worked example below.",
+   "zh": "规范把推导过程定义为九条有序规则（规范 §2.1）。右列指向下面的实例。"
+  },
+  {
+   "type": "small",
+   "text": "1 Find the newest entry that has a head. #20 2 Context starts at that head, or at the beginning if there is none. #10 3 Read every entry from there to the end. #10–#20",
+   "page": 40,
+   "zh": "1 找到最新的、带 `head` 的条目。　#20　2 上下文从该 `head` 开始，若无则从头开始。　#10　3 从那里读到末尾的每一条条目。　#10–#20"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "4 Apply edits: the newest edit of an entry wins; omit hides it, replace swaps its messages. #19 replaces #11",
+    "5 Put the head entry first, then the others in order. #20 first 6 Keep every system message where it was written. #10 kept 7 Move each call’s results directly after the assistant message that made the call, in call order. #16, #14 after #13 8 Add an error result for every call that has none; drop results with no call. call-c 9 Leave out entries with no model, and assistant messages that stopped as aborted, error or deferred. #12, #18 Paraphrased from spec §2.1."
+   ],
+   "page": 40
+  },
+  {
+   "type": "h2",
+   "text": "A worked example",
+   "page": 40,
+   "zh": "一个实例"
+  },
+  {
+   "type": "p",
+   "text": "This transcript was written entry by entry and read back with context(). An agent was asked to fix two files. One reply was aborted. Two reads came back out of order, with a user message between them. A third read never finished. The application then added a note, corrected the user’s wording, and wrote a summary whose head skips the opening exchange.",
+   "zh": "这份记录是逐条写入、再用 `context()` 读回来的。一个智能体被要求修复两个文件。一条回复被中止。两次读取乱序返回，中间夹着一条用户消息。第三次读取始终没完成。应用随后添加了一条备注，纠正了用户的措辞，并写入一份其 `head` 跳过了开头那段对话的摘要。"
+  },
+  {
+   "type": "figure",
+   "number": "3.2",
+   "file": "figures/fig-3.2.png",
+   "title": "ONE TRANSCRIPT, TWO READINGS\nF L O W",
+   "caption": "Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result.",
+   "page": 41,
+   "zh_caption": "上下文推导把一份已存储的记录读成九条请求消息。条目 #8–#20 和推导出的消息取自 research/capture/extra-p23/context-derivation.txt。画阴影线的条目位于 `head` 范围之前；虚线条目在范围内，但不贡献任何消息。画得更深的第 9 条消息没有对应条目：因为 call-c 没有存储结果，推导过程合成了它。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result."
+   ],
+   "page": 41
+  },
+  {
+   "type": "p",
+   "text": "The range (rules 1–3). The newest entry with a head is the summary #20, and its head is #10. So context covers #10 through #20. Entries #8 and #9 are still stored and still readable; they are just not sent. Edits (rule 4). #19 replaces #11. Message 3 is the corrected text, “Fix the typos in a.md and b.md”, not the original. An edit only counts if it sits inside the range.",
+   "zh": "范围（规则 1–3）。最新的带 `head` 的条目是摘要 #20，而它的 `head` 是 #10。所以上下文覆盖 #10 到 #20。条目 #8 和 #9 仍然存储、仍然可读；只是不会被发送。编辑（规则 4）。#19 替换 #11。消息 3 是纠正后的文本「Fix the typos in a.md and b.md」，而不是原文。只有落在范围内的 `edit` 才算数。"
+  },
+  {
+   "type": "p",
+   "text": "Order (rules 5 and 6). The summary #20 becomes message 1. The system entry #10 stays where it was, as message 2. Left out (rule 9). The aborted reply #12 and the note #18 add nothing. Neither does #19, which only edits. Tool results (rules 7 and 8). #13 called call-a, then call-b. Their results, #16 and #14, move up to sit right after #13, in call order and ahead of the user message #15. The last assistant message, #17, called call-c and nothing answered, so a result is made up for it:",
+   "zh": "顺序（规则 5 和 6）。摘要 #20 成为消息 1。系统条目 #10 留在原处，作为消息 2。被排除的（规则 9）。被中止的回复 #12 和备注 #18 什么都不添加。#19 也不添加，它只做编辑。工具结果（规则 7 和 8）。#13 先调用 call-a，再调用 call-b。它们的结果 #16 和 #14 向前移动，紧跟在 #13 之后，按调用顺序，并排在用户消息 #15 之前。最后一条助手消息 #17 调用了 call-c 却没有任何回应，于是为它补出一个结果："
+  },
+  {
+   "type": "small",
+   "text": "message 9, synthesized for call-c research/capture/extra-p23/context-derivation.txt JSON",
+   "page": 42,
+   "zh": "消息 9，为 call-c 合成　research/capture/extra-p23/context-derivation.txt JSON"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "{",
+    "\"role\": \"toolResult\",",
+    "\"toolCallId\": \"call-c\",",
+    "\"toolName\": \"read\", \"content\": [{ \"type\": \"text\",",
+    "\"text\": \"Tool result unavailable: history ends before this call completed.\" }],",
+    "\"isError\": true,",
+    "\"details\": { \"reason\": \"missing_result\" }, \"timestamp\": 1791300010000",
+    "}"
+   ],
+   "page": 42
+  },
+  {
+   "type": "small",
+   "text": "The text and details are fixed in src/harness/context.ts. The timestamp is copied from the assistant message that made the call.",
+   "page": 42,
+   "zh": "文本和 `details` 固定在 src/harness/context.ts 中。`timestamp` 复制自发出该调用的那条助手消息。"
+  },
+  {
+   "type": "h2",
+   "text": "Why these rules exist",
+   "page": 42,
+   "zh": "这些规则为何存在"
+  },
+  {
+   "type": "p",
+   "text": "Each rule handles a state that a durable transcript can legitimately be in. Crashes and aborts — an interrupted reply is stored as an aborted pi.assistant entry (generation (p. 91)). Rule 9 keeps its half-finished text, and any tool calls in it, out of later requests. Interrupted tools — a tool task that fails or is abandoned writes no result. Rule 8 tells the model the call did not finish spec §5.4. Parallel tools and steering — results land in the order they finish, and a user can steer between them (submissions and the inbox (p. 84)). Providers require results right after their call; rule 7 restores that. Forks — a fork taken between a call and its result inherits the call but not the result. Example 09 forks at an assistant message with two calls; the fork’s context ends with two error results run 09.",
+   "zh": "每条规则都处理一种持久记录可能正当处于的状态。崩溃与中止 —— 被中断的回复会存成一条 `aborted` 的 `pi.assistant` 条目（生成（第 91 页））。规则 9 把它的半截文本以及其中的工具调用排除在后续请求之外。被中断的工具 —— 失败或被放弃的工具任务不写入结果。规则 8 告诉模型该调用没有完成（规范 §5.4）。并行工具与引导 —— 结果按完成顺序落地，用户可以在它们之间插入引导（提交项与收件箱（第 84 页））。供应商要求结果紧跟在对应调用之后；规则 7 恢复了这一点。分叉 —— 在调用与其结果之间分出的分叉继承调用，但不继承结果。示例 09 在一条带两次调用的助手消息处分叉；该分叉的上下文以两个错误结果结尾（run 09）。"
+  },
+  {
+   "type": "small",
+   "text": "To see what the model will get, call context() and read messages. Do not rebuild it from entries yourself. A crash never produces an invalid request, so you need no cleanup code for the transcript. Reading context never writes. Two reads of the same transcript give the same messages.",
+   "page": 42,
+   "zh": "要看模型将收到什么，调用 `context()` 并读取 `messages`。不要自己从条目重建。崩溃永远不会产生无效请求，所以记录不需要任何清理代码。读取 context 永不写入。同一份记录读两次得到相同的消息。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: spec §2.1, §2.2 (ContextView), §5.4, §8.1; src/harness/context.ts; src/harness/types.ts (ContextView); ex 09; run 09; research/capture/extra-p23/context-derivation.txt (script test/capture-p23-context.ts)"
+   ],
+   "page": 42
+  },
+  {
+   "type": "chapter-title",
+   "text": "3 . 3 Forks and owned conversations",
+   "page": 43,
+   "zh": "3.3 分叉与被拥有的会话"
+  },
+  {
+   "type": "lede",
+   "text": "A fork branches a conversation at one entry and shares the history before it; an owned conversation belongs to a task, so aborting the task reaches it.",
+   "page": 43,
+   "zh": "分叉从某一条目处分支出一个会话，并共享它之前的历史；被拥有的会话属于某个任务，所以中止该任务时会影响到它。"
+  },
+  {
+   "type": "p",
+   "text": "Users want to go back to an earlier message and try something else, while keeping the original. Agents want to start a side conversation for a subagent. Both are new conversations. After this section you can create each kind and predict what it sees.",
+   "zh": "用户想回到较早的一条消息、换个做法，同时保留原来的版本。智能体想为子智能体开一段旁支对话。两者都是新会话。读完本节，你就能创建这两种会话，并预测它们各自看到什么。"
+  },
+  {
+   "type": "h2",
+   "text": "Four ways to get a conversation",
+   "page": 43,
+   "zh": "获得会话的四种方式"
+  },
+  {
+   "type": "small",
+   "text": "harness.root(context, options) conversation 1, created on first call; later calls write nothing",
+   "page": 43,
+   "zh": "`harness.root(context, options)`　会话 1，首次调用时创建；之后的调用不写入任何东西"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "harness.createConversation(options, context) a new, empty conversation; ownership is required",
+    "conversation.fork(at, options, context) a branch that shares history up to entry at tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init."
+   ],
+   "page": 43
+  },
+  {
+   "type": "p",
+   "text": "Creation is one commit. It writes the conversation, its five built-in documents (the built-in documents (p. 60)), any agent setting, and whatever your init(tx, id) writes. Nothing is half-created spec §2.2. Creating a conversation and sending its first message are separate calls. If your process can crash between them, write a key in init so you can find the conversation again, then submit with a request ID so a retry is not sent twice spec §2.2.",
+   "zh": "创建是一次提交。它会写入该会话、它的五份内置文档（内置文档（第 60 页））、任何 agent 设置，以及你的 `init(tx, id)` 写入的内容。不会出现创建了一半的状态（规范 §2.2）。创建会话和发送它的第一条消息是两个独立的调用。如果你的进程可能在两者之间崩溃，就在 `init` 里写一个键以便再次找到该会话，然后用带请求 ID 的提交项提交，这样重试不会被发送两次（规范 §2.2）。"
+  },
+  {
+   "type": "h2",
+   "text": "Forks",
+   "page": 43,
+   "zh": "分叉"
+  },
+  {
+   "type": "p",
+   "text": "A fork is a new conversation that starts from one entry E of a parent. Its record stores parent: { conversationId, at }. Nothing is copied. The fork sees its own entries, then the parent’s entries up to E, then the grandparent’s up to its own cap, and so on spec §2.1, §3.7. Each ancestor’s entries are cut off at the smallest cap on the way up.",
+   "zh": "分叉是一个新会话，从父会话的某一条目 E 开始。它的记录保存 `parent: { conversationId, at }`。不会复制任何内容。分叉先看到自己的条目，然后是父会话直到 E 的条目，再上是祖父会话直到它自己的 cap，如此类推（规范 §2.1、§3.7）。每一层祖先的条目都在向上路径上最小的那个 cap 处截断。"
+  },
+  {
+   "type": "small",
+   "text": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts",
+   "page": 43,
+   "zh": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "root 1: #9:\"three\" #8:\"two\" #7:\"one\"",
+    "fork 10: #16:\"fork-only\" #8:\"two\" #7:\"one\"",
+    "grand 17: #23:\"grandchild-only\" #7:\"one\"",
+    "fork2 24: #16:\"fork-only\" #8:\"two\" #7:\"one\"",
+    "grand.fork(#9) -> Entry 9 is not visible from conversation 17 From research/capture/extra-p23/forks.txt; entries newest first. Conversation 17 cannot see #9, so it cannot fork there."
+   ],
+   "page": 43
+  },
+  {
+   "type": "p",
+   "text": "Heads cross forks too. A fork taken after a compaction starts its context at the parent’s summary research/capture/context.txt, stage 6. A fork taken between a tool call and its result gets an error result in its context (context derivation (p. 40)).",
+   "zh": "`head` 也会跨分叉传递。在压缩之后分出的分叉，其上下文从父会话的摘要开始（research/capture/context.txt，第 6 阶段）。在工具调用与其结果之间分出的分叉，其上下文中会得到一个错误结果（上下文推导（第 40 页））。"
+  },
+  {
+   "type": "figure",
+   "number": "3.3",
+   "file": "figures/fig-3.3.png",
+   "title": "FORKS, CAPS AND AN OWNED CONVERSATION\nT R E E",
+   "caption": "A fork sees its own entries, then each ancestor’s entries up to the parent.at cap. Conversation 32 has no parent; task 31, which lives in conversation 1, owns it. Conversations, entries and visibility from research/capture/extra-p23/forks.txt.",
+   "page": 44,
+   "zh_caption": "分叉先看到自己的条目，然后是每一层祖先直到 `parent.at` cap 为止的条目。会话 32 没有父会话；住在会话 1 中的任务 31 拥有它。会话、条目与可见性取自 research/capture/extra-p23/forks.txt。"
+  },
+  {
+   "type": "small",
+   "text": "A fork sees its own entries, then each ancestor’s entries up to the parent.at cap. Conversation 32 has no parent; task 31, which lives in conversation 1, owns it. Conversations, entries and visibility from research/capture/extra-p23/forks.txt.",
+   "page": 44,
+   "zh": "分叉先看到自己的条目，然后是每一层祖先直到 `parent.at` cap 为止的条目。会话 32 没有父会话；住在会话 1 中的任务 31 拥有它。会话、条目与可见性取自 research/capture/extra-p23/forks.txt。"
+  },
+  {
+   "type": "p",
+   "text": "What a fork inherits",
+   "zh": "分叉继承什么"
+  },
+  {
+   "type": "small",
+   "text": "entries shared up to E, never copied",
+   "page": 44,
+   "zh": "共享到 E 为止的条目，绝不复制"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "fork: \"asOf\" documents a copy of the parent’s value at E",
+    "fork: \"current\" documents a copy of the parent’s value now",
+    "fork: \"initial\" documents nothing; created fresh on first use",
+    "pi.agent the parent’s agent settings as of E"
+   ],
+   "page": 44
+  },
+  {
+   "type": "code",
+   "lines": [
+    "pi.provider a new provider session ID, never the parent’s"
+   ],
+   "page": 44
+  },
+  {
+   "type": "small",
+   "text": "live state, inbox, usage empty tasks and task documents never copied Session documents shared, not copied From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50).",
+   "page": 44,
+   "zh": "live state、inbox、usage 为空；任务和任务文档绝不复制；`Session` 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。"
+  },
+  {
+   "type": "p",
+   "text": "The capture shows the asOf rule. The root’s agent instructions said \"v1: be brief\" when #8 was written and \"v2: be thorough\" later. The fork at #8 starts with v1, and it has its own provider session ID research/capture/extra-p23/forks.txt.",
+   "zh": "这次捕获展示了 `asOf` 规则。根会话的 agent 指令在写入 #8 时是 \"v1: be brief\"，后来变成了 \"v2: be thorough\"。在 #8 处分出的分叉以 v1 开头，并且拥有自己的供应商 session ID（research/capture/extra-p23/forks.txt）。"
+  },
+  {
+   "type": "h2",
+   "text": "Owned conversations",
+   "page": 44,
+   "zh": "被拥有的会话"
+  },
+  {
+   "type": "p",
+   "text": "An owned conversation belongs to a task. Create it with { kind: \"task\", taskId } ownership; the record then stores owner: { conversationId, taskId }. The task can be created in the same commit:",
+   "zh": "被拥有的会话属于某个任务。用 `{ kind: \"task\", taskId }` 所有权创建它；记录随后会保存 `owner: { conversationId, taskId }`。任务可以在同一次提交中创建："
+  },
+  {
+   "type": "small",
+   "text": "a task and the conversation it owns, in one commit test/capture-p23-context.ts TS",
+   "page": 45,
+   "zh": "一个任务和它拥有的会话，在一次提交中完成　test/capture-p23-context.ts TS"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "const owned = await harness.commit(async (tx) => {",
+    "const taskId = await tx.createTask(Supervisor, null, {",
+    "ownership: { kind: \"conversation\" }, conversationId: root.id, background: true,",
+    "}); const child = await tx.createConversation({ ownership: { kind: \"task\", taskId } });",
+    "return { taskId, child };",
+    "}, context);",
+    "// child: {\"id\":32,\"owner\":{\"conversationId\":1,\"taskId\":31}}"
+   ],
+   "page": 45
+  },
+  {
+   "type": "small",
+   "text": "The comment is the captured output in research/capture/extra-p23/forks.txt.",
+   "page": 45,
+   "zh": "注释是 research/capture/extra-p23/forks.txt 里捕获到的输出。"
+  },
+  {
+   "type": "p",
+   "text": "Ownership is about work, not history. The owned conversation starts empty. It gets a one-time copy of the agent settings of the owner’s conversation; later changes there do not reach it spec §2.2. What the owner edge does is connect the two for abort and idle waits. Aborting the task reaches the conversation’s non-background work, and waiting for the task to go idle includes that work (ownership and structured concurrency (p. 76)). Subagents are built on exactly this (subagents (p. 121)). The owner must be alive. A task that is finishing, finished or being aborted cannot gain a new conversation, even in the same commit spec §3.3.",
+   "zh": "所有权说的是工作，不是历史。被拥有的会话从空开始。它会拿到拥有者会话 agent 设置的一次性副本；之后那里的变更不会传递给它（规范 §2.2）。owner 这条边的作用是把两者为中止和空闲等待连接起来。中止该任务会影响到会话中非后台的工作，而等待任务转为空闲也包含这些工作（所有权与结构化并发（第 76 页））。子智能体正是建立在这之上（子智能体（第 121 页））。拥有者必须存活。正在结束、已经结束或正在被中止的任务无法获得新的会话，即使在同一次提交中也不行（规范 §3.3）。"
+  },
+  {
+   "type": "small",
+   "text": "Use a fork for “try again from here”. The original conversation is untouched. Use an owned conversation for work that should stop when its task stops, such as a subagent. Pick each document’s fork policy on purpose; it decides what a branch starts with.",
+   "page": 45,
+   "zh": "「从这里重试」用分叉，原会话不受影响。应当随任务一起停止的工作，用被拥有的会话，例如子智能体。有意为每份文档选定分叉策略；它决定一条分支以什么开始。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: spec §2, §2.1, §2.2, §3.3, §3.7; src/harness/harness.ts (root, createConversation, fork); src/harness/agent.ts (createAgent); src/session/transaction.ts; src/session/forks.ts; ex 03; run 09; research/capture/extra-p23/forks.txt; research/capture/context.txt"
+   ],
+   "page": 45
+  },
+  {
+   "type": "chapter-title",
+   "text": "3 . 4 Reset, handoff and heads",
+   "page": 46,
+   "zh": "3.4 重置、交接与头指针"
+  },
+  {
+   "type": "lede",
+   "text": "A head moves the start of the model’s context forward without deleting anything; reset, handoff and compaction all work this way.",
+   "page": 46,
+   "zh": "头指针把模型上下文的起点向前移动，而不删除任何东西；重置、交接和压缩都以这种方式工作。"
+  },
+  {
+   "type": "p",
+   "text": "Sometimes the model should forget. The context window is full, or the user wants a fresh start on the same task. Pi Durable never deletes the old messages; it just tells the model to start reading later. After this section you can start a fresh context, with or without a handoff note, and predict what the model sees next.",
+   "zh": "有时候模型应该忘掉一些事。上下文窗口满了，或者用户想在同一个任务上重新开始。Pi Durable 永远不删除旧消息；它只是告诉模型从更靠后的位置开始读。读完本节，你就能开启一段全新的上下文，带或不带交接备注，并预测模型接下来看到什么。"
+  },
+  {
+   "type": "h2",
+   "text": "What a head is",
+   "page": 46,
+   "zh": "头指针是什么"
+  },
+  {
+   "type": "p",
+   "text": "A head is an entry field that says “the model’s context starts here” src/types.ts. An entry that has one is a head marker. Only the newest marker counts, and context derivation puts it first (rules 1, 2 and 5 (p. 40)). Older entries stay in storage; they are just no longer sent spec §2.1. There are two ways to point a head: Back at a kept entry — a compaction summary heads the first entry it keeps. Context becomes “summary, then the kept tail” (compaction (p. 97)).",
+   "zh": "头指针是一个条目字段，表示「模型的上下文从这里开始」（src/types.ts）。带有它的条目就是头指针标记。只有最新的标记有效，上下文推导会把它放在最前（规则 1、2 和 5（第 40 页））。更早的条目仍留在存储里；只是不再被发送（规范 §2.1）。指向头指针有两种方式：回指某个被保留的条目 —— 一份压缩摘要会头指针它保留的第一条条目。上下文变成「摘要，然后是被保留的尾部」（压缩（第 97 页））。"
+  },
+  {
+   "type": "p",
+   "text": "At itself — a reset heads itself. Context becomes the reset entry alone, plus whatever comes after it.",
+   "zh": "指向自身 —— 重置会头指针它自己。上下文变成只有那一条重置条目，加上它之后的所有内容。"
+  },
+  {
+   "type": "h2",
+   "text": "reset() and handoff",
+   "page": 46,
+   "zh": "reset() 与交接"
+  },
+  {
+   "type": "p",
+   "text": "Conversation.reset(handoff, context) starts a new context. It submits a pi.reset entry with head: \"self\". If you pass handoff text, the entry carries it as a user message spec §2.2. reset(text) — the model’s context becomes that one message. In stage 4 of the figure below: \"We were doing arithmetic",
+   "zh": "`Conversation.reset(handoff, context)` 开启一段新的上下文。它提交一条 `head: \"self\"` 的 `pi.reset` 条目。如果你传入交接文本，该条目会把它作为一条用户消息携带（规范 §2.2）。`reset(text)` —— 模型的上下文变成那一条消息。在下图第 4 阶段中：\"We were doing arithmetic"
+  },
+  {
+   "type": "small",
+   "text": "for Ada. Continue from 5+5.\"",
+   "page": 46,
+   "zh": "for Ada. Continue from 5+5.\""
+  },
+  {
+   "type": "p",
+   "text": "reset(undefined) — the entry has no message, so context is empty until the next input research/capture/extra-p23/heads.txt. A reset is queued like any other write. If the conversation is idle, it lands at once. If a run is active, it waits for the next boundary, a safe point between model and tool steps (submissions and the inbox (p. 84)). Landing during a tool round ends the run, and its inputs are reported unanswered with reason reset. Landing after an answer changes nothing for that answer spec §6. reset() returns once the submission is committed, not when the entry lands; watch the conversation to see it. The figure follows one captured conversation through five stages: three questions, a compaction, one more turn, a reset, and a last turn with a correction.",
+   "zh": "`reset(undefined)` —— 该条目没有消息，所以上下文为空，直到下一次输入（research/capture/extra-p23/heads.txt）。重置和其他写入一样排队。如果会话空闲，它立刻落地；如果有运行正在进行，它会等到下一个边界，也就是模型步与工具步之间的安全点（提交项与收件箱（第 84 页））。在工具轮次中落地会结束该运行，并把它的输入按 reason `reset` 报告为未答复；在一次回答之后落地则不改变那次回答（规范 §6）。`reset()` 在提交项被提交后返回，而不是在条目落地时返回；要看到它落地，请观察该会话。下图跟踪一段被捕获的会话经过五个阶段：三个提问、一次压缩、一轮对话、一次重置，以及最后一轮带纠正的对话。"
+  },
+  {
+   "type": "figure",
+   "number": "3.4",
+   "file": "figures/fig-3.4.png",
+   "title": "THE ACTIVE RANGE MOVING WITH HEADS\nT I M E L I N E",
+   "caption": "A head moves the start of context forward; every entry stays stored. Stages 1–5 of research/capture/context.txt; the context().entries lines are copied from it.",
+   "page": 47,
+   "zh_caption": "头指针把上下文的起点向前移动；每个条目都仍然保留。research/capture/context.txt 的第 1–5 阶段；`context().entries` 各行直接取自它。"
+  },
+  {
+   "type": "small",
+   "text": "A head moves the start of context forward; every entry stays stored. Stages 1–5 of research/capture/context.txt; the context().entries lines are copied from it.",
+   "page": 47,
+   "zh": "头指针把上下文的起点向前移动；每个条目都仍然保留。research/capture/context.txt 的第 1–5 阶段；`context().entries` 各行直接取自它。"
+  },
+  {
+   "type": "p",
+   "text": "A tool can ask for the same thing. If its result’s control carries handoff: string, then when the tool round finishes the run ends with a pi.reset entry holding that text, “exactly what reset(handoff) writes” spec §7.3. If several tools ask, the last in call order wins.",
+   "zh": "工具也可以要求同样的事。如果其结果的控制信息带有 `handoff: string`，那么工具轮次结束时，运行会结束并留下一条持有该文本的 `pi.reset` 条目，「与 `reset(handoff)` 写入的内容完全一致」（规范 §7.3）。如果多个工具都提出要求，按调用顺序以最后一个为准。"
+  },
+  {
+   "type": "h2",
+   "text": "Stale head writes",
+   "page": 47,
+   "zh": "过期的头指针写入"
+  },
+  {
+   "type": "p",
+   "text": "A head may only move forward. A head write that points before the current start would bring back history that was cut, so it is refused as stale: it settles unanswered with reason stale and writes nothing spec §6. A reset heads itself, so it is never stale.",
+   "zh": "头指针只能向前移动。指向当前起点之前的头指针写入会把已被截掉的历史带回来，所以它会以过期为由被拒绝：按 reason `stale` 结算为未答复，并且不写入任何东西（规范 §6）。重置会头指针它自己，所以永不过期。"
+  },
+  {
+   "type": "small",
+   "text": "two head writes after a reset at #9 research/capture/extra-p23/heads.txt TEXT",
+   "page": 47,
+   "zh": "在 #9 处重置之后的两次头指针写入　research/capture/extra-p23/heads.txt TEXT"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "context entries: [#9 pi.reset, #11 pi.user]",
+    "write with head=#8 (before the start): status \"unanswered\", reason \"stale\"",
+    "write with head=#11 (inside the range): status \"done\", entry 13 context entries now: [#13 app.summary head=11, #11 pi.user]"
+   ],
+   "page": 47
+  },
+  {
+   "type": "small",
+   "text": "stored entries (newest first), nothing deleted: [#15 pi.reset, #13 app.summary, #11 pi.user, #9 pi.reset, #8 pi.assistant, #7 pi.user] The submission records are shortened to their status. #15 is a later plain reset().",
+   "page": 47,
+   "zh": "存储的条目（最新在前），没有删除任何东西：[#15 pi.reset, #13 app.summary, #11 pi.user, #9 pi.reset, #8 pi.assistant, #7 pi.user]　提交项记录已缩短为只保留状态。#15 是之后一次普通的 `reset()`。"
+  },
+  {
+   "type": "p",
+   "text": "The same rule decides between competing compactions: a summary that would move the start backwards settles stale (compaction (p. 97)).",
+   "zh": "同一条规则也用来在相互竞争的压缩之间做决定：会把起点往回移的摘要会按 `stale` 结算（压缩（第 97 页））。"
+  },
+  {
+   "type": "p",
+   "text": "What a head never does Delete — every entry above is still stored and still returned by entries(). You can still fork at an old entry. Change the provider ID — reset and compaction keep the conversation’s pi.provider session ID spec §2.2. Lose the system prompt — after a head, the next request writes a fresh, complete pi.system entry (the system prompt (p. 115)).",
+   "zh": "头指针绝不会做的事　删除 —— 上面每个条目都仍然存储，`entries()` 仍然返回它们，你仍然可以在旧条目处分叉。改变供应商 ID —— 重置和压缩会保留会话的 `pi.provider` session ID（规范 §2.2）。丢失系统提示词 —— 在一个头指针之后，下一个请求会写入一条全新的、完整的 `pi.system` 条目（系统提示词（第 115 页））。"
+  },
+  {
+   "type": "small",
+   "text": "Use reset(text) to start fresh but tell the model where it left off. Write your own head entries through a write submission, not a raw tx.appendEntry(). Only the submission path checks for stale heads, and a raw write can leave a mounted view out of date spec §12. If a write ends stale, a newer head already moved past its target. Recompute it from the current context.",
+   "page": 48,
+   "zh": "用 `reset(text)` 开启全新上下文，同时告诉模型它停在哪里。通过写提交项写入自己的头指针条目，而不是裸的 `tx.appendEntry()`。只有提交项路径会检查过期的头指针，裸写入可能让已挂载的视图过期（规范 §12）。如果一次写入以过期结束，说明更新的头指针已经越过了它的目标，请从当前上下文重新计算。"
+  },
+  {
+   "type": "code",
+   "lines": [
+    "Sources: spec §2.1, §2.2 (reset, pi.provider), §6, §7.3, §7.4, §8.1, §12; src/types.ts (EntryRecord.head); src/harness/harness.ts (reset); src/harness/submissions.ts; src/harness/inbox.ts; src/harness/generation.ts; src/harness/types.ts (ToolControl);",
+    "research/capture/context.txt; research/capture/extra-p23/heads.txt"
+   ],
+   "page": 48
+  }
+ ]
+}
