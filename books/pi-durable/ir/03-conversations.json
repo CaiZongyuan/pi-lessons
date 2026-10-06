@@ -4,20 +4,22 @@
    "type": "part-title",
    "text": "P A R T 3 Conversations and Context",
    "page": 36,
+   "_y": 83.8,
    "zh": "会话与上下文"
   },
   {
    "type": "h2",
    "text": "A transcript of immutable entries; heads, edits and forks decide what the model actually sees.",
    "page": 36,
+   "_y": 154.8,
    "zh": "一份由不可变条目组成的记录；头指针、编辑和分叉决定模型实际看到什么。"
   },
   {
    "type": "figure",
    "number": "3.1",
    "file": "figures/fig-3.1.png",
-   "title": "ANATOMY OF AN ENTRY\nA N A T O M Y",
-   "caption": "An entry keeps what the model sees, what the application sees and where context starts apart. Entry 20 of research/capture/context.txt, written by a manual compaction; the summary text is cut after three words.",
+   "title": "ANATOMY OF AN ENTRY ANATOMY",
+   "caption": "Anentrykeepswhatthemodelsees , whattheapplicationseesandwherecontextstartsapart . Entry 20 ofresearch / capture / context . txt , writtenbya manualcompaction ; thesummarytextiscuta ft erthreewords .",
    "page": 37,
    "zh_caption": "一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。"
   },
@@ -25,12 +27,14 @@
    "type": "chapter-title",
    "text": "3 . 1 Entries and the built-in kinds",
    "page": 37,
+   "_y": 57.4,
    "zh": "3.1 条目与内置种类"
   },
   {
    "type": "lede",
    "text": "An entry is one immutable line of the transcript, with separate fields for what the model reads, what your code reads and where the model’s context starts.",
    "page": 37,
+   "_y": 106.2,
    "zh": "条目是记录中一行不可变的数据，其中为模型读取的内容、为你的代码读取的内容以及模型上下文的起点分别设了独立字段。"
   },
   {
@@ -42,6 +46,7 @@
    "type": "h2",
    "text": "One record, three readers",
    "page": 37,
+   "_y": 222.7,
    "zh": "一条记录，三个读者"
   },
   {
@@ -53,13 +58,8 @@
    "type": "small",
    "text": "An entry keeps what the model sees, what the application sees and where context starts apart. Entry 20 of research/capture/context.txt, written by a manual compaction; the summary text is cut after three words.",
    "page": 37,
+   "_y": 698.7,
    "zh": "一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。"
-  },
-  {
-   "type": "small",
-   "text": "id an EntryId, ordered across the whole Session the Session conversationId the conversation it belongs to the Session kind a string naming what the entry is the writer model? messages for the model; absent for display or bookkeeping the writer data? JSON for views, extensions and your code the writer head? the first entry of the model’s context from now on the writer; \"self\" means this entry edits? hide or replace earlier entries, in context only the writer byTaskId? the task whose commit appended it the Session The fields of EntryRecord, paraphrased from its field comments in src/types.ts.",
-   "page": 38,
-   "zh": "`id` 一个 `EntryId`，在整个 `Session` 内有序；`conversationId` 该条目所属的会话；`Session` `kind` 指明条目是什么的字符串；`writer` 是否为 `model`？面向模型的消息，用于展示或记账时不存在；`writer` 是否为 `data`？面向视图、扩展和你的代码的 JSON；`writer` 是否为 `head`？模型上下文从此刻起的第一个条目，`writer` 为 `\"self\"` 表示该条目自身；`edits`？仅在上下文里隐藏或替换较早的条目；`writer` 是否为 `byTaskId`？其提交追加了它的任务；`Session`　以上是 `EntryRecord` 的字段，改写自 src/types.ts 中的字段注释。"
   },
   {
    "type": "p",
@@ -67,21 +67,115 @@
    "zh": "条目在一次提交中写入，也就是一次原子保存：其中的内容要么一起存下，要么都不存。你永远不需要设置 `id`、`conversationId` 或 `byTaskId`。`tx.appendEntry()` 会填好它们，并把 `head: \"self\"` 换成新的 ID。因此 `byTaskId` 是记录哪个任务写了该条目的可靠依据。你从宿主用 `Conversation.commit()` 追加的条目没有这些字段。"
   },
   {
+   "type": "table-row",
+   "page": 38,
+   "_y": 83.3,
+   "cells": [
+    "id an EntryId, ordered across the whole Session the Session"
+   ],
+   "is_header": false,
+   "_sig": "id",
+   "zh": "`id` 一个"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 100.6,
+   "cells": [
+    "conversationId the conversation it belongs to the Session"
+   ],
+   "is_header": false,
+   "_sig": "conversationId",
+   "zh": "`conversationId` 该条目所属的会话；`Session`"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 117.1,
+   "cells": [
+    "kind a string naming what the entry is the writer"
+   ],
+   "is_header": false,
+   "_sig": "kind",
+   "zh": "`kind` 指明条目是什么的字符串；"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 134.1,
+   "cells": [
+    "model? messages for the model; absent for display or bookkeeping the writer"
+   ],
+   "is_header": false,
+   "_sig": "model",
+   "zh": "`model`？面向模型的消息，用于展示或记账时不存在；`writer` 是否为"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 150.6,
+   "cells": [
+    "data? JSON for views, extensions and your code the writer"
+   ],
+   "is_header": false,
+   "_sig": "data",
+   "zh": "`data`？面向视图、扩展和你的代码的 JSON；`writer` 是否为"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 167.1,
+   "cells": [
+    "head? the first entry of the model’s context from now on the writer; \"self\" means this entry"
+   ],
+   "is_header": false,
+   "_sig": "head",
+   "zh": "`head`？模型上下文从此刻起的第一个条目，`writer` 为 `\"self\"` 表示该条目自身；"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 184.4,
+   "cells": [
+    "edits? hide or replace earlier entries, in context only the writer"
+   ],
+   "is_header": false,
+   "_sig": "edits",
+   "zh": "`edits`？仅在上下文里隐藏或替换较早的条目；`writer` 是否为"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 200.9,
+   "cells": [
+    "byTaskId? the task whose commit appended it the Session"
+   ],
+   "is_header": false,
+   "_sig": "byTaskId",
+   "zh": "`byTaskId`？其提交追加了它的任务；`Session`　以上是"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 219.0,
+   "cells": [
+    "The fields of EntryRecord, paraphrased from its field comments in src/types.ts."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "The built-in kinds",
    "page": 38,
+   "_y": 314.2,
    "zh": "内置种类"
   },
   {
    "type": "p",
    "text": "The Harness writes six kinds. Each is exported as a typed Entry token src/entries.ts. Only two of them carry data spec §8.1.",
    "zh": "`Harness` 会写入六种种类。每一种都作为带类型的 Entry token 导出（src/entries.ts）。其中只有两种携带 `data`（规范 §8.1）。"
-  },
-  {
-   "type": "small",
-   "text": "pi.user one user message — submissions pi.assistant one assistant message, any stop reason — generation pi.system one system message, as a change — generation, before a request pi.tool-result one tool result message { diagnostics } tool tasks pi.reset none, or the handoff as a user message — reset(), a tool’s handoff pi.compaction the summary as a user message { reason } compaction From spec §8.1 and src/entries.ts. The tokens are UserEntry, AssistantEntry, SystemEntry, ToolResultEntry, ResetEntry and CompactionEntry.",
-   "page": 38,
-   "zh": "`pi.user` 一条用户消息 —— 提交项；`pi.assistant` 一条助手消息，任意停止原因 —— 生成；`pi.system` 一条系统消息，作为一次变更 —— 生成，位于请求之前；`pi.tool-result` 一条工具结果消息 `{ diagnostics }` 工具任务；`pi.reset` 无内容，或作为用户消息的交接 —— `reset()`、某个工具的交接；`pi.compaction` 作为用户消息的摘要 `{ reason }` 压缩。来自规范 §8.1 和 src/entries.ts。对应的 token 是 `UserEntry`、`AssistantEntry`、`SystemEntry`、`ToolResultEntry`、`ResetEntry` 和 `CompactionEntry`。"
   },
   {
    "type": "p",
@@ -92,6 +186,7 @@
    "type": "small",
    "text": "entry 10, the first pi.system of a conversation research/capture/sqlite-rows.txt JSON",
    "page": 39,
+   "_y": 73.9,
    "zh": "条目 10，某会话的第一个 `pi.system`　research/capture/sqlite-rows.txt JSON"
   },
   {
@@ -107,12 +202,14 @@
     "\"id\": 10, \"conversationId\": 1, \"byTaskId\": 9",
     "}"
    ],
-   "page": 39
+   "page": 39,
+   "_y": 97.1
   },
   {
    "type": "small",
    "text": "Reordered and joined; the tool’s description and parameter schema are cut.",
    "page": 39,
+   "_y": 232.5,
    "zh": "重新排序并合并；该工具的描述和参数 schema 已被截去。"
   },
   {
@@ -124,6 +221,7 @@
    "type": "h2",
    "text": "Your own kinds",
    "page": 39,
+   "_y": 311.2,
    "zh": "你自己的种类"
   },
   {
@@ -135,34 +233,32 @@
    "type": "small",
    "text": "a typed application entry src/entries.ts · src/types.ts (Tx) TS",
    "page": 39,
+   "_y": 378.4,
    "zh": "一个带类型的应用条目　src/entries.ts · src/types.ts (Tx) TS"
   },
   {
    "type": "code",
    "lines": [
-    "const NoteEntry = defineEntry<{ text: string }>(\"app.note\");"
+    "const NoteEntry = defineEntry<{ text: string }>(\"app.note\");",
+    "// No `model`, so the model never sees it. await root.commit("
    ],
-   "page": 39
-  },
-  {
-   "type": "small",
-   "text": "// No `model`, so the model never sees it.",
    "page": 39,
-   "zh": "// 没有 `model`，所以模型永远看不到它。"
+   "_y": 401.6
   },
   {
    "type": "code",
    "lines": [
-    "await root.commit(",
     "(tx) => tx.appendEntry(NoteEntry, root.id, { data: { text: \"user pinned b.md\" } }), context,",
     ");"
    ],
-   "page": 39
+   "page": 39,
+   "_y": 445.8
   },
   {
    "type": "small",
    "text": "// Undefined when entry `id` is absent or has another kind.",
    "page": 39,
+   "_y": 489.8,
    "zh": "// 当条目 `id` 不存在或属于其他种类时为 undefined。"
   },
   {
@@ -170,12 +266,14 @@
    "lines": [
     "const note = await harness.commit((tx) => tx.entry(NoteEntry, id), context);"
    ],
-   "page": 39
+   "page": 39,
+   "_y": 500.6
   },
   {
    "type": "small",
    "text": "app.note is this book’s example kind. The token’s is() guard narrows any entry by its kind.",
    "page": 39,
+   "_y": 525.7,
    "zh": "`app.note` 是本书的示例种类。该 token 的 `is()` 守卫按种类收窄任意条目。"
   },
   {
@@ -187,6 +285,7 @@
    "type": "small",
    "text": "Put model-facing text in model and everything else in data. Never change an entry. Append a new one with edits instead. Use byTaskId to see which task wrote an entry when you debug. While a run is active, add entries with a write submission, not a raw append spec §12 (submissions (p. 84)).",
    "page": 39,
+   "_y": 623.1,
    "zh": "面向模型的文本放进 `model`，其余一切放进 `data`。永远不要修改条目，而是追加一条新的并带上 `edits`。调试时用 `byTaskId` 看哪个任务写了某个条目。运行进行中时，用写提交项添加条目，而不是裸 `append`（规范 §12（提交项（第 84 页）））。"
   },
   {
@@ -194,18 +293,21 @@
    "lines": [
     "Sources: spec §1, §2, §8.1, §12; src/types.ts (EntryRecord, EntryDraft, Tx.appendEntry, Tx.entry); src/entries.ts; src/harness/types.ts (CompactionReason); src/session/transaction.ts; research/capture/context.txt; research/capture/sqlite-rows.txt"
    ],
-   "page": 39
+   "page": 39,
+   "_y": 704.9
   },
   {
    "type": "chapter-title",
    "text": "3 . 2 From transcript to model context",
    "page": 40,
+   "_y": 57.4,
    "zh": "3.2 从记录到模型上下文"
   },
   {
    "type": "lede",
    "text": "The transcript records everything that happened; nine fixed rules turn it into a request the provider will accept, without rewriting anything stored.",
    "page": 40,
+   "_y": 106.2,
    "zh": "记录保存了发生过的一切；九条固定规则把它变成供应商会接受的请求，而不重写任何已存储的内容。"
   },
   {
@@ -217,6 +319,7 @@
    "type": "h2",
    "text": "Two readings of one transcript",
    "page": 40,
+   "_y": 222.7,
    "zh": "一份记录的两种读法"
   },
   {
@@ -228,6 +331,7 @@
    "type": "h2",
    "text": "The nine rules",
    "page": 40,
+   "_y": 404.2,
    "zh": "九条规则"
   },
   {
@@ -236,23 +340,120 @@
    "zh": "规范把推导过程定义为九条有序规则（规范 §2.1）。右列指向下面的实例。"
   },
   {
-   "type": "small",
-   "text": "1 Find the newest entry that has a head. #20 2 Context starts at that head, or at the beginning if there is none. #10 3 Read every entry from there to the end. #10–#20",
+   "type": "table-row",
    "page": 40,
-   "zh": "1 找到最新的、带 `head` 的条目。　#20　2 上下文从该 `head` 开始，若无则从头开始。　#10　3 从那里读到末尾的每一条条目。　#10–#20"
+   "_y": 467.3,
+   "cells": [
+    "1 Find the newest entry that has a head. #20"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
   },
   {
-   "type": "code",
-   "lines": [
-    "4 Apply edits: the newest edit of an entry wins; omit hides it, replace swaps its messages. #19 replaces #11",
-    "5 Put the head entry first, then the others in order. #20 first 6 Keep every system message where it was written. #10 kept 7 Move each call’s results directly after the assistant message that made the call, in call order. #16, #14 after #13 8 Add an error result for every call that has none; drop results with no call. call-c 9 Leave out entries with no model, and assistant messages that stopped as aborted, error or deferred. #12, #18 Paraphrased from spec §2.1."
+   "type": "table-row",
+   "page": 40,
+   "_y": 483.8,
+   "cells": [
+    "2 Context starts at that head, or at the beginning if there is none. #10"
    ],
-   "page": 40
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 501.0,
+   "cells": [
+    "3 Read every entry from there to the end. #10–#20"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 517.5,
+   "cells": [
+    "4 Apply edits: the newest edit of an entry wins; omit hides it, replace swaps its messages. #19 replaces #11"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 534.0,
+   "cells": [
+    "5 Put the head entry first, then the others in order. #20 first"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 551.3,
+   "cells": [
+    "6 Keep every system message where it was written. #10 kept"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 566.5,
+   "cells": [
+    "7 Move each call’s results directly after the assistant message that made the call, in call order. #16, #14 after #13"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 585.0,
+   "cells": [
+    "8 Add an error result for every call that has none; drop results with no call. call-c"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 601.5,
+   "cells": [
+    "9 Leave out entries with no model, and assistant messages that stopped as aborted, error or deferred. #12, #18"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 40,
+   "_y": 619.5,
+   "cells": [
+    "Paraphrased from spec §2.1."
+   ],
+   "is_header": false,
+   "_sig": "Paraphrased",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "A worked example",
    "page": 40,
+   "_y": 648.0,
    "zh": "一个实例"
   },
   {
@@ -264,17 +465,16 @@
    "type": "figure",
    "number": "3.2",
    "file": "figures/fig-3.2.png",
-   "title": "ONE TRANSCRIPT, TWO READINGS\nF L O W",
-   "caption": "Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result.",
+   "title": "ONE TRANSCRIPT , TWO READINGS FLOW",
+   "caption": "Contextderivationreadsastoredtranscriptasninerequestmessages . Entries #8–#20 andthederivedmessagesarefromresearch / capture / extra - p 23/ context - derivation . txt . Hatchedentriesliebeforethehead ’ srange ; dashedonesareintherangebutcontributenomessage . Message 9, drawn deeper , hasnoentry : derivationsynthesizesitbecausecall - chasnostoredresult .",
    "page": 41,
    "zh_caption": "上下文推导把一份已存储的记录读成九条请求消息。条目 #8–#20 和推导出的消息取自 research/capture/extra-p23/context-derivation.txt。画阴影线的条目位于 `head` 范围之前；虚线条目在范围内，但不贡献任何消息。画得更深的第 9 条消息没有对应条目：因为 call-c 没有存储结果，推导过程合成了它。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result."
-   ],
-   "page": 41
+   "type": "small",
+   "text": "Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result.",
+   "page": 41,
+   "_y": 451.2
   },
   {
    "type": "p",
@@ -290,6 +490,7 @@
    "type": "small",
    "text": "message 9, synthesized for call-c research/capture/extra-p23/context-derivation.txt JSON",
    "page": 42,
+   "_y": 73.9,
    "zh": "消息 9，为 call-c 合成　research/capture/extra-p23/context-derivation.txt JSON"
   },
   {
@@ -299,23 +500,33 @@
     "\"role\": \"toolResult\",",
     "\"toolCallId\": \"call-c\",",
     "\"toolName\": \"read\", \"content\": [{ \"type\": \"text\",",
-    "\"text\": \"Tool result unavailable: history ends before this call completed.\" }],",
+    "\"text\": \"Tool result unavailable: history ends before this call completed.\" }],"
+   ],
+   "page": 42,
+   "_y": 97.1
+  },
+  {
+   "type": "code",
+   "lines": [
     "\"isError\": true,",
     "\"details\": { \"reason\": \"missing_result\" }, \"timestamp\": 1791300010000",
     "}"
    ],
-   "page": 42
+   "page": 42,
+   "_y": 163.1
   },
   {
    "type": "small",
    "text": "The text and details are fixed in src/harness/context.ts. The timestamp is copied from the assistant message that made the call.",
    "page": 42,
+   "_y": 221.2,
    "zh": "文本和 `details` 固定在 src/harness/context.ts 中。`timestamp` 复制自发出该调用的那条助手消息。"
   },
   {
    "type": "h2",
    "text": "Why these rules exist",
    "page": 42,
+   "_y": 249.0,
    "zh": "这些规则为何存在"
   },
   {
@@ -327,6 +538,7 @@
    "type": "small",
    "text": "To see what the model will get, call context() and read messages. Do not rebuild it from entries yourself. A crash never produces an invalid request, so you need no cleanup code for the transcript. Reading context never writes. Two reads of the same transcript give the same messages.",
    "page": 42,
+   "_y": 477.6,
    "zh": "要看模型将收到什么，调用 `context()` 并读取 `messages`。不要自己从条目重建。崩溃永远不会产生无效请求，所以记录不需要任何清理代码。读取 context 永不写入。同一份记录读两次得到相同的消息。"
   },
   {
@@ -334,18 +546,21 @@
    "lines": [
     "Sources: spec §2.1, §2.2 (ContextView), §5.4, §8.1; src/harness/context.ts; src/harness/types.ts (ContextView); ex 09; run 09; research/capture/extra-p23/context-derivation.txt (script test/capture-p23-context.ts)"
    ],
-   "page": 42
+   "page": 42,
+   "_y": 544.4
   },
   {
    "type": "chapter-title",
    "text": "3 . 3 Forks and owned conversations",
    "page": 43,
+   "_y": 57.4,
    "zh": "3.3 分叉与被拥有的会话"
   },
   {
    "type": "lede",
    "text": "A fork branches a conversation at one entry and shares the history before it; an owned conversation belongs to a task, so aborting the task reaches it.",
    "page": 43,
+   "_y": 106.2,
    "zh": "分叉从某一条目处分支出一个会话，并共享它之前的历史；被拥有的会话属于某个任务，所以中止该任务时会影响到它。"
   },
   {
@@ -357,21 +572,8 @@
    "type": "h2",
    "text": "Four ways to get a conversation",
    "page": 43,
+   "_y": 222.7,
    "zh": "获得会话的四种方式"
-  },
-  {
-   "type": "small",
-   "text": "harness.root(context, options) conversation 1, created on first call; later calls write nothing",
-   "page": 43,
-   "zh": "`harness.root(context, options)`　会话 1，首次调用时创建；之后的调用不写入任何东西"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "harness.createConversation(options, context) a new, empty conversation; ownership is required",
-    "conversation.fork(at, options, context) a branch that shares history up to entry at tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init."
-   ],
-   "page": 43
   },
   {
    "type": "p",
@@ -379,9 +581,65 @@
    "zh": "创建是一次提交。它会写入该会话、它的五份内置文档（内置文档（第 60 页））、任何 agent 设置，以及你的 `init(tx, id)` 写入的内容。不会出现创建了一半的状态（规范 §2.2）。创建会话和发送它的第一条消息是两个独立的调用。如果你的进程可能在两者之间崩溃，就在 `init` 里写一个键以便再次找到该会话，然后用带请求 ID 的提交项提交，这样重试不会被发送两次（规范 §2.2）。"
   },
   {
+   "type": "table-row",
+   "page": 43,
+   "_y": 264.6,
+   "cells": [
+    "harness.root(context, options) conversation 1, created on first call; later calls write nothing"
+   ],
+   "is_header": false,
+   "_sig": "harness",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 43,
+   "_y": 281.9,
+   "cells": [
+    "harness.createConversation(options, context) a new, empty conversation; ownership is required"
+   ],
+   "is_header": false,
+   "_sig": "harness",
+   "zh": "`harness.root(context, options)`　会话 1，首次调用时创建；之后的调用不写入任何东西"
+  },
+  {
+   "type": "table-row",
+   "page": 43,
+   "_y": 298.4,
+   "cells": [
+    "conversation.fork(at, options, context) a branch that shares history up to entry at"
+   ],
+   "is_header": false,
+   "_sig": "conversation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 43,
+   "_y": 315.6,
+   "cells": [
+    "tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s"
+   ],
+   "is_header": false,
+   "_sig": "tx",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 43,
+   "_y": 333.8,
+   "cells": [
+    "From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Forks",
    "page": 43,
+   "_y": 436.2,
    "zh": "分叉"
   },
   {
@@ -393,6 +651,7 @@
    "type": "small",
    "text": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts",
    "page": 43,
+   "_y": 517.8,
    "zh": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts"
   },
   {
@@ -404,7 +663,8 @@
     "fork2 24: #16:\"fork-only\" #8:\"two\" #7:\"one\"",
     "grand.fork(#9) -> Entry 9 is not visible from conversation 17 From research/capture/extra-p23/forks.txt; entries newest first. Conversation 17 cannot see #9, so it cannot fork there."
    ],
-   "page": 43
+   "page": 43,
+   "_y": 530.0
   },
   {
    "type": "p",
@@ -415,8 +675,8 @@
    "type": "figure",
    "number": "3.3",
    "file": "figures/fig-3.3.png",
-   "title": "FORKS, CAPS AND AN OWNED CONVERSATION\nT R E E",
-   "caption": "A fork sees its own entries, then each ancestor’s entries up to the parent.at cap. Conversation 32 has no parent; task 31, which lives in conversation 1, owns it. Conversations, entries and visibility from research/capture/extra-p23/forks.txt.",
+   "title": "FORKS , CAPS AND AN OWNED CONVERSATION TREE",
+   "caption": "Aforkseesitsownentries , theneachancestor ’ sentriesuptothe p a r e nt . a t cap . Conversation 32 hasnoparent ; task 31, whichlivesinconversation 1, ownsit . Conversations , entriesandvisibilityfromresearch / capture / extra - p 23/ forks . txt .",
    "page": 44,
    "zh_caption": "分叉先看到自己的条目，然后是每一层祖先直到 `parent.at` cap 为止的条目。会话 32 没有父会话；住在会话 1 中的任务 31 拥有它。会话、条目与可见性取自 research/capture/extra-p23/forks.txt。"
   },
@@ -424,6 +684,7 @@
    "type": "small",
    "text": "A fork sees its own entries, then each ancestor’s entries up to the parent.at cap. Conversation 32 has no parent; task 31, which lives in conversation 1, owns it. Conversations, entries and visibility from research/capture/extra-p23/forks.txt.",
    "page": 44,
+   "_y": 340.4,
    "zh": "分叉先看到自己的条目，然后是每一层祖先直到 `parent.at` cap 为止的条目。会话 32 没有父会话；住在会话 1 中的任务 31 拥有它。会话、条目与可见性取自 research/capture/extra-p23/forks.txt。"
   },
   {
@@ -432,43 +693,125 @@
    "zh": "分叉继承什么"
   },
   {
-   "type": "small",
-   "text": "entries shared up to E, never copied",
-   "page": 44,
-   "zh": "共享到 E 为止的条目，绝不复制"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "fork: \"asOf\" documents a copy of the parent’s value at E",
-    "fork: \"current\" documents a copy of the parent’s value now",
-    "fork: \"initial\" documents nothing; created fresh on first use",
-    "pi.agent the parent’s agent settings as of E"
-   ],
-   "page": 44
-  },
-  {
-   "type": "code",
-   "lines": [
-    "pi.provider a new provider session ID, never the parent’s"
-   ],
-   "page": 44
-  },
-  {
-   "type": "small",
-   "text": "live state, inbox, usage empty tasks and task documents never copied Session documents shared, not copied From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50).",
-   "page": 44,
-   "zh": "live state、inbox、usage 为空；任务和任务文档绝不复制；`Session` 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。"
-  },
-  {
    "type": "p",
    "text": "The capture shows the asOf rule. The root’s agent instructions said \"v1: be brief\" when #8 was written and \"v2: be thorough\" later. The fork at #8 starts with v1, and it has its own provider session ID research/capture/extra-p23/forks.txt.",
    "zh": "这次捕获展示了 `asOf` 规则。根会话的 agent 指令在写入 #8 时是 \"v1: be brief\"，后来变成了 \"v2: be thorough\"。在 #8 处分出的分叉以 v1 开头，并且拥有自己的供应商 session ID（research/capture/extra-p23/forks.txt）。"
   },
   {
+   "type": "table-row",
+   "page": 44,
+   "_y": 418.5,
+   "cells": [
+    "entries shared up to E, never copied"
+   ],
+   "is_header": false,
+   "_sig": "entries",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 434.9,
+   "cells": [
+    "fork: \"asOf\" documents a copy of the parent’s value at E"
+   ],
+   "is_header": false,
+   "_sig": "fork",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 452.1,
+   "cells": [
+    "fork: \"current\" documents a copy of the parent’s value now"
+   ],
+   "is_header": false,
+   "_sig": "fork",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 468.6,
+   "cells": [
+    "fork: \"initial\" documents nothing; created fresh on first use"
+   ],
+   "is_header": false,
+   "_sig": "fork",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 485.9,
+   "cells": [
+    "pi.agent the parent’s agent settings as of E"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 502.4,
+   "cells": [
+    "pi.provider a new provider session ID, never the parent’s"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 519.8,
+   "cells": [
+    "live state, inbox, usage empty"
+   ],
+   "is_header": false,
+   "_sig": "live",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 536.6,
+   "cells": [
+    "tasks and task documents never copied"
+   ],
+   "is_header": false,
+   "_sig": "tasks",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 552.8,
+   "cells": [
+    "Session documents shared, not copied"
+   ],
+   "is_header": false,
+   "_sig": "Session",
+   "zh": "live state、inbox、usage 为空；任务和任务文档绝不复制；`Session` 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。"
+  },
+  {
+   "type": "table-row",
+   "page": 44,
+   "_y": 571.5,
+   "cells": [
+    "From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50)."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Owned conversations",
    "page": 44,
+   "_y": 638.2,
    "zh": "被拥有的会话"
   },
   {
@@ -480,6 +823,7 @@
    "type": "small",
    "text": "a task and the conversation it owns, in one commit test/capture-p23-context.ts TS",
    "page": 45,
+   "_y": 73.9,
    "zh": "一个任务和它拥有的会话，在一次提交中完成　test/capture-p23-context.ts TS"
   },
   {
@@ -493,12 +837,14 @@
     "}, context);",
     "// child: {\"id\":32,\"owner\":{\"conversationId\":1,\"taskId\":31}}"
    ],
-   "page": 45
+   "page": 45,
+   "_y": 97.1
   },
   {
    "type": "small",
    "text": "The comment is the captured output in research/capture/extra-p23/forks.txt.",
    "page": 45,
+   "_y": 199.5,
    "zh": "注释是 research/capture/extra-p23/forks.txt 里捕获到的输出。"
   },
   {
@@ -510,6 +856,7 @@
    "type": "small",
    "text": "Use a fork for “try again from here”. The original conversation is untouched. Use an owned conversation for work that should stop when its task stops, such as a subagent. Pick each document’s fork policy on purpose; it decides what a branch starts with.",
    "page": 45,
+   "_y": 345.6,
    "zh": "「从这里重试」用分叉，原会话不受影响。应当随任务一起停止的工作，用被拥有的会话，例如子智能体。有意为每份文档选定分叉策略；它决定一条分支以什么开始。"
   },
   {
@@ -517,18 +864,21 @@
    "lines": [
     "Sources: spec §2, §2.1, §2.2, §3.3, §3.7; src/harness/harness.ts (root, createConversation, fork); src/harness/agent.ts (createAgent); src/session/transaction.ts; src/session/forks.ts; ex 03; run 09; research/capture/extra-p23/forks.txt; research/capture/context.txt"
    ],
-   "page": 45
+   "page": 45,
+   "_y": 412.4
   },
   {
    "type": "chapter-title",
    "text": "3 . 4 Reset, handoff and heads",
    "page": 46,
+   "_y": 57.4,
    "zh": "3.4 重置、交接与头指针"
   },
   {
    "type": "lede",
    "text": "A head moves the start of the model’s context forward without deleting anything; reset, handoff and compaction all work this way.",
    "page": 46,
+   "_y": 106.2,
    "zh": "头指针把模型上下文的起点向前移动，而不删除任何东西；重置、交接和压缩都以这种方式工作。"
   },
   {
@@ -540,6 +890,7 @@
    "type": "h2",
    "text": "What a head is",
    "page": 46,
+   "_y": 222.7,
    "zh": "头指针是什么"
   },
   {
@@ -556,6 +907,7 @@
    "type": "h2",
    "text": "reset() and handoff",
    "page": 46,
+   "_y": 399.0,
    "zh": "reset() 与交接"
   },
   {
@@ -567,6 +919,7 @@
    "type": "small",
    "text": "for Ada. Continue from 5+5.\"",
    "page": 46,
+   "_y": 478.8,
    "zh": "for Ada. Continue from 5+5.\""
   },
   {
@@ -578,8 +931,8 @@
    "type": "figure",
    "number": "3.4",
    "file": "figures/fig-3.4.png",
-   "title": "THE ACTIVE RANGE MOVING WITH HEADS\nT I M E L I N E",
-   "caption": "A head moves the start of context forward; every entry stays stored. Stages 1–5 of research/capture/context.txt; the context().entries lines are copied from it.",
+   "title": "THE ACTIVE RANGE MOVING WITH HEADS TIMELINE",
+   "caption": "Aheadmovesthestartofcontextforward ; everyentrystaysstored . Stages 1–5 ofresearch / capture / context . txt ; the c ont e xt (). e ntr ie s linesare copiedfromit .",
    "page": 47,
    "zh_caption": "头指针把上下文的起点向前移动；每个条目都仍然保留。research/capture/context.txt 的第 1–5 阶段；`context().entries` 各行直接取自它。"
   },
@@ -587,6 +940,7 @@
    "type": "small",
    "text": "A head moves the start of context forward; every entry stays stored. Stages 1–5 of research/capture/context.txt; the context().entries lines are copied from it.",
    "page": 47,
+   "_y": 413.7,
    "zh": "头指针把上下文的起点向前移动；每个条目都仍然保留。research/capture/context.txt 的第 1–5 阶段；`context().entries` 各行直接取自它。"
   },
   {
@@ -598,6 +952,7 @@
    "type": "h2",
    "text": "Stale head writes",
    "page": 47,
+   "_y": 510.0,
    "zh": "过期的头指针写入"
   },
   {
@@ -609,6 +964,7 @@
    "type": "small",
    "text": "two head writes after a reset at #9 research/capture/extra-p23/heads.txt TEXT",
    "page": 47,
+   "_y": 577.1,
    "zh": "在 #9 处重置之后的两次头指针写入　research/capture/extra-p23/heads.txt TEXT"
   },
   {
@@ -618,12 +974,14 @@
     "write with head=#8 (before the start): status \"unanswered\", reason \"stale\"",
     "write with head=#11 (inside the range): status \"done\", entry 13 context entries now: [#13 app.summary head=11, #11 pi.user]"
    ],
-   "page": 47
+   "page": 47,
+   "_y": 600.3
   },
   {
    "type": "small",
    "text": "stored entries (newest first), nothing deleted: [#15 pi.reset, #13 app.summary, #11 pi.user, #9 pi.reset, #8 pi.assistant, #7 pi.user] The submission records are shortened to their status. #15 is a later plain reset().",
    "page": 47,
+   "_y": 666.3,
    "zh": "存储的条目（最新在前），没有删除任何东西：[#15 pi.reset, #13 app.summary, #11 pi.user, #9 pi.reset, #8 pi.assistant, #7 pi.user]　提交项记录已缩短为只保留状态。#15 是之后一次普通的 `reset()`。"
   },
   {
@@ -640,6 +998,7 @@
    "type": "small",
    "text": "Use reset(text) to start fresh but tell the model where it left off. Write your own head entries through a write submission, not a raw tx.appendEntry(). Only the submission path checks for stale heads, and a raw write can leave a mounted view out of date spec §12. If a write ends stale, a newer head already moved past its target. Recompute it from the current context.",
    "page": 48,
+   "_y": 233.1,
    "zh": "用 `reset(text)` 开启全新上下文，同时告诉模型它停在哪里。通过写提交项写入自己的头指针条目，而不是裸的 `tx.appendEntry()`。只有提交项路径会检查过期的头指针，裸写入可能让已挂载的视图过期（规范 §12）。如果一次写入以过期结束，说明更新的头指针已经越过了它的目标，请从当前上下文重新计算。"
   },
   {
@@ -648,7 +1007,96 @@
     "Sources: spec §2.1, §2.2 (reset, pi.provider), §6, §7.3, §7.4, §8.1, §12; src/types.ts (EntryRecord.head); src/harness/harness.ts (reset); src/harness/submissions.ts; src/harness/inbox.ts; src/harness/generation.ts; src/harness/types.ts (ToolControl);",
     "research/capture/context.txt; research/capture/extra-p23/heads.txt"
    ],
-   "page": 48
+   "page": 48,
+   "_y": 313.4
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 376.4,
+   "cells": [
+    "pi.user one user message — submissions"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 393.6,
+   "cells": [
+    "pi.assistant one assistant message, any stop reason — generation"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 410.1,
+   "cells": [
+    "pi.system one system message, as a change — generation, before a request"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 427.4,
+   "cells": [
+    "pi.tool-result one tool result message { diagnostics } tool tasks"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 442.7,
+   "cells": [
+    "pi.reset none, or the handoff as a user message — reset(), a tool’s handoff"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 461.1,
+   "cells": [
+    "pi.compaction the summary as a user message { reason } compaction"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": "`pi.user` 一条用户消息 —— 提交项；`pi.assistant` 一条助手消息，任意停止原因 —— 生成；`pi.system` 一条系统消息，作为一次变更 —— 生成，位于请求之前；`pi.tool-result` 一条工具结果消息 `{ diagnostics }` 工具任务；`pi.reset` 无内容，或作为用户消息的交接 ——"
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 479.3,
+   "cells": [
+    "From spec §8.1 and src/entries.ts. The tokens are UserEntry, AssistantEntry, SystemEntry, ToolResultEntry, ResetEntry and"
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 38,
+   "_y": 490.5,
+   "cells": [
+    "CompactionEntry."
+   ],
+   "is_header": false,
+   "_sig": "CompactionEntry",
+   "zh": "`CompactionEntry`。"
   }
  ]
 }

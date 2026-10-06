@@ -73,3 +73,5 @@ docs/fix_deps.py
 docs/src/components/BookCards.astro
 docs/package-lock.json
 docs/prev*/
+.scratch/
+pi-durable/

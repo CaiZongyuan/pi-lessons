@@ -19,8 +19,7 @@
 
 Pi 编码智能体已经会持久化它的各个 Session。一个 Session 是 `~/.pi/agent/sessions/` 下的一个 `JSONL` 文件。每一行是一个带 `type` 的 JSON 对象；第一行是 Session 头，其余是通过 `id` 和 `parentId` 组成一棵树的条目 `coding-agent docs/session-format.md`。这棵树给了 Pi 原地分支的能力：`/tree` 可以移动到更早的条目，而不抹掉你离开的那条分支 `coding-agent docs/sessions.md`。各行随着智能体循环产出而追加。一条用户消息、一条带工具调用的助手消息、以及一条工具结果，各自都是一行消息 `session-format.md §Entry Types`。循环在供应商流式输出完成之后记录响应，然后逐个运行工具调用并记录结果 `coding-agent docs/how-pi-works.md §Agent loop`。这个设计保住了会话，但保不住轮次。如果进程在工具运行期间死去，文件就停在调用它的那条助手消息上。没有任何一行说明工具开始了，或者它打印了什么。流式输出到一半的响应不在文件里，扩展只存在内存中的状态也没了。下一个进程能把会话读回来，但无法判断工具的效果是否已经发生。
 
-<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.1.png" alt="A CRASH IN THE MIDDLE OF A TOOL CALL
-C O M P A R I S O N" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.1.png" alt="A CRASH IN THE MIDDLE OF A TOOL CALL COMPARISON" loading="lazy">
 
 *工具执行中途崩溃，会让原版 Pi 留下一个停在调用处的文件；Pi Durable 则重新打开一个被中断的任务。虚线左侧是崩溃之前已写入的内容*
 
@@ -51,13 +50,8 @@ Pi Durable 是一个 Harness：一处打开的存储，加上在其上运行智�
 不提供对世界的回滚——提交只在存储范围内是原子的。外部效果「不在 `Session` 的变更事务内运行」`spec §1`，不变式 4。当 Harness 无法知道一笔支付是否已经发生时，它会如实说明，并把答案交给幂等键或远端记录（边界与非目标（p. 168））。
 
 <aside class="note">重新打开同一个存储，恢复未完成的工作。安全的工具可以再次运行；不安全的工具报告一个被中断的结果。逐个工具决定运行两次是否安全。这一个选择就决定了被截断的调用会怎样。把应用状态放在文档里，而不是内存里，这样它永远不会与记录（transcript）不一致。每个存储保持一个进程，让你的监督者去重启它。</aside>
-```
-Sources: README.md (intro, §Concepts, §Watching a Conversation, §Your Own State, §Storage); docs/spec.md §1, §13; src/harness/tool.ts
-(ToolTask phases call, execute); research/capture/crash-README.md, crash-before.txt, crash-reopen-tasks.txt, crash-after.txt; research/pi/packages/coding-agent/docs/session-format.md, sessions.md, how-pi-works.md; earendil.com/posts/pi-durable (Earendil, October 2026)
-```
-
-<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.2.png" alt="THE LAYERS OF A HARNESS
-L A Y E R S" loading="lazy">
+<aside class="note">Sources: README.md (intro, §Concepts, §Watching a Conversation, §Your Own State, §Storage); docs/spec.md §1, §13; src/harness/tool.ts (ToolTask phases call, execute); research/capture/crash-README.md, crash-before.txt, crash-reopen-tasks.txt, crash-after.txt; research/pi/packages/coding-agent/docs/session-format.md, sessions.md, how-pi-works.md; earendil.com/posts/pi-durable (Earendil, October 2026)</aside>
+<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.2.png" alt="THE LAYERS OF A HARNESS LAYERS" loading="lazy">
 
 *宿主驱动一个 Harness，Harness 通过一个 `Session` 提交，`Session` 写入一处存储。右列是 `HarnessOptions`；`Chord` 是一个包依赖，不是选项。依据 `src/harness/harness.ts` 与 `src/session/session.ts`。*
 
@@ -80,24 +74,31 @@ L A Y E R S" loading="lazy">
 
 四个组件承担 Harness 的工作，每个都在 `src/harness/` 下的一个文件里。
 
-```
-harness.ts nothing: a handle is an id plus methods; “compare handles by id” README §Concepts
-```
-
-<aside class="note">会话句柄｜提交项 `submissions.ts`、`inbox.ts`：输入与写入的受理、每个会话各自的收件箱，以及 `wait()` 背后的等待者｜任务调度器 `scheduler.ts`：每个存活任务的内存镜像；预留、运行和中止它们｜视图 `view.ts`、`task-graph.ts`、`events.ts`：`viewState()`、`watch()`、任务图和智能体事件</aside>
 Harness 用三个内置任务来回应输入。`pi.generation` 准备提示词并调用模型。`pi.tool` 运行一次工具调用。`pi.compaction` 概括旧上下文 `spec §8`。它们「不是扩展，不能被移除或替换」`src/harness/registry.ts`，所以永远用 `createRegistry()` 构建注册表；`Harness.open()` 会拒绝缺少它们的注册表。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>Conversation handles</td><td></td><td></td></tr>
+<tr><td>Submissions submissions.ts, inbox.ts admission of inputs and writes, the per-conversation inbox, and the waiters behind wait()</td><td></td><td></td></tr>
+<tr><td>Task scheduler scheduler.ts an in-memory mirror of every live task; reserving, running and aborting them</td><td></td><td></td></tr>
+<tr><td>Views view.ts, task-graph.ts, events.ts</td><td></td><td></td></tr>
+</table>
 
 ### 宿主插入的东西
 
 `Harness.open(storage, options, context)` 把其余一切都作为 `HarnessOptions` 接收 `spec §2.2`。
 
-```
-models the pi-ai Models interface; generation calls models.streamSimple() generation (p. 91)
-registry the installed extensions: tools, prompt sections, hooks, wraps and tasks the registry (p. 103)
-```
-
-<aside class="note">`settings`：每次使用时读取、从不存储的运行策略｜设置与默认值（p. 180）｜`env`：为每次工具调用和提示词渲染构建 `ExecutionEnv`｜渲染环境（p. 155）｜`conversationCreated`：在每次创建或分叉会话的提交中运行｜访问与创建（p. 53）｜`now`、`onReport`：时钟，以及 Harness 报告但能挺过去的错误的去处——</aside>
 有两个依赖不是选项：`@earendil-works/pi-ai` 提供消息类型和 faux 供应商，`@earendil-works/chord` 提供文档状态 `package.json`。每个异步调用都接受一个 `Chord Context`；取消它取消的是等待，而不是工作 `README §Quick Start`。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>models the pi-ai Models interface; generation calls models.streamSimple() generation (p. 91)</td><td></td><td></td></tr>
+<tr><td>registry the installed extensions: tools, prompt sections, hooks, wraps and tasks the registry (p. 103)</td><td></td><td></td></tr>
+<tr><td>settings run policy read at every use and never stored settings and defaults (p. 180)</td><td>：每次使用时读取、从不存储的运行策略｜设置与默认值（p. 180）｜</td><td></td></tr>
+<tr><td>env builds the ExecutionEnv for each tool call and prompt render the environment (p. 155)</td><td>：为每次工具调用和提示词渲染构建</td><td></td></tr>
+<tr><td>conversationCreated runs in every commit that creates or forks a conversation access and creation (p. 53)</td><td>：在每次创建或分叉会话的提交中运行｜访问与创建（p. 53）｜</td><td></td></tr>
+<tr><td>now, onReport the clock, and a sink for errors the harness reports but survives —</td><td></td><td></td></tr>
+</table>
 
 ### 一次调用穿过各层
 
@@ -119,19 +120,7 @@ registry the installed extensions: tools, prompt sections, hooks, wraps and task
 
 这个包暴露十条导入路径。依赖 Node 的代码位于以 `/node` 结尾的路径之后；可移植的 `SQLite` 与 `JSONL` 核心也能在 Bun 或 Cloudflare Durable Objects 上运行 `README §Storage`。
 
-<aside class="note">`@earendil-works/pi-durable`：`Harness`、`createRegistry`、`defineExtension`、`defineTool`、`defineTask`、`defineDoc`、条目词元、内置文档与内置任务、`MemoryStorage`、`createSession`｜`…/storage/sqlite/node`、`…/storage/sqlite`</aside>
-```ts
-openNodeSqliteStorage(file); the portable core over an async database facade
-…/storage/jsonl/node, …/storage/jsonl openNodeJsonlStorage(directory, context); the portable core over a FileSystem …/storage/memory MemoryStorage on its own …/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv …/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four …/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks From the exports map of package.json. The package requires Node 22.19.0 or later.
-```
-
-<aside class="note">你的代码只与 Harness 及其会话句柄对话，从不直接接触存储。任何重启后还需要的东西，都必须存在于某次提交中；内存只是缓存。句柄不持有状态。重启之后，用 `harness.conversation(id, context)` 重新取一个。</aside>
-```
-Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts
-```
-
-<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.3.png" alt="THE COMMIT AS THE ONLY DOOR
-F L O W" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.3.png" alt="THE COMMIT AS THE ONLY DOOR FLOW" loading="lazy">
 
 *每一个可见的改变，都要经过变更线上的同一次提交；效果只以提交的形式抵达观察者。阶段名称遵循 `spec §4`：变更线从回调一直持有到发布。*
 
@@ -149,10 +138,7 @@ F L O W" loading="lazy">
 <aside class="note">「`Session` 原子地提交不可变条目、完整任务记录和由 `Chord` 跟踪的文档。只有已提交的状态是可观测的。」</aside>
 第一句说明一次提交包含什么：记录、任务记录和文档变更，作为一个整体写入。第二句说明别的什么都看不见。屏幕、等待者、观察以及调度器本身，读的都是已提交的状态，而且不存在旁路 `spec`，前言。把它读成一扇门：每个改变都从提交通过，每个观察者都坐在门的另一侧。
 
-```
-Every visible change passes through one commit on the mutation line; effects reach observers only as commits. Stage names follow spec §4: the line is held from the callback through publication.
-```
-
+<aside class="note">Every visible change passes through one commit on the mutation line; effects reach observers only as commits. Stage names follow spec §4: the line is held from the callback through publication.</aside>
 ### 术语
 
 规范在 §1 里一次性定义了它的名词。全书其余部分都严格按这个方式使用它们。`Session`——拥有一条变更线、会话、条目、任务、提交项和文档。`Conversation`（会话）——一个记录（transcript）作用域。它可以分叉出另一个会话。`Entry`（条目）——一条不可变的记录。`Task`（任务）——挂在某个会话上的持久状态机。`Document`（文档）——你的应用的 JSON 状态，随会话或任务一起保存。`Definition`——为文档命名并设定其初始值与存储规则的 TypeScript 声明。`Source`——文档更新保存后形成的只读流。`Turn`（轮次）——一次助手响应及其发起的工具调用。`Run`（运行）——从一个被受理的输入到最终答案之间的轮次序列。运行进行期间，会话就是忙碌的。
@@ -161,14 +147,6 @@ Every visible change passes through one commit on the mutation line; effects rea
 
 接着规范 §1 列出八条「必需的不变式」。每一条都堵住一种具体的失效。表格以短形式引用它们；下面的段落说明每一条换来了什么。
 
-<aside class="note">1 一次提交在所有记录和文档写入上是原子的。｜被存下却没有任务的工具调用
-2 文档更新只有在其存储提交成功后才发布。｜屏幕显示的状态被崩溃抹掉
-3 所有可见进展都是持久的；不存在易失的发布路径。｜重开之后从未存在过的流式文本
-4 外部效果不在变更事务内运行。｜一个慢调用拖住每一个会话
-5 条目与 ID 不可变且永不复用。｜引用指向错误的记录
-6 草稿在回调结算时被撤销；值是复制的严格 JSON。｜绕过提交的写入
-7 变更线在结算与采纳期间保持持有；用户回调稍后在线外运行。｜建立在未采纳状态上的提交
-8 不确定的存储失败对已打开的 `Session` 是致命的。｜内存与磁盘悄悄分叉</aside>
 1 · 跨记录与文档的原子性 一次提交就是对 `Storage.commit(writes)` 的一次调用，它要么存下全部写入，要么一个都不存 `src/session/session.ts`。在单轮次的抓取中，提交 6 写入带工具调用的助手条目、把生成任务 9 移到 `waiting`、创建工具任务 12，并更新两个文档。若拆成两次写入，其间的崩溃会留下一个永远不会有任务来运行的工具调用。
 
 2 与 3 · 先落存储，再发布，而且只有如此 `Session` 只有在 `Storage.commit()` 返回、并且新修订被采纳之后，才发布一次提交。不变式 3 排除了另一种可能：没有办法展示某个东西而不先提交它。因此部分答案和工具输出同样要提交，由 `settings.progress` 节流。这些提交每一次都是一次存储写入；这就是「屏幕绝不显示任何崩溃能收走的东西」的代价 `src/harness/generation.ts`（`streamResponse`）。
@@ -197,14 +175,19 @@ drafts”, “poisons the Session after an uncertain Storage failure”); resear
 
 <aside class="note">快速开始，节选 `README.md §Quick Start` `TS`</aside>
 ```ts
-const harness = await Harness.open(
 new MemoryStorage(), { models, registry: createRegistry() }, context
 ); const root = await harness.root(context, {
 agent: { model: { provider: "openai", modelId: "gpt-6-sol" } },
 });
 const submission = await root.submit(
+```
+
+```json
 { type: "input", content: "What is the capital of France?" }, context);
 const settled = await submission.wait(context);
+```
+
+```ts
 // settled.answer is the id of the pi.assistant entry that answered await harness.close(context);
 ```
 
@@ -215,8 +198,7 @@ const settled = await submission.wait(context);
 
 `root()` 在提交 1 中创建根会话。同一次提交还创建了它的五个内置文档，id 2 到 6：`pi.live`、`pi.inbox`、`pi.usage`、`pi.provider` 和 `pi.agent` `src/harness/harness.ts`（`conversationCreated`）。`agent` 文档存放模型选择，这里是 `faux`／`faux-1`。打开 Harness 时也运行了一次提交，用来对齐运行中的任务，但它没有写入任何东西。没有写入的提交会被丢弃，也不占用序列号 `src/session/session.ts`。`submit()` 是提交 2，它是让输入变得持久的那一次。此时会话空闲，于是受理在一次提交里做了三件事 `src/harness/submissions.ts`（`admitSubmission`）。它追加一条 `pi.user` 条目 7。它创建提交项 8，`status` 为 `placed`、`entry` 为 7。它启动一次运行：创建生成任务 9，并把 `pi.live.run` 设为 `{"taskId": 9, "inputs": [8]}`。从这一刻起会话就是忙碌的，因为「忙碌」的定义就是 `pi.live.run` 存在（运行控制（p. 88））。在这次提交之后崩溃，不会丢失用户输入的任何内容。用相同的 `requestId` 重新提交，会返回提交项 8，而不是新建一个。
 
-<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.4.png" alt="ONE ANSWERED INPUT, COMMITS 1–8
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.4.png" alt="ONE ANSWERED INPUT , COMMITS 1–8 SEQUENCE" loading="lazy">
 
 *提交 1–8 把输入从 `submit()` 带到一次意图已经持久的工具调用。来自 `research/capture/sqlite-commits.txt`；文档操作来自 `research/capture/extra-p1/sqlite-commit-ops.txt`。*
 
@@ -252,8 +234,7 @@ S E Q U E N C E" loading="lazy">
 
 工具的输出作为进展提交，默认最小间隔为 100 ms。提交 9 把 `pi.live.tools[0].output` 设为 `"1\n"`；提交 10 追加 `"2\n3\n"`。观察者看到输出在增长，而崩溃只会丢失上一次成功进展提交之后的输出。这个间隔没有固定的时间上限。当 `execute()` 返回时，提交 11 追加 `pi.tool-result` 条目 13，内容为 `"1\n2\n3\n"`，并把任务 12 变为终态，`outcome` 为 `{status: "completed", result: {entryId: 13}}`。
 
-<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.5.png" alt="ONE ANSWERED INPUT, COMMITS 9–17
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/01-model/fig-1.5.png" alt="ONE ANSWERED INPUT , COMMITS 9–17 SEQUENCE" loading="lazy">
 
 *提交 9–17 承载工具输出、结果、第二次生成以及答案。琥珀色的箭头是只涉及任务的提交：预留，以及在提示词没有变化时移到 `request`。*
 
@@ -267,25 +248,50 @@ S E Q U E N C E" loading="lazy">
 
 ### 完整日志
 
-<aside class="note">1 conversation 1 create　2–6　`root()`
-2 entry 7 `pi.user`；submission 8 placed；task 9 pending　`pi.live`　`submit()`
-3 task 9 running · prepare —— scheduler
-4 entry 10 `pi.system`；task 9 · request —— generation 9
-5 —— `pi.live`　generation 9
-6 entry 11 `pi.assistant`；task 9 waiting；task 12 pending　`pi.live`、`pi.usage`　generation 9
-7 task 12 running · call —— scheduler
-8 task 12 · execute　`pi.live`　tool 12
-9、10 —— `pi.live`　tool 12 progress
-11 entry 13 `pi.tool-result`；task 12 terminal　`pi.live`　tool 12
-12 task 9 running · tools —— scheduler
-13 task 14 pending；task 9 terminal　`pi.live`　generation 9
-14 task 14 running · prepare —— scheduler
-15 task 14 · request —— generation 14
-16 —— `pi.live`　generation 14
-17 entry 15 `pi.assistant`；submission 8 done；task 14 terminal　`pi.live`、`pi.usage`　generation 14
-以上每一行都出自 `research/capture/sqlite-commits.txt`；`JSONL` 那次运行是同样的十七条。</aside>
-<aside class="note">从提交 2 起，用户的文本就是安全的；用相同的 `requestId` 重新提交，不会把它复制一份。工具的意图在任何工具代码运行之前就已被提交（提交 8），因此恢复时总能知道某次调用可能已经开始。没有哪次提交会让答案悬在提交项未结算的状态，也没有哪次提交会让工具调用没有任务。在任何一行之后杀掉进程，重开时它都知道下一步该做什么。</aside>
-```
-Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);
-src/harness/generation.ts (prepare, request, startToolRound, finishToolRound, answer, startRun); src/harness/tool.ts (call, execute); src/harness/scheduler.ts (#reserve); src/session/session.ts (#runCommit)
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>@earendil-works/pi-durable Harness, createRegistry, defineExtension, defineTool, defineTask, defineDoc, entry tokens, built-in docs and tasks, MemoryStorage, createSession</td><td></td><td></td></tr>
+<tr><td>…/storage/sqlite/node, …/storage/sqlite</td><td></td><td></td></tr>
+<tr><td>…/storage/jsonl/node, …/storage/jsonl</td><td></td><td></td></tr>
+<tr><td>…/storage/memory MemoryStorage on its own</td><td></td><td></td></tr>
+<tr><td>…/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv</td><td></td><td></td></tr>
+<tr><td>…/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four</td><td></td><td></td></tr>
+<tr><td>…/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks</td><td></td><td></td></tr>
+<tr><td>From the exports map of package.json. The package requires Node 22.19.0 or later.</td><td></td><td></td></tr>
+<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
+<tr><td>Your code talks to the Harness and its conversation handles, never to storage.</td><td></td><td></td></tr>
+<tr><td>Anything you need after a restart must be in a commit; memory is a cache.</td><td></td><td></td></tr>
+<tr><td>Handles hold no state. After a restart, get a new one with harness.conversation(id, context).</td><td></td><td></td></tr>
+<tr><td>Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts</td><td></td><td></td></tr>
+<tr><td>1 One commit is atomic across all record and document writes. a tool call stored without its task</td><td></td><td></td></tr>
+<tr><td>2 A document update is published only after its storage commit succeeds. a screen shows state a crash erases</td><td></td><td></td></tr>
+<tr><td>3 All visible progress is durable; no volatile publication path. streamed text that never existed after reopen</td><td></td><td></td></tr>
+<tr><td>4 External effects do not run inside the mutation transaction. one slow call stalls every conversation</td><td></td><td></td></tr>
+<tr><td>5 Entries and IDs are immutable and never reused. references point at the wrong record</td><td></td><td></td></tr>
+<tr><td>6 Drafts are revoked when the callback settles; values are copied, strict JSON. writes that bypass the commit</td><td></td><td></td></tr>
+<tr><td>7 The line is held through settlement and adoption; user callbacks run later, off it. a commit built on unadopted state</td><td></td><td></td></tr>
+<tr><td>8 An uncertain storage failure is fatal to the open Session. memory and disk silently diverge</td><td></td><td></td></tr>
+<tr><td>1 conversation 1 create 2–6 root()</td><td></td><td></td></tr>
+<tr><td>2 entry 7 pi.user; submission 8 placed; task 9 pending pi.live submit()</td><td></td><td></td></tr>
+<tr><td>3 task 9 running · prepare — scheduler</td><td></td><td></td></tr>
+<tr><td>4 entry 10 pi.system; task 9 · request — generation 9</td><td></td><td></td></tr>
+<tr><td>5 — pi.live generation 9</td><td></td><td></td></tr>
+<tr><td>6 entry 11 pi.assistant; task 9 waiting; task 12 pending pi.live, pi.usage generation 9</td><td></td><td></td></tr>
+<tr><td>7 task 12 running · call — scheduler</td><td></td><td></td></tr>
+<tr><td>8 task 12 · execute pi.live tool 12</td><td></td><td></td></tr>
+<tr><td>9, 10 — pi.live tool 12 progress</td><td></td><td></td></tr>
+<tr><td>11 entry 13 pi.tool-result; task 12 terminal pi.live tool 12</td><td></td><td></td></tr>
+<tr><td>12 task 9 running · tools — scheduler</td><td></td><td></td></tr>
+<tr><td>13 task 14 pending; task 9 terminal pi.live generation 9</td><td></td><td></td></tr>
+<tr><td>14 task 14 running · prepare — scheduler</td><td></td><td></td></tr>
+<tr><td>15 task 14 · request — generation 14</td><td></td><td></td></tr>
+<tr><td>16 — pi.live generation 14</td><td></td><td></td></tr>
+<tr><td>17 entry 15 pi.assistant; submission 8 done; task 14 terminal pi.live, pi.usage generation 14</td><td></td><td></td></tr>
+<tr><td>Every commit of research/capture/sqlite-commits.txt; the JSONL run has the same seventeen.</td><td></td><td></td></tr>
+<tr><td>W H A T T H I S M E A N S F O R Y O U</td><td></td><td></td></tr>
+<tr><td>The user’s text is safe from commit 2; a resubmit with the same requestId cannot duplicate it.</td><td></td><td></td></tr>
+<tr><td>A tool’s intent is committed (commit 8) before any of its code runs, so recovery always knows a call may have started.</td><td></td><td></td></tr>
+<tr><td>No commit leaves an answer without its submission settled, or a tool call without a task. Kill the process after any row and it reopens knowing what to do next.</td><td></td><td></td></tr>
+<tr><td>Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);</td><td></td><td></td></tr>
+<tr><td>src/harness/generation.ts (prepare, request, startToolRound, finishToolRound, answer, startRun); src/harness/tool.ts (call, execute); src/harness/scheduler.ts (#reserve); src/session/session.ts (#runCommit)</td><td></td><td></td></tr>
+</table>

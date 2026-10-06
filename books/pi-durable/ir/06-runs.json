@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 6 Runs",
    "page": 83,
+   "_y": 83.8,
    "zh": "运行"
   },
   {
    "type": "h2",
    "text": "Submissions, the inbox, generation, tool calls and compaction: the built-in tasks that turn an input into an answer.",
    "page": 83,
+   "_y": 154.8,
    "zh": "提交项、收件箱、生成、工具调用与压缩：把一次输入变成一个答案的内置任务。"
   },
   {
    "type": "chapter-title",
    "text": "6 . 1 Submissions and the inbox",
    "page": 84,
+   "_y": 57.4,
    "zh": "6.1 提交项与收件箱"
   },
   {
    "type": "lede",
    "text": "Every message is committed the moment you send it; a busy conversation queues it, and a boundary decides when it lands.",
    "page": 84,
+   "_y": 106.2,
    "zh": "每条消息在你发出的瞬间就被提交；会话繁忙时它会排队，由一个边界决定它何时落地。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "h2",
    "text": "Two kinds of submission",
    "page": 84,
+   "_y": 252.7,
    "zh": "提交项的两种"
   },
   {
@@ -44,6 +49,7 @@
    "type": "small",
    "text": "SubmissionDraft src/harness/types.ts TS",
    "page": 84,
+   "_y": 368.8,
    "zh": "`SubmissionDraft` `src/harness/types.ts` `TS`"
   },
   {
@@ -54,18 +60,21 @@
     "whenBusy?: \"steer\" | \"followUp\" | \"reject\" }",
     "| { type: \"write\"; entry: EntryDraft });"
    ],
-   "page": 84
+   "page": 84,
+   "_y": 391.8
   },
   {
    "type": "small",
    "text": "Simplified: the source marks every field readonly and adds never fields that keep the two branches apart.",
    "page": 84,
+   "_y": 460.5,
    "zh": "已简化：源码把每个字段标记为 `readonly`，并加上 `never` 字段把两个分支区分开。"
   },
   {
    "type": "h2",
    "text": "Where a submission goes",
    "page": 84,
+   "_y": 488.2,
    "zh": "提交项的去向"
   },
   {
@@ -77,8 +86,8 @@
    "type": "figure",
    "number": "6.1",
    "file": "figures/fig-6.1.png",
-   "title": "THE SUBMISSION LIFECYCLE\nS T A T E",
-   "caption": "A submission is queued, placed or settled; only an input is ever placed. From src/harness/submissions.ts, inbox.ts and live.ts; reasons from spec §6 and §8.3. Rose arrows end without an answer.",
+   "title": "THE SUBMISSION LIFECYCLE STATE",
+   "caption": "Asubmissionisqueued , placedorsettled ; onlyaninputiseverplaced . Fromsrc / harness / submissions . ts , inbox . tsandlive . ts ; reasonsfromspec §6 and §8.3. Rosearrowsendwithoutananswer .",
    "page": 85,
    "zh_caption": "提交项会排队、placed 或落定；只有输入才会被 placed。取自 `src/harness/submissions.ts`、`inbox.ts` 和 `live.ts`；reason 取自 spec §6 和 §8.3。玫红色箭头表示没有答案就结束。"
   },
@@ -86,6 +95,7 @@
    "type": "small",
    "text": "A submission is queued, placed or settled; only an input is ever placed. From src/harness/submissions.ts, inbox.ts and live.ts; reasons from spec §6 and §8.3. Rose arrows end without an answer.",
    "page": 85,
+   "_y": 326.0,
    "zh": "提交项会排队、placed 或落定；只有输入才会被 placed。取自 `src/harness/submissions.ts`、`inbox.ts` 和 `live.ts`；reason 取自 spec §6 和 §8.3。玫红色箭头表示没有答案就结束。"
   },
   {
@@ -94,28 +104,70 @@
    "zh": "它走哪条路取决于一个问题：会话是否繁忙？只要有一次运行正在进行，会话就是繁忙的（运行控制（p. 88））。"
   },
   {
-   "type": "small",
-   "text": "idle, nothing queued an input is placed and starts a run; a write is appended and is done busy, or other items already queued the submission is queued in the inbox",
-   "page": 85,
-   "zh": "`idle`，没有排队：输入被 placed 并开启一次运行；写入被追加并 `done`。`busy`，或已有其他项排队：提交项在收件箱中排队。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "busy, with whenBusy: \"reject\" nothing is written; submit() throws ConversationBusy",
-    "a requestId already used nothing is written; you get the existing submission back From src/harness/submissions.ts and the admission table of spec §6. A write that would undo a reset is the one exception; see Details below."
-   ],
-   "page": 85
-  },
-  {
    "type": "p",
    "text": "The requestId check makes retries safe. If a submit times out or your process restarts, send it again with the same ID and you get the same submission, not a second copy. The ID is scoped to one conversation.",
    "zh": "`requestId` 检查让重试变得安全。如果一次提交超时或进程重启，用同一个 ID 再发一次，你拿回的是同一个提交项，而不是第二份副本。这个 ID 的作用域是一个会话。"
   },
   {
+   "type": "table-row",
+   "page": 85,
+   "_y": 416.3,
+   "cells": [
+    "idle, nothing queued an input is placed and starts a run; a write is appended and is done"
+   ],
+   "is_header": false,
+   "_sig": "idle",
+   "zh": "`idle`，没有排队：输入被 placed 并开启一次运行；写入被追加并"
+  },
+  {
+   "type": "table-row",
+   "page": 85,
+   "_y": 432.8,
+   "cells": [
+    "busy, or other items already queued the submission is queued in the inbox"
+   ],
+   "is_header": false,
+   "_sig": "busy",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 85,
+   "_y": 449.9,
+   "cells": [
+    "busy, with whenBusy: \"reject\" nothing is written; submit() throws ConversationBusy"
+   ],
+   "is_header": false,
+   "_sig": "busy",
+   "zh": "`busy`，或已有其他项排队：提交项在收件箱中排队。"
+  },
+  {
+   "type": "table-row",
+   "page": 85,
+   "_y": 466.5,
+   "cells": [
+    "a requestId already used nothing is written; you get the existing submission back"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 85,
+   "_y": 484.5,
+   "cells": [
+    "From src/harness/submissions.ts and the admission table of spec §6. A write that would undo a reset is the one exception; see Details below."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "The inbox",
    "page": 85,
+   "_y": 551.2,
    "zh": "收件箱"
   },
   {
@@ -127,8 +179,8 @@
    "type": "figure",
    "number": "6.2",
    "file": "figures/fig-6.2.png",
-   "title": "TWO BOUNDARIES, ONE INBOX\nF L O W",
-   "caption": "A postTools boundary takes writes and steers; only a final boundary takes follow-ups. A tool call holds the first run while a follow-up, a steer and a note are queued; each connector joins a queued item to the entry it became. Answer 21 is appended in the same commit as the final boundary, not taken from the inbox. IDs, sequence numbers and pi.live.run values from research/capture/inbox-steps.txt.",
+   "title": "TWO BOUNDARIES , ONE INBOX FLOW",
+   "caption": "ApostToolsboundarytakeswritesandsteers ; onlyafinalboundarytakesfollow - ups . Atoolcallholdsthefirstrunwhileafollow - up , asteerandanote arequeued ; eachconnectorjoinsaqueueditemtotheentryitbecame . Answer 21 isappendedinthesamecommitasthefinalboundary , nottakenfrom theinbox . IDs , sequencenumbersand p i . l i v e . run valuesfromresearch / capture / inbox - steps . txt .",
    "page": 86,
    "zh_caption": "一个 `postTools` 边界接收写入和 steer；只有 final 边界接收 follow-up。一次工具调用占住第一次运行，同时一个 follow-up、一个 steer 和一条备注在排队；每条连接线把一个排队项连到它变成的条目。回答 21 与 final 边界在同一次提交里被追加，而不是从收件箱取出。ID、序号和 `pi.live.run` 取值来自 `research/capture/inbox-steps.txt`。"
   },
@@ -136,6 +188,7 @@
    "type": "h2",
    "text": "Boundaries: when queued items land",
    "page": 86,
+   "_y": 75.0,
    "zh": "边界：排队项何时落地"
   },
   {
@@ -144,26 +197,77 @@
    "zh": "边界就是排队项进入记录的那次提交。有两种。`postTools` 边界在运行仍在进行时、一轮工具调用之后运行。final 边界在一次运行成功结束时运行。"
   },
   {
-   "type": "small",
-   "text": "postTools all the first none join the current run final all the first the first start one new run spec §6; src/harness/inbox.ts. Set steeringMode or followUpMode to \"all\" to take every item of that mode instead of the first (both default to \"one-at-a- time\"). A queued reset turns a postTools boundary into a final one (see Details below). A submit to an idle conversation that still has items waiting queues behind them and runs a final boundary at once (src/harness/submissions.ts).",
-   "page": 86,
-   "zh": "`postTools`：`all` 全部接收／取第一个／其余不加入当前运行。`final`：`all` 全部接收／取第一个／第一个开启一次新运行。spec §6；`src/harness/inbox.ts`。把 `steeringMode` 或 `followUpMode` 设为 `\"all\"`，就会取该 mode 的每一项而不是第一项（两者默认都是 `\"one-at-a-time\"`）。一次排队的重置会把 `postTools` 边界变成 final 边界（见下文「详解」）。向仍然有排队项的空闲会话提交时，会排在它们之后，并立即运行一次 final 边界（`src/harness/submissions.ts`）。"
-  },
-  {
    "type": "p",
    "text": "A boundary places writes first, then user messages, each in the order they were submitted. So a message queued before a reset or a compaction summary lands after it, and the model reads it in the new context.",
    "zh": "边界先落写入，再落用户消息，各自按提交的顺序。因此一条排在重置或压缩摘要之前排队的消息会落在它之后，模型在新上下文里读到它。"
   },
   {
+   "type": "table-row",
+   "page": 86,
+   "_y": 151.6,
+   "cells": [
+    "postTools all the first none join the current run"
+   ],
+   "is_header": false,
+   "_sig": "postTools",
+   "zh": "`postTools`："
+  },
+  {
+   "type": "table-row",
+   "page": 86,
+   "_y": 168.1,
+   "cells": [
+    "final all the first the first start one new run"
+   ],
+   "is_header": false,
+   "_sig": "final",
+   "zh": "`final`：`all` 全部接收／取第一个／第一个开启一次新运行。spec §6；"
+  },
+  {
+   "type": "table-row",
+   "page": 86,
+   "_y": 186.8,
+   "cells": [
+    "spec §6; src/harness/inbox.ts. Set steeringMode or followUpMode to \"all\" to take every item of that mode instead of the first (both default to \"one-at-a-"
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 86,
+   "_y": 198.0,
+   "cells": [
+    "time\"). A queued reset turns a postTools boundary into a final one (see Details below). A submit to an idle conversation that still has items waiting queues"
+   ],
+   "is_header": false,
+   "_sig": "time",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 86,
+   "_y": 209.3,
+   "cells": [
+    "behind them and runs a final boundary at once (src/harness/submissions.ts)."
+   ],
+   "is_header": false,
+   "_sig": "behind",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "A postTools boundary takes writes and steers; only a final boundary takes follow-ups. A tool call holds the first run while a follow-up, a steer and a note are queued; each connector joins a queued item to the entry it became. Answer 21 is appended in the same commit as the final boundary, not taken from the inbox. IDs, sequence numbers and pi.live.run values from research/capture/inbox-steps.txt.",
    "page": 86,
+   "_y": 532.2,
    "zh": "一个 `postTools` 边界接收写入和 steer；只有 final 边界接收 follow-up。一次工具调用占住第一次运行，同时一个 follow-up、一个 steer 和一条备注在排队；每条连接线把一个排队项连到它变成的条目。回答 21 与 final 边界在同一次提交里被追加，而不是从收件箱取出。ID、序号和 `pi.live.run` 取值来自 `research/capture/inbox-steps.txt`。"
   },
   {
    "type": "h2",
    "text": "Withdrawal, failure and crashes",
    "page": 86,
+   "_y": 582.7,
    "zh": "撤回、失败与崩溃"
   },
   {
@@ -175,6 +279,7 @@
    "type": "small",
    "text": "Queued follow-ups stay in the inbox, and their wait() does not resolve, until something else is submitted or you withdraw them. The next submission queues behind them, so the older follow-up runs first (test/harness-inbox.test.ts).",
    "page": 87,
+   "_y": 87.0,
    "zh": "排队的 follow-up 会留在收件箱里，它们的 `wait()` 也不会兑现，直到有别的东西被提交或者你撤回它们。下一次提交会排在它们之后，于是更早的那个 follow-up 先运行（`test/harness-inbox.test.ts`）。"
   },
   {
@@ -186,6 +291,7 @@
    "type": "small",
    "text": "Pass a requestId on any submit you might retry. Pick whenBusy per message: steer for a correction the agent should see mid-run, followUp for the next question, reject when your UI should refuse. After a failed run, resubmit or withdraw queued follow-ups; do not wait on them forever. After a restart, get handles back with harness.submission(id).",
    "page": 87,
+   "_y": 308.8,
    "zh": "任何你可能重试的 `submit()` 都带上 `requestId`。按消息选择 `whenBusy`：要让智能体在运行中途看到纠正用 `steer`，下一个问题用 `followUp`，界面该拒绝时用 `reject`。运行失败后，重新提交或撤回排队的 follow-up；不要永远等它们。重启之后，用 `harness.submission(id)` 取回句柄。"
   },
   {
@@ -193,24 +299,28 @@
    "lines": [
     "Sources: spec §6; src/harness/submissions.ts; src/harness/inbox.ts; src/harness/types.ts (SubmissionDraft, Submission, QueueMode); src/types.ts (SubmissionRecord); src/harness/agent.ts (resolveSettings); src/harness/generation.ts; README §Busy Conversations; test/harness-inbox.test.ts; test/harness-submissions.test.ts; ex 20; run 20; research/capture/inbox-steps.txt"
    ],
-   "page": 87
+   "page": 87,
+   "_y": 403.4
   },
   {
    "type": "chapter-title",
    "text": "6 . 2 Run control and the live document",
    "page": 88,
+   "_y": 57.4,
    "zh": "6.2 运行控制与实时文档"
   },
   {
    "type": "lede",
    "text": "One small document says whether the conversation is busy and shows the answer and tool output as they form; a crash loses only progress since the last",
    "page": 88,
+   "_y": 106.2,
    "zh": "一个小文档说明会话是否繁忙，并展示答案和工具输出形成的过程；崩溃只丢失上一次"
   },
   {
    "type": "lede",
    "text": "successful commit. The gap can exceed the configured interval.",
    "page": 88,
+   "_y": 136.9,
    "zh": "成功提交之后的进展。这个间隔可以超过配置值。"
   },
   {
@@ -222,6 +332,7 @@
    "type": "h2",
    "text": "The shape",
    "page": 88,
+   "_y": 252.7,
    "zh": "结构"
   },
   {
@@ -231,14 +342,14 @@
   },
   {
    "type": "small",
-   "text": "LiveState, simplified src/harness/live.ts TS",
+   "text": "LiveState, simplified src/harness/live.ts TS type LiveState = {",
    "page": 88,
+   "_y": 305.6,
    "zh": "`LiveState`，已简化 `src/harness/live.ts` `TS`"
   },
   {
    "type": "code",
    "lines": [
-    "type LiveState = {",
     "run?: { taskId: TaskId; inputs: SubmissionId[] }; // present while busy generation?: { // the model call in progress",
     "attempt: number;",
     "message?: AssistantMessage; // the answer so far retry?: { at: number; error: string }; // waiting to retry",
@@ -247,24 +358,21 @@
     "compactions?: CompactionStatus[]; // see 6.5",
     "};"
    ],
-   "page": 88
+   "page": 88,
+   "_y": 340.1
   },
   {
    "type": "small",
-   "text": "The stored message is the JSON form of an AssistantMessage. Each ToolSlot shows one call: its callId, name, a status of pending, running or done, the",
+   "text": "The stored message is the JSON form of an AssistantMessage. Each ToolSlot shows one call: its callId, name, a status of pending, running or done, the output so far, and the result entry once done.",
    "page": 88,
+   "_y": 464.2,
    "zh": "存储的消息是 `AssistantMessage` 的 JSON 形式。每个 `ToolSlot` 显示一次调用：它的 `callId`、名称，状态为 `pending`、`running` 或 `done`，以及"
-  },
-  {
-   "type": "small",
-   "text": "output so far, and the result entry once done.",
-   "page": 88,
-   "zh": "到目前为止的输出，以及 `done` 之后的结果条目。"
   },
   {
    "type": "h2",
    "text": "Run control: the busy flag",
    "page": 88,
+   "_y": 502.5,
    "zh": "运行控制：busy 标志"
   },
   {
@@ -276,8 +384,8 @@
    "type": "figure",
    "number": "6.3",
    "file": "figures/fig-6.3.png",
-   "title": "PI.LIVE OVER ONE RUN\nT I M E L I N E",
-   "caption": "pi.live holds run control for the whole run and live progress only while something runs. One input, one count tool call that prints five lines, one answer; times from research/capture/extra-p6/live-run.txt. (1) submitting sets run; (2) the model asks for the tool, so generation gives way to tools; (3) the round hands run to generation 14; (4) the answer clears everything.",
+   "title": "PI . LIVE OVER ONE RUN TIMELINE",
+   "caption": "pi . liveholdsruncontrolforthewholerunandliveprogressonlywhilesomethingruns . Oneinput , one c ount toolcallthatprintsfivelines , one answer ; timesfromresearch / capture / extra - p 6/ live - run . txt . (1) submittingsets run ; (2) themodelasksforthetool , so ge n e r a t i on giveswayto tools ; (3) theroundhands run togeneration 14; (4) theanswerclearseverything .",
    "page": 89,
    "zh_caption": "`pi.live` 在整个运行期间持有运行控制，只在有东西正在运行时才持有实时进展。一次输入、一次打印五行内容的 `count` 工具调用、一个答案；时间取自 `research/capture/extra-p6/live-run.txt`。(1) 提交设置 `run`；(2) 模型要这个工具，于是 `generation` 让位给 `tools`；(3) 这一轮把 `run` 交给 generation 14；(4) 回答清空一切。"
   },
@@ -285,12 +393,14 @@
    "type": "small",
    "text": "pi.live holds run control for the whole run and live progress only while something runs. One input, one count tool call that prints five lines, one answer; times from research/capture/extra-p6/live-run.txt. (1) submitting sets run; (2) the model asks for the tool, so generation gives way to tools; (3) the round hands run to generation 14; (4) the answer clears everything.",
    "page": 89,
+   "_y": 309.5,
    "zh": "`pi.live` 在整个运行期间持有运行控制，只在有东西正在运行时才持有实时进展。一次输入、一次打印五行内容的 `count` 工具调用、一个答案；时间取自 `research/capture/extra-p6/live-run.txt`。(1) 提交设置 `run`；(2) 模型要这个工具，于是 `generation` 让位给 `tools`；(3) 这一轮把 `run` 交给 generation 14；(4) 回答清空一切。"
   },
   {
    "type": "h2",
    "text": "Live progress, and what it costs",
    "page": 89,
+   "_y": 360.0,
    "zh": "实时进展，及其代价"
   },
   {
@@ -312,6 +422,7 @@
    "type": "h2",
    "text": "What a crash leaves",
    "page": 89,
+   "_y": 580.5,
    "zh": "崩溃留下什么"
   },
   {
@@ -323,6 +434,7 @@
    "type": "small",
    "text": "conversation 1, pi.live after SIGKILL research/capture/crash-reopen-tasks.txt JSON",
    "page": 90,
+   "_y": 73.9,
    "zh": "会话 1，`SIGKILL` 之后的 `pi.live` `research/capture/crash-reopen-tasks.txt` `JSON`"
   },
   {
@@ -335,19 +447,22 @@
     "\"output\": \"deploy site: step 1/10 (pid 98319)\\n … step 6/10 (pid 98319)\\n\"",
     "}]"
    ],
-   "page": 90
+   "page": 90,
+   "_y": 97.1
   },
   {
    "type": "code",
    "lines": [
     "}"
    ],
-   "page": 90
+   "page": 90,
+   "_y": 174.3
   },
   {
    "type": "small",
    "text": "Lines 2–5 of the output are elided. The conversation is still busy; nothing answers input 14 until recovery decides what happened.",
    "page": 90,
+   "_y": 199.5,
    "zh": "输出的第 2–5 行被省略。会话仍然繁忙；在恢复判定发生了什么之前，没有东西回答输入 14。"
   },
   {
@@ -361,31 +476,11 @@
    "zh": "详解：谁设置并清除每个字段"
   },
   {
-   "type": "small",
-   "text": "run a run starts the run ends, on every path generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends tools the model asks for tools the round finishes, or the run ends compactions a compaction starts it finishes spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)), the same commit settles its inputs unanswered and clears its fields.",
-   "page": 90,
-   "zh": "`run`：一次运行开始时设置；运行结束时，在每条路径上清除。`generation`：一次模型请求开始、等待重试、或等待一个延迟答案时设置；响应被处理或运行结束时清除。`tools`：模型要工具时设置；这一轮结束或运行结束时清除。`compactions`：一次压缩开始时设置；结束时清除。spec §8.2；`src/harness/live.ts`、`generation.ts`、`tool.ts`、`compaction.ts`。如果调度器放弃了一个运行任务（`faulted` 或 `orphaned`，中止、故障与孤儿（p. 80）），同一次提交会让它的输入以 `unanswered` 落定并清除它的字段。"
-  },
-  {
-   "type": "small",
-   "text": "Drive your busy indicator from run and your streaming view from generation and tools. On slow or remote storage, raise settings.progress intervals. A crash loses uncommitted progress, with no fixed time bound, while the saved run survives.",
-   "page": 90,
-   "zh": "用 `run` 驱动繁忙指示，用 `generation` 和 `tools` 驱动流式视图。在缓慢或远程的存储上，调高 `settings.progress` 的间隔。崩溃丢失未提交的进展，没有固定的时间上界，而保存下来的 `run` 依然存在。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts;",
-    "src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt"
-   ],
-   "page": 90
-  },
-  {
    "type": "figure",
    "number": "6.4",
    "file": "figures/fig-6.4.png",
-   "title": "THE PHASES OF PI.GENERATION\nS T A T E",
-   "caption": "One generation prepares, calls the model, classifies the response, and ends or loops. From src/harness/generation.ts. Amber boxes are the task’s phases; request and poll call the provider. White boxes are how the task ends. The dashed box is the task waiting on a compaction it owns, after which it prepares again with the same attempt. After the tool round the task completes and a new generation takes the run. Not drawn: an abort, which can end the task in any phase, and a missing model, which fails it with no_model in prepare, request or poll.",
+   "title": "THE PHASES OF PI . GENERATION STATE",
+   "caption": "Onegenerationprepares , callsthemodel , classifiestheresponse , andendsorloops . Fromsrc / harness / generation . ts . Amberboxesarethetask ’ s phases ; r e qu e st and poll calltheprovider . Whiteboxesarehowthetaskends . Thedashedboxisthetaskwaitingonacompactionitowns , a ft erwhich itpreparesagainwiththesameattempt . A ft erthetoolroundthetaskcompletesandanewgenerationtakestherun . Notdrawn : anabort , whichcanend thetaskinanyphase , andamissingmodel , whichfailsitwith no _ mo de l in pr e p a r e , r e qu e st or poll .",
    "page": 91,
    "zh_caption": "一次生成依次准备、调用模型、对响应分类，然后结束或循环。取自 `src/harness/generation.ts`。琥珀色方框是任务的各个阶段；`request` 和 `poll` 调用供应商。白色方框是任务的结束方式。虚线方框是任务在等待它自己拥有的一次压缩，之后它以同一个 attempt 重新准备。工具轮之后任务完成，由一个新的生成接管这次运行。未画出：中止，它可以结束任何阶段中的任务；以及缺失的模型，它会在 `prepare`、`request` 或 `poll` 中让任务以 `no_model` 失败。"
   },
@@ -393,12 +488,14 @@
    "type": "chapter-title",
    "text": "6 . 3 Generation",
    "page": 91,
+   "_y": 57.4,
    "zh": "6.3 生成"
   },
   {
    "type": "lede",
    "text": "Each model call saves its model, options and transcript cutoff before sending. Recovery rebuilds that context and runs request hooks again.",
    "page": 91,
+   "_y": 106.2,
    "zh": "每次模型调用在发出之前都保存自己的模型、选项和记录截止点。恢复会重建那份上下文，并再次运行请求钩子。"
   },
   {
@@ -410,6 +507,7 @@
    "type": "h2",
    "text": "One generation, one turn",
    "page": 91,
+   "_y": 252.7,
    "zh": "一次生成，一个轮次"
   },
   {
@@ -421,21 +519,16 @@
    "type": "code",
    "lines": [
     "One generation prepares, calls the model, classifies the response, and ends or loops. From src/harness/generation.ts. Amber boxes are the task’s phases; request and poll call the provider. White boxes are how the task ends. The dashed box is the task waiting on a compaction it owns, after which it prepares again with the same attempt. After the tool round the task completes and a new generation takes the run. Not drawn: an abort, which can end the task in any phase, and a missing model, which fails it with no_model in prepare, request or poll.",
-    "prepare builds the system prompt and tool list; checks the compaction budgets the attempt number request calls the model and streams the answer the model, thinking level, stream options and cutoff retry waits out the backoff the time to wake, until poll waits for a provider that answers later the provider’s handle and pollAt tools waits for the round’s tool calls the assistant entry and the tool task IDs"
+    "prepare builds the system prompt and tool list; checks the compaction budgets the attempt number request calls the model and streams the answer the model, thinking level, stream options and cutoff retry waits out the backoff the time to wake, until poll waits for a provider that answers later the provider’s handle and pollAt tools waits for the round’s tool calls the assistant entry and the tool task IDs The GenerationCheckpoint union in src/harness/generation.ts. Every task starts at { phase: \"prepare\", attempt: 1 }."
    ],
-   "page": 91
-  },
-  {
-   "type": "code",
-   "lines": [
-    "The GenerationCheckpoint union in src/harness/generation.ts. Every task starts at { phase: \"prepare\", attempt: 1 }."
-   ],
-   "page": 91
+   "page": 91,
+   "_y": 554.0
   },
   {
    "type": "h2",
    "text": "Prepare, then send",
    "page": 92,
+   "_y": 75.0,
    "zh": "先准备，再发送"
   },
   {
@@ -447,6 +540,7 @@
    "type": "h2",
    "text": "What the response decides",
    "page": 92,
+   "_y": 283.5,
    "zh": "响应决定了什么"
   },
   {
@@ -455,36 +549,103 @@
    "zh": "每个响应都作为一条 `pi.assistant` 条目被追加，并记录它的开销（用量（p. 100）），失败也不例外。后续请求会把失败和被中止的消息排除在外（从记录到上下文（p. 40））。停止原因决定下一步。"
   },
   {
-   "type": "small",
-   "text": "tool calls (toolUse) run the tool round (tool calls (p. 94)) an answer (stop or length) answer the inputs; run the final boundary",
-   "page": 92,
-   "zh": "工具调用（`toolUse`）：运行工具轮（工具调用（p. 94））。一个答案（`stop` 或 `length`）：回答这些输入；运行 final 边界。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "an error: context too long compact once, then prepare again",
-    "an error the provider may recover from wait, then retry any other error, or aborted inputs settle unanswered with model_error; the run fails"
-   ],
-   "page": 92
-  },
-  {
-   "type": "code",
-   "lines": [
-    "deferred: “come back later” poll after pollAfterMs, 5000 ms by default",
-    "src/harness/generation.ts. A toolUse response with no calls counts as an answer. The too-long rescue needs compaction enabled and a place to cut; without them, or on a second overflow, the run fails with model_error."
-   ],
-   "page": 92
-  },
-  {
    "type": "p",
    "text": "An answer can be extended. Before it settles the inputs, onYield hooks may return { continue } with more user content. The run then goes on with that message, and the inputs stay open. This applies only when no queued user message or reset is landing at the same boundary.",
    "zh": "一个答案可以被延长。在它让输入落定之前，`onYield` 钩子可以返回 `{ continue }`，带上更多用户内容。运行随后带着那条消息继续，输入保持未落定。只有当同一个边界上没有排队用户消息或重置要落地时，这才适用。"
   },
   {
+   "type": "table-row",
+   "page": 92,
+   "_y": 360.0,
+   "cells": [
+    "tool calls (toolUse) run the tool round (tool calls (p. 94))"
+   ],
+   "is_header": false,
+   "_sig": "tool",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 376.5,
+   "cells": [
+    "an answer (stop or length) answer the inputs; run the final boundary"
+   ],
+   "is_header": false,
+   "_sig": "an",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 393.8,
+   "cells": [
+    "an error: context too long compact once, then prepare again"
+   ],
+   "is_header": false,
+   "_sig": "an",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 410.3,
+   "cells": [
+    "an error the provider may recover from wait, then retry"
+   ],
+   "is_header": false,
+   "_sig": "an",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 427.4,
+   "cells": [
+    "any other error, or aborted inputs settle unanswered with model_error; the run fails"
+   ],
+   "is_header": false,
+   "_sig": "any",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 442.7,
+   "cells": [
+    "deferred: “come back later” poll after pollAfterMs, 5000 ms by default"
+   ],
+   "is_header": false,
+   "_sig": "deferred",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 462.0,
+   "cells": [
+    "src/harness/generation.ts. A toolUse response with no calls counts as an answer. The too-long rescue needs compaction enabled and a place to cut; without"
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 92,
+   "_y": 473.3,
+   "cells": [
+    "them, or on a second overflow, the run fails with model_error."
+   ],
+   "is_header": false,
+   "_sig": "them",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Retries and late answers",
    "page": 92,
+   "_y": 554.2,
    "zh": "重试与迟到的答案"
   },
   {
@@ -496,6 +657,7 @@
    "type": "small",
    "text": "a 503, a 50 ms backoff, then the answer research/capture/extra-p6/retry.txt TEXT",
    "page": 93,
+   "_y": 73.9,
    "zh": "一次 503，一次 50 ms 的退避，然后是答案 `research/capture/extra-p6/retry.txt` `TEXT`"
   },
   {
@@ -505,16 +667,10 @@
     "task 9 {\"phase\": \"retry\", \"attempt\": 1, \"until\": 1791211854633}",
     "pi.live generation.retry = {\"at\": …, \"error\": \"503 service unavailable\"} seq 7 task 9 {\"phase\": \"prepare\", \"attempt\": 2}",
     "seq 8 task 9 {\"phase\": \"request\", \"attempt\": 2, \"cutoff\": 10, …}",
-    "seq 9 entry 11 pi.assistant; submission 8 done; task 9 completed"
+    "seq 9 entry 11 pi.assistant; submission 8 done; task 9 completed Run with settings.retry.baseDelayMs = 50; some commits are elided. The second request’s cutoff includes the error entry, which the context then leaves out."
    ],
-   "page": 93
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Run with settings.retry.baseDelayMs = 50; some commits are elided. The second request’s cutoff includes the error entry, which the context then leaves out."
-   ],
-   "page": 93
+   "page": 93,
+   "_y": 97.1
   },
   {
    "type": "p",
@@ -525,13 +681,8 @@
    "type": "h2",
    "text": "What a crash in each phase costs",
    "page": 93,
+   "_y": 278.2,
    "zh": "每个阶段崩溃的代价"
-  },
-  {
-   "type": "small",
-   "text": "prepare preparation, from the same transcript request, nothing streamed yet the saved context, model and options; request hooks run again request, partial answer committed the partial becomes an aborted entry; the saved context is rebuilt and request hooks run again retry or poll the rest of the wait tools the end of the round (tool rounds (p. 94)) test/harness-generation-recovery.test.ts and test/harness-tools-recovery.test.ts. If the pinned model is gone after a restart, the run fails with no_model.",
-   "page": 93,
-   "zh": "`prepare`：准备，从同一份记录重来。`request`：分片答案已提交——该分片变成一条 `aborted` 条目；保存的上下文被重建，请求钩子再次运行。`retry` 或 `poll`：等待的剩余部分。`tools`：这一轮的结束（工具轮（p. 94））。`test/harness-generation-recovery.test.ts` 和 `test/harness-tools-recovery.test.ts`。如果重启后钉住的模型已经不在，运行以 `no_model` 失败。"
   },
   {
    "type": "p",
@@ -539,35 +690,103 @@
    "zh": "一次被中断的请求可能被付两次费：供应商也许在崩溃之前已经做完了工作，而重发又做了一遍。已提交的分片带着自己的用量，所以账本会计入崩溃之前已流式输出的部分。"
   },
   {
+   "type": "table-row",
+   "page": 93,
+   "_y": 320.3,
+   "cells": [
+    "prepare preparation, from the same transcript"
+   ],
+   "is_header": false,
+   "_sig": "prepare",
+   "zh": "`prepare`：准备，从同一份记录重来。"
+  },
+  {
+   "type": "table-row",
+   "page": 93,
+   "_y": 337.5,
+   "cells": [
+    "request, nothing streamed yet the saved context, model and options; request hooks run again"
+   ],
+   "is_header": false,
+   "_sig": "request",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 93,
+   "_y": 354.0,
+   "cells": [
+    "request, partial answer committed the partial becomes an aborted entry; the saved context is rebuilt and request hooks run again"
+   ],
+   "is_header": false,
+   "_sig": "request",
+   "zh": "`request`：分片答案已提交——该分片变成一条"
+  },
+  {
+   "type": "table-row",
+   "page": 93,
+   "_y": 371.3,
+   "cells": [
+    "retry or poll the rest of the wait"
+   ],
+   "is_header": false,
+   "_sig": "retry",
+   "zh": "`retry` 或"
+  },
+  {
+   "type": "table-row",
+   "page": 93,
+   "_y": 387.8,
+   "cells": [
+    "tools the end of the round (tool rounds (p. 94))"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": "`tools`：这一轮的结束（工具轮（p. 94））。"
+  },
+  {
+   "type": "table-row",
+   "page": 93,
+   "_y": 404.5,
+   "cells": [
+    "test/harness-generation-recovery.test.ts and test/harness-tools-recovery.test.ts. If the pinned model is gone after a restart, the run fails with no_model."
+   ],
+   "is_header": false,
+   "_sig": "test",
+   "zh": "`test/harness-generation-recovery.test.ts` 和 `test/harness-tools-recovery.test.ts`。如果重启后钉住的模型已经不在，运行以"
+  },
+  {
    "type": "small",
    "text": "A resend keeps its saved model and options, but reruns request hooks. Keep hook output stable if you need identical messages. Tune settings.retry; maxRetries counts retries after the first attempt. Budget for the occasional double charge after a crash mid-request.",
    "page": 93,
+   "_y": 491.1,
    "zh": "重发保留保存下来的模型和选项，但会重新运行请求钩子。如果你需要完全相同的消息，就让钩子的输出保持稳定。调整 `settings.retry`；`maxRetries` 计的是第一次尝试之后的重试次数。为「请求中途崩溃后偶发的双重计费」留出预算。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §8, §8.3; src/harness/generation.ts; src/harness/provider.ts; src/harness/agent.ts (DEFAULT_RETRY_POLICY);",
-    "src/harness/types.ts (GenerationHooks, ConversationRetryPolicy); research/pi/packages/ai/src/utils/retry.ts; README §Persist and Resume; test/harness-generation.test.ts; test/harness-generation-recovery.test.ts; research/capture/extra-p6/retry.txt"
-   ],
-   "page": 93
+   "type": "small",
+   "text": "Sources: spec §8, §8.3; src/harness/generation.ts; src/harness/provider.ts; src/harness/agent.ts (DEFAULT_RETRY_POLICY); src/harness/types.ts (GenerationHooks, ConversationRetryPolicy); research/pi/packages/ai/src/utils/retry.ts; README §Persist and Resume; test/harness-generation.test.ts; test/harness-generation-recovery.test.ts; research/capture/extra-p6/retry.txt",
+   "page": 93,
+   "_y": 557.1
   },
   {
    "type": "chapter-title",
    "text": "6 . 4 Tool calls and replay",
    "page": 94,
+   "_y": 57.4,
    "zh": "6.4 工具调用与重放"
   },
   {
    "type": "lede",
    "text": "Every tool call commits its intent before it runs; after a crash, only a tool declared safe to repeat runs again, and every other one is reported as",
    "page": 94,
+   "_y": 106.2,
    "zh": "每次工具调用在运行之前都提交它的意图；崩溃之后，只有被声明为可安全重复的工具才会再运行，其余每一个都被报告为"
   },
   {
    "type": "lede",
    "text": "interrupted.",
    "page": 94,
+   "_y": 136.9,
    "zh": "`interrupted`。"
   },
   {
@@ -579,6 +798,7 @@
    "type": "h2",
    "text": "One task per call",
    "page": 94,
+   "_y": 267.7,
    "zh": "每次调用一个任务"
   },
   {
@@ -590,16 +810,30 @@
    "type": "small",
    "text": "ToolTaskCheckpoint src/harness/tool.ts TS type ToolTaskCheckpoint =",
    "page": 94,
+   "_y": 335.1,
    "zh": "`ToolTaskCheckpoint` `src/harness/tool.ts` `TS` `type ToolTaskCheckpoint =`"
   },
   {
    "type": "code",
    "lines": [
-    "| { phase: \"call\" }",
-    "// committed just before execute(): the final arguments and the replay policy",
+    "| { phase: \"call\" }"
+   ],
+   "page": 94,
+   "_y": 368.6
+  },
+  {
+   "type": "small",
+   "text": "// committed just before execute(): the final arguments and the replay policy",
+   "page": 94,
+   "_y": 380.3
+  },
+  {
+   "type": "code",
+   "lines": [
     "| { phase: \"execute\"; arguments: JsonObject; replay: \"safe\" | \"unsafe\" };"
    ],
-   "page": 94
+   "page": 94,
+   "_y": 391.1
   },
   {
    "type": "p",
@@ -620,6 +854,7 @@
    "type": "h2",
    "text": "Replay after a crash",
    "page": 94,
+   "_y": 609.0,
    "zh": "崩溃之后的重放"
   },
   {
@@ -631,8 +866,8 @@
    "type": "figure",
    "number": "6.5",
    "file": "figures/fig-6.5.png",
-   "title": "A CRASH IN THE MIDDLE OF TWO TOOL CALLS\nS E Q U E N C E",
-   "caption": "After a crash mid-call, a safe tool runs again and an unsafe one is reported as interrupted. Sequence numbers from research/capture/crash-before.txt and crash-after.txt; the time is on the test parent’s clock. In the capture the two tools’ output commits interleave.",
+   "title": "A CRASH IN THE MIDDLE OF TWO TOOL CALLS SEQUENCE",
+   "caption": "A ft eracrashmid - call , asafetoolrunsagainandanunsafeoneisreportedasinterrupted . Sequencenumbersfromresearch / capture / crash - before . txt andcrash - a ft er . txt ; thetimeisonthetestparent ’ sclock . Inthecapturethetwotools ’ outputcommitsinterleave .",
    "page": 95,
    "zh_caption": "调用中途崩溃之后，安全的工具会再跑一次，不安全的则被报告为 `interrupted`。序号取自 `research/capture/crash-before.txt` 和 `crash-after.txt`；时间用的是测试父进程的时钟。在那次抓取里，两个工具的输出提交是交错的。"
   },
@@ -640,6 +875,7 @@
    "type": "small",
    "text": "After a crash mid-call, a safe tool runs again and an unsafe one is reported as interrupted. Sequence numbers from research/capture/crash-before.txt and crash-after.txt; the time is on the test parent’s clock. In the capture the two tools’ output commits interleave.",
    "page": 95,
+   "_y": 407.8,
    "zh": "调用中途崩溃之后，安全的工具会再跑一次，不安全的则被报告为 `interrupted`。序号取自 `research/capture/crash-before.txt` 和 `crash-after.txt`；时间用的是测试父进程的时钟。在那次抓取里，两个工具的输出提交是交错的。"
   },
   {
@@ -651,6 +887,7 @@
    "type": "small",
    "text": "entry 25, the interrupted deploy research/capture/crash-after.txt JSON",
    "page": 95,
+   "_y": 475.9,
    "zh": "条目 25，被中断的 deploy `research/capture/crash-after.txt` `JSON`"
   },
   {
@@ -660,15 +897,10 @@
     "\"role\": \"toolResult\", \"toolCallId\": \"deploy-1\", \"toolName\": \"deploy\", \"content\": [",
     "{ \"type\": \"text\", \"text\": \"deploy site: step 1/10 (pid 98319)\\n …\" },",
     "{ \"type\": \"text\", \"text\":",
-    "\"<harness>\\n[error] Tool deploy was interrupted and may have partially run\\n</harness>\" }"
+    "\"<harness>\\n[error] Tool deploy was interrupted and may have partially run\\n</harness>\" } ],"
    ],
-   "page": 95
-  },
-  {
-   "type": "small",
-   "text": "],",
    "page": 95,
-   "zh": "],"
+   "_y": 499.1
   },
   {
    "type": "code",
@@ -676,12 +908,14 @@
     "\"isError\": true, \"timestamp\": 1791211977057",
     "}"
    ],
-   "page": 95
+   "page": 95,
+   "_y": 576.3
   },
   {
    "type": "small",
    "text": "The message inside the entry’s model array. The first text part holds all six committed output lines; lines 2–6 are elided. The entry also stores the diagnostic, code interrupted, in data.diagnostics.",
    "page": 95,
+   "_y": 623.2,
    "zh": "条目 `model` 数组里的那条消息。第一个文本部分包含全部六行已提交的输出；第 2–6 行被省略。该条目还在 `data.diagnostics` 里存有诊断信息，`code` 为 `interrupted`。"
   },
   {
@@ -698,6 +932,7 @@
    "type": "h2",
    "text": "Tool rounds",
    "page": 96,
+   "_y": 212.2,
    "zh": "工具轮"
   },
   {
@@ -711,48 +946,17 @@
    "zh": "`terminate`——不再发起模型调用就结束运行，但只有当这一轮里每个调用都这么要求时。`handoff`——把上下文重置为一段交接文本并结束运行（重置与交接（p. 46））。`addTools`——从下一轮起提供更多工具。否则运行一次 `postTools` 边界，由一个新的生成接管这次运行。如果运行在轮中途被中止，从未开始的调用会得到一个 `aborted` 结果。详解：Harness 写入的错误结果"
   },
   {
-   "type": "small",
-   "text": "tool_unavailable the tool was not offered, or no longer exists completed invalid_arguments the arguments fail the schema, before or after beforeTool completed blocked a beforeTool hook blocks or throws completed tool_error execute() throws, or its environment cannot be built failed interrupted a crash mid-call without a safe policy failed aborted the call is aborted aborted",
-   "page": 96,
-   "zh": "`tool_unavailable`：该工具没有被提供，或已不存在 `completed`。`invalid_arguments`：参数不符合 schema，在 `beforeTool` 之前或之后 `completed`。`blocked`：一个 `beforeTool` 钩子阻止或抛出 `completed`。`tool_error`：`execute()` 抛出，或它的环境无法构建 `failed`。`interrupted`：调用中途崩溃且没有安全策略 `failed`。`aborted`：调用被中止 `aborted`。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also"
-   ],
-   "page": 96
-  },
-  {
-   "type": "small",
-   "text": "aborts any conversations the call owns (ownership (p. 76)).",
-   "page": 96,
-   "zh": "中止这次调用所拥有的任何会话（所有权（p. 76））。"
-  },
-  {
-   "type": "small",
-   "text": "Mark a tool replay: \"safe\" only if running it twice is harmless. Report progress with output as you go: it is what the model sees if the call is interrupted. A beforeTool hook that must decide the same way after a crash should store its decision in a memo (memos (p. 67)).",
-   "page": 96,
-   "zh": "只有在跑两次无害时，才把工具标记为 `replay: \"safe\"`。用 `output` 边走边报告进展：调用被中断时，模型看到的就是它。一个在崩溃后也必须做出同样决定的 `beforeTool` 钩子，应当把它的决定存进备忘（备忘（p. 67））。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts",
-    "(ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt"
-   ],
-   "page": 96
-  },
-  {
    "type": "chapter-title",
    "text": "6 . 5 Compaction",
    "page": 97,
+   "_y": 57.4,
    "zh": "6.5 压缩"
   },
   {
    "type": "lede",
    "text": "A compaction replaces the oldest part of what the model sees with a summary; nothing is deleted, and the summary that cuts furthest wins.",
    "page": 97,
+   "_y": 106.2,
    "zh": "压缩用一段摘要替换模型所见内容中最老的那部分；什么都没有被删除，而切得最靠前的摘要胜出。"
   },
   {
@@ -764,6 +968,7 @@
    "type": "h2",
    "text": "What a compaction writes",
    "page": 97,
+   "_y": 237.7,
    "zh": "压缩写下什么"
   },
   {
@@ -775,6 +980,7 @@
    "type": "small",
    "text": "summary entry 25 research/capture/extra-p6/compaction.txt JSON",
    "page": 97,
+   "_y": 332.6,
    "zh": "摘要条目 25 `research/capture/extra-p6/compaction.txt` `JSON`"
   },
   {
@@ -786,7 +992,8 @@
     "\"content\": [{ \"type\": \"text\", \"text\": \"The conversation history before this point was",
     "compacted into the following summary:\\n\\n<summary>\\n## Goal\\nPlan a week in Lisbon.\\n</summary>\" }], …"
    ],
-   "page": 97
+   "page": 97,
+   "_y": 355.8
   },
   {
    "type": "code",
@@ -795,25 +1002,22 @@
     "\"byTaskId\": 21",
     "}"
    ],
-   "page": 97
+   "page": 97,
+   "_y": 444.3
   },
   {
    "type": "small",
    "text": "The summary text is wrapped onto three lines; the timestamp and conversationId are elided. The conversation was busy, so the summary waited in the inbox as write submission compaction:22 and the running generation, task 21, placed it.",
    "page": 97,
+   "_y": 502.5,
    "zh": "摘要文本被折成三行；时间戳和 `conversationId` 被省略。会话当时繁忙，所以摘要作为写入提交项 `compaction:22` 在收件箱里等待，而正在运行的生成（任务 21）把它 placed 了。"
   },
   {
    "type": "h2",
    "text": "Three ways to start one",
    "page": 97,
+   "_y": 540.7,
    "zh": "三种启动方式"
-  },
-  {
-   "type": "small",
-   "text": "you, with Conversation.compact() manual no as a write submission generation, background budget threshold no as a write submission generation, blocking budget threshold yes appended directly generation, context too long overflow yes appended directly spec §8.7; src/harness/compaction.ts.",
-   "page": 97,
-   "zh": "你，用 `Conversation.compact()`：手动 否 作为写入提交项。生成，背景预算阈值 否 作为写入提交项。生成，阻塞预算阈值 是 直接追加。生成，上下文过长溢出 是 直接追加。spec §8.7；`src/harness/compaction.ts`。"
   },
   {
    "type": "p",
@@ -824,8 +1028,8 @@
    "type": "figure",
    "number": "6.6",
    "file": "figures/fig-6.6.png",
-   "title": "BUDGETS ON ONE TOKEN AXIS\nS T R U C T U R E",
-   "caption": "Two budgets decide when generation compacts; keepRecentTokens decides where the cut falls. Numbers from ex 25, a test model with a 3000-token window. The defaults are reserveTokens 16384, backgroundTokens 32768 and keepRecentTokens 20000. The lower row is schematic: counting back lands in a tool result, so the cut moves to the next message and fewer than 400 tokens stay.",
+   "title": "BUDGETS ON ONE TOKEN AXIS STRUCTURE",
+   "caption": "Twobudgetsdecidewhengenerationcompacts ; keepRecentTokensdecideswherethecutfalls . Numbersfromex 25, atestmodelwitha 3000-token window . Thedefaultsare r e s e rv eT ok e ns 16384 , bac k g roun dT ok e ns 32768 and k ee p Rece nt T ok e ns 20000 . Thelowerrowisschematic : counting backlandsinatoolresult , sothecutmovestothenextmessageandfewerthan 400 tokensstay .",
    "page": 98,
    "zh_caption": "两个预算决定生成何时压缩；`keepRecentTokens` 决定切口落在哪里。数字取自 ex 25，一个上下文窗口 3000 token 的测试模型。默认值是 `reserveTokens` 16384、`backgroundTokens` 32768 和 `keepRecentTokens` 20000。下面一行是示意的：往回数落在一条工具结果里，于是切口移到下一条消息，留下的不足 400 token。"
   },
@@ -833,6 +1037,7 @@
    "type": "h2",
    "text": "When generation compacts",
    "page": 98,
+   "_y": 75.0,
    "zh": "生成何时压缩"
   },
   {
@@ -841,11 +1046,10 @@
    "zh": "在 `prepare` 里，生成估算它即将发出的请求有多大，并把它与 `settings.compaction` 的两个预算比较。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Two budgets decide when generation compacts; keepRecentTokens decides where the cut falls. Numbers from ex 25, a test model with a 3000-token window. The defaults are reserveTokens 16384, backgroundTokens 32768 and keepRecentTokens 20000. The lower row is schematic: counting back lands in a tool result, so the cut moves to the next message and fewer than 400 tokens stay."
-   ],
-   "page": 98
+   "type": "small",
+   "text": "Two budgets decide when generation compacts; keepRecentTokens decides where the cut falls. Numbers from ex 25, a test model with a 3000-token window. The defaults are reserveTokens 16384, backgroundTokens 32768 and keepRecentTokens 20000. The lower row is schematic: counting back lands in a tool result, so the cut moves to the next message and fewer than 400 tokens stay.",
+   "page": 98,
+   "_y": 377.7
   },
   {
    "type": "p",
@@ -856,6 +1060,7 @@
    "type": "h2",
    "text": "When summaries compete",
    "page": 98,
+   "_y": 621.7,
    "zh": "当摘要互相竞争"
   },
   {
@@ -867,8 +1072,8 @@
    "type": "figure",
    "number": "6.7",
    "file": "figures/fig-6.7.png",
-   "title": "TWO COMPACTIONS, ONE WINNER\nC O M P A R I S O N",
-   "caption": "Compactions never coordinate; a summary that cuts before the context’s current start is stale. The worked example of spec §6. Hatching marks what each summary replaces; the dashed line is the context’s start once A has landed.",
+   "title": "TWO COMPACTIONS , ONE WINNER COMPARISON",
+   "caption": "Compactionsnevercoordinate ; asummarythatcutsbeforethecontext ’ scurrentstartisstale . Theworkedexampleofspec §6. Hatchingmarkswhat eachsummaryreplaces ; thedashedlineisthecontext ’ sstartonceAhaslanded .",
    "page": 99,
    "zh_caption": "压缩之间从不协调；切口早于上下文当前起点的摘要就是 stale 的。这里是 spec §6 中的示例。影线标出每个摘要替换掉的内容；虚线是 A 落地之后的上下文起点。"
   },
@@ -876,6 +1081,7 @@
    "type": "small",
    "text": "Compactions never coordinate; a summary that cuts before the context’s current start is stale. The worked example of spec §6. Hatching marks what each summary replaces; the dashed line is the context’s start once A has landed.",
    "page": 99,
+   "_y": 319.2,
    "zh": "压缩之间从不协调；切口早于上下文当前起点的摘要就是 stale 的。这里是 spec §6 中的示例。影线标出每个摘要替换掉的内容；虚线是 A 落地之后的上下文起点。"
   },
   {
@@ -887,26 +1093,27 @@
    "type": "small",
    "text": "The defaults suit large windows. For a small window, keep keepRecentTokens well below the blocking line, or the context can overflow before anything is compacted. Call compact() any time; it never blocks the run. Place app edits before compacting, not during. Every summary attempt is paid for, even one that ends stale.",
    "page": 99,
+   "_y": 549.6,
    "zh": "这些默认值适合大窗口。对于小窗口，要让 `keepRecentTokens` 远低于阻塞线，否则上下文可能在任何压缩发生之前就溢出。任何时候都可以调用 `compact()`；它从不阻塞运行。把应用内编辑放在压缩之前，而不是压缩之中。每一次摘要尝试都要付费，即使它最终以 stale 结束。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §6, §8.3, §8.7, §12; src/harness/compaction.ts; src/harness/generation.ts; src/harness/live.ts (CompactionStatus);",
-    "src/harness/agent.ts (DEFAULT_COMPACTION_POLICY); README §Compaction; docs/pico-v5-handoff.md §20; test/harness-compaction.test.ts; ex 25; run 25; research/capture/extra-p6/compaction.txt"
-   ],
-   "page": 99
+   "type": "small",
+   "text": "Sources: spec §6, §8.3, §8.7, §12; src/harness/compaction.ts; src/harness/generation.ts; src/harness/live.ts (CompactionStatus); src/harness/agent.ts (DEFAULT_COMPACTION_POLICY); README §Compaction; docs/pico-v5-handoff.md §20; test/harness-compaction.test.ts; ex 25; run 25; research/capture/extra-p6/compaction.txt",
+   "page": 99,
+   "_y": 643.4
   },
   {
    "type": "chapter-title",
    "text": "6 . 6 Usage and cost",
    "page": 100,
+   "_y": 57.4,
    "zh": "6.6 用量与成本"
   },
   {
    "type": "lede",
    "text": "Spend is recorded in the same commit as the response that caused it, so the ledger and the transcript can never disagree.",
    "page": 100,
+   "_y": 106.2,
    "zh": "开销与导致它的那次响应记录在同一次提交里，所以账本和记录永远不会不一致。"
   },
   {
@@ -918,6 +1125,7 @@
    "type": "h2",
    "text": "The ledger",
    "page": 100,
+   "_y": 222.7,
    "zh": "账本"
   },
   {
@@ -929,6 +1137,7 @@
    "type": "small",
    "text": "pi.usage after one tool call and one answer research/capture/extra-p6/live-run.txt JSON",
    "page": 100,
+   "_y": 303.4,
    "zh": "一次工具调用和一次回答之后的 `pi.usage` `research/capture/extra-p6/live-run.txt` `JSON`"
   },
   {
@@ -941,7 +1150,8 @@
     "\"cost\": { \"input\": 0, \"output\": 0, \"cacheRead\": 0, \"cacheWrite\": 0, \"total\": 0 }",
     "} },"
    ],
-   "page": 100
+   "page": 100,
+   "_y": 326.6
   },
   {
    "type": "code",
@@ -949,12 +1159,14 @@
     "\"tools\": {}",
     "}"
    ],
-   "page": 100
+   "page": 100,
+   "_y": 403.8
   },
   {
    "type": "small",
    "text": "The sum of two responses: the tool-calling one (118 tokens) and the final answer. The test provider reports zero cost.",
    "page": 100,
+   "_y": 440.2,
    "zh": "两次响应之和：调用工具的那一次（118 token）和最终答案。测试供应商报告的成本为零。"
   },
   {
@@ -966,20 +1178,13 @@
    "type": "h2",
    "text": "What gets counted",
    "page": 100,
+   "_y": 593.2,
    "zh": "什么会被计入"
   },
   {
    "type": "p",
    "text": "Usage is recorded in the commit that appends the response, never later.",
    "zh": "用量记录在追加该响应的那次提交里，绝不在之后。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "every model response: answers, tool calls, failed attempts models",
-    "a partial answer committed before a crash or abort models every summary attempt, even one that fails or ends stale models a tool result that reports usage tools[name] spec §8.6; src/harness/usage.ts, called from generation.ts, tool.ts and compaction.ts."
-   ],
-   "page": 100
   },
   {
    "type": "p",
@@ -990,8 +1195,8 @@
    "type": "figure",
    "number": "6.8",
    "file": "figures/fig-6.8.png",
-   "title": "WHERE SPEND LANDS\nS T R U C T U R E",
-   "caption": "Spend is recorded once, in the conversation that made it, in the commit that records the response. Writers from spec §8.6; the models total from research/capture/extra-p6/live-run.txt. The dashed path is the double count of spec §12.",
+   "title": "WHERE SPEND LANDS STRUCTURE",
+   "caption": "Spendisrecordedonce , intheconversationthatmadeit , inthecommitthatrecordstheresponse . Writersfromspec §8.6; the mo de ls totalfrom research / capture / extra - p 6/ live - run . txt . Thedashedpathisthedoublecountofspec §12.",
    "page": 101,
    "zh_caption": "开销只被记录一次，记在产生它的那次会话里，记在记录该响应的那次提交中。写入方取自 spec §8.6；`models` 总数取自 `research/capture/extra-p6/live-run.txt`。虚线路径是 spec §12 里说的重复计数。"
   },
@@ -999,6 +1204,7 @@
    "type": "h2",
    "text": "Totals across conversations",
    "page": 101,
+   "_y": 102.0,
    "zh": "跨会话的合计"
   },
   {
@@ -1010,12 +1216,14 @@
    "type": "small",
    "text": "Spend is recorded once, in the conversation that made it, in the commit that records the response. Writers from spec §8.6; the models total from research/capture/extra-p6/live-run.txt. The dashed path is the double count of spec §12.",
    "page": 101,
+   "_y": 413.7,
    "zh": "开销只被记录一次，记在产生它的那次会话里，记在记录该响应的那次提交中。写入方取自 spec §8.6；`models` 总数取自 `research/capture/extra-p6/live-run.txt`。虚线路径是 spec §12 里说的重复计数。"
   },
   {
    "type": "small",
    "text": "A tool that runs a subagent in its own conversation must not report that conversation’s spend in its result’s usage. The child’s pi.usage already counts it, so harness.usage() would count it twice (subagents (p. 121)).",
    "page": 101,
+   "_y": 469.5,
    "zh": "在自有会话中运行子智能体的工具，不应在结果的 `usage` 里报告那个会话的开销。子会话的 `pi.usage` 已经计了它，所以 `harness.usage()` 会算两次（子智能体（p. 121））。"
   },
   {
@@ -1027,6 +1235,7 @@
    "type": "small",
    "text": "Read per-conversation spend from pi.usage, and the grand total from harness.usage(). Report tool usage only for spend the tool paid for directly. Tool names are data: read the maps with Object.entries(), not property access, in case a tool is named __proto__.",
    "page": 101,
+   "_y": 575.1,
    "zh": "逐会话的开销从 `pi.usage` 读，总计从 `harness.usage()` 读。只报告工具直接付费的那部分开销。工具名是数据：用 `Object.entries()` 读这些映射，不要用属性访问，以防某个工具名叫 `__proto__`。"
   },
   {
@@ -1035,7 +1244,470 @@
     "Sources: spec §8.6, §12; src/harness/usage.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/compaction.ts; src/harness/harness.ts (usage); README §Usage and Cost; test/harness-inbox.test.ts (describe “usage”); test/harness-",
     "compaction.test.ts; research/capture/extra-p6/live-run.txt"
    ],
-   "page": 101
+   "page": 101,
+   "_y": 641.9
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 314.3,
+   "cells": [
+    "run a run starts the run ends, on every path"
+   ],
+   "is_header": false,
+   "_sig": "run",
+   "zh": "`run` 驱动繁忙指示，用"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 330.8,
+   "cells": [
+    "generation a model request starts, waits to retry, or waits for a deferred answer the response is handled, or the run ends"
+   ],
+   "is_header": false,
+   "_sig": "generation",
+   "zh": "`generation` 和"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 348.0,
+   "cells": [
+    "tools the model asks for tools the round finishes, or the run ends"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": "`tools` 驱动流式视图。在缓慢或远程的存储上，调高"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 364.6,
+   "cells": [
+    "compactions a compaction starts it finishes"
+   ],
+   "is_header": false,
+   "_sig": "compactions",
+   "zh": "`compactions`：一次压缩开始时设置；结束时清除。spec §8.2；"
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 382.5,
+   "cells": [
+    "spec §8.2; src/harness/live.ts, generation.ts, tool.ts, compaction.ts. If the scheduler gives up on a run task (faulted or orphaned, abort, fault and orphan (p. 80)),"
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 393.8,
+   "cells": [
+    "the same commit settles its inputs unanswered and clears its fields."
+   ],
+   "is_header": false,
+   "_sig": "the",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 427.6,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 440.8,
+   "cells": [
+    "Drive your busy indicator from run and your streaming view from generation and tools."
+   ],
+   "is_header": false,
+   "_sig": "Drive",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 455.8,
+   "cells": [
+    "On slow or remote storage, raise settings.progress intervals."
+   ],
+   "is_header": false,
+   "_sig": "On",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 470.8,
+   "cells": [
+    "A crash loses uncommitted progress, with no fixed time bound, while the saved run survives."
+   ],
+   "is_header": false,
+   "_sig": "A",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 506.9,
+   "cells": [
+    "Sources: spec §6, §8.2, §12; src/harness/live.ts; src/harness/generation.ts; src/harness/tool.ts; src/harness/output.ts;"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 90,
+   "_y": 517.5,
+   "cells": [
+    "src/harness/agent.ts (DEFAULT_PROGRESS_POLICY); src/harness/types.ts (ProgressPolicy); CHANGELOG 1.0.3; test/harness-live-deltas.test.ts; test/harness-generation.test.ts; research/capture/extra-p6/live-run.txt; research/capture/inbox-steps.txt; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt"
+   ],
+   "is_header": true,
+   "_sig": "src",
+   "zh": "`src/harness/live.ts`、`generation.ts`、"
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 629.3,
+   "cells": [
+    "prepare builds the system prompt and tool list; checks the compaction budgets the attempt number"
+   ],
+   "is_header": false,
+   "_sig": "prepare",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 646.5,
+   "cells": [
+    "request calls the model and streams the answer the model, thinking level, stream options and cutoff"
+   ],
+   "is_header": false,
+   "_sig": "request",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 661.7,
+   "cells": [
+    "retry waits out the backoff the time to wake, until"
+   ],
+   "is_header": false,
+   "_sig": "retry",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 680.3,
+   "cells": [
+    "poll waits for a provider that answers later the provider’s handle and pollAt"
+   ],
+   "is_header": false,
+   "_sig": "poll",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 696.8,
+   "cells": [
+    "tools waits for the round’s tool calls the assistant entry and the tool task IDs"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 91,
+   "_y": 714.8,
+   "cells": [
+    "The GenerationCheckpoint union in src/harness/generation.ts. Every task starts at { phase: \"prepare\", attempt: 1 }."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 466.0,
+   "cells": [
+    "tool_unavailable the tool was not offered, or no longer exists completed"
+   ],
+   "is_header": false,
+   "_sig": "tool_unavailable",
+   "zh": "`tool_unavailable`：该工具没有被提供，或已不存在"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 482.5,
+   "cells": [
+    "invalid_arguments the arguments fail the schema, before or after beforeTool completed"
+   ],
+   "is_header": false,
+   "_sig": "invalid_arguments",
+   "zh": "`invalid_arguments`：参数不符合 schema，在"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 501.1,
+   "cells": [
+    "blocked a beforeTool hook blocks or throws completed"
+   ],
+   "is_header": false,
+   "_sig": "blocked",
+   "zh": "`blocked`：一个 `beforeTool` 钩子阻止或抛出 `completed`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 517.4,
+   "cells": [
+    "tool_error execute() throws, or its environment cannot be built failed"
+   ],
+   "is_header": false,
+   "_sig": "tool_error",
+   "zh": "`tool_error`："
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 534.8,
+   "cells": [
+    "interrupted a crash mid-call without a safe policy failed"
+   ],
+   "is_header": false,
+   "_sig": "interrupted",
+   "zh": "`interrupted`：调用中途崩溃且没有安全策略 `failed`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 551.3,
+   "cells": [
+    "aborted the call is aborted aborted"
+   ],
+   "is_header": false,
+   "_sig": "aborted",
+   "zh": "`aborted`：调用被中止 `aborted`。"
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 569.3,
+   "cells": [
+    "src/harness/tool.ts and generation.ts. Each result has isError: true; the last three keep the output reported so far. A task that ends failed or aborted also"
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 580.5,
+   "cells": [
+    "aborts any conversations the call owns (ownership (p. 76))."
+   ],
+   "is_header": false,
+   "_sig": "aborts",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 614.3,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 627.6,
+   "cells": [
+    "Mark a tool replay: \"safe\" only if running it twice is harmless."
+   ],
+   "is_header": false,
+   "_sig": "Mark",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 642.6,
+   "cells": [
+    "Report progress with output as you go: it is what the model sees if the call is interrupted."
+   ],
+   "is_header": false,
+   "_sig": "Report",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 656.1,
+   "cells": [
+    "A beforeTool hook that must decide the same way after a crash should store its decision in a memo (memos (p. 67))."
+   ],
+   "is_header": false,
+   "_sig": "A",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 693.6,
+   "cells": [
+    "Sources: spec §7.3, §8.4, §8.5, §12; src/harness/tool.ts; src/harness/generation.ts; src/harness/agent.ts; src/harness/types.ts"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 96,
+   "_y": 704.3,
+   "cells": [
+    "(ToolRegistration, ToolControl, ToolHooks); README §Tools; test/harness-tools.test.ts; test/harness-tools-recovery.test.ts; research/capture/crash-README.md; research/capture/crash-before.txt; research/capture/crash-reopen-tasks.txt; research/capture/crash-after.txt"
+   ],
+   "is_header": true,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 97,
+   "_y": 582.6,
+   "cells": [
+    "you, with Conversation.compact() manual no as a write submission"
+   ],
+   "is_header": false,
+   "_sig": "you",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 97,
+   "_y": 600.0,
+   "cells": [
+    "generation, background budget threshold no as a write submission"
+   ],
+   "is_header": false,
+   "_sig": "generation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 97,
+   "_y": 616.5,
+   "cells": [
+    "generation, blocking budget threshold yes appended directly"
+   ],
+   "is_header": false,
+   "_sig": "generation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 97,
+   "_y": 633.8,
+   "cells": [
+    "generation, context too long overflow yes appended directly"
+   ],
+   "is_header": false,
+   "_sig": "generation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 97,
+   "_y": 651.8,
+   "cells": [
+    "spec §8.7; src/harness/compaction.ts."
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 100,
+   "_y": 655.5,
+   "cells": [
+    "every model response: answers, tool calls, failed attempts models"
+   ],
+   "is_header": false,
+   "_sig": "every",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 100,
+   "_y": 672.1,
+   "cells": [
+    "a partial answer committed before a crash or abort models"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 100,
+   "_y": 689.3,
+   "cells": [
+    "every summary attempt, even one that fails or ends stale models"
+   ],
+   "is_header": false,
+   "_sig": "every",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 100,
+   "_y": 705.6,
+   "cells": [
+    "a tool result that reports usage tools[name]"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 100,
+   "_y": 723.8,
+   "cells": [
+    "spec §8.6; src/harness/usage.ts, called from generation.ts, tool.ts and compaction.ts."
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
   }
  ]
 }

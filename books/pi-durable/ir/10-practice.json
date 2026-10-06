@@ -4,20 +4,22 @@
    "type": "part-title",
    "text": "P A R T 1 0 In Practice",
    "page": 158,
+   "_y": 83.8,
    "zh": "实践"
   },
   {
    "type": "h2",
    "text": "Building real agents on the harness, the contracts that bite, and what it deliberately does not do.",
    "page": 158,
+   "_y": 154.8,
    "zh": "在 Harness 上构建真实智能体、会咬人的契约，以及它刻意不做的事。"
   },
   {
    "type": "figure",
    "number": "10.1",
    "file": "figures/fig-10.1.png",
-   "title": "THE CODING AGENT ASSEMBLED\nS T R U C T U R E",
-   "caption": "Code and policy live in the process; a conversation stores only its choices. The Harness combines the two each time it needs them. Assembled from ex 26–29 and src/harness/agent.ts.",
+   "title": "THE CODING AGENT ASSEMBLED STRUCTURE",
+   "caption": "Codeandpolicyliveintheprocess ; aconversationstoresonlyitschoices . TheHarnesscombinesthetwoeachtimeitneedsthem . Assembledfromex 26–29 andsrc / harness / agent . ts .",
    "page": 159,
    "zh_caption": "代码与策略存在于进程之中；会话只存储它的选择。Harness 每次需要时才把两者组合起来。由 ex 26–29 与 `src/harness/agent.ts` 拼装。"
   },
@@ -25,12 +27,14 @@
    "type": "chapter-title",
    "text": "1 0 . 1 Building a coding agent",
    "page": 159,
+   "_y": 57.4,
    "zh": "10.1 构建一个编码智能体"
   },
   {
    "type": "lede",
    "text": "A coding agent is a registry, a settings object and an environment function; everything a user chooses per conversation is a name in pi.agent.",
    "page": 159,
+   "_y": 106.2,
    "zh": "一个编码智能体就是一张注册表、一个设置对象和一个环境函数；用户按会话做出的一切选择，都是 `pi.agent` 里的一个名字。"
   },
   {
@@ -42,12 +46,14 @@
    "type": "small",
    "text": "Code and policy live in the process; a conversation stores only its choices. The Harness combines the two each time it needs them. Assembled from ex 26–29 and src/harness/agent.ts.",
    "page": 159,
+   "_y": 467.0,
    "zh": "代码与策略存在于进程之中；会话只存储它的选择。Harness 每次需要时才把两者组合起来。由 ex 26–29 与 `src/harness/agent.ts` 拼装。"
   },
   {
    "type": "h2",
    "text": "Three host inputs, one stored document",
    "page": 159,
+   "_y": 507.0,
    "zh": "三个宿主输入，一个被存储的文档"
   },
   {
@@ -59,6 +65,7 @@
    "type": "small",
    "text": "settings that follow a file, an env that follows cwd test/examples/26-coding-agent.ts TS",
    "page": 160,
+   "_y": 147.4,
    "zh": "跟随文件的设置，跟随 cwd 的 env `test/examples/26-coding-agent.ts` TS"
   },
   {
@@ -76,12 +83,14 @@
     "await root.configure({ cwd: join(workspace, \"app\") }, context);",
     "userSettings.parallelTools = false;"
    ],
-   "page": 160
+   "page": 160,
+   "_y": 170.6
   },
   {
    "type": "small",
    "text": "The Harness.open() call and the first turn are elided (…). The first pwd prints the workspace, the second workspace/app (run 26). Neither change restarted anything.",
    "page": 160,
+   "_y": 339.0,
    "zh": "`Harness.open()` 调用和第一轮对话已省略（…）。第一次 `pwd` 打印 workspace，第二次打印 workspace/app（run 26）。两处变更都没有重启任何东西。"
   },
   {
@@ -91,34 +100,36 @@
   },
   {
    "type": "small",
-   "text": "entering and leaving plan mode test/examples/27-plan-mode.ts TS",
+   "text": "entering and leaving plan mode test/examples/27-plan-mode.ts TS const read = createReadTool();",
    "page": 160,
+   "_y": 515.6,
    "zh": "进入与退出 plan 模式 `test/examples/27-plan-mode.ts` TS"
   },
   {
    "type": "code",
    "lines": [
-    "const read = createReadTool();",
     "const enterPlanMode = { extensions: { add: [Plan] }, tools: [read, submitPlan] };",
     "const leavePlanMode = { extensions: null, tools: null };",
     "await root.configure(enterPlanMode, context);",
     "const input = { type: \"input\", content: \"Make the port configurable.\" } as const;",
     "await (await root.submit(input, context)).wait(context); await root.configure(leavePlanMode, context);"
    ],
-   "page": 160
+   "page": 160,
+   "_y": 549.3
   },
   {
    "type": "small",
    "text": "Lines 60–62 and 93–98 of the example; the submission is pulled into input to fit the page.",
    "page": 160,
+   "_y": 640.5,
    "zh": "示例的第 60–62 行与第 93–98 行；为排进页面，提交项被提取到了 input 中。"
   },
   {
    "type": "figure",
    "number": "10.2",
    "file": "figures/fig-10.2.png",
-   "title": "SAME REGISTRY, TWO BASH TOOLS\nF L O W",
-   "caption": "Selection order decides which same-name tool wins, and a wrapper decorates the winner. Both conversations share one registry. Values from ex 30 and run 30; the project path is shortened to <project>.",
+   "title": "SAME REGISTRY , TWO BASH TOOLS FLOW",
+   "caption": "Selectionorderdecideswhichsame - nametoolwins , andawrapperdecoratesthewinner . Bothconversationsshareoneregistry . Valuesfromex 30 and run 30; theprojectpathisshortenedto < proj ec t > .",
    "page": 161,
    "zh_caption": "选择顺序决定同名工具中谁胜出，包装器再装饰胜出的那个。两个会话共享同一张注册表。数值取自 ex 30 与 run 30；项目路径缩写为 `<project>`。"
   },
@@ -126,6 +137,7 @@
    "type": "small",
    "text": "$ node --conditions=source --experimental-strip-types test/examples/27-plan-mode.ts",
    "page": 161,
+   "_y": 76.1,
    "zh": "$ node --conditions=source --experimental-strip-types test/examples/27-plan-mode.ts"
   },
   {
@@ -140,12 +152,14 @@
     "system: { sections: { plan_mode: null },",
     "added: [ 'write', 'edit', 'bash' ], removed: [ 'submit_plan' ] }"
    ],
-   "page": 161
+   "page": 161,
+   "_y": 87.5
   },
   {
    "type": "small",
    "text": "Run 27, first system line shortened. The model saw each switch as one small system-prompt change, not a new prompt (the system prompt (p. 115)).",
    "page": 161,
+   "_y": 190.5,
    "zh": "run 27，第一行 system 输出已缩短。模型把每次切换都看作一处小的 system 提示词变更，而不是一份新提示词（system 提示词（p. 115））。"
   },
   {
@@ -157,6 +171,7 @@
    "type": "small",
    "text": "Selection order decides which same-name tool wins, and a wrapper decorates the winner. Both conversations share one registry. Values from ex 30 and run 30; the project path is shortened to <project>.",
    "page": 161,
+   "_y": 717.5,
    "zh": "选择顺序决定同名工具中谁胜出，包装器再装饰胜出的那个。两个会话共享同一张注册表。数值取自 ex 30 与 run 30；项目路径缩写为 `<project>`。"
   },
   {
@@ -168,6 +183,7 @@
    "type": "h2",
    "text": "When a change arrives",
    "page": 162,
+   "_y": 131.2,
    "zh": "变更何时生效"
   },
   {
@@ -176,52 +192,17 @@
    "zh": "每种输入都有自己的时机。表格回答产品团队问的第一个问题：如果我现在改这个，谁会看到它？"
   },
   {
-   "type": "small",
-   "text": "a settings getter every use at the next decision; nothing is written configure() model, tools, sections before each model request at the next request; the current one keeps its prompt configure({ cwd }) env() at each use at the next tool call, even one the model already made installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code a process restart after you reinstall stored names bind to the newly installed code",
-   "page": 162,
-   "zh": "设置 getter｜每次使用｜下一次决策时生效；不写入任何东西。`configure()` 的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。`configure({ cwd })`｜`env()` 每次使用｜下一次工具调用时生效，哪怕是模型已经发出的那一个。安装或替换扩展｜每个阶段的开始、每次请求和每次调用｜下一阶段生效；正在运行的调用会用旧代码完成。进程重启｜在你重新安装之后｜存储的名字绑定到新安装的代码。"
-  },
-  {
-   "type": "code",
-   "lines": [],
-   "page": 162
-  },
-  {
-   "type": "small",
-   "text": "From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process",
-   "page": 162,
-   "zh": "出自 spec §2.2、README §Per-Conversation Agent 与 §Reload，以及 run 31：重载期间运行的一次调用打印 v1，下一次打印 v2，而重启后的进程"
-  },
-  {
-   "type": "small",
-   "text": "offers no tools until it installs the extension (reload while running (p. 118)).",
-   "page": 162,
-   "zh": "在装上该扩展之前不提供任何工具（运行中重载（p. 118））。"
-  },
-  {
-   "type": "small",
-   "text": "Put code in the registry, shared policy in settings, and per-conversation choices in pi.agent. Anything else a conversation must remember across restarts goes in your own document. Install every extension before reopening; stored names are useless without their code.",
-   "page": 162,
-   "zh": "代码放注册表，共享策略放设置，按会话的选择放 `pi.agent`。会话需要跨重启记住的其他任何东西，都放进你自己的文档。重新打开之前先安装每个扩展；脱离代码的存储名字毫无用处。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts;",
-    "src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload"
-   ],
-   "page": 162
-  },
-  {
    "type": "chapter-title",
    "text": "1 0 . 2 Contracts that bite",
    "page": 163,
+   "_y": 57.4,
    "zh": "10.2 会咬人的契约"
   },
   {
    "type": "lede",
    "text": "Pi Durable does not police its own rules; break one and nothing throws, until load, concurrency or a crash makes the failure show.",
    "page": 163,
+   "_y": 106.2,
    "zh": "Pi Durable 不会为自己的规则派出警察；违反其中一条不会有任何异常，直到负载、并发或崩溃让失败显形。"
   },
   {
@@ -233,6 +214,7 @@
    "type": "h2",
    "text": "Transactions and storage",
    "page": 163,
+   "_y": 288.0,
    "zh": "事务与存储"
   },
   {
@@ -241,33 +223,110 @@
    "zh": "把提交回调当作一次快速编辑。它可以是异步的，但其中每一个 await 都让队列保持阻塞，其他每一次提交都要等。"
   },
   {
-   "type": "small",
-   "text": "Keep commits short (2.2 (p. 29)) awaiting a model, tool, process, network call, person or another commit inside the callback stalls or deadlocks every write use only the Tx you were given; do slow work between commits No work left running after the callback (2.2 (p. 29)) once the callback returns, its drafts and Tx reject; un-awaited work before that is unsupported await everything the callback starts Read before you write (2.2 (p. 29)) reading a table after the first table write throws ReadAfterWrite read every row first; document drafts stay usable reading a document that was never created returns undefined create it with tx.doc() Create documents explicitly (4.2 (p. 53)) a seed passed for an existing family member is ignored change the member with a draft instead Family seeds apply once (4.2 (p. 53)) after a failure where the write may or may not have landed, every later commit throws do not catch and continue; reopen Storage failures are fatal (2.3 (p. 33))",
-   "page": 163,
-   "zh": "保持提交简短（2.2（p. 29））｜在回调里 await 模型、工具、进程、网络调用、人，或另一次提交，会让每一次写入停滞或死锁｜只使用交给你的那个 `Tx`；把慢活放在提交之间做。回调返回后不留运行中的工作（2.2（p. 29））｜回调一返回，它的草稿和 `Tx` 就会 reject；在此之前未 await 的工作不受支持｜await 回调启动的每一样东西。先读后写（2.2（p. 29））｜第一次写表之后再读该表会抛出 `ReadAfterWrite`｜先把每一行读完；文档草稿仍然可用。显式创建文档（4.2（p. 53））｜读取一个从未创建过的文档会返回 undefined｜用 `tx.doc()` 创建它。族种子只生效一次（4.2（p. 53））｜为已存在的族成员传入种子会被忽略｜改用草稿修改该成员。存储失败是致命的（2.3（p. 33））｜在写入可能已落地也可能没落地的失败之后，每一次后续提交都会抛错｜不要 catch 之后继续；重新打开。JSONL 需要 fsync 才能在断电后幸存（9.3（p. 148））｜机器宕机时一次已确认的提交可能丢失｜在关键处传入 `{ fsync: true }`。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "a confirmed commit may be lost if the machine goes down pass { fsync: true } where that matters"
-   ],
-   "page": 163
-  },
-  {
-   "type": "small",
-   "text": "JSONL needs fsync to survive power loss (9.3 (p. 148))",
-   "page": 163,
-   "zh": "JSONL 需要 fsync 才能在断电后幸存（9.3（p. 148））"
-  },
-  {
    "type": "p",
    "text": "The fatal case deserves a sentence. If storage fails in a way that leaves it unknown whether the write landed, the in-memory state could drift from what a reopen will read. So the Session stops: it rejects every later commit and must be reopened, and the reopen reads whatever storage actually holds (when a commit fails (p. 33)). A StorageRejected error is the harmless case: storage refused the write before touching anything, the commit rolls back, and the Session carries on.",
    "zh": "致命情形值得单独说一句。如果存储以某种方式失败，让人无法知道写入是否已落地，内存中的状态就可能与重新打开时读到的内容发生偏离。于是 Session 停止：它拒绝之后的每一次提交，必须重新打开，而重新打开读到的是存储实际持有的内容（提交失败时（p. 33））。`StorageRejected` 错误属于无害情形：存储在动手之前就拒绝了写入，提交回滚，Session 继续运行。"
   },
   {
+   "type": "table-row",
+   "page": 163,
+   "_y": 364.5,
+   "cells": [
+    "Keep commits short (2.2 (p. 29)) awaiting a model, tool, process, network call, person or another commit inside the callback stalls or deadlocks every write",
+    "use only the Tx you were given; do slow work between commits"
+   ],
+   "is_header": false,
+   "_sig": "Keep",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 391.0,
+   "cells": [
+    "No work left running after the callback (2.2 (p. 29))",
+    "once the callback returns, its drafts and Tx reject; un-awaited work before that is unsupported"
+   ],
+   "is_header": false,
+   "_sig": "No",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 392.6,
+   "cells": [
+    "await everything the callback starts"
+   ],
+   "is_header": false,
+   "_sig": "await",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 418.0,
+   "cells": [
+    "Read before you write (2.2 (p. 29)) reading a table after the first table write throws ReadAfterWrite read every row first; document drafts stay usable"
+   ],
+   "is_header": false,
+   "_sig": "Read",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 446.6,
+   "cells": [
+    "Create documents explicitly (4.2 (p. 53))",
+    "reading a document that was never created returns undefined create it with tx.doc()"
+   ],
+   "is_header": false,
+   "_sig": "Create",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 474.4,
+   "cells": [
+    "Family seeds apply once (4.2 (p. 53))",
+    "a seed passed for an existing family member is ignored change the member with a draft instead"
+   ],
+   "is_header": false,
+   "_sig": "Family",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 501.4,
+   "cells": [
+    "Storage failures are fatal (2.3 (p. 33))",
+    "after a failure where the write may or may not have landed, every later commit throws",
+    "do not catch and continue; reopen"
+   ],
+   "is_header": false,
+   "_sig": "Storage",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 163,
+   "_y": 528.8,
+   "cells": [
+    "JSONL needs fsync to survive power loss (9.3 (p. 148))",
+    "a confirmed commit may be lost if the machine goes down pass { fsync: true } where that matters"
+   ],
+   "is_header": false,
+   "_sig": "JSONL",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Runs, the inbox and progress",
    "page": 163,
+   "_y": 637.5,
    "zh": "运行、收件箱与进度"
   },
   {
@@ -279,8 +338,8 @@
    "type": "figure",
    "number": "10.3",
    "file": "figures/fig-10.3.png",
-   "title": "A RAW WRITE INTO A BUSY CONVERSATION\nS E Q U E N C E",
-   "caption": "A raw entry can land between the read and the commit of request preparation; a write submission waits for a boundary instead. Steps 1–3 follow the",
+   "title": "A RAW WRITE INTO A BUSY CONVERSATION SEQUENCE",
+   "caption": "Arawentrycanlandbetweenthereadandthecommitofrequestpreparation ; awritesubmissionwaitsforaboundaryinstead . Steps 1–3 followthe",
    "page": 164,
    "zh_caption": "一个原始条目可能落在请求准备的读取与提交之间；write 提交项则改为等待一个边界。步骤 1–3 遵循"
   },
@@ -288,12 +347,14 @@
    "type": "small",
    "text": "A raw entry can land between the read and the commit of request preparation; a write submission waits for a boundary instead. Steps 1–3 follow the prepare phase of src/harness/generation.ts; steps 4–6 follow spec §6.",
    "page": 164,
+   "_y": 406.2,
    "zh": "一个原始条目可能落在请求准备的读取与提交之间；write 提交项则改为等待一个边界。步骤 1–3 遵循 `src/harness/generation.ts` 的 prepare 阶段；步骤 4–6 遵循 spec §6。"
   },
   {
    "type": "small",
    "text": "the same note, raw and as a submission README §Busy Conversations TS // Unsafe while a run may be active: lands wherever the queue puts it.",
    "page": 164,
+   "_y": 448.9,
    "zh": "同一条 note，原始形式与作为提交项的形式 README §Busy Conversations TS // 当运行可能处于活跃状态时这样做不安全：条目会落在队列放它的位置。"
   },
   {
@@ -304,37 +365,95 @@
     "// Safe: added at once when idle, otherwise at the next boundary. await root.submit(",
     "{ type: \"write\", entry: { kind: \"app.note\", data: \"user opened a file\" } }, context);"
    ],
-   "page": 164
+   "page": 164,
+   "_y": 483.3
   },
   {
    "type": "small",
    "text": "The second form is the README’s own example. A write submission never starts a model turn.",
    "page": 164,
+   "_y": 563.2,
    "zh": "第二种形式就是 README 自己的示例。write 提交项绝不会启动一个模型轮次。"
   },
   {
-   "type": "small",
-   "text": "Don’t write into a busy conversation (6.1 (p. 84)) raw entries can land among the run’s system-prompt entries use a write submission Don’t move the head into the past by hand (3.4 (p. 46)) the model’s context changes, but an open view keeps showing old entries until rebuilt use a write submission, which rejects it as stale queued follow-ups stay in pi.inbox and their wait() never settles submit again, or withdraw them A failed run leaves its queue (6.1 (p. 84)) tune settings.progress; never show uncommitted text a crash loses streamed text since the last successful progress commit; 100 ms is the default minimum interval, not a maximum loss window Progress is committed in steps (6.2 (p. 88))",
+   "type": "table-row",
    "page": 165,
-   "zh": "不要向忙碌的会话写入（6.1（p. 84））｜原始条目可能落在运行的 system 提示词条目之间｜改用 write 提交项。不要手工把头指针移回过去（3.4（p. 46））｜模型的上下文变了，但已打开的视图会继续显示旧条目，直到被重建｜改用 write 提交项，它会以过期为由拒绝。失败的运行会留下它的队列（6.1（p. 84））｜排队的后续项留在 `pi.inbox` 里，它们的 `wait()` 永远不落定｜重新提交，或者撤回它们。进度按步提交（6.2（p. 88））｜崩溃会丢失上一次成功进度提交以来流式输出的文本；100 ms 是默认的最小间隔，不是最大丢失窗口｜调整 `settings.progress`；绝不显示未提交的文本。"
+   "_y": 83.3,
+   "cells": [
+    "Don’t write into a busy conversation (6.1 (p. 84))",
+    "raw entries can land among the run’s system-prompt entries use a write submission"
+   ],
+   "is_header": false,
+   "_sig": "Don",
+   "zh": null
   },
   {
-   "type": "code",
-   "lines": [
+   "type": "table-row",
+   "page": 165,
+   "_y": 111.0,
+   "cells": [
+    "Don’t move the head into the past by hand (3.4 (p. 46))",
+    "the model’s context changes, but an open view keeps showing old entries until rebuilt",
+    "use a write submission, which rejects it as stale"
+   ],
+   "is_header": false,
+   "_sig": "Don",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 165,
+   "_y": 138.4,
+   "cells": [
+    "A failed run leaves its queue (6.1 (p. 84))",
+    "queued follow-ups stay in pi.inbox and their wait() never settles submit again, or withdraw them"
+   ],
+   "is_header": false,
+   "_sig": "A",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 165,
+   "_y": 166.1,
+   "cells": [
+    "Progress is committed in steps (6.2 (p. 88))",
+    "a crash loses streamed text since the last successful progress commit; 100 ms is the default minimum interval, not a maximum loss window",
+    "tune settings.progress; never show uncommitted text"
+   ],
+   "is_header": false,
+   "_sig": "Progress",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 165,
+   "_y": 193.1,
+   "cells": [
+    "Keep task results small (5.1 (p. 63))",
     "finished task records stay in storage, so big results stay too store the data in entries or documents; return their IDs"
    ],
-   "page": 165
+   "is_header": false,
+   "_sig": "Keep",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "Keep task results small (5.1 (p. 63)) raw entries miss edits, display-only entries and filtering use context() for what the model sees The transcript is not the model’s context (3.2 (p. 40))",
+   "type": "table-row",
    "page": 165,
-   "zh": "保持任务结果小（5.1（p. 63））｜已结束的任务记录留在存储里，大结果也一样｜把数据放进条目或文档；返回它们的 ID。记录不是模型的上下文（3.2（p. 40））｜原始条目会漏掉编辑、仅用于展示的条目和过滤｜用 `context()` 获取模型看到的内容"
+   "_y": 220.1,
+   "cells": [
+    "The transcript is not the model’s context (3.2 (p. 40))",
+    "raw entries miss edits, display-only entries and filtering use context() for what the model sees"
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Compaction",
    "page": 165,
+   "_y": 263.0,
    "zh": "压缩"
   },
   {
@@ -343,15 +462,46 @@
    "zh": "压缩用一段摘要替换旧轮次（压缩（p. 97））。摘要是在选定它那段条目范围之后过一段时间才写入的。这中间任何改变该范围的东西都有风险。"
   },
   {
-   "type": "small",
-   "text": "every attempt pays for one summary request, even when the summary arrives too late to use budget for it; it shows in pi.usage Compaction costs a model call an edit placed while the summary is written is lost if the summary covers its target; a head placed meanwhile is undone by the cut Edits during compaction make such writes before compacting Summary timestamps a queued summary carries the time its compaction finished, not when it was placed judge freshness by entry order, as the Harness does",
+   "type": "table-row",
    "page": 165,
-   "zh": "压缩要花一次模型调用｜每一次尝试都要付一次摘要请求的代价，即使摘要来得太晚用不上｜为它做预算；它会显示在 `pi.usage` 里。压缩期间的编辑｜在写入摘要期间放入的编辑，若摘要覆盖了它的目标就会丢失；同时放入的头指针会被这次切断撤销｜在压缩之前做这类写入。摘要时间戳｜排队的摘要携带的是它那次压缩完成的时间，而不是它被放入的时间｜像 Harness 那样按条目顺序判断新鲜度"
+   "_y": 338.6,
+   "cells": [
+    "Compaction costs a model call",
+    "every attempt pays for one summary request, even when the summary arrives too late to use budget for it; it shows in pi.usage"
+   ],
+   "is_header": false,
+   "_sig": "Compaction",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 165,
+   "_y": 366.4,
+   "cells": [
+    "Edits during compaction",
+    "an edit placed while the summary is written is lost if the summary covers its target; a head placed meanwhile is undone by the cut",
+    "make such writes before compacting"
+   ],
+   "is_header": false,
+   "_sig": "Edits",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 165,
+   "_y": 393.0,
+   "cells": [
+    "Summary timestamps a queued summary carries the time its compaction finished, not when it was placed judge freshness by entry order, as the Harness does"
+   ],
+   "is_header": false,
+   "_sig": "Summary",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Ownership, hooks and close",
    "page": 165,
+   "_y": 435.0,
    "zh": "所有权、钩子与关闭"
   },
   {
@@ -363,6 +513,7 @@
    "type": "small",
    "text": "a child created in the finishing commit research/capture/task-transitions.txt TEXT",
    "page": 165,
+   "_y": 536.6,
    "zh": "在结束提交中创建的子任务 `research/capture/task-transitions.txt` TEXT"
   },
   {
@@ -373,24 +524,94 @@
     "\"error\":{\"message\":\"Task owner 12 is completing\"}}",
     "effects in order: [\"charged charge-d\"]"
    ],
-   "page": 165
+   "page": 165,
+   "_y": 559.8
   },
   {
    "type": "small",
    "text": "Scenario D, timestamps and memos cut (…). The receipt task was never stored, and the charge was never refunded, because a fault runs no abort handler. Create children in an earlier commit; the finishing task then waits as completing (spec §5.5).",
    "page": 165,
+   "_y": 629.2,
    "zh": "场景 D，时间戳与 memo 已省略（…）。receipt 任务从未被存储，扣款也从未退回，因为故障不会运行任何中止处理器。在更早的一次提交里创建子任务；这样结束中的任务就以 completing 状态等待（spec §5.5）。"
   },
   {
-   "type": "small",
-   "text": "the owner stays completing; a subagent’s work holds up the tool call and the run Owned work holds its owner (5.5 (p. 76)) create work that must not hold anything as background Work started by hooks (7.3 (p. 109)) it holds up the task that ran the hook; code reacting after the result cannot extend it create it before the task records its result an aborting task cannot create owned children undo effects where they happened, or with background tasks No children from abort handlers (5.6 (p. 80)) hooks and their task use one memo namespace, so names collide prefix memo names Hooks share memo names (7.3 (p. 109)) a tool that reports its child’s usage is counted twice in totals let the child’s pi.usage count it Count subagent spend once (6.6 (p. 100)) Honour abort signals (2.3 (p. 33)) code that ignores its signal keeps close() waiting and storage open pass context.abortSignal to every await",
+   "type": "table-row",
    "page": 166,
-   "zh": "被拥有的工作会拖住它的拥有者（5.5（p. 76））｜拥有者停留在 completing；子智能体的工作会拖住工具调用与运行｜把不该拖住任何东西的工作创建为 background。钩子启动的工作（7.3（p. 109））｜它会拖住运行该钩子的任务；在结果出来后才响应的代码无法延长它｜在任务记录结果之前创建它。中止处理器不得创建子任务（5.6（p. 80））｜一个正在中止的任务无法创建被拥有的子任务｜在效果发生的地方撤销，或用 background 任务撤销。钩子共用 memo 名字（7.3（p. 109））｜钩子与它的任务使用同一个 memo 命名空间，因此名字冲突｜给 memo 名字加前缀。子智能体开销只计一次（6.6（p. 100））｜一个上报子任务用量的工具会在总计中被计两次｜让子任务的 `pi.usage` 去计。响应中止信号（2.3（p. 33））｜忽略自己信号的代码会让 `close()` 一直等待、让存储一直打开｜把 `context.abortSignal` 传给每一个 await。"
+   "_y": 83.6,
+   "cells": [
+    "Owned work holds its owner (5.5 (p. 76))",
+    "the owner stays completing; a subagent’s work holds up the tool call and the run",
+    "create work that must not hold anything as background"
+   ],
+   "is_header": false,
+   "_sig": "Owned",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 109.7,
+   "cells": [
+    "Work started by hooks (7.3 (p. 109)) it holds up the task that ran the hook; code reacting after the result cannot extend it",
+    "create it before the task records its result"
+   ],
+   "is_header": false,
+   "_sig": "Work",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 138.4,
+   "cells": [
+    "No children from abort handlers (5.6 (p. 80))",
+    "an aborting task cannot create owned children undo effects where they happened, or with background tasks"
+   ],
+   "is_header": false,
+   "_sig": "No",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 166.1,
+   "cells": [
+    "Hooks share memo names (7.3 (p. 109))",
+    "hooks and their task use one memo namespace, so names collide prefix memo names"
+   ],
+   "is_header": false,
+   "_sig": "Hooks",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 193.1,
+   "cells": [
+    "Count subagent spend once (6.6 (p. 100))",
+    "a tool that reports its child’s usage is counted twice in totals let the child’s pi.usage count it"
+   ],
+   "is_header": false,
+   "_sig": "Count",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 219.6,
+   "cells": [
+    "Honour abort signals (2.3 (p. 33)) code that ignores its signal keeps close() waiting and storage open",
+    "pass context.abortSignal to every await"
+   ],
+   "is_header": false,
+   "_sig": "Honour",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Documents and watches",
    "page": 166,
+   "_y": 261.7,
    "zh": "文档与观察者"
   },
   {
@@ -399,39 +620,128 @@
    "zh": "文档 kind 与 fork 策略是一种存储格式：它们的寿命比定义它们的代码更长。你读到的值是共享的，不能修改；而观察者只能缓冲有限数量的更新（会话视图（p. 129））。"
   },
   {
-   "type": "code",
-   "lines": [],
-   "page": 166
-  },
-  {
-   "type": "small",
-   "text": "Store full copies sometimes (4.3 (p. 56)) if checkpointWhen() never returns true, storage grows without bound return true now and then",
-   "page": 166,
-   "zh": "有时存完整副本（4.3（p. 56））｜如果 `checkpointWhen()` 从不返回 true，存储就会无界增长｜时不时返回一次 true"
-  },
-  {
-   "type": "small",
-   "text": "current, initial and asOf change what a fork sees choose by what the product means Pick fork policies on purpose (4.1 (p. 50)) Kinds are permanent (4.3 (p. 56)) a migration cannot rename a kind; two definitions claiming one kind go unnoticed",
-   "page": 166,
-   "zh": "`current`、`initial` 和 `asOf` 决定分叉看到什么｜按产品语义来选。有意识地选择 fork 策略（4.1（p. 50））。kind 是永久的（4.3（p. 56））｜迁移无法给一个 kind 改名；两个定义都声称拥有同一个 kind 也不会被发现。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "to rename, copy to a new kind and retire the old",
-    "pi. names are reserved (3.1 (p. 37)) nothing enforces it; reusing one collides with the Harness use your own prefix, such as app. Read values are immutable (8.1 (p. 125)) changing a snapshot or watch value corrupts shared state copy before changing Start watches after reading (8.2 (p. 129)) before start(), watch.value is the value at the time you acquired it initialize from it, then start Watches can skip updates (8.2 (p. 129)) past 100 waiting updates, one full value replaces them; steps in between are lost count events from entries or a log stop() does not wait (8.2 (p. 129)) it neither aborts nor waits for a callback in progress coordinate with your callback yourself Close clients before the Harness (8.1 (p. 125)) a state ended by close keeps its last value forever detach clients and services first"
-   ],
-   "page": 166
-  },
-  {
    "type": "p",
    "text": "The watch rules matter most for remote clients. A client that mirrors the latest value stays correct when updates collapse, because the replacement carries the whole newest value. A client that counts transitions, such as “notify on every tool start”, does not: under load it sees the end state without the steps. Anything that must be counted belongs in an entry or a log the consumer reads.",
    "zh": "观察者规则对远程客户端尤其重要。一个镜像最新值的客户端，在更新被合并时仍然正确，因为替代值带着完整的最新内容。一个统计状态转移的客户端——比如「每次工具开始时通知」——则不然：负载之下它只看到终态，看不到中间的步骤。任何必须被计数的东西，都应该放进消费者会读取的条目或日志。"
   },
   {
+   "type": "table-row",
+   "page": 166,
+   "_y": 338.1,
+   "cells": [
+    "Store full copies sometimes (4.3 (p. 56)) if checkpointWhen() never returns true, storage grows without bound return true now and then"
+   ],
+   "is_header": false,
+   "_sig": "Store",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 355.5,
+   "cells": [
+    "current, initial and asOf change what a fork sees choose by what the product means"
+   ],
+   "is_header": false,
+   "_sig": "current",
+   "zh": "`current`、"
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 355.9,
+   "cells": [
+    "Pick fork policies on purpose (4.1 (p. 50))"
+   ],
+   "is_header": false,
+   "_sig": "Pick",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 382.5,
+   "cells": [
+    "Kinds are permanent (4.3 (p. 56)) a migration cannot rename a kind; two definitions claiming one kind go unnoticed",
+    "to rename, copy to a new kind and retire the old"
+   ],
+   "is_header": false,
+   "_sig": "Kinds",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 410.1,
+   "cells": [
+    "pi. names are reserved (3.1 (p. 37)) nothing enforces it; reusing one collides with the Harness use your own prefix, such as app."
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": "`pi.usage` 去计。响应中止信号（2.3（p. 33））｜忽略自己信号的代码会让"
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 426.8,
+   "cells": [
+    "Read values are immutable (8.1 (p. 125)) changing a snapshot or watch value corrupts shared state copy before changing"
+   ],
+   "is_header": false,
+   "_sig": "Read",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 442.7,
+   "cells": [
+    "Start watches after reading (8.2 (p. 129)) before start(), watch.value is the value at the time you acquired it initialize from it, then start"
+   ],
+   "is_header": false,
+   "_sig": "Start",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 460.5,
+   "cells": [
+    "Watches can skip updates (8.2 (p. 129)) past 100 waiting updates, one full value replaces them; steps in between are lost",
+    "count events from entries or a log"
+   ],
+   "is_header": false,
+   "_sig": "Watches",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 487.4,
+   "cells": [
+    "stop() does not wait (8.2 (p. 129)) it neither aborts nor waits for a callback in progress coordinate with your callback yourself"
+   ],
+   "is_header": false,
+   "_sig": "stop",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 166,
+   "_y": 505.1,
+   "cells": [
+    "Close clients before the Harness (8.1 (p. 125))",
+    "a state ended by close keeps its last value forever detach clients and services first"
+   ],
+   "is_header": false,
+   "_sig": "Close",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Extensions and the agent",
    "page": 166,
+   "_y": 614.2,
    "zh": "扩展与 agent"
   },
   {
@@ -440,42 +750,11 @@
    "zh": "一个扩展要么整体被选中，要么完全不被选中，因此守卫只在选中它的会话里运行。子会话在创建时复制一次它的选择（每个会话的 agent（p. 106））。"
   },
   {
-   "type": "small",
-   "text": "Include guards in every list an explicit extension list that leaves out a permissions extension runs without it include guards in every list Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead build the full list from the resolved agent Copies happen once later changes to the parent never reach a task-owned child configure the child directly a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory Reruns use today’s directory (9.5 (p. 155)) changing settings or installs adds pi.system entries and misses the prompt cache Default changes cost cache (7.5 (p. 115)) expect one system change and one cache miss per change Keep prompt text stable (7.5 (p. 115)) a section that embeds the time changes every request and defeats caching render only real changes Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end Rows paraphrase spec §12 in its order within each group; “Do instead” is the spec’s own fix where it gives one.",
-   "page": 167,
-   "zh": "每一份列表都要包含守卫｜一份显式的扩展列表若漏掉某个权限扩展，运行时就少了它｜每一份列表都要包含守卫。改动会替换复制来的列表｜对复制过列表的子任务做 `{ add, remove }`，会从宿主默认值开始，而不是从复制品开始｜从解析后的 agent 构建完整列表。复制只发生一次｜之后对父级的改动永远到不了任务持有的子任务｜直接配置子任务。重跑使用当天的目录（9.5（p. 155））｜崩溃后的重跑会从当前 cwd 构建环境｜不要想当然地认为还是第一次尝试那个目录。默认值的改动要付出缓存代价（7.5（p. 115））｜改动设置或安装会新增 `pi.system` 条目并让提示词缓存失效｜预期每次改动带来一处 system 变更和一次缓存未命中。保持提示词文本稳定（7.5（p. 115））｜一个嵌入了时间的片段每次请求都会变化，从而破坏缓存｜只渲染真实的变化。延后 dispose（7.6（p. 118））｜在卸载时释放资源会打断仍在运行的调用｜在运行的调用结束之后再 dispose。表格各行在每组内部按 spec §12 的顺序转述；spec 给出修法时，「改用」一列就是它自己的修法。"
-  },
-  {
-   "type": "small",
-   "text": "Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension src/harness/registry.ts. Reserved names, kind collisions and immutability are up to your tests and review.",
-   "page": 167,
-   "zh": "这其中几乎没有任何一项在运行时被检查。注册表只检查片段键，以及工具名在同一个扩展内是否唯一 `src/harness/registry.ts`。保留名、kind 冲突和不可变性都靠你的测试与评审。"
-  },
-  {
-   "type": "small",
-   "text": "Three questions catch most of these in code review. A yes to any is a bug, even if every test passes, because it shows only under load, concurrency or a crash.",
-   "page": 167,
-   "zh": "代码评审时，三个问题能抓到其中大多数。任何一个答「是」都是 bug——即使所有测试都通过，因为它只在负载、并发或崩溃下才显现。"
-  },
-  {
-   "type": "small",
-   "text": "Does any await inside a commit callback leave the process? Does any code write to a conversation whose run it does not own? Does any consumer change a value it read, or depend on seeing every update?",
-   "page": 167,
-   "zh": "提交回调里有没有哪个 await 会离开进程？有没有哪段代码在写入一个它并不拥有其运行的会话？有没有哪个消费者改动了它读到的值，或依赖看到每一次更新？"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6"
-   ],
-   "page": 167
-  },
-  {
    "type": "figure",
    "number": "10.4",
    "file": "figures/fig-10.4.png",
-   "title": "INSIDE AND OUTSIDE THE GUARANTEE\nC O M P A R I S O N",
-   "caption": "The Harness guarantees what is committed in its storage; the host owns everything around it. Each row pairs a guarantee with the work it leaves. From spec §2.2, §5.2, §11.3, §13, README §Storage, and src/harness/types.ts.",
+   "title": "INSIDE AND OUTSIDE THE GUARANTEE COMPARISON",
+   "caption": "TheHarnessguaranteeswhatiscommittedinitsstorage ; thehostownseverythingaroundit . Eachrowpairsaguaranteewiththeworkitleaves . From spec §2.2, §5.2, §11.3, §13, README § Storage , andsrc / harness / types . ts .",
    "page": 168,
    "zh_caption": "Harness 保证的是它存储中已提交的东西；它周边的一切都归宿主所有。每一行都把一项保证与它留下的工作配在一起。出自 spec §2.2、§5.2、§11.3、§13、README §Storage 与 `src/harness/types.ts`。"
   },
@@ -483,12 +762,14 @@
    "type": "chapter-title",
    "text": "1 0 . 3 Limits and non-goals",
    "page": 168,
+   "_y": 57.4,
    "zh": "10.3 边界与非目标"
   },
   {
    "type": "lede",
    "text": "Pi Durable guarantees what happens inside one process and one storage; supervision, identity, backups and remote exactly-once are the host’s to build.",
    "page": 168,
+   "_y": 106.2,
    "zh": "Pi Durable 保证的是发生在一个进程、一个存储之内的事情；监管、身份、备份和远端恰好一次，都由宿主自己去建。"
   },
   {
@@ -500,12 +781,14 @@
    "type": "small",
    "text": "The Harness guarantees what is committed in its storage; the host owns everything around it. Each row pairs a guarantee with the work it leaves. From spec §2.2, §5.2, §11.3, §13, README §Storage, and src/harness/types.ts.",
    "page": 168,
+   "_y": 509.7,
    "zh": "Harness 保证的是它存储中已提交的东西；它周边的一切都归宿主所有。每一行都把一项保证与它留下的工作配在一起。出自 spec §2.2、§5.2、§11.3、§13、README §Storage 与 `src/harness/types.ts`。"
   },
   {
    "type": "h2",
    "text": "What the spec rules out",
    "page": 168,
+   "_y": 549.7,
    "zh": "规范排除在外的东西"
   },
   {
@@ -529,15 +812,132 @@
    "zh": "没有强制终止。一个忽略自己中止信号的工具无法在进程内被停下；`close()` 会等它。把该次调用的 context 传给每一个 await。"
   },
   {
-   "type": "small",
-   "text": "whole-Session DOM no single observable tree of everything; observe a conversation view, a document or the task graph (8.2 (p. 129)) visible-undurable publication no fast path for uncommitted progress; partials appear at commit cadence (6.2 (p. 88)) Session-kernel semantic event journal agent events are derived from commits, not stored (8.3 (p. 133)) session-scoped rewindable documents rewindable exists only for conversation scope (4.1 (p. 50)) automatic checkpoint heuristic a document stores a base only when checkpointWhen() says so (4.3 (p. 56)) automatic third-party view mounting the view mounts the built-in documents only; read yours with snapshot(), documentState() or watchDoc() CRDT/offline multi-writer merge one writer per storage; no merge of concurrent histories SQL translation of Chord operations SQLite stores operations as records, not as SQL updates (9.2 (p. 144)) JSONL global compaction or repair main.jsonl only grows; corruption fails the open (9.3 (p. 148)) compatibility with removed Pico prototypes no migration path from earlier internal prototypes forced termination of extension code a handler that ignores its signal cannot be killed in-process; close waits for it",
+   "type": "table-row",
    "page": 169,
-   "zh": "整个 Session 的 DOM｜没有一棵包含全部内容的可观察树；去观察会话视图、文档或任务图（8.2（p. 129））。可见但未持久的发布｜未提交进度没有快速通道；片段按提交节奏出现（6.2（p. 88））。Session 内核的语义事件日志｜agent 事件由提交推导而来，不被存储（8.3（p. 133））。会话作用域的可回溯文档｜可回溯只对 conversation 作用域存在（4.1（p. 50））。自动检查点启发式｜文档只在 `checkpointWhen()` 这么说时才存基线（4.3（p. 56））。自动挂载第三方视图｜视图只挂载内置文档；你自己的要用 `snapshot()`、`documentState()` 或 `watchDoc()` 读。CRDT／离线多写者合并｜每个存储一个写者；不合并并发的历史。把 Chord 操作翻译成 SQL｜SQLite 把操作存为记录，而不是 SQL 更新（9.2（p. 144））。JSONL 的全局压缩或修复｜main.jsonl 只会增长；一旦损坏，打开就会失败（9.3（p. 148））。与已移除的 Pico 原型的兼容性｜没有从更早的内部原型迁移的路径。强制终止扩展代码｜一个忽略自己信号的处理器无法在进程内被杀掉；close 会等它。"
+   "_y": 83.3,
+   "cells": [
+    "whole-Session DOM no single observable tree of everything; observe a conversation view, a document or the task graph (8.2 (p. 129))"
+   ],
+   "is_header": false,
+   "_sig": "whole",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 100.5,
+   "cells": [
+    "visible-undurable publication no fast path for uncommitted progress; partials appear at commit cadence (6.2 (p. 88))"
+   ],
+   "is_header": false,
+   "_sig": "visible",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 117.0,
+   "cells": [
+    "Session-kernel semantic event journal agent events are derived from commits, not stored (8.3 (p. 133))"
+   ],
+   "is_header": false,
+   "_sig": "Session",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 134.3,
+   "cells": [
+    "session-scoped rewindable documents rewindable exists only for conversation scope (4.1 (p. 50))"
+   ],
+   "is_header": false,
+   "_sig": "session",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 150.6,
+   "cells": [
+    "automatic checkpoint heuristic a document stores a base only when checkpointWhen() says so (4.3 (p. 56))"
+   ],
+   "is_header": false,
+   "_sig": "automatic",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 167.1,
+   "cells": [
+    "automatic third-party view mounting the view mounts the built-in documents only; read yours with snapshot(), documentState() or watchDoc()"
+   ],
+   "is_header": false,
+   "_sig": "automatic",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 193.7,
+   "cells": [
+    "CRDT/offline multi-writer merge one writer per storage; no merge of concurrent histories"
+   ],
+   "is_header": false,
+   "_sig": "CRDT",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 211.5,
+   "cells": [
+    "SQL translation of Chord operations SQLite stores operations as records, not as SQL updates (9.2 (p. 144))"
+   ],
+   "is_header": false,
+   "_sig": "SQL",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 228.6,
+   "cells": [
+    "JSONL global compaction or repair main.jsonl only grows; corruption fails the open (9.3 (p. 148))"
+   ],
+   "is_header": false,
+   "_sig": "JSONL",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 245.6,
+   "cells": [
+    "compatibility with removed Pico prototypes",
+    "no migration path from earlier internal prototypes"
+   ],
+   "is_header": false,
+   "_sig": "compatibility",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 169,
+   "_y": 273.0,
+   "cells": [
+    "forced termination of extension code a handler that ignores its signal cannot be killed in-process; close waits for it"
+   ],
+   "is_header": false,
+   "_sig": "forced",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "One storage, one owner",
    "page": 169,
+   "_y": 303.7,
    "zh": "一个存储，一个所有者"
   },
   {
@@ -549,6 +949,7 @@
    "type": "h2",
    "text": "Effects belong to the systems that perform them",
    "page": 169,
+   "_y": 561.0,
    "zh": "效果属于执行它们的系统"
   },
   {
@@ -560,6 +961,7 @@
    "type": "h2",
    "text": "Original Pi sessions and Pi Durable",
    "page": 170,
+   "_y": 75.0,
    "zh": "原始 Pi session 与 Pi Durable"
   },
   {
@@ -568,58 +970,150 @@
    "zh": "Pi Durable「并不取代 Pi 编码智能体。它是一个用来构建任何智能体应用的框架，编码智能体也包含在内」earendil.com/posts/pi-durable。编码智能体保留自己的 session 文件。表格为已经了解前者的读者比较这两种记录模型（Pi Durable 的用途（p. 10））。"
   },
   {
-   "type": "small",
-   "text": "Storage one JSONL file per session under ~/.pi/agent/sessions/ Memory, one SQLite file, or a JSONL directory with sidecars",
-   "page": 170,
-   "zh": "存储｜`~/.pi/agent/sessions/` 下每个 session 一个 JSONL 文件｜内存、一个 SQLite 文件，或一个带 sidecar 的 JSONL 目录。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "History shape a tree in one file; the leaf is the current position conversations; a fork is a new conversation capped at parent.at",
-    "Branching /tree in place; /fork, /clone write new files fork(entryId) in the same storage, with document fork policies"
-   ],
-   "page": 170
-  },
-  {
-   "type": "small",
-   "text": "Write unit one appended line per entry, file first written once a user or assistant message exists one atomic commit across entries, tasks, submissions and documents System prompt system messages patching sections, toolsAdded/toolsRemoved pi.system entries with the same positional contract",
-   "page": 170,
-   "zh": "写入单位｜每个条目追加一行，文件在出现第一条 user 或 assistant 消息时才首次写入｜跨条目、任务、提交项和文档的一次原子提交。system 提示词｜用 system 消息给片段打补丁，`toolsAdded`／`toolsRemoved`｜具有相同位置契约的 `pi.system` 条目。"
-  },
-  {
-   "type": "code",
-   "lines": [],
-   "page": 170
-  },
-  {
-   "type": "small",
-   "text": "Compaction compaction entry: summary, firstKeptEntryId, system checkpoint pi.compaction entry whose head is the first kept entry",
-   "page": 170,
-   "zh": "压缩｜compaction 条目：`summary`、`firstKeptEntryId`、system 检查点｜`pi.compaction` 条目，其头指针是第一个保留的条目。"
-  },
-  {
-   "type": "small",
-   "text": "Context edits context_edit entry with targetId and replacement edits on an entry: omit or replace model_change, thinking_level_change entries fields of the rewindable pi.agent document Model and thinking Extension state custom entries with customType and data typed documents with scope, history and fork policy steering and follow-ups in memory; abort returns them to the editor durable submissions in pi.inbox, deduplicated by requestId Queued messages Work in flight no entry type records a running response or tool call pi.generation and pi.tool tasks with checkpoints",
-   "page": 170,
-   "zh": "上下文编辑｜带 `targetId` 和替换内容的 `context_edit` 条目｜对某个条目的编辑：省略或替换。模型与思考｜`model_change`、`thinking_level_change` 条目｜可回溯的 `pi.agent` 文档的字段。扩展状态｜带 `customType` 和 `data` 的自定义条目｜带 scope、history 和 fork 策略的类型化文档。排队的消息｜转向与后续项放在内存里；中止把它们退回编辑器｜`pi.inbox` 里持久的提交项，按 `requestId` 去重。进行中的工作｜没有任何条目类型记录运行中的响应或工具调用｜带检查点的 `pi.generation` 与 `pi.tool` 任务。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Left: coding-agent docs and src/core/session-manager.ts. Right: src/types.ts, src/entries.ts and spec §2–§8."
-   ],
-   "page": 170
-  },
-  {
    "type": "p",
    "text": "The two designs share the transcript ideas: append-only entries, positional system deltas, summaries that keep the original entries. They differ in what a write means. A Pi session line records that something happened. A Pi Durable commit records state that is allowed to be seen, including work that has not finished yet.",
    "zh": "两种设计共享记录方面的想法：只追加的条目、位置化的 system 增量、保留原始条目的摘要。不同之处在于一次写入意味着什么。Pi session 的一行记录某件事发生了。Pi Durable 的一次提交记录被允许看到的状态，包括尚未完成的工作。"
   },
   {
+   "type": "table-row",
+   "page": 170,
+   "_y": 165.6,
+   "cells": [
+    "Storage one JSONL file per session under ~/.pi/agent/sessions/ Memory, one SQLite file, or a JSONL directory with sidecars"
+   ],
+   "is_header": false,
+   "_sig": "Storage",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 182.3,
+   "cells": [
+    "History shape a tree in one file; the leaf is the current position conversations; a fork is a new conversation capped at parent.at"
+   ],
+   "is_header": false,
+   "_sig": "History",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 209.9,
+   "cells": [
+    "Branching /tree in place; /fork, /clone write new files fork(entryId) in the same storage, with document fork policies"
+   ],
+   "is_header": false,
+   "_sig": "Branching",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 237.0,
+   "cells": [
+    "Write unit one appended line per entry, file first written once a user or assistant message exists",
+    "one atomic commit across entries, tasks, submissions and documents"
+   ],
+   "is_header": false,
+   "_sig": "Write",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 264.6,
+   "cells": [
+    "System prompt system messages patching sections, toolsAdded/toolsRemoved pi.system entries with the same positional contract"
+   ],
+   "is_header": false,
+   "_sig": "System",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 281.1,
+   "cells": [
+    "Compaction compaction entry: summary, firstKeptEntryId, system checkpoint pi.compaction entry whose head is the first kept entry"
+   ],
+   "is_header": false,
+   "_sig": "Compaction",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 298.4,
+   "cells": [
+    "Context edits context_edit entry with targetId and replacement edits on an entry: omit or replace"
+   ],
+   "is_header": false,
+   "_sig": "Context",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 315.4,
+   "cells": [
+    "Model and thinking",
+    "model_change, thinking_level_change entries fields of the rewindable pi.agent document"
+   ],
+   "is_header": false,
+   "_sig": "Model",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 342.0,
+   "cells": [
+    "Extension state custom entries with customType and data typed documents with scope, history and fork policy"
+   ],
+   "is_header": false,
+   "_sig": "Extension",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 359.6,
+   "cells": [
+    "Queued messages",
+    "steering and follow-ups in memory; abort returns them to the editor durable submissions in pi.inbox, deduplicated by requestId"
+   ],
+   "is_header": false,
+   "_sig": "Queued",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 386.1,
+   "cells": [
+    "Work in flight no entry type records a running response or tool call pi.generation and pi.tool tasks with checkpoints"
+   ],
+   "is_header": false,
+   "_sig": "Work",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 170,
+   "_y": 403.0,
+   "cells": [
+    "Left: coding-agent docs and src/core/session-manager.ts. Right: src/types.ts, src/entries.ts and spec §2–§8."
+   ],
+   "is_header": false,
+   "_sig": "Left",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "What to build yourself",
    "page": 170,
+   "_y": 485.2,
    "zh": "需要你自己动手的部分"
   },
   {
@@ -632,7 +1126,355 @@
    "lines": [
     "Sources: spec §2.2, §5.2, §11.3, §13; README §Storage; CHANGELOG 1.0.3; research/capture/crash-reopen-tasks.txt; coding-agent docs/session-format.md, src/core/session-manager.ts; earendil.com/posts/pi-durable"
    ],
-   "page": 170
+   "page": 170,
+   "_y": 714.6
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 194.3,
+   "cells": [
+    "a settings getter every use at the next decision; nothing is written"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 210.6,
+   "cells": [
+    "configure() model, tools, sections before each model request at the next request; the current one keeps its prompt"
+   ],
+   "is_header": false,
+   "_sig": "configure",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 227.1,
+   "cells": [
+    "configure({ cwd }) env() at each use at the next tool call, even one the model already made"
+   ],
+   "is_header": false,
+   "_sig": "configure",
+   "zh": "`configure()` 的 model、tools、sections｜每次模型请求之前｜下一次请求时生效；当前的请求保留自己的提示词。`configure({ cwd })`｜"
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 244.5,
+   "cells": [
+    "installing or replacing an extension each phase start, request and call at the next phase; a running call finishes on the old code"
+   ],
+   "is_header": false,
+   "_sig": "installing",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 259.7,
+   "cells": [
+    "a process restart after you reinstall stored names bind to the newly installed code"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 279.0,
+   "cells": [
+    "From spec §2.2, README §Per-Conversation Agent and §Reload, and run 31: a call running during a reload prints v1, the next prints v2, and a restarted process"
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 289.0,
+   "cells": [
+    "offers no tools until it installs the extension (reload while running (p. 118))."
+   ],
+   "is_header": false,
+   "_sig": "offers",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 324.1,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 337.3,
+   "cells": [
+    "Put code in the registry, shared policy in settings, and per-conversation choices in pi.agent."
+   ],
+   "is_header": false,
+   "_sig": "Put",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 352.3,
+   "cells": [
+    "Anything else a conversation must remember across restarts goes in your own document."
+   ],
+   "is_header": false,
+   "_sig": "Anything",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 367.3,
+   "cells": [
+    "Install every extension before reopening; stored names are useless without their code."
+   ],
+   "is_header": false,
+   "_sig": "Install",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 403.4,
+   "cells": [
+    "Sources: ex 26–31; run 26–31; src/harness/agent.ts (resolveSettings, resolveAgent, selectExtensions); src/harness/registry.ts;"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 162,
+   "_y": 414.0,
+   "cells": [
+    "src/harness/tool.ts:253; src/tools/index.ts; src/tools/bash.ts; src/tools/env.ts; spec §2.2, §7.1; README §Tools, §Per-Conversation Agent, §Settings, §Environment, §Reload"
+   ],
+   "is_header": true,
+   "_sig": "src",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 83.6,
+   "cells": [
+    "Include guards in every list an explicit extension list that leaves out a permissions extension runs without it",
+    "include guards in every list"
+   ],
+   "is_header": false,
+   "_sig": "Include",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 110.9,
+   "cells": [
+    "Edits replace copied lists { add, remove } on a child that copied a list starts from the host default instead",
+    "build the full list from the resolved agent"
+   ],
+   "is_header": false,
+   "_sig": "Edits",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 138.0,
+   "cells": [
+    "Copies happen once later changes to the parent never reach a task-owned child configure the child directly"
+   ],
+   "is_header": false,
+   "_sig": "Copies",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 154.0,
+   "cells": [
+    "a rerun after a crash builds its environment from the current cwd do not assume the first attempt’s directory"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 155.3,
+   "cells": [
+    "Reruns use today’s directory (9.5 (p. 155))"
+   ],
+   "is_header": false,
+   "_sig": "Reruns",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 182.6,
+   "cells": [
+    "Default changes cost cache (7.5 (p. 115))",
+    "changing settings or installs adds pi.system entries and misses the prompt cache",
+    "expect one system change and one cache miss per change"
+   ],
+   "is_header": false,
+   "_sig": "Default",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 209.6,
+   "cells": [
+    "Keep prompt text stable (7.5 (p. 115))",
+    "a section that embeds the time changes every request and defeats caching",
+    "render only real changes"
+   ],
+   "is_header": false,
+   "_sig": "Keep",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 235.7,
+   "cells": [
+    "Dispose late (7.6 (p. 118)) freeing resources at uninstall breaks calls still running dispose after running calls end"
+   ],
+   "is_header": false,
+   "_sig": "Dispose",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 255.0,
+   "cells": [
+    "Rows paraphrase spec §12 in its order within each group; “Do instead” is the spec’s own fix where it gives one."
+   ],
+   "is_header": false,
+   "_sig": "Rows",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 284.3,
+   "cells": [
+    "N O S A F E T Y N E T"
+   ],
+   "is_header": true,
+   "_sig": "N",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 297.0,
+   "cells": [
+    "Almost none of this is checked at runtime. The registry only checks section keys and that tool names are unique within one extension"
+   ],
+   "is_header": false,
+   "_sig": "Almost",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 309.0,
+   "cells": [
+    "src/harness/registry.ts. Reserved names, kind collisions and immutability are up to your tests and review."
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": "这其中几乎没有任何一项在运行时被检查。注册表只检查片段键，以及工具名在同一个扩展内是否唯一 `src/harness/registry.ts`。保留名、kind 冲突和不可变性都靠你的测试与评审。"
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 351.1,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 364.3,
+   "cells": [
+    "Three questions catch most of these in code review. A yes to any is a bug, even if every test passes, because it shows only under load, concurrency or a crash."
+   ],
+   "is_header": false,
+   "_sig": "Three",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 397.3,
+   "cells": [
+    "Does any await inside a commit callback leave the process?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 410.8,
+   "cells": [
+    "Does any code write to a conversation whose run it does not own?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 425.1,
+   "cells": [
+    "Does any consumer change a value it read, or depend on seeing every update?"
+   ],
+   "is_header": false,
+   "_sig": "Does",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 167,
+   "_y": 461.9,
+   "cells": [
+    "Sources: spec §12, §6, §4; src/harness/generation.ts (prepare); src/harness/registry.ts (validateExtension); src/session/observation.ts (MAX_PENDING_WATCH_FRAMES); README §Busy Conversations; test/harness-inbox.test.ts; test/harness-view.test.ts; research/capture/task-transitions.txt and NOTES.md §6"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
   }
  ]
 }

@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 4 Documents",
    "page": 49,
+   "_y": 83.8,
    "zh": "文档"
   },
   {
    "type": "h2",
    "text": "Typed JSON state committed with the transcript, stored as Chord operations and occasional complete bases.",
    "page": 49,
+   "_y": 154.8,
    "zh": "与记录一同提交的类型化 `JSON` 状态，存成 `Chord` 操作以及偶尔出现的完整基线。"
   },
   {
    "type": "chapter-title",
    "text": "4 . 1 Defining a document",
    "page": 50,
+   "_y": 57.4,
    "zh": "4.1 定义文档"
   },
   {
    "type": "lede",
    "text": "A definition is a typed token that fixes a document’s kind, version, owner and fork behaviour, and the stored record remembers every one of those choices.",
    "page": 50,
+   "_y": 106.2,
    "zh": "定义是一个带类型的词元，它固定文档的 kind、version、所有者和 fork 行为，而存储下来的记录会记住其中每一项选择。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "small",
    "text": "a per-conversation todo list README §Your Own State TS",
    "page": 50,
+   "_y": 286.9,
    "zh": "每个会话一份待办清单 `README §Your Own State` `TS`"
   },
   {
@@ -46,15 +51,22 @@
     "initial: () => ({ items: [] }),",
     "});",
     "await root.commit(async (tx) => {",
-    "(await tx.doc(Todos, root.id)).items.push(\"write docs\"); }, context);",
-    "The import line is omitted. \"asOf\" is only allowed together with history: \"rewindable\"; the compiler enforces it."
+    "(await tx.doc(Todos, root.id)).items.push(\"write docs\"); }, context);"
    ],
-   "page": 50
+   "page": 50,
+   "_y": 310.1
+  },
+  {
+   "type": "small",
+   "text": "The import line is omitted. \"asOf\" is only allowed together with history: \"rewindable\"; the compiler enforces it.",
+   "page": 50,
+   "_y": 456.0
   },
   {
    "type": "h2",
    "text": "The definition is a token",
    "page": 50,
+   "_y": 484.5,
    "zh": "定义就是一个词元"
   },
   {
@@ -66,29 +78,115 @@
    "type": "figure",
    "number": "4.1",
    "file": "figures/fig-4.1.png",
-   "title": "THE SEVEN LEGAL SEMANTICS\nT R E E",
-   "caption": "Scope fixes owner and lifetime; only conversation documents choose history and fork. The union DocumentSemantics of src/types.ts; fork results from spec §3.7. The right column names the built-in documents that use a combination.",
+   "title": "THE SEVEN LEGAL SEMANTICS TREE",
+   "caption": "Scopefixesownerandlifetime ; onlyconversationdocumentschoosehistoryandfork . Theunion D o c um e nt Se m a nt ic s ofsrc / types . ts ; forkresults fromspec §3.7. Therightcolumnnamesthebuilt - indocumentsthatuseacombination .",
    "page": 51,
    "zh_caption": "作用域决定所有者与存续期；只有 conversation 文档才选择 history 和 fork。`src/types.ts` 中的联合类型 `DocumentSemantics`；fork 来自 `spec §3.7`。右列列出使用该组合的内置文档。"
   },
   {
-   "type": "small",
-   "text": "kind string The stored name. It is part of the public protocol and cannot be renamed. version positive integer Version of the value’s shape; stored with every change. scope \"session\" · \"conversation\" · \"task\" Who owns it and how long it lives. history \"latest\" · \"rewindable\" Conversation only. Whether old values stay readable. fork \"current\" · \"initial\" · \"asOf\" Conversation only. What a fork’s copy starts with.",
+   "type": "table-row",
    "page": 51,
-   "zh": "`kind` string 存储时使用的名字。它是公开协议的一部分，不能改名。 `version` 正整数 值的形状版本；随每次改动一起存储。 `scope` `\"session\"` · `\"conversation\"` · `\"task\"` 谁拥有它、它存续多久。 `history` `\"latest\"` · `\"rewindable\"` 仅 conversation。旧值是否仍可读。 `fork` `\"current\"` · `\"initial\"` · `\"asOf\"` 仅 conversation。分叉副本从什么开始。"
+   "_y": 83.3,
+   "cells": [
+    "kind string The stored name. It is part of the public protocol and cannot be renamed."
+   ],
+   "is_header": false,
+   "_sig": "kind",
+   "zh": "`kind` string 存储时使用的名字。它是公开协议的一部分，不能改名。"
   },
   {
-   "type": "code",
-   "lines": [
-    "initial() () => T The value of a new document; must be a JSON object.",
-    "migrate? (value, fromVersion) => T Upgrades an older stored value when it is read (4.3 (p. 56)). checkpointWhen? (value, ops, info) => boolean When to store the whole value instead of the edits (4.3 (p. 56)). The definition fields, from src/types.ts (CommonDocDefinition, DocumentSemantics)."
+   "type": "table-row",
+   "page": 51,
+   "_y": 100.5,
+   "cells": [
+    "version positive integer Version of the value’s shape; stored with every change."
    ],
-   "page": 51
+   "is_header": false,
+   "_sig": "version",
+   "zh": "`version` 正整数 值的形状版本；随每次改动一起存储。"
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 116.9,
+   "cells": [
+    "scope \"session\" · \"conversation\" · \"task\" Who owns it and how long it lives."
+   ],
+   "is_header": false,
+   "_sig": "scope",
+   "zh": "`scope` `\"session\"` · `\"conversation\"` · `\"task\"` 谁拥有它、它存续多久。"
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 134.1,
+   "cells": [
+    "history \"latest\" · \"rewindable\" Conversation only. Whether old values stay readable."
+   ],
+   "is_header": false,
+   "_sig": "history",
+   "zh": "`history` 与"
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 150.6,
+   "cells": [
+    "fork \"current\" · \"initial\" · \"asOf\" Conversation only. What a fork’s copy starts with."
+   ],
+   "is_header": false,
+   "_sig": "fork",
+   "zh": "`fork`"
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 167.1,
+   "cells": [
+    "initial() () => T The value of a new document; must be a JSON object."
+   ],
+   "is_header": false,
+   "_sig": "initial",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 184.4,
+   "cells": [
+    "migrate? (value, fromVersion) => T Upgrades an older stored value when it is read (4.3 (p. 56))."
+   ],
+   "is_header": false,
+   "_sig": "migrate",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 200.9,
+   "cells": [
+    "checkpointWhen? (value, ops, info) => boolean When to store the whole value instead of the edits (4.3 (p. 56))."
+   ],
+   "is_header": false,
+   "_sig": "checkpointWhen",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 51,
+   "_y": 219.0,
+   "cells": [
+    "The definition fields, from src/types.ts (CommonDocDefinition, DocumentSemantics)."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Scope, history and fork",
    "page": 51,
+   "_y": 247.5,
    "zh": "作用域、`history` 与 `fork`"
   },
   {
@@ -100,6 +198,7 @@
    "type": "small",
    "text": "Scope fixes owner and lifetime; only conversation documents choose history and fork. The union DocumentSemantics of src/types.ts; fork results from spec §3.7. The right column names the built-in documents that use a combination.",
    "page": 51,
+   "_y": 602.7,
    "zh": "作用域决定所有者与存续期；只有 conversation 文档才选择 history 和 fork。`src/types.ts` 中的联合类型 `DocumentSemantics`；fork 来自 `spec §3.7`。右列列出使用该组合的内置文档。"
   },
   {
@@ -111,6 +210,7 @@
    "type": "h2",
    "text": "Families",
    "page": 52,
+   "_y": 104.7,
    "zh": "文档族"
   },
   {
@@ -122,6 +222,7 @@
    "type": "small",
    "text": "one review document per file docs/pico-v5-chord-usage.md §2 TS",
    "page": 52,
+   "_y": 169.9,
    "zh": "每个文件一份评审文档 `docs/pico-v5-chord-usage.md §2` `TS`"
   },
   {
@@ -133,7 +234,8 @@
     "});",
     "await tx.doc(ReviewDoc, conversationId, review.key, review.seed);"
    ],
-   "page": 52
+   "page": 52,
+   "_y": 193.1
   },
   {
    "type": "p",
@@ -144,6 +246,7 @@
    "type": "h2",
    "text": "The choices are stored",
    "page": 52,
+   "_y": 350.2,
    "zh": "这些选择会被存下来"
   },
   {
@@ -155,6 +258,7 @@
    "type": "small",
    "text": "State that describes the transcript, like a plan: rewindable + asOf, so a fork from an old entry sees the matching plan. Example 27’s app.plan and the built-in pi.agent do this. State that belongs to the user, like a draft: current, so a fork takes it as it is now docs/pico-v5-chord-usage.md §2. State that belongs to one branch, like a sandbox or spend: initial. A copied spend counter would count twice, so “a fork starts at zero” spec §8.6. Treat kind, scope, history and fork as permanent. Only the value’s shape can evolve, through version and migrate().",
    "page": 52,
+   "_y": 463.2,
    "zh": "描述记录（transcript）的状态，比如计划：`rewindable` + `asOf`，这样从旧条目分叉出来的副本看到的正是那份计划。示例 27 的 `app.plan` 和内置的 `pi.agent` 就是这样。属于用户的状态，比如草稿：`current`，这样分叉会按它现在的样子复制 `docs/pico-v5-chord-usage.md §2`。只属于某个分支的状态，比如沙箱或开销：`initial`。复制一份开销计数器会重复计数，所以要「分叉从零开始」 `spec §8.6`。把 kind、scope、history 和 fork 当作永久不变。只有值的形状可以演进，靠 version 和 `migrate()`。"
   },
   {
@@ -162,14 +266,15 @@
    "lines": [
     "Sources: src/documents.ts; src/types.ts; spec §1, §3.1, §3.2, §3.3, §3.7, §8.6, §12; README §Your Own State; docs/pico-v5-chord-usage.md §2; ex 02, ex 27; run 02; research/capture/extra-p4/documents.txt (test/capture-p4-documents.ts)"
    ],
-   "page": 52
+   "page": 52,
+   "_y": 571.4
   },
   {
    "type": "figure",
    "number": "4.2",
    "file": "figures/fig-4.2.png",
-   "title": "THE FIRST TX.DOC() OF A NEW DOCUMENT\nS E Q U E N C E",
-   "caption": "Creation is a write: the first tx.doc() of a missing document stores its whole value in that commit. From src/session/transaction.ts; ID 4, seq 2 and the value are from research/capture/extra-p4/documents.txt.",
+   "title": "THE FIRST TX . DOC () OF A NEW DOCUMENT SEQUENCE",
+   "caption": "Creationisawrite : thefirsttx . doc () ofamissingdocumentstoresitswholevalueinthatcommit . Fromsrc / session / transaction . ts ; ID 4, seq 2 andthe valuearefromresearch / capture / extra - p 4/ documents . txt .",
    "page": 53,
    "zh_caption": "创建是一次写入：对不存在文档的第一次 `tx.doc()` 会在那次提交里存下它的整个值。来自 `src/session/transaction.ts`；ID 4、seq 2 和该值取自 `research/capture/extra-p4/documents.txt`。"
   },
@@ -177,12 +282,14 @@
    "type": "chapter-title",
    "text": "4 . 2 Access, creation and lifetimes",
    "page": 53,
+   "_y": 57.4,
    "zh": "4.2 访问、创建与存续期"
   },
   {
    "type": "lede",
    "text": "Only tx.doc() creates a document; every read returns undefined for one that does not exist, and scope decides what ends a document’s life.",
    "page": 53,
+   "_y": 105.9,
    "zh": "只有 `tx.doc()` 会创建文档；任何读取对不存在的文档都返回 `undefined`，而作用域决定文档的存续期何时结束。"
   },
   {
@@ -194,25 +301,13 @@
    "type": "h2",
    "text": "tx.doc() is get-or-create",
    "page": 53,
+   "_y": 207.7,
    "zh": "`tx.doc()` 是 get-or-create"
   },
   {
    "type": "p",
    "text": "Inside a commit, tx.doc() returns a draft: an editable view of the document for this commit only. If the document does not exist yet, the same call creates it. The arguments follow the token’s scope:",
    "zh": "在一次提交内部，`tx.doc()` 返回一个草稿：仅对本次提交有效的文档可编辑视图。如果文档还不存在，同一个调用会把它创建出来。参数取决于词元的 scope："
-  },
-  {
-   "type": "small",
-   "text": "session tx.doc(Doc) tx.doc(Doc, key, seed) conversation tx.doc(Doc, conversationId) tx.doc(Doc, conversationId, key, seed) task tx.doc(Doc, taskId) tx.doc(Doc, taskId, key, seed) The Tx.doc overloads in src/types.ts. Reads take the same owner and key, without the seed, plus a Context.",
-   "page": 53,
-   "zh": "session `tx.doc(Doc)` `tx.doc(Doc, key, seed)`；conversation `tx.doc(Doc, conversationId)` `tx.doc(Doc, conversationId, key, seed)`；task `tx.doc(Doc, taskId)` `tx.doc(Doc, taskId, key, seed)`。以上是 `src/types.ts` 中的 `Tx.doc` 重载。读取传入同样的所有者与 key，不带 seed，外加一个 `Context`。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Creation is a write: the first tx.doc() of a missing document stores its whole value in that commit. From src/session/transaction.ts; ID 4, seq 2 and the value are from research/capture/extra-p4/documents.txt."
-   ],
-   "page": 53
   },
   {
    "type": "p",
@@ -223,8 +318,8 @@
    "type": "figure",
    "number": "4.3",
    "file": "figures/fig-4.3.png",
-   "title": "THREE SCOPES OVER ONE STORAGE\nT I M E L I N E",
-   "caption": "An incarnation lives from its creating commit up to its retiring commit; scope decides what retires it. One SQLite file: a plain Session wrote seq 1–14, then the file was reopened as a Harness for seq 15–19. research/capture/extra-p4/documents.txt and document-publications.txt.",
+   "title": "THREE SCOPES OVER ONE STORAGE TIMELINE",
+   "caption": "Anincarnationlivesfromitscreatingcommituptoitsretiringcommit ; scopedecideswhatretiresit . OneSQLitefile : aplainSessionwroteseq 1–14, thenthefilewasreopenedasaHarnessforseq 15–19. research / capture / extra - p 4/ documents . txtanddocument - publications . txt .",
    "page": 54,
    "zh_caption": "一个化身从创建它的那次提交活到让它退役的那次提交；由作用域决定是什么让它退役。同一个 `SQLite` 文件：一个普通 `Session` 写了 seq 1–14，随后这个文件以 `Harness` 的身份重新打开，写了 seq 15–19。`research/capture/extra-p4/documents.txt` 与 `document-publications.txt`。"
   },
@@ -232,12 +327,14 @@
    "type": "small",
    "text": "tx.doc() on a missing document is a write, even if your code only reads the draft. Use snapshot() to look without creating. A draft kept after its commit is dead: assigning to it “throws: the draft was revoked” spec §3.4.",
    "page": 54,
+   "_y": 128.2,
    "zh": "对不存在的文档调用 `tx.doc()` 就是一次写入，即使你的代码只是读那个草稿。想只看而不创建，就用 `snapshot()`。提交之后仍留着的草稿已经死了：往它赋值会「抛出：草稿已被撤销」 `spec §3.4`。"
   },
   {
    "type": "h2",
    "text": "Reads never create",
    "page": 54,
+   "_y": 179.2,
    "zh": "读取从不创建"
   },
   {
@@ -246,20 +343,70 @@
    "zh": "对不存在的文档，「快照、状态和观察查询都返回 `undefined`」 `spec §12`。把 `undefined` 当作默认值。在示例 11 中，待办清单缺失时某个提示词小节什么都不显示，而工具的 `tx.doc()` 在第一次写入时创建这份清单 `ex 11`。"
   },
   {
-   "type": "small",
-   "text": "snapshot() the current value snapshotAsOf() the value when an entry was written; rewindable documents only documentState() a read-only live state (8.1 (p. 125)) watchDoc() a stream of committed changes (8.2 (p. 129)) The read methods. snapshot() and snapshotAsOf() are available on the Session, the Harness, tasks, tools and hooks (src/types.ts, src/harness/types.ts).",
-   "page": 54,
-   "zh": "`snapshot()` 当前值；`snapshotAsOf()` 某个条目写入时的值，仅可回溯的文档可用；`documentState()` 只读的实时状态（8.1（p. 125））；`watchDoc()` 已提交改动的流（8.2（p. 129））。以上是读取方法。`snapshot()` 和 `snapshotAsOf()` 在 `Session`、`Harness`、任务、工具和钩子上都可用（`src/types.ts`、`src/harness/types.ts`）。"
-  },
-  {
    "type": "p",
    "text": "A snapshot is shared, not copied, and it is not frozen. If your code changes it, later readers see the change spec §3.4. Copy it before you modify it.",
    "zh": "快照是共享的，不是副本，而且它不是冻结的。如果你的代码改了它，后来的读者会看到这个改动 `spec §3.4`。修改之前先复制一份。"
   },
   {
+   "type": "table-row",
+   "page": 54,
+   "_y": 269.9,
+   "cells": [
+    "snapshot() the current value"
+   ],
+   "is_header": false,
+   "_sig": "snapshot",
+   "zh": "`snapshot()` 当前值；"
+  },
+  {
+   "type": "table-row",
+   "page": 54,
+   "_y": 286.4,
+   "cells": [
+    "snapshotAsOf() the value when an entry was written; rewindable documents only"
+   ],
+   "is_header": false,
+   "_sig": "snapshotAsOf",
+   "zh": "`snapshotAsOf()` 某个条目写入时的值，仅可回溯的文档可用；"
+  },
+  {
+   "type": "table-row",
+   "page": 54,
+   "_y": 303.6,
+   "cells": [
+    "documentState() a read-only live state (8.1 (p. 125))"
+   ],
+   "is_header": false,
+   "_sig": "documentState",
+   "zh": "`documentState()` 只读的实时状态（8.1（p. 125））；"
+  },
+  {
+   "type": "table-row",
+   "page": 54,
+   "_y": 320.1,
+   "cells": [
+    "watchDoc() a stream of committed changes (8.2 (p. 129))"
+   ],
+   "is_header": false,
+   "_sig": "watchDoc",
+   "zh": "`watchDoc()` 已提交改动的流（8.2（p. 129））。以上是读取方法。`snapshot()` 和 `snapshotAsOf()` 在"
+  },
+  {
+   "type": "table-row",
+   "page": 54,
+   "_y": 338.3,
+   "cells": [
+    "The read methods. snapshot() and snapshotAsOf() are available on the Session, the Harness, tasks, tools and hooks (src/types.ts, src/harness/types.ts)."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "What ends a document",
    "page": 54,
+   "_y": 405.0,
    "zh": "什么会终结一个文档"
   },
   {
@@ -272,7 +419,8 @@
    "lines": [
     "An incarnation lives from its creating commit up to its retiring commit; scope decides what retires it. One SQLite file: a plain Session wrote seq 1–14, then the file was reopened as a Harness for seq 15–19. research/capture/extra-p4/documents.txt and document-publications.txt."
    ],
-   "page": 54
+   "page": 54,
+   "_y": 668.0
   },
   {
    "type": "p",
@@ -283,6 +431,7 @@
    "type": "h2",
    "text": "Documents every conversation gets",
    "page": 55,
+   "_y": 162.7,
    "zh": "每个 conversation 都会得到的文档"
   },
   {
@@ -294,6 +443,7 @@
    "type": "small",
    "text": "Use snapshot() to look, tx.doc() to change. Handle undefined from every read; it means “not created yet” or “retired”. Anything that must outlive a task goes into its result, an entry or a longer-lived document, in the task’s final commit spec §12. Kinds starting with pi. belong to the Harness. Nothing enforces it, but reusing one collides with Harness behaviour spec §12.",
    "page": 55,
+   "_y": 291.6,
    "zh": "查看用 `snapshot()`，修改用 `tx.doc()`。每次读取返回的 `undefined` 都要处理；它意味着「尚未创建」或「已退役」。任何必须比任务活得更久的东西，都放进它的结果、一个条目或一份存续期更长的文档，在任务的最后一次提交中完成 `spec §12`。以 `pi.` 开头的 kind 属于 `Harness`。没有任何机制强制这一点，但复用其中一个会与 `Harness` 的行为冲突 `spec §12`。"
   },
   {
@@ -301,18 +451,21 @@
    "lines": [
     "Sources: src/session/transaction.ts (doc, retireDoc); src/session/session.ts; src/types.ts (Tx.doc, DocumentReader); src/harness/harness.ts (conversationCreated); src/harness/types.ts (HarnessOptions); spec §2.2, §3.2–3.4, §12; ex 11; research/capture/extra-p4/documents.txt, document-publications.txt (test/capture-p4-documents.ts)"
    ],
-   "page": 55
+   "page": 55,
+   "_y": 373.4
   },
   {
    "type": "chapter-title",
    "text": "4 . 3 Bases, deltas and migrations",
    "page": 56,
+   "_y": 57.4,
    "zh": "4.3 基线、增量与迁移"
   },
   {
    "type": "lede",
    "text": "Storage keeps a document as occasional bases, whole copies of the value, plus the small edits between them; your definition decides when to write a base.",
    "page": 56,
+   "_y": 106.2,
    "zh": "`Storage` 把一个文档保存为偶尔出现的基线，也就是值的完整副本，加上它们之间的少量编辑；何时写基线由你的定义决定。"
   },
   {
@@ -324,6 +477,7 @@
    "type": "h2",
    "text": "Two kinds of record",
    "page": 56,
+   "_y": 237.7,
    "zh": "两种记录"
   },
   {
@@ -335,6 +489,7 @@
    "type": "small",
    "text": "document_revisions after five commits research/capture/extra-p4/documents.txt TEXT document_id seq kind version content 4 2 base 1 {\"items\":[\"write docs\"]} 4 3 delta 1 [[\"p\",[\"items\"],1,0,[\"fix build\"]]] 4 4 delta 1 [[\"p\",[\"items\"],2,0,[\"ship\"]]] 4 5 base 1 {\"items\":[\"fix build\",\"ship\"]} 4 6 delta 1 [[\"p\",[\"items\"],2,0,[\"celebrate\"]]]",
    "page": 56,
+   "_y": 428.6,
    "zh": "五次提交之后的 `document_revisions` `research/capture/extra-p4/documents.txt` TEXT `document_id` `seq` `kind` `version` `content` 4 2 base 1 `{\"items\":[\"write docs\"]}` 4 3 delta 1 `[[\"p\",[\"items\"],1,0,[\"fix build\"]]]` 4 4 delta 1 `[[\"p\",[\"items\"],2,0,[\"ship\"]]]` 4 5 base 1 `{\"items\":[\"fix build\",\"ship\"]}` 4 6 delta 1 `[[\"p\",[\"items\"],2,0,[\"celebrate\"]]]`"
   },
   {
@@ -342,12 +497,14 @@
    "lines": [
     "5 5 base 1 {\"text\":\"Dear team, we shipped.\"}"
    ],
-   "page": 56
+   "page": 56,
+   "_y": 517.8
   },
   {
    "type": "small",
    "text": "5 6 delta 1 [[\"s\",[\"text\"],\"Done.\"]] SQLite rows, one per stored change. \"p\" is an array splice (path, index, delete count, items) and \"s\" sets a value.",
    "page": 56,
+   "_y": 529.1,
    "zh": "5 6 delta 1 `[[\"s\",[\"text\"],\"Done.\"]]` `SQLite` 行，每次存储改动一行。`\"p\"` 是数组拼接操作（路径、索引、删除数量、元素），`\"s\"` 则是设置一个值。"
   },
   {
@@ -359,8 +516,8 @@
    "type": "figure",
    "number": "4.4",
    "file": "figures/fig-4.4.png",
-   "title": "A DOCUMENT’S RECORDS OVER COMMIT SEQUENCE\nA N A T O M Y",
-   "caption": "A read starts at the newest base and replays the deltas after it; only rewindable documents keep older records. Rows from research/capture/extra-p4/documents.txt. Seq 7 is a fork, which wrote nothing for ID 4; seq 8 and 9 come from the migration below.",
+   "title": "A DOCUMENT ’ S RECORDS OVER COMMIT SEQUENCE ANATOMY",
+   "caption": "Areadstartsatthenewestbaseandreplaysthedeltasa ft erit ; onlyrewindabledocumentskeepolderrecords . Rowsfromresearch / capture / extra - p 4/ documents . txt . Seq 7 isafork , whichwrotenothingforID 4; seq 8 and 9 comefromthemigrationbelow .",
    "page": 57,
    "zh_caption": "一次读取从最新的基线开始，重放它之后的增量；只有可回溯的文档保留更早的记录。行取自 `research/capture/extra-p4/documents.txt`。Seq 7 是一次分叉，对 ID 4 什么都没写；seq 8 和 9 来自下面的迁移。"
   },
@@ -368,12 +525,14 @@
    "type": "small",
    "text": "A read starts at the newest base and replays the deltas after it; only rewindable documents keep older records. Rows from research/capture/extra-p4/documents.txt. Seq 7 is a fork, which wrote nothing for ID 4; seq 8 and 9 come from the migration below.",
    "page": 57,
+   "_y": 293.8,
    "zh": "一次读取从最新的基线开始，重放它之后的增量；只有可回溯的文档保留更早的记录。行取自 `research/capture/extra-p4/documents.txt`。Seq 7 是一次分叉，对 ID 4 什么都没写；seq 8 和 9 来自下面的迁移。"
   },
   {
    "type": "h2",
    "text": "The checkpoint predicate",
    "page": 57,
+   "_y": 335.2,
    "zh": "检查点谓词"
   },
   {
@@ -390,12 +549,14 @@
    "type": "small",
    "text": "Without checkpointWhen, a document stores one base at creation and deltas forever. Reads get slower and storage “can grow without bound while the document is live” spec §12. Storage never takes a base on its own spec §3.5.",
    "page": 57,
+   "_y": 492.7,
    "zh": "没有 `checkpointWhen`，一个文档在创建时存一个基线，之后永远只存增量。读取会越来越慢，存储「在文档存活期间可以无界增长」 `spec §12`。`Storage` 从不自己取基线 `spec §3.5`。"
   },
   {
    "type": "h2",
    "text": "What a base lets storage delete",
    "page": 57,
+   "_y": 542.2,
    "zh": "一个基线让存储可以删除什么"
   },
   {
@@ -412,6 +573,7 @@
    "type": "h2",
    "text": "Versions and migrations",
    "page": 57,
+   "_y": 673.5,
    "zh": "版本与迁移"
   },
   {
@@ -423,16 +585,10 @@
    "type": "figure",
    "number": "4.5",
    "file": "figures/fig-4.5.png",
-   "title": "WHAT A FORK COPIES\nS T R U C T U R E",
-   "caption": "A fork copies each conversation document by its own policy, into a new incarnation with one base. IDs, sequences and values from research/capture/extra-p4/documents.txt; the policies are those of spec §3.7.",
+   "title": "WHAT A FORK COPIES STRUCTURE",
+   "caption": "Aforkcopieseachconversationdocumentbyitsownpolicy , intoanewincarnationwithonebase . IDs , sequencesandvaluesfrom research / capture / extra - p 4/ documents . txt ; thepoliciesarethoseofspec §3.7.",
    "page": 58,
    "zh_caption": "一次分叉按各文档自己的策略复制每个 conversation 文档，复制到一个只有单个基线的新化身里。ID、序号和值取自 `research/capture/extra-p4/documents.txt`；策略出自 `spec §3.7`。"
-  },
-  {
-   "type": "small",
-   "text": "same as the token’s the value is used as stored older, token has migrate migrate(value, storedVersion) returns the current shape older, no migrate throws requires migration from version 1 newer than the token’s throws has newer version 2 than 1 From src/documents.ts and spec §3.6.",
-   "page": 58,
-   "zh": "与词元的相同 按存储原样使用该值；更旧，词元有 `migrate`：`migrate(value, storedVersion)` 返回当前形状；更旧，没有 `migrate`：抛出，需要从 version 1 迁移；比词元更新：抛出 `has newer version 2 than 1`。来自 `src/documents.ts` 与 `spec §3.6`。"
   },
   {
    "type": "p",
@@ -440,15 +596,70 @@
    "zh": "这次捕获把 `app.todos` 从字符串列表改成了对象列表："
   },
   {
-   "type": "small",
-   "text": "a version-2 token test/capture-p4-documents.ts TS",
+   "type": "table-row",
    "page": 58,
+   "_y": 83.3,
+   "cells": [
+    "same as the token’s the value is used as stored"
+   ],
+   "is_header": false,
+   "_sig": "same",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 58,
+   "_y": 100.4,
+   "cells": [
+    "older, token has migrate migrate(value, storedVersion) returns the current shape"
+   ],
+   "is_header": false,
+   "_sig": "older",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 58,
+   "_y": 116.9,
+   "cells": [
+    "older, no migrate throws requires migration from version 1"
+   ],
+   "is_header": false,
+   "_sig": "older",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 58,
+   "_y": 134.1,
+   "cells": [
+    "newer than the token’s throws has newer version 2 than 1"
+   ],
+   "is_header": false,
+   "_sig": "newer",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 58,
+   "_y": 152.3,
+   "cells": [
+    "From src/documents.ts and spec §3.6."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "small",
+   "text": "a version-2 token test/capture-p4-documents.ts TS const TodosNext = defineDoc<TodosV2>({",
+   "page": 58,
+   "_y": 203.6,
    "zh": "一个 version 2 的词元 `test/capture-p4-documents.ts` `TS`"
   },
   {
    "type": "code",
    "lines": [
-    "const TodosNext = defineDoc<TodosV2>({",
     "kind: \"app.todos\", version: 2,",
     "scope: \"conversation\", history: \"rewindable\", fork: \"asOf\",",
     "initial: () => ({ items: [] }), migrate: (value, fromVersion) => {",
@@ -456,12 +667,14 @@
     "return { items: (value.items as string[]).map((text) => ({ text, done: false })) }; },",
     "});"
    ],
-   "page": 58
+   "page": 58,
+   "_y": 237.3
   },
   {
    "type": "small",
    "text": "Kind, scope, history and fork are unchanged; only the shape and the version move. The capture’s checkpointWhen line is omitted.",
    "page": 58,
+   "_y": 339.7,
    "zh": "kind、scope、history 和 fork 都不变；只有形状和版本动了。这次捕获中的 `checkpointWhen` 一行被略去。"
   },
   {
@@ -473,6 +686,7 @@
    "type": "h2",
    "text": "Forks copy documents",
    "page": 58,
+   "_y": 433.5,
    "zh": "分叉会复制文档"
   },
   {
@@ -481,11 +695,10 @@
    "zh": "在条目 7 处分叉 conversation 2，会按每个文档自己的策略复制它们："
   },
   {
-   "type": "code",
-   "lines": [
-    "A fork copies each conversation document by its own policy, into a new incarnation with one base. IDs, sequences and values from research/capture/extra-p4/documents.txt; the policies are those of spec §3.7."
-   ],
-   "page": 58
+   "type": "small",
+   "text": "A fork copies each conversation document by its own policy, into a new incarnation with one base. IDs, sequences and values from research/capture/extra-p4/documents.txt; the policies are those of spec §3.7.",
+   "page": 58,
+   "_y": 712.2
   },
   {
    "type": "p",
@@ -496,6 +709,7 @@
    "type": "small",
    "text": "Give every long-lived document a checkpointWhen. A delta count, like the spec’s info.deltasSinceBase >= 31, is the simplest rule. Change a document’s shape with a new version and migrate(). Never rename its kind: the new name finds nothing and creates an empty document beside the old one. A rename needs an explicit copy and retirement spec §12. Choose rewindable only when you need old values. It never frees space.",
    "page": 59,
+   "_y": 164.1,
    "zh": "给每个长命的文档都配一个 `checkpointWhen`。增量计数是最简单的规则，比如 spec 里的 `info.deltasSinceBase >= 31`。改变文档形状要用新版本加 `migrate()`。绝不要改它的 kind：新名字找不到任何东西，只会在旧文档旁边创建一个空文档。改名需要显式复制并退役 `spec §12`。只在需要旧值时才选 `rewindable`。它永远不会释放空间。"
   },
   {
@@ -504,24 +718,28 @@
     "Sources: src/types.ts (DocumentContent, CheckpointInfo); src/documents.ts; src/session/transaction.ts; src/session/session.ts (snapshotAsOf); src/session/forks.ts; src/storage/sqlite/storage.ts; spec §3.2, §3.5–3.7, §12; docs/pico-v5-handoff.md §10; test/session-checkpoints-migrations.test.ts; research/capture/extra-p4/documents.txt, document-publications.txt (test/capture-p4-",
     "documents.ts)"
    ],
-   "page": 59
+   "page": 59,
+   "_y": 255.6
   },
   {
    "type": "chapter-title",
    "text": "4 . 4 The built-in documents",
    "page": 60,
+   "_y": 57.4,
    "zh": "4.4 内置文档"
   },
   {
    "type": "lede",
    "text": "Five conversation documents hold what the Harness needs between commits: what the agent is, who the provider sees, what is running, what is waiting,",
    "page": 60,
+   "_y": 106.2,
    "zh": "五个 conversation 文档保存着 `Harness` 在两次提交之间需要的东西：智能体是什么、供应商看到的是谁、什么在运行、什么在等待，"
   },
   {
    "type": "lede",
    "text": "and what it cost.",
    "page": 60,
+   "_y": 136.9,
    "zh": "以及它花了多少。"
   },
   {
@@ -530,44 +748,81 @@
    "zh": "`Harness` 存储自身状态的方式和你存储自己的一样：放在文档里。UI 读它们来显示加载指示、队列或账单。读完本节你就能读出任意 conversation 视图的 `docs` 块，并说清每一部分由什么写入。这五个文档和你的一样用 `defineDoc()` 定义，它们的词元已导出：`AgentDoc`、`ProviderDoc`、`LiveDoc`、`InboxDoc` 和 `UsageDoc` `src/index.ts`。五个都属于同一个 conversation，随它一起创建，并在它的视图里以 `docs[kind]` 出现（conversation 视图（p. 129））。你自己的文档不会挂在那里；用 `watchDoc()` 观察它们。"
   },
   {
-   "type": "small",
-   "text": "pi.agent model, tools, instructions rewindable · asOf every change 7.2 (p. 106) pi.provider the provider session ID latest · initial every change 6.3 (p. 91) pi.live what is running now latest · initial nothing runs 6.2 (p. 88) pi.inbox queued inputs latest · initial the inbox is empty 6.1 (p. 84) pi.usage tokens and cost latest · initial every change 6.6 (p. 100) From the definitions in src/harness/agent.ts, provider.ts, live.ts, inbox.ts and usage.ts. All five are version 1.",
-   "page": 60,
-   "zh": "`pi.agent` 模型、工具、指令 `rewindable` · `asOf` 每次改动 7.2（p. 106）； `pi.provider` 供应商 session ID `latest` · `initial` 每次改动 6.3（p. 91）； `pi.live` 当前在运行什么 `latest` · `initial` 没有东西在运行 6.2（p. 88）； `pi.inbox` 排队的输入 `latest` · `initial` 收件箱是空的 6.1（p. 84）； `pi.usage` token 与开销 `latest` · `initial` 每次改动 6.6（p. 100）。来自 `src/harness/agent.ts`、`provider.ts`、`live.ts`、`inbox.ts` 和 `usage.ts` 中的定义。五个都是 version 1。"
-  },
-  {
    "type": "p",
    "text": "After one tool-using turn, the root conversation’s view held these values:",
    "zh": "在一个使用工具的轮次之后，根 conversation 的视图里是这些值："
   },
   {
-   "type": "small",
-   "text": "the docs block after one turn research/capture/view-final.json JSON",
+   "type": "table-row",
    "page": 60,
-   "zh": "一轮之后的 `docs` 块 `research/capture/view-final.json` `JSON`"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "\"docs\": {",
-    "\"pi.agent\": { \"model\": { \"provider\": \"faux\", \"modelId\": \"faux-1\" } },",
-    "\"pi.live\": {},",
-    "\"pi.inbox\": { \"items\": [] }, \"pi.provider\": { \"sessionId\": \"01a10c8d-c25d-72c3-83b8-8dc6cf418d86\" },",
-    "\"pi.usage\": { \"models\": { \"faux/faux-1\": { \"input\": 83, \"output\": 31, … } }, \"tools\": {} }",
-    "}"
+   "_y": 281.9,
+   "cells": [
+    "pi.agent model, tools, instructions rewindable · asOf every change 7.2 (p. 106)"
    ],
-   "page": 60
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "The usage entry is cut after two counters. An idle conversation has an empty pi.live and an empty inbox.",
+   "type": "table-row",
    "page": 60,
-   "zh": "usage 条目在两个计数器之后被截断。空闲的 conversation 有一个空的 `pi.live` 和一个空的收件箱。"
+   "_y": 298.4,
+   "cells": [
+    "pi.provider the provider session ID latest · initial every change 6.3 (p. 91)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 315.6,
+   "cells": [
+    "pi.live what is running now latest · initial nothing runs 6.2 (p. 88)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 332.1,
+   "cells": [
+    "pi.inbox queued inputs latest · initial the inbox is empty 6.1 (p. 84)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 348.6,
+   "cells": [
+    "pi.usage tokens and cost latest · initial every change 6.6 (p. 100)"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 366.8,
+   "cells": [
+    "From the definitions in src/harness/agent.ts, provider.ts, live.ts, inbox.ts and usage.ts. All five are version 1."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "At birth and in a fork",
    "page": 60,
+   "_y": 561.0,
    "zh": "出生时与分叉时"
   },
   {
@@ -576,31 +831,10 @@
    "zh": "每个新 conversation 都在创建它的那次提交里拿到全部五个。其中四个永远以同样的方式开始。只有 `pi.agent` 取决于 conversation 是怎么来的 `spec §2.2`；`src/harness/agent.ts`（`createAgent`）："
   },
   {
-   "type": "small",
-   "text": "pi.agent {} a copy of the owner conversation’s agent the parent’s agent as of E",
-   "page": 60,
-   "zh": "`pi.agent` `{}` 所有者 conversation 的 agent 副本；父级在 E 处的 agent"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "pi.provider a new UUIDv7, never copied",
-    "pi.live {}: nothing running",
-    "pi.inbox { items: [] }: nothing queued",
-    "pi.usage { models: {}, tools: {} }: zero spend"
-   ],
-   "page": 60
-  },
-  {
-   "type": "small",
-   "text": "Copies are one-time: “later owner changes do not reach it” spec §12.",
-   "page": 60,
-   "zh": "副本只有一次：「所有者后来的改动不会传到它那里」 `spec §12`。"
-  },
-  {
    "type": "h2",
    "text": "Each document",
    "page": 61,
+   "_y": 75.0,
    "zh": "每个文档"
   },
   {
@@ -617,6 +851,7 @@
    "type": "small",
    "text": "pi.live records while a tool runs research/capture/jsonl-dir-midrun/doc-2.jsonl TEXT seq 6 base {\"run\":{\"taskId\":9,\"inputs\":[8]},\"tools\":[{\"callId\":\"call-1\",",
    "page": 61,
+   "_y": 355.1,
    "zh": "工具运行期间的 `pi.live` 记录 `research/capture/jsonl-dir-midrun/doc-2.jsonl` TEXT seq 6 base `{\"run\":{\"taskId\":9,\"inputs\":[8]},\"tools\":[{\"callId\":\"call-1\",`"
   },
   {
@@ -624,12 +859,14 @@
    "lines": [
     "\"name\":\"count\",\"taskId\":12,\"status\":\"pending\"}]}"
    ],
-   "page": 61
+   "page": 61,
+   "_y": 389.6
   },
   {
    "type": "small",
    "text": "seq 8 delta [[\"s\",[\"tools\",0,\"status\"],\"running\"]] seq 9 delta [[\"s\",[\"tools\",0,\"output\"],\"1\\n\"]] seq 10 delta [[\"a\",[\"tools\",0,\"output\"],\"2\\n3\\n\"]]",
    "page": 61,
+   "_y": 400.8,
    "zh": "seq 8 delta `[[\"s\",[\"tools\",0,\"status\"],\"running\"]]` seq 9 delta `[[\"s\",[\"tools\",0,\"output\"],\"1\\n\"]]` seq 10 delta `[[\"a\",[\"tools\",0,\"output\"],\"2\\n3\\n\"]]`"
   },
   {
@@ -637,21 +874,142 @@
    "lines": [
     "Other fields of each line are omitted. At seq 6 the tool was still pending, so nothing was running and the rule chose a base. After the run, the file held a single line: the base {} at seq 17 research/capture/jsonl-dir/doc-2.jsonl."
    ],
-   "page": 61
+   "page": 61,
+   "_y": 446.4
   },
   {
    "type": "small",
    "text": "Build UI state from the view’s docs block: pi.live for spinners, pi.inbox for queues, pi.usage for cost. Change pi.agent only through configure(). Do not write the other four; the Harness owns them.",
    "page": 61,
+   "_y": 504.6,
    "zh": "从视图的 `docs` 块构建 UI 状态：加载指示用 `pi.live`，队列用 `pi.inbox`，开销用 `pi.usage`。只通过 `configure()` 修改 `pi.agent`。另外四个不要写；它们归 `Harness` 所有。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: src/harness/agent.ts; src/harness/provider.ts; src/harness/live.ts; src/harness/inbox.ts; src/harness/usage.ts;",
-    "src/harness/harness.ts; src/harness/types.ts (AgentState); src/index.ts; spec §2.2, §6, §8.2, §8.6, §12; CHANGELOG.md 1.0.2; research/capture/view-final.json, jsonl-dir-midrun/doc-2.jsonl, jsonl-dir/doc-2.jsonl"
+   "type": "small",
+   "text": "Sources: src/harness/agent.ts; src/harness/provider.ts; src/harness/live.ts; src/harness/inbox.ts; src/harness/usage.ts; src/harness/harness.ts; src/harness/types.ts (AgentState); src/index.ts; spec §2.2, §6, §8.2, §8.6, §12; CHANGELOG.md 1.0.2; research/capture/view-final.json, jsonl-dir-midrun/doc-2.jsonl, jsonl-dir/doc-2.jsonl",
+   "page": 61,
+   "_y": 555.6
+  },
+  {
+   "type": "table-row",
+   "page": 53,
+   "_y": 284.1,
+   "cells": [
+    "session tx.doc(Doc) tx.doc(Doc, key, seed)"
    ],
-   "page": 61
+   "is_header": false,
+   "_sig": "session",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 53,
+   "_y": 300.6,
+   "cells": [
+    "conversation tx.doc(Doc, conversationId) tx.doc(Doc, conversationId, key, seed)"
+   ],
+   "is_header": false,
+   "_sig": "conversation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 53,
+   "_y": 317.9,
+   "cells": [
+    "task tx.doc(Doc, taskId) tx.doc(Doc, taskId, key, seed)"
+   ],
+   "is_header": false,
+   "_sig": "task",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 53,
+   "_y": 336.0,
+   "cells": [
+    "The Tx.doc overloads in src/types.ts. Reads take the same owner and key, without the seed, plus a Context."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 53,
+   "_y": 668.0,
+   "cells": [
+    "Creation is a write: the first tx.doc() of a missing document stores its whole value in that commit. From src/session/transaction.ts; ID 4, seq 2 and the value are from research/capture/extra-p4/documents.txt."
+   ],
+   "is_header": false,
+   "_sig": "Creation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 637.4,
+   "cells": [
+    "pi.agent {} a copy of the owner conversation’s agent the parent’s agent as of E"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 653.9,
+   "cells": [
+    "pi.provider a new UUIDv7, never copied"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 671.1,
+   "cells": [
+    "pi.live {}: nothing running"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 687.6,
+   "cells": [
+    "pi.inbox { items: [] }: nothing queued"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 704.9,
+   "cells": [
+    "pi.usage { models: {}, tools: {} }: zero spend"
+   ],
+   "is_header": false,
+   "_sig": "pi",
+   "zh": "`pi.agent` 模型、工具、指令"
+  },
+  {
+   "type": "table-row",
+   "page": 60,
+   "_y": 723.0,
+   "cells": [
+    "Copies are one-time: “later owner changes do not reach it” spec §12."
+   ],
+   "is_header": false,
+   "_sig": "Copies",
+   "zh": null
   }
  ]
 }

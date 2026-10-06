@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 8 Watching",
    "page": 124,
+   "_y": 83.8,
    "zh": "观察"
   },
   {
    "type": "h2",
    "text": "Every screen is a function of committed state: views, watches, agent events and the task graph.",
    "page": 124,
+   "_y": 154.8,
    "zh": "每一个界面都是已提交状态的函数：视图、观察流、智能体事件和任务图。"
   },
   {
    "type": "chapter-title",
    "text": "8 . 1 Chord and document state",
    "page": 125,
+   "_y": 57.4,
    "zh": "8.1 Chord 与文档状态"
   },
   {
    "type": "lede",
    "text": "An observer sees a document as a series of read-only values, each with the exact edits that produced it, and never sees anything storage does not hold.",
    "page": 125,
+   "_y": 106.2,
    "zh": "观察者看到的是一个文档的一连串只读值，每个值都带着产生它的确切编辑，而且绝不会看到存储里没有的东西。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "h2",
    "text": "What an observer receives",
    "page": 125,
+   "_y": 252.7,
    "zh": "观察者收到什么"
   },
   {
@@ -41,34 +46,116 @@
    "zh": "文档构建在 Chord（`@earendil-works/chord`）之上，这是一个用于复制式 JSON 状态的小库。要观察一个文档，你需要它的两个概念（基线与增量（p. 56））：Revision（修订）—— 一个不可变的 JSON 值，每次改变文档的提交都会产生一个新的。Operations（操作）—— 从一个修订到下一个修订的确切编辑，写成小元组；另一处的副本应用它们即可保持同步。观察者只读。Pi Durable 是唯一的写入者，被观察的状态没有任何能修改它的方法 spec §9.1。每个操作都是一个元组：一个单字母名称，然后是通往该值的键与数组下标构成的路径。"
   },
   {
-   "type": "small",
-   "text": "[\"r\", value] Replace the whole value [\"s\", path, value] Set a property or array element [\"d\", path] Delete a property or array element [\"a\", path, text] Append to a string [\"t\", path, count] Remove count UTF-16 code units from a string’s front [\"p\", path, index, remove, items] Splice an array",
+   "type": "table-row",
    "page": 125,
-   "zh": "`[\"r\", value]` 替换整个值；`[\"s\", path, value]` 设置一个属性或数组元素；`[\"d\", path]` 删除一个属性或数组元素；`[\"a\", path, text]` 追加到字符串；`[\"t\", path, count]` 从字符串前端移除 count 个 UTF-16 码元；`[\"p\", path, index, remove, items]` 拼接数组"
+   "_y": 439.4,
+   "cells": [
+    "[\"r\", value] Replace the whole value"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
   },
   {
-   "type": "code",
-   "lines": [
+   "type": "table-row",
+   "page": 125,
+   "_y": 455.9,
+   "cells": [
+    "[\"s\", path, value] Set a property or array element"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 473.1,
+   "cells": [
+    "[\"d\", path] Delete a property or array element"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 489.6,
+   "cells": [
+    "[\"a\", path, text] Append to a string"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 506.1,
+   "cells": [
+    "[\"t\", path, count] Remove count UTF-16 code units from a string’s front"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 523.4,
+   "cells": [
+    "[\"p\", path, index, remove, items] Splice an array"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 539.9,
+   "cells": [
     "[\"m\", path, permutation] Reorder an array: new[i] = old[permutation[i]]"
    ],
-   "page": 125
+   "is_header": false,
+   "_sig": "",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "From research/pi/packages/chord/src/delta/README.md. The same change can be written with different tuples, and a large edit may arrive as one s or r. Only the resulting value is guaranteed.",
+   "type": "table-row",
    "page": 125,
-   "zh": "摘自 `research/pi/packages/chord/src/delta/README.md`。同一个变更可以用不同的元组写出，一次大编辑也可能以单个 `s` 或 `r` 到达。只有结果值是有保证的。"
+   "_y": 556.7,
+   "cells": [
+    "From research/pi/packages/chord/src/delta/README.md. The same change can be written with different tuples, and a large edit may arrive as one s or r. Only the"
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 125,
+   "_y": 569.3,
+   "cells": [
+    "resulting value is guaranteed."
+   ],
+   "is_header": false,
+   "_sig": "resulting",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Two ways to observe one document",
    "page": 125,
+   "_y": 597.7,
    "zh": "观察一个文档的两种方式"
   },
   {
    "type": "small",
    "text": "WATCHDOC() A read-only state you subscribe to. It starts with the current value and calls your listener after each commit. Use it to drive a UI. A stream of frames, one per commit: the new value, its operations and the commit’s Context. Your callback handles one frame at a time. Use it to forward changes in order (the watch contract (p. 129)).",
    "page": 125,
+   "_y": 629.5,
    "zh": "`watchDoc()`：一个供你订阅的只读状态。它以当前值开始，并在每次提交之后调用你的监听器。用它驱动界面。帧流：每次提交一帧，包含新值、它的操作以及该提交的 Context；你的回调每次处理一帧。用它按序转发变更（观察契约（p. 129））。"
   },
   {
@@ -80,8 +167,8 @@
    "type": "figure",
    "number": "8.1",
    "file": "figures/fig-8.1.png",
-   "title": "FROM COMMIT TO CHORD STATE\nS E Q U E N C E",
-   "caption": "A document state sees a commit only after storage holds it; your listener runs in a microtask before commit() resolves. Step 1 runs on the Session’s mutation line, so no commit can slip between the first value and the attachment; subscribe() then delivers that value at once as hydrate 0. The",
+   "title": "FROM COMMIT TO CHORD STATE SEQUENCE",
+   "caption": "Adocumentstateseesacommitonlya ft erstorageholdsit ; yourlistenerrunsinamicrotaskbeforecommit () resolves . Step 1 runsontheSession ’ s mutationline , sonocommitcanslipbetweenthefirstvalueandtheattachment ; su b s c r ibe () thendeliversthatvalueatonceas h y d r a t e 0 . The",
    "page": 126,
    "zh_caption": "文档状态只有在存储持有某次提交之后才会看到它；你的监听器在 `commit()` 兑现之前于一个微任务中运行。第 1 步运行在 Session 的变更线上，因此从取到首个值到完成附着之间不可能有提交插进来；`subscribe()` 随后立刻把该值作为 `hydrate` 0 投递。"
   },
@@ -89,6 +176,7 @@
    "type": "small",
    "text": "A document state sees a commit only after storage holds it; your listener runs in a microtask before commit() resolves. Step 1 runs on the Session’s mutation line, so no commit can slip between the first value and the attachment; subscribe() then delivers that value at once as hydrate 0. The Board document is the one captured in research/capture/extra-p8/doc-observation.txt (next figure). src/session/session.ts, src/session/observation.ts, chord/src/services/state.ts.",
    "page": 126,
+   "_y": 498.6,
    "zh": "文档状态只有在存储持有某次提交之后才会看到它；你的监听器在 `commit()` 兑现之前于一个微任务中运行。第 1 步运行在 Session 的变更线上，因此从取到首个值到完成附着之间不可能有提交插进来；`subscribe()` 随后立刻把该值作为 `hydrate` 0 投递。Board 文档就是 `research/capture/extra-p8/doc-observation.txt` 中捕获的那一个（见下一图）。`src/session/session.ts`、`src/session/observation.ts`、`chord/src/services/state.ts`。"
   },
   {
@@ -100,6 +188,7 @@
    "type": "h2",
    "text": "documentState() in use",
    "page": 126,
+   "_y": 646.5,
    "zh": "`documentState()` 的用法"
   },
   {
@@ -111,8 +200,8 @@
    "type": "figure",
    "number": "8.2",
    "file": "figures/fig-8.2.png",
-   "title": "ONE DOCUMENT’S REVISIONS\nA N A T O M Y",
-   "caption": "Each commit yields a new immutable revision and the exact operations that produced it. A session-scoped app.board observed through",
+   "title": "ONE DOCUMENT ’ S REVISIONS ANATOMY",
+   "caption": "Eachcommityieldsanewimmutablerevisionandtheexactoperationsthatproducedit . Asession - scoped a pp . b o a r d observedthrough",
    "page": 127,
    "zh_caption": "每次提交都产生一个新的不可变修订，以及产生它的确切操作。一个以 Session 为作用域的 `app.board`，通过"
   },
@@ -120,6 +209,7 @@
    "type": "small",
    "text": "a document state, from first value to update test/examples/04-chord-state.ts TS",
    "page": 127,
+   "_y": 73.9,
    "zh": "文档状态被观察，从首个值到一次更新。`test/examples/04-chord-state.ts` TS"
   },
   {
@@ -130,23 +220,10 @@
     "}); await session.commit(async (tx) => {",
     "(await tx.doc(Notes, chat.id)).text = \"published through Chord\";",
     "}, context);",
-    "$ node --conditions=source --experimental-strip-types test/examples/04-chord-state.ts"
+    "$ node --conditions=source --experimental-strip-types test/examples/04-chord-state.ts Chord notes: hydrate 0 { text: 'first' } Chord notes: update 1 { text: 'published through Chord' } The Notes definition, the creating commit, the undefined check and the final stopNotes() and dispose() are elided. subscribe delivers the current value at once as hydrate, then one update per commit. Output from run 04."
    ],
-   "page": 127
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Chord notes: hydrate 0 { text: 'first' }",
-    "Chord notes: update 1 { text: 'published through Chord' }"
-   ],
-   "page": 127
-  },
-  {
-   "type": "small",
-   "text": "The Notes definition, the creating commit, the undefined check and the final stopNotes() and dispose() are elided. subscribe delivers the current value at once as hydrate, then one update per commit. Output from run 04.",
    "page": 127,
-   "zh": "`Notes` 的定义、创建它的那次提交、`undefined` 检查以及末尾的 `stopNotes()` 和 `dispose()` 均已省略。`subscribe` 立刻把当前值作为 `hydrate` 投递，然后每次提交一次 `update`。输出来自 run 04。"
+   "_y": 97.1
   },
   {
    "type": "p",
@@ -157,6 +234,7 @@
    "type": "h2",
    "text": "Revisions are immutable and shared",
    "page": 127,
+   "_y": 324.0,
    "zh": "修订不可变且共享"
   },
   {
@@ -168,6 +246,7 @@
    "type": "small",
    "text": "Each commit yields a new immutable revision and the exact operations that produced it. A session-scoped app.board observed through documentState() and watchDoc() at once; 101 further commits come before the retirement. Values, operations, sequences and the sharing check are from research/capture/extra-p8/doc-observation.txt.",
    "page": 127,
+   "_y": 681.5,
    "zh": "每次提交都产生一个新的不可变修订，以及产生它的确切操作。一个以 Session 为作用域的 `app.board`，同时通过 `documentState()` 和 `watchDoc()` 被观察；退役之前还有 101 次提交。值、操作、序列以及共享性检查均来自 `research/capture/extra-p8/doc-observation.txt`。"
   },
   {
@@ -179,6 +258,7 @@
    "type": "h2",
    "text": "Retirement, versions, close and crashes",
    "page": 128,
+   "_y": 138.0,
    "zh": "退役、版本、关闭与崩溃"
   },
   {
@@ -190,6 +270,7 @@
    "type": "small",
    "text": "Drive a UI from documentState(). It shows only committed data, so it is correct after a crash without extra work. Never mutate a value you received. Copy it first. Treat [\"r\", …] as “replace everything”. It arrives on retirement, version change and overflow. Attach again after a retirement or a reopen; observers never move to a new incarnation. To serve remote clients through a Chord service, follow docs/pico-v5-chord-usage.md.",
    "page": 128,
+   "_y": 380.8,
    "zh": "用 `documentState()` 驱动界面。它只显示已提交的数据，因此崩溃之后无需额外工作就是正确的。绝不要改动你收到的值，先复制。把 `[\"r\", …]` 视为「全部替换」——它会在退役、版本变更和溢出时到达。退役或重新打开之后请再次附着；观察者绝不会迁移到新的化身。要通过 Chord 服务为远程客户端服务，请遵循 `docs/pico-v5-chord-usage.md`。"
   },
   {
@@ -197,24 +278,28 @@
    "lines": [
     "Sources: spec §1, §2.2, §9.1, §12; src/session/observation.ts; src/session/session.ts (documentState, watchDoc, observedOperations); src/types.ts (DocumentState); docs/pico-v5-chord-usage.md; research/pi/packages/chord/src/delta/README.md; test/session-states.test.ts; test/session-watches.test.ts; ex 04; run 04; research/capture/extra-p8/doc-observation.txt (script test/capture-p8-observe.ts)"
    ],
-   "page": 128
+   "page": 128,
+   "_y": 476.9
   },
   {
    "type": "chapter-title",
    "text": "8 . 2 The conversation view and watch()",
    "page": 129,
+   "_y": 57.4,
    "zh": "8.2 会话视图与 `watch()`"
   },
   {
    "type": "lede",
    "text": "One value holds a conversation’s transcript and what is running now; it changes only when a commit lands, and you can read it as a state or as a",
    "page": 129,
+   "_y": 106.2,
    "zh": "一个值同时承载某个会话的记录（transcript）和当前正在运行的东西；它只在提交落地时改变，而你可以把它读作一个状态，"
   },
   {
    "type": "lede",
    "text": "stream of frames.",
    "page": 129,
+   "_y": 136.9,
    "zh": "或者一帧帧的流。"
   },
   {
@@ -226,6 +311,7 @@
    "type": "h2",
    "text": "What the view holds",
    "page": 129,
+   "_y": 237.7,
    "zh": "视图承载什么"
   },
   {
@@ -237,6 +323,7 @@
    "type": "small",
    "text": "watch.value at attachment research/capture/watch-ops.txt JSON",
    "page": 129,
+   "_y": 304.9,
    "zh": "`watch.value`（附着时）。`research/capture/watch-ops.txt` JSON"
   },
   {
@@ -253,12 +340,14 @@
     "}",
     "}"
    ],
-   "page": 129
+   "page": 129,
+   "_y": 328.1
   },
   {
    "type": "small",
    "text": "Each document is folded onto one line. pi.live is {} because nothing runs yet.",
    "page": 129,
+   "_y": 463.5,
    "zh": "每个文档被折叠到一行。`pi.live` 是 `{}`，因为还没有任何东西在运行。"
   },
   {
@@ -270,6 +359,7 @@
    "type": "h2",
    "text": "How the view changes",
    "page": 129,
+   "_y": 630.0,
    "zh": "视图如何变化"
   },
   {
@@ -281,8 +371,8 @@
    "type": "figure",
    "number": "8.3",
    "file": "figures/fig-8.3.png",
-   "title": "FROM A COMMIT TO A VIEW FRAME\nF L O W",
-   "caption": "A view frame is the commit’s document changes, then its new entries, rewritten as paths into one value. From advance() in src/harness/view.ts. The first row is frame 3 of research/capture/watch-ops.txt; frame 1 shows the order, a pi.live set before the splice of entry 7.",
+   "title": "FROM A COMMIT TO A VIEW FRAME FLOW",
+   "caption": "Aviewframeisthecommit ’ sdocumentchanges , thenitsnewentries , rewrittenaspathsintoonevalue . From ad v a n ce () insrc / harness / view . ts . The firstrowisframe 3 ofresearch / capture / watch - ops . txt ; frame 1 showstheorder , a p i . l i v e setbeforethespliceofentry 7.",
    "page": 130,
    "zh_caption": "一个视图帧就是该提交的文档变更，随后是它的新条目，全部改写成通往同一个值的路径。取自 `src/harness/view.ts` 中的 `advance()`。第一行是 `research/capture/watch-ops.txt` 的第 3 帧；第 1 帧展示了顺序：先设置 `pi.live`，再对条目 7 做拼接。"
   },
@@ -291,7 +381,8 @@
    "lines": [
     "A view frame is the commit’s document changes, then its new entries, rewritten as paths into one value. From advance() in src/harness/view.ts. The first row is frame 3 of research/capture/watch-ops.txt; frame 1 shows the order, a pi.live set before the splice of entry 7."
    ],
-   "page": 130
+   "page": 130,
+   "_y": 375.5
   },
   {
    "type": "p",
@@ -302,6 +393,7 @@
    "type": "small",
    "text": "frame 14: one commit settles a tool research/capture/watch-ops.txt JSON [ [\"s\", [\"docs\", \"pi.live\", \"tools\", 0, \"status\"], \"done\"], [\"s\", [\"docs\", \"pi.live\", \"tools\", 0, \"entry\"], 13], [\"d\", [\"docs\", \"pi.live\", \"tools\", 0, \"output\"]],",
    "page": 130,
+   "_y": 456.4,
    "zh": "第 14 帧：一次提交了结一个工具。`research/capture/watch-ops.txt` JSON：`[[\"s\", [\"docs\", \"pi.live\", \"tools\", 0, \"status\"], \"done\"], [\"s\", [\"docs\", \"pi.live\", \"tools\", 0, \"entry\"], 13], [\"d\", [\"docs\", \"pi.live\", \"tools\", 0, \"output\"]],`"
   },
   {
@@ -309,12 +401,14 @@
    "lines": [
     "[\"d\", [\"docs\", \"pi.live\", \"tools\", 0, \"details\"]], [\"p\", [\"entries\"], 3, 0, [{ \"kind\": \"pi.tool-result\", \"id\": 13, … }]]"
    ],
-   "page": 130
+   "page": 130,
+   "_y": 523.8
   },
   {
    "type": "small",
    "text": "] The entry is elided. The slot points at entry 13 in the same frame that inserts it, so a renderer never sees a dangling reference.",
    "page": 130,
+   "_y": 545.6,
    "zh": "]` 条目内容已省略。该槽位在插入条目 13 的同一帧里就指向它，因此渲染器绝不会看到悬空引用。"
   },
   {
@@ -326,12 +420,14 @@
    "type": "h2",
    "text": "Two ways to consume it",
    "page": 130,
+   "_y": 650.2,
    "zh": "消费它的两种方式"
   },
   {
    "type": "small",
    "text": "VIEWSTATE() WATCH() A Chord state, like documentState(). Use it in the same process when you only want the latest value, for example a terminal UI that re-renders on each update. A stream of frames. Use it to keep a copy across a process boundary: send watch.value once, then each frame’s operations in order. The other side applies them with applyImmutable().",
    "page": 130,
+   "_y": 682.0,
    "zh": "`viewState()`：一个 Chord 状态，和 `documentState()` 一样。当在同一进程中只需要最新值时用它，例如每次更新都重绘的终端界面。`watch()`：帧流。用它在跨进程边界处保留一份副本——先发送一次 `watch.value`，此后按序发送每帧的操作，另一侧用 `applyImmutable()` 应用它们。"
   },
   {
@@ -368,21 +464,82 @@
    "type": "figure",
    "number": "8.4",
    "file": "figures/fig-8.4.png",
-   "title": "A SLOW CONSUMER’S BUFFER\nS T A T E",
-   "caption": "A watch keeps 100 undelivered frames; the next commit replaces them all with the newest value. The frame being delivered is never replaced. Rule from spec §9.2 and src/session/observation.ts. A test commits 101 entries before start() and receives one frame, [[\"r\", view]], holding all 101 entries.",
+   "title": "A SLOW CONSUMER ’ S BUFFER STATE",
+   "caption": "Awatchkeeps 100 undeliveredframes ; thenextcommitreplacesthemallwiththenewestvalue . Theframebeingdeliveredisneverreplaced . Rule fromspec §9.2 andsrc / session / observation . ts . Atestcommits 101 entriesbefore st a rt () andreceivesoneframe , [[\" r \", v ie w ]] , holdingall 101 entries .",
    "page": 131,
    "zh_caption": "一个观察流保留 100 个未投递的帧；下一次提交会用最新值把它们全部替换掉。正在投递的那个帧永远不会被替换。规则出自 spec §9.2 和 `src/session/observation.ts`。一个测试在 `start()` 之前提交 101 个条目，收到的只有一帧 `[[\"r\", view]]`，其中包含全部 101 个条目。"
   },
   {
-   "type": "small",
-   "text": "stopped stop() was called cancelled The Context passed when attaching was aborted session_closed The Session began closing retired The null frame of a retired document was delivered listener_error Your listener threw; carries error, and only this watch ends src/types.ts (WatchEnd). The first reason wins. A watch opened inside a task or a tool also stops when that invocation ends (src/harness/scheduler.ts).",
+   "type": "table-row",
    "page": 131,
-   "zh": "`stopped` —— 调用了 `stop()`；`cancelled` —— 附着时传入的 Context 被中止；`session_closed` —— Session 开始关闭；`retired` —— 已退役文档的 null 帧被投递；`listener_error` —— 你的监听器抛错，带有 `error`，且只有该观察流结束 `src/types.ts`（`WatchEnd`）。以最先出现的 reason 为准。在任务或工具内部打开的观察流，也会在那次调用结束时停止（`src/harness/scheduler.ts`）。"
+   "_y": 290.1,
+   "cells": [
+    "stopped stop() was called"
+   ],
+   "is_header": false,
+   "_sig": "stopped",
+   "zh": "`stopped` —— 调用了"
+  },
+  {
+   "type": "table-row",
+   "page": 131,
+   "_y": 307.6,
+   "cells": [
+    "cancelled The Context passed when attaching was aborted"
+   ],
+   "is_header": false,
+   "_sig": "cancelled",
+   "zh": "`cancelled` —— 附着时传入的 Context 被中止；"
+  },
+  {
+   "type": "table-row",
+   "page": 131,
+   "_y": 323.9,
+   "cells": [
+    "session_closed The Session began closing"
+   ],
+   "is_header": false,
+   "_sig": "session_closed",
+   "zh": "`session_closed` —— Session 开始关闭；"
+  },
+  {
+   "type": "table-row",
+   "page": 131,
+   "_y": 340.6,
+   "cells": [
+    "retired The null frame of a retired document was delivered"
+   ],
+   "is_header": false,
+   "_sig": "retired",
+   "zh": "`retired` —— 已退役文档的 null 帧被投递；"
+  },
+  {
+   "type": "table-row",
+   "page": 131,
+   "_y": 357.6,
+   "cells": [
+    "listener_error Your listener threw; carries error, and only this watch ends"
+   ],
+   "is_header": false,
+   "_sig": "listener_error",
+   "zh": "`listener_error` —— 你的监听器抛错，带有"
+  },
+  {
+   "type": "table-row",
+   "page": 131,
+   "_y": 375.8,
+   "cells": [
+    "src/types.ts (WatchEnd). The first reason wins. A watch opened inside a task or a tool also stops when that invocation ends (src/harness/scheduler.ts)."
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": "`src/types.ts`（"
   },
   {
    "type": "h2",
    "text": "Slow and late consumers",
    "page": 131,
+   "_y": 404.2,
    "zh": "缓慢与迟到的消费者"
   },
   {
@@ -394,6 +551,7 @@
    "type": "small",
    "text": "A watch keeps 100 undelivered frames; the next commit replaces them all with the newest value. The frame being delivered is never replaced. Rule from spec §9.2 and src/session/observation.ts. A test commits 101 entries before start() and receives one frame, [[\"r\", view]], holding all 101 entries.",
    "page": 131,
+   "_y": 677.7,
    "zh": "一个观察流保留 100 个未投递的帧；下一次提交会用最新值把它们全部替换掉。正在投递的那个帧永远不会被替换。规则出自 spec §9.2 和 `src/session/observation.ts`。一个测试在 `start()` 之前提交 101 个条目，收到的只有一帧 `[[\"r\", view]]`，其中包含全部 101 个条目。"
   },
   {
@@ -410,25 +568,31 @@
    "type": "small",
    "text": "$ node --conditions=source --experimental-strip-types test/examples/21-late-join.ts",
    "page": 132,
+   "_y": 166.8,
    "zh": "$ node --conditions=source --experimental-strip-types test/examples/21-late-join.ts"
   },
   {
    "type": "code",
    "lines": [
-    "view entries: [ 'pi.user', 'pi.system', 'pi.assistant' ]",
-    "view tool slot: running \"1\\n2\\n3\\n4\\n5\\n\"",
-    "view output now: \"1\\n2\\n3\\n4\\n5\\n\"",
-    "snapshot tools: [ 'count running' ]",
-    "view output now: \"1\\n2\\n3\\n4\\n5\\n6\\n\"",
-    "event output now: \"1\\n2\\n3\\n4\\n5\\n6\\n\""
+    "view entries: [ 'pi.user', 'pi.system', 'pi.assistant' ]"
    ],
-   "page": 132
+   "page": 132,
+   "_y": 179.0
   },
   {
    "type": "small",
-   "text": "First lines of research/runs/21-late-join.txt. The view already holds the committed output; the event stream of 8.3 (p. 133) starts from the same state.",
+   "text": "view tool slot: running \"1\\n2\\n3\\n4\\n5\\n\" view output now: \"1\\n2\\n3\\n4\\n5\\n\"",
    "page": 132,
-   "zh": "摘自 `research/runs/21-late-join.txt` 的开头几行。视图里已经包含了已提交的输出；8.3（p. 133）中的事件流也从同一状态开始。"
+   "_y": 190.3
+  },
+  {
+   "type": "code",
+   "lines": [
+    "snapshot tools: [ 'count running' ]",
+    "view output now: \"1\\n2\\n3\\n4\\n5\\n6\\n\" event output now: \"1\\n2\\n3\\n4\\n5\\n6\\n\" First lines of research/runs/21-late-join.txt. The view already holds the committed output; the event stream of 8.3 (p. 133) starts from the same state."
+   ],
+   "page": 132,
+   "_y": 212.8
   },
   {
    "type": "p",
@@ -439,6 +603,7 @@
    "type": "small",
    "text": "Same process, latest value only: viewState(). Remote copy: watch() plus applyImmutable(). Handle [\"r\", value] as a full replace at any point in the stream. Do not use a watch as an audit log. Use entries, a document, or Submission.wait(). On reconnect, attach again and resend watch.value.",
    "page": 132,
+   "_y": 356.1,
    "zh": "同一进程、只需要最新值：`viewState()`。远程副本：`watch()` 加 `applyImmutable()`。在流的任何位置都要把 `[\"r\", value]` 当作整体替换。不要把观察流当审计日志用——请用条目、文档或 `Submission.wait()`。重连时再次附着并重发 `watch.value`。"
   },
   {
@@ -447,18 +612,21 @@
     "Sources: spec §2.2, §9.2, §9.3, §12; README §Watching a Conversation; src/harness/view.ts; src/session/observation.ts; src/types.ts (WatchHandle, WatchEnd); src/harness/scheduler.ts; test/harness-view.test.ts; test/session-watches.test.ts; ex 19; ex 21; run 21;",
     "research/capture/watch-ops.txt; research/capture/NOTES.md (note 14)"
    ],
-   "page": 132
+   "page": 132,
+   "_y": 437.9
   },
   {
    "type": "chapter-title",
    "text": "8 . 3 Agent events",
    "page": 133,
+   "_y": 57.4,
    "zh": "8.3 智能体事件"
   },
   {
    "type": "lede",
    "text": "An experimental adapter turns each commit into one batch of coding-agent events: a snapshot is the state, and every batch is a change to it.",
    "page": 133,
+   "_y": 106.2,
    "zh": "一个实验性适配器把每次提交变成一批编码智能体事件：快照即状态，而每一批都是对状态的一次变更。"
   },
   {
@@ -470,6 +638,7 @@
    "type": "h2",
    "text": "Attaching",
    "page": 133,
+   "_y": 224.0,
    "zh": "附着"
   },
   {
@@ -481,18 +650,13 @@
    "type": "h2",
    "text": "One commit, one batch",
    "page": 133,
+   "_y": 374.2,
    "zh": "一次提交，一批事件"
   },
   {
    "type": "p",
    "text": "Each commit produces at most one batch of events. The table follows one turn of the capture: the model thinks, calls count {n: 3}, then answers. A generation is one model call, run as a task.",
    "zh": "每次提交最多产生一批事件。下表跟随捕获中的一次轮次：模型思考、调用 `count {n: 3}`，然后作答。一次生成就是一次模型调用，以任务的方式运行。"
-  },
-  {
-   "type": "small",
-   "text": "1 user message committed; the run starts message_start, message_end, submission, run_start, turn_start 2 system prompt entry message_start, message_end 3 attempt 1 of the generation begins none 4 first streamed partial message_start 5–7 thinking and text stream in message_update each 8 assistant message committed; tool call queued message_end, usage_changed 9 the tool starts running tool_execution_start 10–13 tool output and details tool_execution_update each 14 tool done; its result entry committed tool_execution_end, message_start, message_end 15 the next generation replaces the first turn_end, turn_start 16 attempt 1 begins none 17–19 the answer streams in message_start, message_update ×2 20 answer committed; the run ends message_end, turn_end, run_end, submission, usage_changed research/capture/watch-ops.txt (20 frames) and agent-events.txt (18 batches), one run of test/capture/view-ops.ts.",
-   "page": 133,
-   "zh": "1 用户消息已提交；运行开始 `message_start`、`message_end`、`submission`、`run_start`、`turn_start`；2 系统提示词条目 `message_start`、`message_end`；3 该生成的第 1 次尝试开始：无；4 第一个流式分片 `message_start`；5–7 思考与文本逐块流入，每个都发 `message_update`；8 助手消息已提交；工具调用入队 `message_end`、`usage_changed`；9 该工具开始运行 `tool_execution_start`；10–13 工具输出与细节，每个都发 `tool_execution_update`；14 工具完成；其结果条目已提交 `tool_execution_end`、`message_start`、`message_end`；15 下一次生成取代上一次 `turn_end`、`turn_start`；16 第 1 次尝试开始：无；17–19 回答流入 `message_start`、`message_update` ×2；20 回答已提交；运行结束 `message_end`、`turn_end`、`run_end`、`submission`、`usage_changed`。`research/capture/watch-ops.txt`（20 帧）与 `agent-events.txt`（18 批），来自 `test/capture/view-ops.ts` 的一次运行。"
   },
   {
    "type": "p",
@@ -503,33 +667,24 @@
    "type": "figure",
    "number": "8.5",
    "file": "figures/fig-8.5.png",
-   "title": "THE ORDER OF ONE BATCH\nS T R U C T U R E",
-   "caption": "Inside one batch, progress comes first, then entries, then ends, and beginnings come last. Right: the batch a test expects from one commit that answers a run and starts the queued follow-up as the next run (test/harness-events.test.ts).",
+   "title": "THE ORDER OF ONE BATCH STRUCTURE",
+   "caption": "Insideonebatch , progresscomesfirst , thenentries , thenends , andbeginningscomelast . Right : thebatchatestexpectsfromonecommitthat answersarunandstartsthequeuedfollow - upasthenextrun (test / harness - events . test . ts).",
    "page": 134,
    "zh_caption": "一批之内，先是进展，然后是条目，然后是结束，开头放在最后。右图：测试所期望的那一批，来自一次提交——它结束了一个运行，并把排队的后续任务作为下一个运行启动（`test/harness-events.test.ts`）。"
-  },
-  {
-   "type": "code",
-   "lines": [],
-   "page": 134
   },
   {
    "type": "small",
    "text": "Inside one batch, progress comes first, then entries, then ends, and beginnings come last. Right: the batch a test expects from one commit that answers a run and starts the queued follow-up as the next run (test/harness-events.test.ts).",
    "page": 134,
+   "_y": 417.5,
    "zh": "一批之内，先是进展，然后是条目，然后是结束，开头放在最后。右图：测试所期望的那一批，来自一次提交——它结束了一个运行，并把排队的后续任务作为下一个运行启动（`test/harness-events.test.ts`）。"
   },
   {
    "type": "h2",
    "text": "What each event means",
    "page": 134,
+   "_y": 456.7,
    "zh": "每个事件的含义"
-  },
-  {
-   "type": "small",
-   "text": "run_start / run_end starts or ends a run. Steering input that joins a running run is not a new run turn_start / turn_end moves the run to a new generation / commits a generation’s outcome message_start / message_end commits an attempt’s first streamed partial, or a message entry that had none / appends an entry with model messages message_update changes the streamed partial; carries usage and changes entry_appended appends an entry with no model messages, such as a plain pi.reset tool_execution_* starts a tool call / changes its output, details or diagnostics / finishes it, or drops it with its run submission writes a submission record of this conversation inbox_update, agent_changed, usage_changed changes that document auto_retry_start / _end, deferred_poll starts or ends a retry wait; schedules or moves a deferred poll task_failed settles a task of the conversation faulted or orphaned compaction_start / _end starts or finishes a compaction spec §9.4; src/harness/events.ts.",
-   "page": 134,
-   "zh": "`run_start` / `run_end` —— 开始或结束一次运行；加入正在运行之中运行的引导输入不算新运行。`turn_start` / `turn_end` —— 让运行进入新的一次生成 / 提交某次生成的结果。`message_start` / `message_end` —— 提交某次尝试的第一个流式分片，或提交一条本来没有分片的消息条目 / 追加一条带模型消息的条目。`message_update` —— 改动流式分片，携带 usage 和 changes。`entry_appended` —— 追加一条不含模型消息的条目，例如一条普通的 `pi.reset`。`tool_execution_*` —— 开始一次工具调用 / 改动它的输出、细节或诊断信息 / 结束它，或随其运行一起丢弃它。`submission` —— 写入本会话的一条提交项记录。`inbox_update`、`agent_changed`、`usage_changed` —— 改动对应文档。`auto_retry_start` / `_end`、`deferred_poll` —— 开始或结束一次重试等待；调度或移动一个延迟轮询。`task_failed` —— 以 `faulted` 或 `orphaned` 了结会话中的某个任务。`compaction_start` / `_end` —— 开始或完成一次压缩。spec §9.4；`src/harness/events.ts`。"
   },
   {
    "type": "p",
@@ -540,6 +695,7 @@
    "type": "h2",
    "text": "Deltas, not values",
    "page": 135,
+   "_y": 130.5,
    "zh": "增量，而非值"
   },
   {
@@ -551,6 +707,7 @@
    "type": "small",
    "text": "the batch of commit 6 research/capture/agent-events.txt JSON",
    "page": 135,
+   "_y": 211.9,
    "zh": "第 6 次提交的那一批。`research/capture/agent-events.txt` JSON"
   },
   {
@@ -563,12 +720,14 @@
     "{ \"type\": \"thinking_delta\", \"contentIndex\": 0, \"delta\": \"use the tool.\" }",
     "] }"
    ],
-   "page": 135
+   "page": 135,
+   "_y": 234.3
   },
   {
    "type": "small",
    "text": "Two view operations become two changes, in order. Usage fields are elided.",
    "page": 135,
+   "_y": 336.7,
    "zh": "两个视图操作变成两个 changes，按序排列。usage 字段已省略。"
   },
   {
@@ -580,6 +739,7 @@
    "type": "small",
    "text": "applying output updates test/examples/21-late-join.ts TS",
    "page": 135,
+   "_y": 415.1,
    "zh": "应用输出更新。`test/examples/21-late-join.ts` TS"
   },
   {
@@ -590,12 +750,14 @@
     "if (event.type === \"tool_execution_update\" && event.output !== undefined) {",
     "output = \"set\" in event.output"
    ],
-   "page": 135
+   "page": 135,
+   "_y": 438.3
   },
   {
    "type": "small",
    "text": "? event.output.set",
    "page": 135,
+   "_y": 493.1,
    "zh": "? event.output.set"
   },
   {
@@ -605,18 +767,21 @@
     "} }",
     "});"
    ],
-   "page": 135
+   "page": 135,
+   "_y": 504.3
   },
   {
    "type": "small",
    "text": "Trimmed from the example. Removed details arrive as null, as when a replay-safe tool restarts (6.4 (p. 94)).",
    "page": 135,
+   "_y": 562.5,
    "zh": "示例中已省略。被移除的 details 以 `null` 到达，例如可重放工具重启时（6.4（p. 94））。"
   },
   {
    "type": "h2",
    "text": "Falling behind",
    "page": 135,
+   "_y": 590.2,
    "zh": "落后"
   },
   {
@@ -628,6 +793,7 @@
    "type": "small",
    "text": "A snapshot can arrive at any time, not only first. Reset your state to it. Use events for animation and log lines; render the durable picture from the view spec §9.4. Example 19 prints a run with -- events. Do not count on seeing every event; use Submission.wait() for outcomes. One stream covers one conversation. Attach to child conversations separately.",
    "page": 136,
+   "_y": 92.8,
    "zh": "快照可能在任何时刻到达，不只是在最初——把你的状态重置为它。事件用于动画和日志行；持久的那份画面要从视图渲染 spec §9.4。示例 19 用 `--events` 打印一次运行。不要指望看到每个事件，结果请用 `Submission.wait()`。一条流只覆盖一个会话，子会话要分别附着。"
   },
   {
@@ -635,18 +801,21 @@
    "lines": [
     "Sources: spec §9.4; README §Agent Events (Experimental); src/harness/events.ts; test/harness-events.test.ts; ex 19; ex 21; run 21; research/capture/watch-ops.txt, agent-events.txt"
    ],
-   "page": 136
+   "page": 136,
+   "_y": 187.4
   },
   {
    "type": "chapter-title",
    "text": "8 . 4 The task graph and inspect()",
    "page": 137,
+   "_y": 57.4,
    "zh": "8.4 任务图与 `inspect()`"
   },
   {
    "type": "lede",
    "text": "The graph shows every live task as it is committed; inspect() adds what the scheduler would do with each one under the registry you have now.",
    "page": 137,
+   "_y": 105.8,
    "zh": "任务图按提交的形态展示每个存活的任务；`inspect()` 补上在你当前这份注册表下调度器会对每个任务做什么。"
   },
   {
@@ -658,6 +827,7 @@
    "type": "h2",
    "text": "A node",
    "page": 137,
+   "_y": 222.7,
    "zh": "一个节点"
   },
   {
@@ -669,6 +839,7 @@
    "type": "small",
    "text": "a waiting task in the graph research/capture/extra-p8/inspect-vs-graph.txt JSON",
    "page": 137,
+   "_y": 289.9,
    "zh": "任务图中一个处于 `waiting` 的任务。`research/capture/extra-p8/inspect-vs-graph.txt` JSON"
   },
   {
@@ -680,16 +851,77 @@
     "\"background\": false,",
     "\"abortRequested\": false,",
     "\"state\": { \"status\": \"waiting\", \"phase\": \"done\", \"on\": [7], \"policy\": \"allSettled\" }, \"conversations\": []",
-    "}",
-    "No owner key: a conversation owns this task. A node owned by another task carries \"owner\": <TaskId>. abortRequested turns true in the commit that aborts the task.",
-    "pending phase Committed and not yet picked up; also every task that was running when the process died, until it runs again running phase Picked up by the scheduler in this process waiting phase, on, policy The stored wait, exactly as committed completing outcome Finished, holding its outcome until its owned work ends src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63)."
+    "}"
    ],
-   "page": 137
+   "page": 137,
+   "_y": 312.3
+  },
+  {
+   "type": "small",
+   "text": "No owner key: a conversation owns this task. A node owned by another task carries \"owner\": <TaskId>. abortRequested turns true in the commit that aborts the task.",
+   "page": 137,
+   "_y": 426.0
+  },
+  {
+   "type": "table-row",
+   "page": 137,
+   "_y": 474.0,
+   "cells": [
+    "pending phase Committed and not yet picked up; also every task that was running when the process died, until it runs again"
+   ],
+   "is_header": false,
+   "_sig": "pending",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 137,
+   "_y": 490.6,
+   "cells": [
+    "running phase Picked up by the scheduler in this process"
+   ],
+   "is_header": false,
+   "_sig": "running",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 137,
+   "_y": 507.8,
+   "cells": [
+    "waiting phase, on, policy The stored wait, exactly as committed"
+   ],
+   "is_header": false,
+   "_sig": "waiting",
+   "zh": "`waiting` 的任务。"
+  },
+  {
+   "type": "table-row",
+   "page": 137,
+   "_y": 524.3,
+   "cells": [
+    "completing outcome Finished, holding its outcome until its owned work ends"
+   ],
+   "is_header": false,
+   "_sig": "completing",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 137,
+   "_y": 542.3,
+   "cells": [
+    "src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63)."
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "How the graph moves",
    "page": 137,
+   "_y": 570.7,
    "zh": "任务图如何变化"
   },
   {
@@ -701,17 +933,16 @@
    "type": "figure",
    "number": "8.6",
    "file": "figures/fig-8.6.png",
-   "title": "TWO FRAMES OF THE TASK GRAPH\nT R E E",
-   "caption": "The task graph is the live ownership tree; a finished task leaves it in the commit that ends it. Frames 6 and 7 of scenario A in research/capture/task-graph.txt: an order waits failFast on three packs, and the first pack to finish is deleted while the order’s stored on still names it. The conversation box is drawn from conversationId; the graph holds task nodes only.",
+   "title": "TWO FRAMES OF THE TASK GRAPH TREE",
+   "caption": "Thetaskgraphistheliveownershiptree ; afinishedtaskleavesitinthecommitthatendsit . Frames 6 and 7 ofscenarioAinresearch / capture / task - graph . txt : anorderwaits fai l Fa st onthreepacks , andthefirstpacktofinishisdeletedwhiletheorder ’ sstored on stillnamesit . Theconversationboxis drawnfrom c onv e rs a t i on Id ; thegraphholdstasknodesonly .",
    "page": 138,
    "zh_caption": "任务图是实时的所有权树；一个已完成的任务在结束它的那次提交中离开这棵树。`research/capture/task-graph.txt` 中场景 A 的第 6 帧和第 7 帧：一个 order 以 `failFast` 等待三个 pack，第一个完成的 pack 被删除，而该 order 存储的 `on` 仍然列着它。会话方框由 `conversationId` 画出；任务图只持有任务节点。"
   },
   {
-   "type": "code",
-   "lines": [
-    "The task graph is the live ownership tree; a finished task leaves it in the commit that ends it. Frames 6 and 7 of scenario A in research/capture/task-graph.txt: an order waits failFast on three packs, and the first pack to finish is deleted while the order’s stored on still names it. The conversation box is drawn from conversationId; the graph holds task nodes only."
-   ],
-   "page": 138
+   "type": "small",
+   "text": "The task graph is the live ownership tree; a finished task leaves it in the commit that ends it. Frames 6 and 7 of scenario A in research/capture/task-graph.txt: an order waits failFast on three packs, and the first pack to finish is deleted while the order’s stored on still names it. The conversation box is drawn from conversationId; the graph holds task nodes only.",
+   "page": 138,
+   "_y": 308.7
   },
   {
    "type": "p",
@@ -722,6 +953,7 @@
    "type": "h2",
    "text": "inspect(): what the scheduler would do",
    "page": 138,
+   "_y": 402.0,
    "zh": "`inspect()`：调度器会做什么"
   },
   {
@@ -730,25 +962,11 @@
    "zh": "`harness.inspect(context)` 不写任何东西，也不运行任何任务代码。它返回调度状态（在第一次 `resume()` 之前是 `paused`、`running` 或 `closing`）、每个存活任务的完整记录与一个推导出的状态，以及排队中和已放置的提交项。"
   },
   {
-   "type": "small",
-   "text": "running Its code is running in this process completing Its outcome is held until its owned work ends waiting, on The live tasks it still waits for",
-   "page": 138,
-   "zh": "`running` —— 它的代码正在本进程中运行。`completing` —— 它的结果被持有，直到它所拥有的工作结束。`waiting`、`on` —— 它仍在等待的存活任务。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "blocked, reason No installed definition can run it: missing_task, task_too_old, or migration_failed (with error)",
-    "ready, migrates The next scheduling pass picks it up; migrates when a newer definition will migrate it first src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration."
-   ],
-   "page": 138
-  },
-  {
    "type": "figure",
    "number": "8.7",
    "file": "figures/fig-8.7.png",
-   "title": "ONE SET OF TASKS, TWO READINGS\nC O M P A R I S O N",
-   "caption": "The graph shows what is committed; inspect() adds what the scheduler would do under this registry. Four tasks created in one commit, read while the gate runs. app.legacy was stored by a version 2 definition and only version 1 is installed; app.retired is not installed. From research/capture/extra-p8/inspect-vs-graph.txt.",
+   "title": "ONE SET OF TASKS , TWO READINGS COMPARISON",
+   "caption": "Thegraphshowswhatiscommitted ; inspect () addswhattheschedulerwoulddounderthisregistry . Fourtaskscreatedinonecommit , readwhilethe gateruns . a pp . l egac y wasstoredbyaversion 2 definitionandonlyversion 1 isinstalled ; a pp . r e t i r ed isnotinstalled . Fromresearch / capture / extra - p 8/ inspect - vs - graph . txt .",
    "page": 139,
    "zh_caption": "任务图展示已提交的内容；`inspect()` 补上在这份注册表下调度器会做什么。一次提交创建四个任务，在闸门运行期间读取。`app.legacy` 由版本 2 的定义存储，而只安装了版本 1；`app.retired` 未安装。摘自 `research/capture/extra-p8/inspect-vs-graph.txt`。"
   },
@@ -756,6 +974,7 @@
    "type": "small",
    "text": "The graph shows what is committed; inspect() adds what the scheduler would do under this registry. Four tasks created in one commit, read while the gate runs. app.legacy was stored by a version 2 definition and only version 1 is installed; app.retired is not installed. From research/capture/extra-p8/inspect-vs-graph.txt.",
    "page": 139,
+   "_y": 305.0,
    "zh": "任务图展示已提交的内容；`inspect()` 补上在这份注册表下调度器会做什么。一次提交创建四个任务，在闸门运行期间读取。`app.legacy` 由版本 2 的定义存储，而只安装了版本 1；`app.retired` 未安装。摘自 `research/capture/extra-p8/inspect-vs-graph.txt`。"
   },
   {
@@ -767,6 +986,7 @@
    "type": "h2",
    "text": "From “nothing happens” to a reason",
    "page": 139,
+   "_y": 411.7,
    "zh": "从「什么都没发生」到一个原因"
   },
   {
@@ -825,12 +1045,363 @@
    "zh": "排队的提交项要等它前面的运行；已放置的提交项属于某个尚未作答的运行（6.1（p. 84））。已完成的任务不在 `inspect()` 里，用 `getTask()` 读取它们。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §2.2 (inspect()), §5.4, §9.5; README §Task Graph; src/harness/task-graph.ts; src/harness/harness.ts (inspect, taskGraph,",
-    "watchTaskGraph); src/harness/types.ts (TaskInspection, HarnessInspection); src/harness/scheduler.ts; test/harness-task-graph.test.ts; test/harness-inspect.test.ts; research/capture/task-graph.txt; research/capture/NOTES.md (note 9); research/capture/extra-p8/inspect- vs-graph.txt (script test/capture-p8-observe.ts)"
+   "type": "small",
+   "text": "Sources: spec §2.2 (inspect()), §5.4, §9.5; README §Task Graph; src/harness/task-graph.ts; src/harness/harness.ts (inspect, taskGraph, watchTaskGraph); src/harness/types.ts (TaskInspection, HarnessInspection); src/harness/scheduler.ts; test/harness-task-graph.test.ts; test/harness-inspect.test.ts; research/capture/task-graph.txt; research/capture/NOTES.md (note 9); research/capture/extra-p8/inspect- vs-graph.txt (script test/capture-p8-observe.ts)",
+   "page": 139,
+   "_y": 660.6
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 450.6,
+   "cells": [
+    "1 user message committed; the run starts message_start, message_end, submission, run_start, turn_start"
    ],
-   "page": 139
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 467.9,
+   "cells": [
+    "2 system prompt entry message_start, message_end"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 484.5,
+   "cells": [
+    "3 attempt 1 of the generation begins none"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 501.6,
+   "cells": [
+    "4 first streamed partial message_start"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 518.1,
+   "cells": [
+    "5–7 thinking and text stream in message_update each"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 534.6,
+   "cells": [
+    "8 assistant message committed; tool call queued message_end, usage_changed"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 551.9,
+   "cells": [
+    "9 the tool starts running tool_execution_start"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 568.4,
+   "cells": [
+    "10–13 tool output and details tool_execution_update each"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 585.6,
+   "cells": [
+    "14 tool done; its result entry committed tool_execution_end, message_start, message_end"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 602.1,
+   "cells": [
+    "15 the next generation replaces the first turn_end, turn_start"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 619.5,
+   "cells": [
+    "16 attempt 1 begins none"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 634.6,
+   "cells": [
+    "17–19 the answer streams in message_start, message_update ×2"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 653.1,
+   "cells": [
+    "20 answer committed; the run ends message_end, turn_end, run_end, submission, usage_changed"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 133,
+   "_y": 671.3,
+   "cells": [
+    "research/capture/watch-ops.txt (20 frames) and agent-events.txt (18 batches), one run of test/capture/view-ops.ts."
+   ],
+   "is_header": false,
+   "_sig": "research",
+   "zh": "`research/capture/watch-ops.txt`（20 帧）与"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 499.4,
+   "cells": [
+    "run_start / run_end starts or ends a run. Steering input that joins a running run is not a new run"
+   ],
+   "is_header": false,
+   "_sig": "run_start",
+   "zh": "`run_start` /"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 515.9,
+   "cells": [
+    "turn_start / turn_end moves the run to a new generation / commits a generation’s outcome"
+   ],
+   "is_header": false,
+   "_sig": "turn_start",
+   "zh": "`turn_start` /"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 533.1,
+   "cells": [
+    "message_start / message_end commits an attempt’s first streamed partial, or a message entry that had none / appends an entry with model messages"
+   ],
+   "is_header": false,
+   "_sig": "message_start",
+   "zh": "`message_start` /"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 560.1,
+   "cells": [
+    "message_update changes the streamed partial; carries usage and changes"
+   ],
+   "is_header": false,
+   "_sig": "message_update",
+   "zh": "`message_update` —— 改动流式分片，携带 usage 和 changes。"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 577.4,
+   "cells": [
+    "entry_appended appends an entry with no model messages, such as a plain pi.reset"
+   ],
+   "is_header": false,
+   "_sig": "entry_appended",
+   "zh": "`entry_appended` —— 追加一条不含模型消息的条目，例如一条普通的"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 593.9,
+   "cells": [
+    "tool_execution_* starts a tool call / changes its output, details or diagnostics / finishes it, or drops it with its run"
+   ],
+   "is_header": false,
+   "_sig": "tool_execution_",
+   "zh": "`tool_execution_*` —— 开始一次工具调用 / 改动它的输出、细节或诊断信息 / 结束它，或随其运行一起丢弃它。"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 610.6,
+   "cells": [
+    "submission writes a submission record of this conversation"
+   ],
+   "is_header": false,
+   "_sig": "submission",
+   "zh": "`submission` —— 写入本会话的一条提交项记录。"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 627.6,
+   "cells": [
+    "inbox_update, agent_changed, usage_changed",
+    "changes that document"
+   ],
+   "is_header": false,
+   "_sig": "inbox_update",
+   "zh": "`inbox_update`、"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 654.6,
+   "cells": [
+    "auto_retry_start / _end, deferred_poll starts or ends a retry wait; schedules or moves a deferred poll"
+   ],
+   "is_header": false,
+   "_sig": "auto_retry_start",
+   "zh": "`auto_retry_start` /"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 671.9,
+   "cells": [
+    "task_failed settles a task of the conversation faulted or orphaned"
+   ],
+   "is_header": false,
+   "_sig": "task_failed",
+   "zh": "`task_failed` —— 以"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 688.4,
+   "cells": [
+    "compaction_start / _end starts or finishes a compaction"
+   ],
+   "is_header": false,
+   "_sig": "compaction_start",
+   "zh": "`compaction_start` / `_end` —— 开始或完成一次压缩。spec §9.4；"
+  },
+  {
+   "type": "table-row",
+   "page": 134,
+   "_y": 706.5,
+   "cells": [
+    "spec §9.4; src/harness/events.ts."
+   ],
+   "is_header": false,
+   "_sig": "spec",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 478.6,
+   "cells": [
+    "running Its code is running in this process"
+   ],
+   "is_header": false,
+   "_sig": "running",
+   "zh": "`running` —— 它的代码正在本进程中运行。"
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 495.1,
+   "cells": [
+    "completing Its outcome is held until its owned work ends"
+   ],
+   "is_header": false,
+   "_sig": "completing",
+   "zh": "`completing` —— 它的结果被持有，直到它所拥有的工作结束。"
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 512.3,
+   "cells": [
+    "waiting, on The live tasks it still waits for"
+   ],
+   "is_header": false,
+   "_sig": "waiting",
+   "zh": "`waiting`、"
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 528.6,
+   "cells": [
+    "blocked, reason No installed definition can run it: missing_task, task_too_old, or migration_failed (with error)"
+   ],
+   "is_header": false,
+   "_sig": "blocked",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 546.0,
+   "cells": [
+    "ready, migrates The next scheduling pass picks it up; migrates when a newer definition will migrate it first"
+   ],
+   "is_header": false,
+   "_sig": "ready",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 138,
+   "_y": 562.7,
+   "cells": [
+    "src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration."
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": null
   }
  ]
 }

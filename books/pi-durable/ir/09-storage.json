@@ -4,20 +4,22 @@
    "type": "part-title",
    "text": "P A R T 9 Storage and Environment",
    "page": 140,
+   "_y": 83.8,
    "zh": "存储与环境"
   },
   {
    "type": "h2",
    "text": "A small storage contract with three backends, and the execution environment where tools touch the world.",
    "page": 140,
+   "_y": 154.8,
    "zh": "一份小型存储契约，三个后端，以及工具接触真实世界的执行环境。"
   },
   {
    "type": "figure",
    "number": "9.1",
    "file": "figures/fig-9.1.png",
-   "title": "THE STORAGE INTERFACE\nS T R U C T U R E",
-   "caption": "Everything the Session stores goes through one call; everything it reads is a keyed lookup or a cursor scan. The eight write types and the methods of",
+   "title": "THE STORAGE INTERFACE STRUCTURE",
+   "caption": "EverythingtheSessionstoresgoesthroughonecall ; everythingitreadsisakeyedlookuporacursorscan . Theeightwritetypesandthemethodsof",
    "page": 141,
    "zh_caption": "Session 存储的一切都经过一次调用；它读取的一切都是按键查找或游标扫描。图中是 `src/types.ts` 里 Storage 的八种写入类型与方法。"
   },
@@ -25,12 +27,14 @@
    "type": "chapter-title",
    "text": "9 . 1 The storage contract",
    "page": 141,
+   "_y": 57.4,
    "zh": "9.1 存储契约"
   },
   {
    "type": "lede",
    "text": "Storage stores each commit all or nothing and answers lookups and paged scans; every other rule belongs to the Session.",
    "page": 141,
+   "_y": 106.2,
    "zh": "存储要么完整保存每一次提交，要么什么都不保存，并响应查找和分页扫描；其余规则都归 Session。"
   },
   {
@@ -42,6 +46,7 @@
    "type": "h2",
    "text": "A small interface with a narrow job",
    "page": 141,
+   "_y": 237.7,
    "zh": "一个职责狭窄的小接口"
   },
   {
@@ -58,12 +63,14 @@
    "type": "small",
    "text": "Everything the Session stores goes through one call; everything it reads is a keyed lookup or a cursor scan. The eight write types and the methods of Storage in src/types.ts. The cursor shown is the shape all three shipped backends use.",
    "page": 141,
+   "_y": 704.8,
    "zh": "Session 存储的一切都经过一次调用；它读取的一切都是按键查找或游标扫描。图中是 `src/types.ts` 里 Storage 的八种写入类型与方法。所示的游标是三个已发布后端都采用的形态。"
   },
   {
    "type": "h2",
    "text": "One write: commit",
    "page": 142,
+   "_y": 75.0,
    "zh": "唯一的写入：提交"
   },
   {
@@ -72,27 +79,114 @@
    "zh": "`commit(writes, context)` 原子地存储一批写入，并返回它的 `Seq`，即该提交的序号。序号「严格递增，但可能有间隔」，而一旦 `commit()` resolve，之后的每次读取都能看到这一批（spec §10）。存储把序号盖在它保存的内容上。正是这样，文档后来才能被读回某个条目写入时的样子（基线、增量与迁移，见第 56 页）。"
   },
   {
-   "type": "code",
-   "lines": [
-    "conversation value: ConversationRecord a new immutable record",
-    "entry value: EntryRecord a new immutable record and its commit sequence",
-    "task value: TaskRecord the complete record, replacing the previous one",
-    "submission value: SubmissionRecord the complete record, replacing the previous one",
-    "document.create record, content (a base) a new incarnation, stamped createdAt",
-    "document.copy record, source: { id, at } a new incarnation that starts from the source’s committed value",
-    "document.change id, content (base or delta) one more revision document.retire id the incarnation, stamped retiredAt The StorageWrite union in src/types.ts. A base is a document’s complete value; a delta is a batch of Chord operations on top of the previous revision."
-   ],
-   "page": 142
-  },
-  {
    "type": "p",
    "text": "When a commit fails Only one kind of failure is safe. StorageRejected “means a batch was rejected before any durable effect and is guaranteed not to have committed”. The Session rolls back and carries on. Any other error from commit() poisons the Session: it can no longer know whether the batch was stored, so it refuses further commits spec §10. What poison means for your host is in when a commit fails (p. 33).",
    "zh": "提交失败时：只有一种失败是安全的。`StorageRejected` 「意味着某批次在任何持久效果发生之前就被拒绝，并且保证没有提交」。Session 会回滚并继续。`commit()` 抛出的任何其他错误都会毒化 Session：它再也无法知道该批次是否已存储，于是拒绝后续提交（spec §10）。毒化对你的宿主意味着什么，见「提交失败时」（第 33 页）。"
   },
   {
+   "type": "table-row",
+   "page": 142,
+   "_y": 179.9,
+   "cells": [
+    "conversation value: ConversationRecord a new immutable record"
+   ],
+   "is_header": false,
+   "_sig": "conversation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 197.1,
+   "cells": [
+    "entry value: EntryRecord a new immutable record and its commit sequence"
+   ],
+   "is_header": false,
+   "_sig": "entry",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 213.6,
+   "cells": [
+    "task value: TaskRecord the complete record, replacing the previous one"
+   ],
+   "is_header": false,
+   "_sig": "task",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 230.1,
+   "cells": [
+    "submission value: SubmissionRecord the complete record, replacing the previous one"
+   ],
+   "is_header": false,
+   "_sig": "submission",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 247.4,
+   "cells": [
+    "document.create record, content (a base) a new incarnation, stamped createdAt"
+   ],
+   "is_header": false,
+   "_sig": "document",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 263.9,
+   "cells": [
+    "document.copy record, source: { id, at } a new incarnation that starts from the source’s committed value"
+   ],
+   "is_header": false,
+   "_sig": "document",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 281.1,
+   "cells": [
+    "document.change id, content (base or delta) one more revision"
+   ],
+   "is_header": false,
+   "_sig": "document",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 297.6,
+   "cells": [
+    "document.retire id the incarnation, stamped retiredAt"
+   ],
+   "is_header": false,
+   "_sig": "document",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 142,
+   "_y": 314.5,
+   "cells": [
+    "The StorageWrite union in src/types.ts. A base is a document’s complete value; a delta is a batch of Chord operations on top of the previous revision."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Reads: keyed lookups and paged scans",
    "page": 142,
+   "_y": 432.0,
    "zh": "读取：按键查找与分页扫描"
   },
   {
@@ -101,20 +195,180 @@
    "zh": "按键查找返回一条记录，或 `undefined`。扫描返回一页 `{ items, next? }`；把 `next` 传回去即可取下一页。游标是不透明的：只能把它传回同一存储上的同一次扫描（spec §10）。Harness 每页读 256 项，而它发起的每次读取背后都有索引（spec §10）。"
   },
   {
-   "type": "small",
-   "text": "conversation(id) record exact ID entry(id) { entry, commitSeq } any entry entry(conversationId, id) { entry, commitSeq } only if that conversation can see it findLatestHeadMarker(conversationId, at?) entry the newest head marker at or before at task(id), submission(id) record the latest complete record submissionByRequest(conversationId, requestId) record host deduplication (submissions (p. 84)) findDocument(address, at) DocumentRecord which incarnation lives at an address document(id, at) StoredDocument the value, its version, deltas replayed scanConversations(query) page by owner; ascending ID scanEntries(query) page an ID range, newest first, through fork ancestors scanTasks(query) page by conversation, kind, status, abort mark, background scanSubmissions(query) page by conversation, status; ascending ID scanDocuments(query) page one scope, optional kind; ascending ID close() — releases resources; every later call fails Every method also takes a final context. src/types.ts and spec §10.",
-   "page": 143,
-   "zh": "`conversation(id)` → record —— 精确 ID / `entry(id)` → `{ entry, commitSeq }` —— 任意条目 / `entry(conversationId, id)` → `{ entry, commitSeq }` —— 仅当那个会话能看到它 / `findLatestHeadMarker(conversationId, at?)` → entry —— `at` 或之前最新的头指针标记 / `task(id)`、`submission(id)` → record —— 最新的完整记录 / `submissionByRequest(conversationId, requestId)` → record —— 宿主去重（提交项，见第 84 页）/ `findDocument(address, at)` → DocumentRecord —— 某个地址上存续的化身 / `document(id, at)` → StoredDocument —— 该值、其版本、已重放的增量 / `scanConversations(query)` → page —— 按 owner 分页；ID 升序 / `scanEntries(query)` → page —— 一个 ID 区间，最新在前，穿过 fork 祖先 / `scanTasks(query)` → page —— 按会话、kind、status、中止标记、background 分页 / `scanSubmissions(query)` → page —— 按会话、status；ID 升序 / `scanDocuments(query)` → page —— 一个作用域，可选 kind；ID 升序 / `close()` —— 释放资源；之后所有调用都失败。每个方法还接受最后一个 context 参数。`src/types.ts` 与 spec §10。"
-  },
-  {
    "type": "p",
    "text": "document(id, at) is the one read that computes. It finds the newest base at or before the point, applies the deltas after it in order, and returns the value. At \"current\" a retired incarnation returns undefined. Asking for an old point of a document that keeps no history fails rather than guessing (defining a document (p. 50)).",
    "zh": "`document(id, at)` 是唯一需要计算的读取。它找到该时点或之前最新的基线，按序应用其后的增量，然后返回值。在 `\"current\"` 处，已退场的化身返回 `undefined`。若一个不保留历史的文档被问到旧的时点，则直接失败而不是猜测（定义文档，见第 50 页）。"
   },
   {
+   "type": "table-row",
+   "page": 143,
+   "_y": 83.1,
+   "cells": [
+    "conversation(id) record exact ID"
+   ],
+   "is_header": false,
+   "_sig": "conversation",
+   "zh": "`conversation(id)` → record —— 精确 ID /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 100.4,
+   "cells": [
+    "entry(id) { entry, commitSeq } any entry"
+   ],
+   "is_header": false,
+   "_sig": "entry",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 116.9,
+   "cells": [
+    "entry(conversationId, id) { entry, commitSeq } only if that conversation can see it"
+   ],
+   "is_header": false,
+   "_sig": "entry",
+   "zh": "`entry(id)` → `{ entry, commitSeq }` —— 任意条目 / `entry(conversationId, id)` → `{ entry, commitSeq }` —— 仅当那个会话能看到它 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 134.1,
+   "cells": [
+    "findLatestHeadMarker(conversationId, at?) entry the newest head marker at or before at"
+   ],
+   "is_header": false,
+   "_sig": "findLatestHeadMarker",
+   "zh": "`findLatestHeadMarker(conversationId, at?)` → entry ——"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 150.6,
+   "cells": [
+    "task(id), submission(id) record the latest complete record"
+   ],
+   "is_header": false,
+   "_sig": "task",
+   "zh": "`task(id)`、"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 167.1,
+   "cells": [
+    "submissionByRequest(conversationId, requestId) record host deduplication (submissions (p. 84))"
+   ],
+   "is_header": false,
+   "_sig": "submissionByRequest",
+   "zh": "`submissionByRequest(conversationId, requestId)` → record —— 宿主去重（提交项，见第 84 页）/"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 184.4,
+   "cells": [
+    "findDocument(address, at) DocumentRecord which incarnation lives at an address"
+   ],
+   "is_header": false,
+   "_sig": "findDocument",
+   "zh": "`findDocument(address, at)` → DocumentRecord —— 某个地址上存续的化身 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 200.9,
+   "cells": [
+    "document(id, at) StoredDocument the value, its version, deltas replayed"
+   ],
+   "is_header": false,
+   "_sig": "document",
+   "zh": "`document(id, at)` → StoredDocument —— 该值、其版本、已重放的增量 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 218.1,
+   "cells": [
+    "scanConversations(query) page by owner; ascending ID"
+   ],
+   "is_header": false,
+   "_sig": "scanConversations",
+   "zh": "`scanConversations(query)` → page —— 按 owner 分页；ID 升序 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 234.6,
+   "cells": [
+    "scanEntries(query) page an ID range, newest first, through fork ancestors"
+   ],
+   "is_header": false,
+   "_sig": "scanEntries",
+   "zh": "`scanEntries(query)` → page —— 一个 ID 区间，最新在前，穿过 fork 祖先 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 251.9,
+   "cells": [
+    "scanTasks(query) page by conversation, kind, status, abort mark, background"
+   ],
+   "is_header": false,
+   "_sig": "scanTasks",
+   "zh": "`scanTasks(query)` → page —— 按会话、kind、status、中止标记、background 分页 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 268.4,
+   "cells": [
+    "scanSubmissions(query) page by conversation, status; ascending ID"
+   ],
+   "is_header": false,
+   "_sig": "scanSubmissions",
+   "zh": "`scanSubmissions(query)` → page —— 按会话、status；ID 升序 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 284.9,
+   "cells": [
+    "scanDocuments(query) page one scope, optional kind; ascending ID"
+   ],
+   "is_header": false,
+   "_sig": "scanDocuments",
+   "zh": "`scanDocuments(query)` → page —— 一个作用域，可选 kind；ID 升序 /"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 302.1,
+   "cells": [
+    "close() — releases resources; every later call fails"
+   ],
+   "is_header": false,
+   "_sig": "close",
+   "zh": "`close()` —— 释放资源；之后所有调用都失败。每个方法还接受最后一个 context 参数。"
+  },
+  {
+   "type": "table-row",
+   "page": 143,
+   "_y": 320.3,
+   "cells": [
+    "Every method also takes a final context. src/types.ts and spec §10."
+   ],
+   "is_header": false,
+   "_sig": "Every",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "You rarely call storage yourself. Choose a backend, open it, and pass it to the Harness. A commit error other than StorageRejected poisons the Session. Close it and reopen the storage; the reopened state is the truth. Writing a backend? Pass the conformance suite (9.4 (p. 152)).",
    "page": 143,
+   "_y": 419.1,
    "zh": "你很少自己调用存储。挑一个后端，打开它，交给 Harness。除 `StorageRejected` 之外的提交错误会毒化 Session。把它关掉再重新打开存储；重新打开后的状态才是真相。要写一个后端？把一致性测试套件传进去（9.4，见第 152 页）。"
   },
   {
@@ -123,23 +377,23 @@
    "zh": "后端作者需要知道的细节：所有记录共享同一个 ID 空间，来自 `mintId()`；ID 1 是根会话。一个批次对每个文档化身最多包含一次 create 或 change，外加一次可选的退场，且版本变更必须是基线（spec §10）。`commit()` 结束之后不要保留参数里的任何东西，并返回彼此独立的值（spec §4）。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §4, §10; src/types.ts (Storage, StorageWrite); src/session/session.ts; src/harness/context.ts; src/storage/memory.ts;",
-    "src/storage/sqlite/storage.ts; src/testing/storage-conformance.ts; docs/pico-v5-handoff.md §1–2"
-   ],
-   "page": 143
+   "type": "small",
+   "text": "Sources: spec §4, §10; src/types.ts (Storage, StorageWrite); src/session/session.ts; src/harness/context.ts; src/storage/memory.ts; src/storage/sqlite/storage.ts; src/testing/storage-conformance.ts; docs/pico-v5-handoff.md §1–2",
+   "page": 143,
+   "_y": 570.6
   },
   {
    "type": "chapter-title",
    "text": "9 . 2 SQLite",
    "page": 144,
+   "_y": 57.4,
    "zh": "9.2 SQLite"
   },
   {
    "type": "lede",
    "text": "One SQL transaction is one commit; every record is kept whole as JSON beside the few columns its queries need.",
    "page": 144,
+   "_y": 106.2,
    "zh": "一个 SQL 事务就是一次提交；每条记录都以 JSON 完整保存，查询所需的少数几列放在旁边。"
   },
   {
@@ -151,6 +405,7 @@
    "type": "h2",
    "text": "Opening a file",
    "page": 144,
+   "_y": 222.7,
    "zh": "打开文件"
   },
   {
@@ -159,20 +414,48 @@
    "zh": "`openNodeSqliteStorage(path, options)` 来自 `@earendil-works/pi-durable/storage/sqlite/node`，它会创建父目录，并用 Node 内置的 `node:sqlite` 打开文件。它开启预写日志（`journal_mode = WAL`、`synchronous = NORMAL`），并应用任何待执行的 schema 迁移（`src/storage/sqlite/node.ts`）。"
   },
   {
-   "type": "small",
-   "text": "walAutoCheckpointPages 1,000 WAL auto-checkpoint threshold in pages; 0 disables it busyTimeoutMs 5,000 how long to wait for another connection’s lock (SQLite’s own default is 0) NodeSqliteStorageOptions, src/storage/sqlite/node.ts.",
-   "page": 144,
-   "zh": "`walAutoCheckpointPages` 1,000 —— WAL 自动检查点阈值，单位为页；0 表示关闭 / `busyTimeoutMs` 5,000 —— 等待其他连接释放锁的时长（SQLite 自身的默认值是 0）。`NodeSqliteStorageOptions`，`src/storage/sqlite/node.ts`。"
-  },
-  {
    "type": "p",
    "text": "Those settings decide what survives. “WAL mode with synchronous = NORMAL: commits survive process crashes; the newest may be lost on power or host failure” README §Storage. One SQL transaction is one commit, so a process that dies mid-commit leaves all of it or none of it spec §11.2. close() folds the write-ahead log back into the file. After a close, the capture found a single session.sqlite and no WAL file research/capture/extra-p9/sqlite-revisions.txt.",
    "zh": "这些设置决定了什么能存活。「WAL 模式且 `synchronous = NORMAL`：提交可挺过进程崩溃；最新的可能在断电或宿主故障时丢失」（README §Storage）。一个 SQL 事务就是一次提交，所以进程若在提交中途死掉，结果是全有或全无（spec §11.2）。`close()` 会把预写日志折回文件里。close 之后，采集结果显示只有一个 `session.sqlite`，没有 WAL 文件（`research/capture/extra-p9/sqlite-revisions.txt`）。"
   },
   {
+   "type": "table-row",
+   "page": 144,
+   "_y": 313.5,
+   "cells": [
+    "walAutoCheckpointPages 1,000 WAL auto-checkpoint threshold in pages; 0 disables it"
+   ],
+   "is_header": false,
+   "_sig": "walAutoCheckpointPages",
+   "zh": "`walAutoCheckpointPages` 1,000 —— WAL 自动检查点阈值，单位为页；0 表示关闭 /"
+  },
+  {
+   "type": "table-row",
+   "page": 144,
+   "_y": 330.0,
+   "cells": [
+    "busyTimeoutMs 5,000 how long to wait for another connection’s lock (SQLite’s own default is 0)"
+   ],
+   "is_header": false,
+   "_sig": "busyTimeoutMs",
+   "zh": "`busyTimeoutMs` 5,000 —— 等待其他连接释放锁的时长（SQLite 自身的默认值是 0）。"
+  },
+  {
+   "type": "table-row",
+   "page": 144,
+   "_y": 348.0,
+   "cells": [
+    "NodeSqliteStorageOptions, src/storage/sqlite/node.ts."
+   ],
+   "is_header": false,
+   "_sig": "NodeSqliteStorageOptions",
+   "zh": "`NodeSqliteStorageOptions`，"
+  },
+  {
    "type": "h2",
    "text": "Nine tables",
    "page": 144,
+   "_y": 443.2,
    "zh": "九张表"
   },
   {
@@ -184,8 +467,8 @@
    "type": "figure",
    "number": "9.2",
    "file": "figures/fig-9.2.png",
-   "title": "THE SQLITE SCHEMA\nS T R U C T U R E",
-   "caption": "Each record table lifts its query columns out of a JSON record; document content lives apart, one row per commit that changes it. All nine tables of research/capture/sqlite-schema.sql; “idx” marks a column used by an index. Bookkeeping values are from research/capture/sqlite-rows.txt after one turn.",
+   "title": "THE SQLITE SCHEMA STRUCTURE",
+   "caption": "Eachrecordtableli ft sitsquerycolumnsoutofaJSONrecord ; documentcontentlivesapart , onerowpercommitthatchangesit . Allninetablesof research / capture / sqlite - schema . sql ; “ idx ” marksacolumnusedbyanindex . Bookkeepingvaluesarefromresearch / capture / sqlite - rows . txta ft eroneturn .",
    "page": 145,
    "zh_caption": "每张记录表都把查询列从 JSON 记录里提出来；文档内容单独存放，每次改动它的提交占一行。图中是 `research/capture/sqlite-schema.sql` 的全部九张表；「idx」标出被索引使用的列。记账类数值取自 `research/capture/sqlite-rows.txt`，在一个轮次之后。"
   },
@@ -193,12 +476,14 @@
    "type": "small",
    "text": "Each record table lifts its query columns out of a JSON record; document content lives apart, one row per commit that changes it. All nine tables of research/capture/sqlite-schema.sql; “idx” marks a column used by an index. Bookkeeping values are from research/capture/sqlite-rows.txt after one turn.",
    "page": 145,
+   "_y": 449.8,
    "zh": "每张记录表都把查询列从 JSON 记录里提出来；文档内容单独存放，每次改动它的提交占一行。图中是 `research/capture/sqlite-schema.sql` 的全部九张表；「idx」标出被索引使用的列。记账类数值取自 `research/capture/sqlite-rows.txt`，在一个轮次之后。"
   },
   {
    "type": "small",
    "text": "the tasks table and its indexes research/capture/sqlite-schema.sql SQL CREATE TABLE tasks ( id INTEGER PRIMARY KEY, conversation_id INTEGER NOT NULL, kind TEXT NOT NULL, status TEXT NOT NULL CHECK (status IN ('pending', 'running', 'waiting', 'completing', 'terminal')), abort_requested INTEGER NOT NULL CHECK (abort_requested IN (0, 1)), background INTEGER NOT NULL CHECK (background IN (0, 1)), record TEXT NOT NULL CHECK (json_valid(record))",
    "page": 145,
+   "_y": 493.9,
    "zh": "the `tasks` 表及其索引（`research/capture/sqlite-schema.sql`）　SQL　CREATE TABLE tasks ( id INTEGER PRIMARY KEY, conversation_id INTEGER NOT NULL, kind TEXT NOT NULL CHECK (status IN ('pending', 'running', 'waiting', 'completing', 'terminal')), abort_requested INTEGER NOT NULL CHECK (abort_requested IN (0, 1)), background INTEGER NOT NULL CHECK (background IN (0, 1)), record TEXT NOT NULL CHECK (json_valid(record))"
   },
   {
@@ -207,12 +492,14 @@
     ") STRICT;",
     "CREATE INDEX tasks_by_status ON tasks (status, id); CREATE INDEX tasks_by_conversation ON tasks (conversation_id, id);"
    ],
-   "page": 145
+   "page": 145,
+   "_y": 616.1
   },
   {
    "type": "small",
    "text": "… Three more indexes, on kind, abort_requested and background, are elided. Each index ends in id, so a scan pages in ID order.",
    "page": 145,
+   "_y": 660.3,
    "zh": "……另外三个索引，分别在 kind、abort_requested 和 background 上，此处省略。每个索引都以 id 结尾，因此扫描按 ID 顺序分页。"
   },
   {
@@ -244,8 +531,8 @@
    "type": "figure",
    "number": "9.3",
    "file": "figures/fig-9.3.png",
-   "title": "REVISIONS OF TWO DOCUMENTS\nT I M E L I N E",
-   "caption": "A rewindable document keeps every revision; a current-only document drops its older rows when a base commits. Rows and reads from research/capture/extra-p9/sqlite-revisions.txt: two app documents changed in the same commits, seq 2–7.",
+   "title": "REVISIONS OF TWO DOCUMENTS TIMELINE",
+   "caption": "Arewindabledocumentkeepseveryrevision ; acurrent - onlydocumentdropsitsolderrowswhenabasecommits . Rowsandreadsfrom research / capture / extra - p 9/ sqlite - revisions . txt : twoappdocumentschangedinthesamecommits , seq 2–7.",
    "page": 146,
    "zh_caption": "可回溯的文档保留每一个修订；只保留当前值的文档在基线提交时丢弃较旧的行。行与读取结果取自 `research/capture/extra-p9/sqlite-revisions.txt`：两个 app 文档在同一批提交中被改动，seq 2–7。"
   },
@@ -253,6 +540,7 @@
    "type": "h2",
    "text": "One commit, one transaction",
    "page": 146,
+   "_y": 197.2,
    "zh": "一次提交，一个事务"
   },
   {
@@ -264,6 +552,7 @@
    "type": "h2",
    "text": "Document revisions",
    "page": 146,
+   "_y": 314.2,
    "zh": "文档修订"
   },
   {
@@ -272,11 +561,10 @@
    "zh": "文档内容存放在 document_revisions，每个文档每次改动它的提交占一行。一行要么是基线，保存完整值；要么是增量，保存 Chord 操作。要读取一个文档，SQLite 找到该时点或之前最新的基线，在同一个事务内应用其后的增量，这样并发提交无法调包基线（`src/storage/sqlite/storage.ts`）。"
   },
   {
-   "type": "code",
-   "lines": [
-    "A rewindable document keeps every revision; a current-only document drops its older rows when a base commits. Rows and reads from research/capture/extra-p9/sqlite-revisions.txt: two app documents changed in the same commits, seq 2–7."
-   ],
-   "page": 146
+   "type": "small",
+   "text": "A rewindable document keeps every revision; a current-only document drops its older rows when a base commits. Rows and reads from research/capture/extra-p9/sqlite-revisions.txt: two app documents changed in the same commits, seq 2–7.",
+   "page": 146,
+   "_y": 661.3
   },
   {
    "type": "p",
@@ -287,6 +575,7 @@
    "type": "h2",
    "text": "Beyond Node",
    "page": 147,
+   "_y": 103.5,
    "zh": "Node 之外"
   },
   {
@@ -296,28 +585,37 @@
   },
   {
    "type": "small",
-   "text": "the facade an adapter implements src/storage/sqlite/database.ts TS",
+   "text": "the facade an adapter implements src/storage/sqlite/database.ts TS export interface SqliteExecutor {",
    "page": 147,
+   "_y": 184.1,
    "zh": "适配器要实现的外观（`src/storage/sqlite/database.ts`）　TS"
   },
   {
    "type": "code",
    "lines": [
-    "export interface SqliteExecutor {",
     "exec(sql: string): Promise<void>; run(sql: string, ...params: SqliteValue[]): Promise<void>;",
     "get<T extends object>(sql: string, ...params: SqliteValue[]): Promise<T | undefined>;",
     "all<T extends object>(sql: string, ...params: SqliteValue[]): Promise<T[]>;",
     "}",
-    "export interface SqliteDatabase extends SqliteExecutor {",
+    "export interface SqliteDatabase extends SqliteExecutor {"
+   ],
+   "page": 147,
+   "_y": 218.6
+  },
+  {
+   "type": "code",
+   "lines": [
     "transaction<T>(callback: (transaction: SqliteExecutor) => Promise<T>): Promise<T>; close(): Promise<void>;",
     "}"
    ],
-   "page": 147
+   "page": 147,
+   "_y": 295.8
   },
   {
    "type": "small",
    "text": "Doc comments and the SqliteValue type (null, number, bigint, string or bytes) are elided.",
    "page": 147,
+   "_y": 342.7,
    "zh": "文档注释和 SqliteValue 类型（`null`、`number`、`bigint`、`string` 或字节）此处省略。"
   },
   {
@@ -329,32 +627,34 @@
    "type": "small",
    "text": "“One process owns a storage at a time; there is no cross-process locking” README §Storage. Each SqliteStorage mints IDs from its own counter, so two processes on one file can mint the same ID. The second commit then fails and poisons that Session, or silently replaces the other process’s task or submission. Running a single owner is the host’s job (limits and non-goals (p. 168)).",
    "page": 147,
+   "_y": 497.2,
    "zh": "「同一时刻只有一个进程拥有一个存储；没有跨进程锁」（README §Storage）。每个 SqliteStorage 都从自己的计数器铸出 ID，所以两个进程操作同一个文件可能铸出相同的 ID。于是第二次提交会失败并毒化那个 Session，或者悄悄替换掉另一个进程的任务或提交项。只运行单一所有者是宿主的职责（限制与非目标，见第 168 页）。"
   },
   {
    "type": "small",
    "text": "Use SQLite for anything long-lived. A process crash loses nothing committed; a power cut may lose the newest commits. To debug, open the file with any SQLite client and read the record column. On another runtime, write a SqliteDatabase adapter and run the conformance suite against it.",
    "page": 147,
+   "_y": 577.3,
    "zh": "任何长期存在的东西都用 SQLite。进程崩溃不会丢失任何已提交内容；断电可能丢掉最新的提交。调试时，用任意 SQLite 客户端打开文件并读 record 列。在其他运行时上，写一个 SqliteDatabase 适配器并对它跑一致性测试套件。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §4, §11.2; README §Storage; src/storage/sqlite/{storage,node,database,migrations}.ts; test/sqlite-storage.test.ts;",
-    "test/sqlite-facade.test.ts; test/sqlite-migrations.test.ts; research/capture/sqlite-schema.sql, sqlite-rows.txt, sqlite-rows-midrun.txt; research/capture/extra-p9/sqlite-revisions.txt"
-   ],
-   "page": 147
+   "type": "small",
+   "text": "Sources: spec §4, §11.2; README §Storage; src/storage/sqlite/{storage,node,database,migrations}.ts; test/sqlite-storage.test.ts; test/sqlite-facade.test.ts; test/sqlite-migrations.test.ts; research/capture/sqlite-schema.sql, sqlite-rows.txt, sqlite-rows-midrun.txt; research/capture/extra-p9/sqlite-revisions.txt",
+   "page": 147,
+   "_y": 643.4
   },
   {
    "type": "chapter-title",
    "text": "9 . 3 JSONL",
    "page": 148,
+   "_y": 57.4,
    "zh": "9.3 JSONL"
   },
   {
    "type": "lede",
    "text": "Sidecar records first, one marker in main.jsonl second: a commit exists exactly when its marker does.",
    "page": 148,
+   "_y": 106.2,
    "zh": "先写边车记录，再在 main.jsonl 写一个标记：标记存在，提交就存在。"
   },
   {
@@ -366,6 +666,7 @@
    "type": "h2",
    "text": "The directory",
    "page": 148,
+   "_y": 222.7,
    "zh": "目录"
   },
   {
@@ -377,8 +678,8 @@
    "type": "figure",
    "number": "9.4",
    "file": "figures/fig-9.4.png",
-   "title": "ONE COMMIT, ONE MARKER, FOUR SIDECARS\nA N A T O M Y",
-   "caption": "A JSONL commit is one marker in main.jsonl that names its sidecar records by sequence and ordinal. Commit 6 of the one-turn run, copied while the count tool was running: research/capture/jsonl-dir-midrun/. The assistant entry rides in the marker; the two tasks and two documents live in sidecars.",
+   "title": "ONE COMMIT , ONE MARKER , FOUR SIDECARS ANATOMY",
+   "caption": "AJSONLcommitisonemarkerinmain . jsonlthatnamesitssidecarrecordsbysequenceandordinal . Commit 6 oftheone - turnrun , copiedwhilethe counttoolwasrunning : research / capture / jsonl - dir - midrun /. Theassistantentryridesinthemarker ; thetwotasksandtwodocumentsliveinsidecars .",
    "page": 149,
    "zh_caption": "一次 JSONL 提交就是 main.jsonl 里的一个标记，它按提交序号和序位指明自己的边车记录。图中是那一轮运行中计数工具运行时刻复制出的第 6 次提交：`research/capture/jsonl-dir-midrun/`。助手条目随标记一起走；两个任务和两个文档住在边车里。"
   },
@@ -387,12 +688,14 @@
    "lines": [
     "A JSONL commit is one marker in main.jsonl that names its sidecar records by sequence and ordinal. Commit 6 of the one-turn run, copied while the count tool was running: research/capture/jsonl-dir-midrun/. The assistant entry rides in the marker; the two tasks and two documents live in sidecars."
    ],
-   "page": 149
+   "page": 149,
+   "_y": 365.7
   },
   {
    "type": "small",
    "text": "the marker of commit 6 research/capture/jsonl-dir-midrun/main.jsonl, line 6 JSON",
    "page": 149,
+   "_y": 408.4,
    "zh": "第 6 次提交的标记（`research/capture/jsonl-dir-midrun/main.jsonl` 第 6 行）　JSON"
   },
   {
@@ -408,12 +711,14 @@
     "{ \"type\": \"document.change\", \"id\": 4, \"ordinal\": 3 }",
     "] }"
    ],
-   "page": 149
+   "page": 149,
+   "_y": 430.8
   },
   {
    "type": "small",
    "text": "Pretty-printed; on disk it is one line. The entry’s model message is elided.",
    "page": 149,
+   "_y": 566.2,
    "zh": "已做美化排版；在磁盘上是一行。条目的 model 消息已省略。"
   },
   {
@@ -425,6 +730,7 @@
    "type": "h2",
    "text": "Publication",
    "page": 149,
+   "_y": 632.7,
    "zh": "发布"
   },
   {
@@ -436,17 +742,16 @@
    "type": "figure",
    "number": "9.5",
    "file": "figures/fig-9.5.png",
-   "title": "PUBLICATION AND RECLAMATION\nS E Q U E N C E",
-   "caption": "Sidecar records land first, the marker makes them a commit, and reclamation runs only after publication. A commit that writes a new base for a current-only document, in the file order asserted by test/jsonl-storage.test.ts; steps 2, 5 and 7 happen only with fsync: true.",
+   "title": "PUBLICATION AND RECLAMATION SEQUENCE",
+   "caption": "Sidecarrecordslandfirst , themarkermakesthemacommit , andreclamationrunsonlya ft erpublication . Acommitthatwritesanewbasefora current - onlydocument , inthefileorderassertedbytest / jsonl - storage . test . ts ; steps 2, 5 and 7 happenonlywith f syn c : tru e .",
    "page": 150,
    "zh_caption": "边车记录先落盘，标记把它们变成一次提交，回收只在发布之后运行。图中是一次为只保留当前值的文档写入新基线的提交，文件顺序由 `test/jsonl-storage.test.ts` 断言；第 2、5、7 步仅在 `fsync: true` 时发生。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sidecar records land first, the marker makes them a commit, and reclamation runs only after publication. A commit that writes a new base for a current-only document, in the file order asserted by test/jsonl-storage.test.ts; steps 2, 5 and 7 happen only with fsync: true."
-   ],
-   "page": 150
+   "type": "small",
+   "text": "Sidecar records land first, the marker makes them a commit, and reclamation runs only after publication. A commit that writes a new base for a current-only document, in the file order asserted by test/jsonl-storage.test.ts; steps 2, 5 and 7 happen only with fsync: true.",
+   "page": 150,
+   "_y": 440.1
   },
   {
    "type": "p",
@@ -459,22 +764,43 @@
    "zh": "fsync 选项决定什么能存活，默认为 false。不开启它，JSONL 能挺过进程崩溃，但挺不过断电、内核或磁盘故障。开启 `fsync: true` 后，每个边车会在其标记写入之前被刷新到磁盘。最新的提交在断电时仍可能消失，「但一个存活的标记不应越过它的边车数据」（spec §11.3）。"
   },
   {
-   "type": "code",
-   "lines": [
+   "type": "table-row",
+   "page": 150,
+   "_y": 579.9,
+   "cells": [
     "two new documents append ×2, append main append ×2, flush ×2, append main"
    ],
-   "page": 150
+   "is_header": false,
+   "_sig": "two",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "task finishes append main, remove sidecar append main, flush main, remove sidecar File operations per commit, from test/jsonl-storage.test.ts.",
+   "type": "table-row",
    "page": 150,
-   "zh": "任务结束　append main，remove sidecar　append main，flush main，remove sidecar　每次提交的文件操作，取自 `test/jsonl-storage.test.ts`。"
+   "_y": 597.8,
+   "cells": [
+    "task finishes append main, remove sidecar append main, flush main, remove sidecar"
+   ],
+   "is_header": false,
+   "_sig": "task",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 150,
+   "_y": 615.8,
+   "cells": [
+    "File operations per commit, from test/jsonl-storage.test.ts."
+   ],
+   "is_header": false,
+   "_sig": "File",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Recovery",
    "page": 150,
+   "_y": 645.5,
    "zh": "恢复"
   },
   {
@@ -486,8 +812,8 @@
    "type": "figure",
    "number": "9.6",
    "file": "figures/fig-9.6.png",
-   "title": "A TORN MARKER, BEFORE AND AFTER OPEN\nC O M P A R I S O N",
-   "caption": "Opening a JSONL directory cuts the torn marker and every sidecar record no marker confirms. research/capture/extra-p9/jsonl-crash.txt.",
+   "title": "A TORN MARKER , BEFORE AND AFTER OPEN COMPARISON",
+   "caption": "OpeningaJSONLdirectorycutsthetornmarkerandeverysidecarrecordnomarkerconfirms . research / capture / extra - p 9/ jsonl - crash . txt .",
    "page": 151,
    "zh_caption": "打开一个 JSONL 目录会截掉残缺的标记，以及每一条没有标记确认的边车记录。`research/capture/extra-p9/jsonl-crash.txt`。"
   },
@@ -495,6 +821,7 @@
    "type": "small",
    "text": "Opening a JSONL directory cuts the torn marker and every sidecar record no marker confirms. research/capture/extra-p9/jsonl-crash.txt.",
    "page": 151,
+   "_y": 455.7,
    "zh": "打开一个 JSONL 目录会截掉残缺的标记，以及每一条没有标记确认的边车记录。`research/capture/extra-p9/jsonl-crash.txt`。"
   },
   {
@@ -506,6 +833,7 @@
    "type": "h2",
    "text": "Reclamation",
    "page": 151,
+   "_y": 556.2,
    "zh": "回收"
   },
   {
@@ -517,6 +845,7 @@
    "type": "small",
    "text": "A process crash never leaves half a commit. A commit exists exactly when its marker line is complete. Turn on fsync: true if the files must survive a power cut in a consistent state. Expect slow opens on large stores (9.4 (p. 152)).",
    "page": 151,
+   "_y": 655.3,
    "zh": "进程崩溃绝不会留下半个提交。标记行完整，提交就存在。如果文件必须挺过断电并保持一致状态，打开 fsync: true。在大型存储上打开会很慢（9.4，见第 152 页）。"
   },
   {
@@ -524,18 +853,21 @@
    "lines": [
     "Sources: spec §11.3, §12, §13; src/storage/jsonl/storage.ts; test/jsonl-storage.test.ts; research/capture/jsonl-dir-midrun/, jsonl-files.txt; research/capture/extra-p9/jsonl-crash.txt"
    ],
-   "page": 151
+   "page": 151,
+   "_y": 707.1
   },
   {
    "type": "chapter-title",
    "text": "9 . 4 Memory, conformance and portability",
    "page": 152,
+   "_y": 57.4,
    "zh": "9.4 内存、一致性与可移植性"
   },
   {
    "type": "lede",
    "text": "MemoryStorage defines what every backend means, one shared test suite checks it, and the storage cores run wherever an adapter can.",
    "page": 152,
+   "_y": 106.2,
    "zh": "MemoryStorage 定义了每个后端的含义，一套共享测试套件来检验它，而存储内核在任何能写适配器的地方都能运行。"
   },
   {
@@ -547,6 +879,7 @@
    "type": "h2",
    "text": "MemoryStorage is the reference",
    "page": 152,
+   "_y": 222.7,
    "zh": "MemoryStorage 是参考实现"
   },
   {
@@ -558,6 +891,7 @@
    "type": "h2",
    "text": "The conformance suite",
    "page": 152,
+   "_y": 381.7,
    "zh": "一致性测试套件"
   },
   {
@@ -567,29 +901,45 @@
   },
   {
    "type": "small",
-   "text": "running the storage suite README §Storage TS",
+   "text": "running the storage suite README §Storage TS import { registerStorageConformance } from \"@earendil-works/pi-durable/testing\";",
    "page": 152,
+   "_y": 448.9,
    "zh": "运行存储测试套件（README §Storage）　TS"
   },
   {
    "type": "code",
    "lines": [
-    "import { registerStorageConformance } from \"@earendil-works/pi-durable/testing\";",
     "import { describe, expect, it } from \"vitest\";",
     "registerStorageConformance({ describe, expect, it }, \"My Storage\", async (use) => {",
     "const storage = await openMyStorage(); try {",
-    "await use(storage);",
+    "await use(storage);"
+   ],
+   "page": 152,
+   "_y": 483.3
+  },
+  {
+   "type": "code",
+   "lines": [
     "} finally {",
-    "await closeMyStorage(storage);",
+    "await closeMyStorage(storage);"
+   ],
+   "page": 152,
+   "_y": 549.3
+  },
+  {
+   "type": "code",
+   "lines": [
     "}",
     "});"
    ],
-   "page": 152
+   "page": 152,
+   "_y": 571.1
   },
   {
    "type": "small",
    "text": "Call use exactly once per case, with a fresh, empty storage.",
    "page": 152,
+   "_y": 607.5,
    "zh": "每个用例恰好调用 use 一次，且传入一个全新的空存储。"
   },
   {
@@ -601,8 +951,8 @@
    "type": "figure",
    "number": "9.7",
    "file": "figures/fig-9.7.png",
-   "title": "ENTRY POINTS AND WHAT THEY NEED\nL A Y E R S",
-   "caption": "The SQLite and JSONL cores are portable; only their Node adapters touch Node APIs. Subpath exports of package.json; either core also accepts an adapter you write. The boundary is enforced by test/storage-runtime-boundary.test.ts, which walks each entry point’s imports.",
+   "title": "ENTRY POINTS AND WHAT THEY NEED LAYERS",
+   "caption": "TheSQLiteandJSONLcoresareportable ; onlytheirNodeadapterstouchNodeAPIs . Subpathexportsofpackage . json ; eithercorealsoacceptsan adapteryouwrite . Theboundaryisenforcedbytest / storage - runtime - boundary . test . ts , whichwalkseachentrypoint ’ simports .",
    "page": 153,
    "zh_caption": "SQLite 和 JSONL 的内核是可移植的；只有它们的 Node 适配器会碰 Node API。图中是 package.json 的子路径导出；两个内核也都接受你自己写的适配器。这条边界由 `test/storage-runtime-boundary.test.ts` 强制，它遍历每个入口点的导入。"
   },
@@ -610,12 +960,14 @@
    "type": "h2",
    "text": "Portable cores, Node adapters",
    "page": 153,
+   "_y": 75.0,
    "zh": "可移植内核，Node 适配器"
   },
   {
    "type": "small",
    "text": "The SQLite and JSONL cores are portable; only their Node adapters touch Node APIs. Subpath exports of package.json; either core also accepts an adapter you write. The boundary is enforced by test/storage-runtime-boundary.test.ts, which walks each entry point’s imports.",
    "page": 153,
+   "_y": 354.5,
    "zh": "SQLite 和 JSONL 的内核是可移植的；只有它们的 Node 适配器会碰 Node API。图中是 package.json 的子路径导出；两个内核也都接受你自己写的适配器。这条边界由 `test/storage-runtime-boundary.test.ts` 强制，它遍历每个入口点的导入。"
   },
   {
@@ -627,6 +979,7 @@
    "type": "h2",
    "text": "Measured costs",
    "page": 153,
+   "_y": 465.0,
    "zh": "实测代价"
   },
   {
@@ -638,8 +991,8 @@
    "type": "figure",
    "number": "9.8",
    "file": "figures/fig-9.8.png",
-   "title": "THREE COSTS, THREE BACKENDS\nC O M P A R I S O N",
-   "caption": "JSONL reads as fast as memory because it is memory; it pays at every commit and at open. Means from research/capture/extra-p9/bench-storage.txt (Apple M3 Max, macOS 26.2, Node 24.13.0, 2026-10-05). Commit and reopen rows have 20 samples each, with margins of ±8–66%. Each panel has its own scale.",
+   "title": "THREE COSTS , THREE BACKENDS COMPARISON",
+   "caption": "JSONLreadsasfastasmemorybecauseitismemory ; itpaysateverycommitandatopen . Meansfromresearch / capture / extra - p 9/ bench - storage . txt (AppleM 3 Max , macOS 26.2, Node 24.13.0, 2026-10-05). Commitandreopenrowshave 20 sampleseach , withmarginsof ± 8–66 % . Eachpanelhasitsown scale .",
    "page": 154,
    "zh_caption": "JSONL 的读取和内存一样快，因为它就是内存；代价出现在每次提交和打开时。均值取自 `research/capture/extra-p9/bench-storage.txt`（Apple M3 Max、macOS 26.2、Node 24.13.0、2026-10-05）。提交与重新打开两行各 20 个样本，误差为 ±8–66%。每个面板有自己的刻度。"
   },
@@ -647,6 +1000,7 @@
    "type": "small",
    "text": "JSONL reads as fast as memory because it is memory; it pays at every commit and at open. Means from research/capture/extra-p9/bench-storage.txt (Apple M3 Max, macOS 26.2, Node 24.13.0, 2026-10-05). Commit and reopen rows have 20 samples each, with margins of ±8–66%. Each panel has its own scale.",
    "page": 154,
+   "_y": 320.7,
    "zh": "JSONL 的读取和内存一样快，因为它就是内存；代价出现在每次提交和打开时。均值取自 `research/capture/extra-p9/bench-storage.txt`（Apple M3 Max、macOS 26.2、Node 24.13.0、2026-10-05）。提交与重新打开两行各 20 个样本，误差为 ±8–66%。每个面板有自己的刻度。"
   },
   {
@@ -655,20 +1009,59 @@
    "zh": "这些数字源自各自的设计。JSONL 从内存响应读取，所以一次精确的条目查找代价与在内存上相同：0.44 µs，而 SQLite 是 2.85 µs。一次 JSONL 提交要追加到好几个文件，792 µs，而 SQLite 是 120 µs。打开一个 JSONL 目录要重放每个标记，这个数据集是 249 ms，而 SQLite 打开并完成首次读取用了 1.33 ms。规模十倍时，SQLite 占用 0.22 MiB 堆；JSONL 和内存各占超过 7 MiB（`research/capture/extra-p9/bench-storage-memory.txt`）。"
   },
   {
-   "type": "small",
-   "text": "memory nothing heap grows with the store tests, examples, short sessions SQLite process crashes slower reads; small heap; fast open anything long-lived JSONL process crashes; power loss stays consistent with fsync slow commits; whole store in memory; replays at open debugging, readable files Summary of this section and the two before it.",
-   "page": 154,
-   "zh": "memory 无持久化；堆随存储增长；适合测试、示例和短会话 / SQLite 进程崩溃无损失；读取较慢；堆小；打开快；适合任何长期存在的东西 / JSONL 进程崩溃无损失；配合 fsync 断电也保持一致；提交慢；整个存储在内存里；打开时重放；适合调试与可读文件。本节及前两节的小结。"
-  },
-  {
    "type": "p",
    "text": "Timings from different machines are not comparable. To compare your own backend, use the scenarios exported from /testing (seedStorageBenchmark() and the read and write benchmark lists) and run every candidate in one process, as the package’s test/storage.bench.ts does.",
    "zh": "不同机器上的时间数字不可比较。要比较你自己的后端，使用从 /testing 导出的各个场景（`seedStorageBenchmark()` 以及读、写基准列表），并在一个进程里运行每个候选者，就像这个包的 `test/storage.bench.ts` 所做的那样。"
   },
   {
+   "type": "table-row",
+   "page": 154,
+   "_y": 465.0,
+   "cells": [
+    "memory nothing heap grows with the store tests, examples, short sessions"
+   ],
+   "is_header": false,
+   "_sig": "memory",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 154,
+   "_y": 481.5,
+   "cells": [
+    "SQLite process crashes slower reads; small heap; fast open anything long-lived"
+   ],
+   "is_header": false,
+   "_sig": "SQLite",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 154,
+   "_y": 498.8,
+   "cells": [
+    "JSONL process crashes; power loss stays consistent with fsync slow commits; whole store in memory; replays at open debugging, readable files"
+   ],
+   "is_header": false,
+   "_sig": "JSONL",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 154,
+   "_y": 516.8,
+   "cells": [
+    "Summary of this section and the two before it."
+   ],
+   "is_header": false,
+   "_sig": "Summary",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "Default to SQLite; use memory in tests, and JSONL when you want to read the files. Whatever you choose, run one process per storage. No backend locks against a second. A custom backend must pass the 23-case suite, plus its own crash tests.",
    "page": 154,
+   "_y": 615.6,
    "zh": "默认用 SQLite；测试中用内存；想读文件时用 JSONL。无论选哪个，一个存储只跑一个进程。没有后端会针对第二个进程加锁。自定义后端必须通过那 23 个用例，外加自己的崩溃测试。"
   },
   {
@@ -676,20 +1069,22 @@
    "lines": [
     "Sources: spec §11.1; README §Storage, §Examples; src/storage/memory.ts; src/storage/jsonl/storage.ts; src/testing/{storage-conformance, runner,storage-benchmark}.ts; test/storage.bench.ts; test/memory-storage.test.ts; test/sqlite-storage.test.ts; test/jsonl-storage.test.ts; test/storage-runtime-boundary.test.ts; package.json; research/capture/extra-p9/bench-storage.txt, bench-"
    ],
-   "page": 154
+   "page": 154,
+   "_y": 682.4
   },
   {
    "type": "small",
    "text": "storage-memory.txt",
    "page": 154,
+   "_y": 711.0,
    "zh": "storage-memory.txt"
   },
   {
    "type": "figure",
    "number": "9.9",
    "file": "figures/fig-9.9.png",
-   "title": "THE ENVIRONMENT BOUNDARY\nF L O W",
-   "caption": "Tools, prompt sections and task phases reach files and processes only through an environment the host builds per use from committed state. Callers from README §Environment and src/harness/{tool,generation,scheduler}.ts; the target from src/harness/types.ts.",
+   "title": "THE ENVIRONMENT BOUNDARY FLOW",
+   "caption": "Tools , promptsectionsandtaskphasesreachfilesandprocessesonlythroughanenvironmentthehostbuildsperusefromcommittedstate . Callers fromREADME § Environmentandsrc / harness /{ tool , generation , scheduler }. ts ; thetargetfromsrc / harness / types . ts .",
    "page": 155,
    "zh_caption": "工具、提示词段落和任务阶段只能通过一个环境触达文件与进程，而这个环境由宿主每次使用时依据已提交状态构建。调用方见 README §Environment 和 `src/harness/{tool,generation,scheduler}.ts`；目标见 `src/harness/types.ts`。"
   },
@@ -697,12 +1092,14 @@
    "type": "chapter-title",
    "text": "9 . 5 The execution environment",
    "page": 155,
+   "_y": 57.4,
    "zh": "9.5 执行环境"
   },
   {
    "type": "lede",
    "text": "Tools touch files and processes only through an ExecutionEnv the host builds for each use, so where a conversation runs is the host’s decision, not the tool’s.",
    "page": 155,
+   "_y": 106.2,
    "zh": "工具只通过宿主为每次使用构建的 ExecutionEnv 触达文件与进程，所以会话在哪里运行是宿主的决定，不是工具的。"
   },
   {
@@ -714,6 +1111,7 @@
    "type": "h2",
    "text": "Built at each use",
    "page": 155,
+   "_y": 237.7,
    "zh": "每次使用时构建"
   },
   {
@@ -725,6 +1123,7 @@
    "type": "small",
    "text": "Tools, prompt sections and task phases reach files and processes only through an environment the host builds per use from committed state. Callers from README §Environment and src/harness/{tool,generation,scheduler}.ts; the target from src/harness/types.ts.",
    "page": 155,
+   "_y": 524.8,
    "zh": "工具、提示词段落和任务阶段只能通过一个环境触达文件与进程，而这个环境由宿主每次使用时依据已提交状态构建。调用方见 README §Environment 和 `src/harness/{tool,generation,scheduler}.ts`；目标见 `src/harness/types.ts`。"
   },
   {
@@ -734,34 +1133,30 @@
   },
   {
    "type": "small",
-   "text": "a sandbox per conversation test/examples/29-sandbox-per-conversation.ts TS",
+   "text": "a sandbox per conversation test/examples/29-sandbox-per-conversation.ts TS const harness = await Harness.open(",
    "page": 156,
+   "_y": 64.1,
    "zh": "每个会话一个沙箱（`test/examples/29-sandbox-per-conversation.ts`）　TS"
   },
   {
    "type": "code",
    "lines": [
-    "const harness = await Harness.open(",
     "new MemoryStorage(),",
     "{",
     "models, registry, // Committed reads only; a conversation without a sandbox gets no environment,"
    ],
-   "page": 156
+   "page": 156,
+   "_y": 97.8
   },
   {
    "type": "code",
    "lines": [
     "// so its tools fail cleanly. env: async ({ conversationId, read }, envContext) => {",
     "const sandbox = await read.snapshot(Sandbox, conversationId, envContext);",
-    "return sandbox?.path === undefined"
+    "return sandbox?.path === undefined ? undefined"
    ],
-   "page": 156
-  },
-  {
-   "type": "small",
-   "text": "? undefined",
    "page": 156,
-   "zh": "? undefined"
+   "_y": 153.8
   },
   {
    "type": "code",
@@ -769,7 +1164,8 @@
     ": new NodeExecutionEnv({ cwd: sandbox.path });",
     "}, }, context,"
    ],
-   "page": 156
+   "page": 156,
+   "_y": 208.1
   },
   {
    "type": "code",
@@ -777,12 +1173,14 @@
     ");",
     "$ node --conditions=source --experimental-strip-types test/examples/29-sandbox-per-conversation.ts alice's sandbox: from alice bob's sandbox: from bob Sandbox is an app document set when each conversation is created. Both conversations ran the same write tool, and each note landed in its own directory (run 29). The ternary is rewrapped to fit the page."
    ],
-   "page": 156
+   "page": 156,
+   "_y": 252.3
   },
   {
    "type": "h2",
    "text": "The interface",
    "page": 156,
+   "_y": 375.7,
    "zh": "接口"
   },
   {
@@ -791,20 +1189,103 @@
    "zh": "ExecutionEnv 是一个 FileSystem 加一个 Shell，来自 `@earendil-works/pi-durable/env`。每个操作都返回结果而不抛出：`{ ok: true, value }` 或 `{ ok: false, error }`，其中 error 带一个 code，比如 not_found 或 timeout（`src/env/index.ts`）。"
   },
   {
-   "type": "small",
-   "text": "identity id, cwd paths absolutePath, joinPath, canonicalPath, exists read readTextFile, readTextLines, openTextLineReader, readBinaryFile, openBinaryReader write writeFile, appendFile, truncateFile, flushFile, renameFile directories fileInfo, listDir, openDirReader, createDir, remove temporary createTempDir, createTempFile, cleanup changes watch src/env/index.ts. truncateFile and flushFile exist for JSONL storage.",
-   "page": 156,
-   "zh": "identity id、cwd / paths absolutePath、joinPath、canonicalPath、exists / read readTextFile、readTextLines、openTextLineReader、readBinaryFile、openBinaryReader / write writeFile、appendFile、truncateFile、flushFile、renameFile / directories fileInfo、listDir、openDirReader、createDir、remove / temporary createTempDir、createTempFile、cleanup / changes watch　`src/env/index.ts`。truncateFile 和 flushFile 是为 JSONL 存储准备的。"
-  },
-  {
    "type": "p",
    "text": "id names the file namespace: “equal ids see the same files at the same paths, whatever their cwd” src/env/index.ts. Every local NodeExecutionEnv uses \"node:local\"; each container or remote host needs its own. The id lets the host build a new environment object per call. The built-in edit and write tools still take turns on one file, because they queue by id plus path. That queue is per process and “not a lock against bash or other processes” src/tools/file-mutation-queue.ts.",
    "zh": "id 指明文件命名空间：「相同的 id 无论 cwd 是什么，都看到相同路径上的相同文件」（`src/env/index.ts`）。每个本地 NodeExecutionEnv 都用 \"node:local\"；每个容器或远程宿主都需要自己的。id 让宿主可以为每次调用构建一个新的环境对象。内置的编辑与写工具在同一个文件上仍然是轮流的，因为它们按 id 加路径排队。那条队列是进程内的，「不是针对 bash 或其他进程的锁」（`src/tools/file-mutation-queue.ts`）。"
   },
   {
+   "type": "table-row",
+   "page": 156,
+   "_y": 466.5,
+   "cells": [
+    "identity id, cwd"
+   ],
+   "is_header": false,
+   "_sig": "identity",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 483.0,
+   "cells": [
+    "paths absolutePath, joinPath, canonicalPath, exists"
+   ],
+   "is_header": false,
+   "_sig": "paths",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 500.3,
+   "cells": [
+    "read readTextFile, readTextLines, openTextLineReader, readBinaryFile, openBinaryReader"
+   ],
+   "is_header": false,
+   "_sig": "read",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 516.8,
+   "cells": [
+    "write writeFile, appendFile, truncateFile, flushFile, renameFile"
+   ],
+   "is_header": false,
+   "_sig": "write",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 534.0,
+   "cells": [
+    "directories fileInfo, listDir, openDirReader, createDir, remove"
+   ],
+   "is_header": false,
+   "_sig": "directories",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 550.5,
+   "cells": [
+    "temporary createTempDir, createTempFile, cleanup"
+   ],
+   "is_header": false,
+   "_sig": "temporary",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 567.8,
+   "cells": [
+    "changes watch"
+   ],
+   "is_header": false,
+   "_sig": "changes",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 156,
+   "_y": 585.8,
+   "cells": [
+    "src/env/index.ts. truncateFile and flushFile exist for JSONL storage."
+   ],
+   "is_header": false,
+   "_sig": "src",
+   "zh": "identity id、cwd / paths absolutePath、joinPath、canonicalPath、exists / read readTextFile、readTextLines、openTextLineReader、readBinaryFile、openBinaryReader / write writeFile、appendFile、truncateFile、flushFile、renameFile / directories fileInfo、listDir、openDirReader、createDir、remove / temporary createTempDir、createTempFile、cleanup / changes watch　`src/env/index.ts`。truncateFile 和 flushFile 是为 JSONL 存储准备的。"
+  },
+  {
    "type": "h2",
    "text": "Running commands",
    "page": 156,
+   "_y": 680.2,
    "zh": "运行命令"
   },
   {
@@ -816,8 +1297,8 @@
    "type": "figure",
    "number": "9.10",
    "file": "figures/fig-9.10.png",
-   "title": "A WINDOWED EXEC\nS T R U C T U R E",
-   "caption": "A windowed exec may drop output the caller would drop anyway, and counts exactly what it dropped. The rule of info.skipped (src/env/index.ts) and the conformance case that prints 2,000 lines through a 200-byte, 5-line window.",
+   "title": "A WINDOWED EXEC STRUCTURE",
+   "caption": "Awindowedexecmaydropoutputthecallerwoulddropanyway , andcountsexactlywhatitdropped . Theruleof i n f o . sk i pp ed (src / env / index . ts) andtheconformancecasethatprints 2,000 linesthrougha 200-byte , 5-linewindow .",
    "page": 157,
    "zh_caption": "带窗口的 exec 可能丢弃调用方本来也会丢弃的输出，并精确统计自己丢弃了多少。info.skipped 的规则（`src/env/index.ts`）以及一致性用例中通过一个 200 字节、5 行的窗口打印 2,000 行的那一条。"
   },
@@ -825,6 +1306,7 @@
    "type": "h2",
    "text": "Output windows",
    "page": 157,
+   "_y": 123.7,
    "zh": "输出窗口"
   },
   {
@@ -836,6 +1318,7 @@
    "type": "small",
    "text": "A windowed exec may drop output the caller would drop anyway, and counts exactly what it dropped. The rule of info.skipped (src/env/index.ts) and the conformance case that prints 2,000 lines through a 200-byte, 5-line window.",
    "page": 157,
+   "_y": 396.5,
    "zh": "带窗口的 exec 可能丢弃调用方本来也会丢弃的输出，并精确统计自己丢弃了多少。info.skipped 的规则（`src/env/index.ts`）以及一致性用例中通过一个 200 字节、5 行的窗口打印 2,000 行的那一条。"
   },
   {
@@ -847,6 +1330,7 @@
    "type": "small",
    "text": "To isolate conversations, return a different environment per conversation from HarnessOptions.env. Return undefined to switch file and shell tools off. Build the environment only from committed state: a rerun after a crash builds it again. For a custom environment, implement FileSystem and Shell, return failures as results, give each file namespace its own id, and run registerEnvConformance from /testing, which has 21 cases.",
    "page": 157,
+   "_y": 523.3,
    "zh": "要隔离会话，就从 HarnessOptions.env 为每个会话返回不同的环境。返回 undefined 会关掉文件与 shell 工具。只依据已提交状态构建环境：崩溃后重跑会重新构建。自定义环境要实现 FileSystem 和 Shell，以结果形式返回失败，给每个文件命名空间自己的 id，并运行来自 /testing 的 `registerEnvConformance`，它有 21 个用例。"
   },
   {
@@ -859,7 +1343,8 @@
    "lines": [
     "Sources: spec §12 (environment on recovery); README §Environment; CHANGELOG 1.0.3; src/env/{index,node,node-watch}.ts; src/harness/{types,harness,tool}.ts; src/tools/{env,bash,file-mutation-queue}.ts; src/testing/env-conformance.ts; ex 29, run 29"
    ],
-   "page": 157
+   "page": 157,
+   "_y": 703.4
   }
  ]
 }

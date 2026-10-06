@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 5 Tasks",
    "page": 62,
+   "_y": 83.8,
    "zh": "任务"
   },
   {
    "type": "h2",
    "text": "Durable state machines that checkpoint every phase, own their children, and abort from the bottom up.",
    "page": 62,
+   "_y": 154.8,
    "zh": "在每个阶段都做检查点、拥有自己的子任务、并自底向上中止的持久状态机。"
   },
   {
    "type": "chapter-title",
    "text": "5 . 1 Tasks as state machines",
    "page": 63,
+   "_y": 57.4,
    "zh": "5.1 任务即状态机"
   },
   {
    "type": "lede",
    "text": "A task is work cut into phases, and its stored record is the only thing about it that survives a crash.",
    "page": 63,
+   "_y": 106.2,
    "zh": "任务是被切成若干阶段的工作，而关于它的全部信息中，唯一能在崩溃后存续下来的，是它的存储记录。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "h2",
    "text": "A task is a list of phases",
    "page": 63,
+   "_y": 222.7,
    "zh": "任务就是一份阶段列表"
   },
   {
@@ -44,6 +49,7 @@
    "type": "small",
    "text": "a two-phase payment task test/examples/12-tasks.ts TS",
    "page": 63,
+   "_y": 380.6,
    "zh": "一个两阶段支付任务 test/examples/12-tasks.ts TS"
   },
   {
@@ -60,11 +66,19 @@
     "await runtime.commit(() => ({ status: \"running\", checkpoint }), taskContext); },",
     "charge: async (task, runtime, taskContext) => {",
     "const key = task.state.checkpoint.key; if (!payments.has(key)) payments.set(key, task.input.amount * 100);",
-    "const receipt = payments.get(key)!;",
+    "const receipt = payments.get(key)!;"
+   ],
+   "page": 63,
+   "_y": 403.8
+  },
+  {
+   "type": "code",
+   "lines": [
     "const outcome = { status: \"completed\", result: { receipt } } as const; await runtime.commit(() => ({ status: \"terminal\", outcome }), taskContext);",
     "},"
    ],
-   "page": 63
+   "page": 63,
+   "_y": 557.4
   },
   {
    "type": "code",
@@ -73,11 +87,16 @@
     "const outcome = { status: \"aborted\" } as const;",
     "await runtime.commit(() => ({ status: \"terminal\", outcome }), taskContext);",
     "}, });",
-    "registry.install(defineExtension({ name: \"payments\", tasks: [Payment] }));",
-    "Two inline state literals are hoisted into checkpoint and outcome constants to fit the page. Run 12 prints { status: 'completed', result: { receipt:",
-    "500 } }."
+    "registry.install(defineExtension({ name: \"payments\", tasks: [Payment] }));"
    ],
-   "page": 63
+   "page": 63,
+   "_y": 591.3
+  },
+  {
+   "type": "small",
+   "text": "Two inline state literals are hoisted into checkpoint and outcome constants to fit the page. Run 12 prints { status: 'completed', result: { receipt: 500 } }.",
+   "page": 63,
+   "_y": 682.5
   },
   {
    "type": "p",
@@ -88,32 +107,104 @@
    "type": "figure",
    "number": "5.1",
    "file": "figures/fig-5.1.png",
-   "title": "THE TASK STATE MACHINE\nS T A T E",
-   "caption": "A task has five states; your code commits checkpoints, waits and outcomes, and the Harness does the rest. Edges from src/harness/scheduler.ts. An abort-marked waiting task also leaves waiting early to run its abort handler; an abort-marked pending or waiting task that no code can take ends",
+   "title": "THE TASK STATE MACHINE STATE",
+   "caption": "Ataskhasfivestates ; yourcodecommitscheckpoints , waitsandoutcomes , andtheHarnessdoestherest . Edgesfromsrc / harness / scheduler . ts . An abort - markedwaitingtaskalsoleaves w ai t i n g earlytorunitsaborthandler ; anabort - marked p e n di n g or w ai t i n g taskthatnocodecantakeends",
    "page": 64,
    "zh_caption": "一个任务有五种状态；你的代码提交检查点、等待和 outcome，剩下的由 Harness 完成。边取自 `src/harness/scheduler.ts`。一个带中止标记的 waiting 任务也会提前离开 waiting 去运行它的中止处理器；一个带中止标记、又没有任何代码能接手的 pending 或 waiting 任务则最终落到 orphaned。"
   },
   {
-   "type": "small",
-   "text": "name The task’s kind, stored in every record. Renaming it strands stored tasks of the old name. version Stored with every record. A newer definition must migrate older records (the scheduler (p. 73)). initial(input) The first checkpoint, committed when the task is created. phases One handler per phase name. Each handler sees the task narrowed to its own phase. abort Runs after an abort and must commit a final outcome (abort, fault and orphan (p. 80)). migrate? Upgrades the input and checkpoint stored by an older version. hooks? Hooks other extensions may attach to this task (hooks (p. 109)).",
+   "type": "table-row",
    "page": 64,
-   "zh": "`name` 任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。`version` 与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。`initial(input)` 第一个检查点，在任务创建时提交。`phases` 每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。`abort` 在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。`migrate?` 升级旧版本存储的输入和检查点。`hooks?` 其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。"
+   "_y": 97.5,
+   "cells": [
+    "name The task’s kind, stored in every record. Renaming it strands stored tasks of the old name."
+   ],
+   "is_header": false,
+   "_sig": "name",
+   "zh": "`name` 任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。"
   },
   {
-   "type": "code",
-   "lines": [],
-   "page": 64
+   "type": "table-row",
+   "page": 64,
+   "_y": 114.8,
+   "cells": [
+    "version Stored with every record. A newer definition must migrate older records (the scheduler (p. 73))."
+   ],
+   "is_header": false,
+   "_sig": "version",
+   "zh": "`version` 与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。"
   },
   {
-   "type": "small",
-   "text": "TaskDefinition in src/types.ts. Its type parameters are the input I, the checkpoint S, the result R and the hooks H.",
+   "type": "table-row",
    "page": 64,
-   "zh": "`src/types.ts` 中的 `TaskDefinition`。它的类型参数分别是输入 I、检查点 S、结果 R 和钩子 H。"
+   "_y": 131.1,
+   "cells": [
+    "initial(input) The first checkpoint, committed when the task is created."
+   ],
+   "is_header": false,
+   "_sig": "initial",
+   "zh": "`initial(input)` 第一个检查点，在任务创建时提交。"
+  },
+  {
+   "type": "table-row",
+   "page": 64,
+   "_y": 147.8,
+   "cells": [
+    "phases One handler per phase name. Each handler sees the task narrowed to its own phase."
+   ],
+   "is_header": false,
+   "_sig": "phases",
+   "zh": "`phases` 每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。"
+  },
+  {
+   "type": "table-row",
+   "page": 64,
+   "_y": 163.7,
+   "cells": [
+    "abort Runs after an abort and must commit a final outcome (abort, fault and orphan (p. 80))."
+   ],
+   "is_header": false,
+   "_sig": "abort",
+   "zh": "`abort` 在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。"
+  },
+  {
+   "type": "table-row",
+   "page": 64,
+   "_y": 181.4,
+   "cells": [
+    "migrate? Upgrades the input and checkpoint stored by an older version."
+   ],
+   "is_header": false,
+   "_sig": "migrate",
+   "zh": "`migrate?` 升级旧版本存储的输入和检查点。"
+  },
+  {
+   "type": "table-row",
+   "page": 64,
+   "_y": 198.6,
+   "cells": [
+    "hooks? Hooks other extensions may attach to this task (hooks (p. 109))."
+   ],
+   "is_header": false,
+   "_sig": "hooks",
+   "zh": "`hooks?` 其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。"
+  },
+  {
+   "type": "table-row",
+   "page": 64,
+   "_y": 216.8,
+   "cells": [
+    "TaskDefinition in src/types.ts. Its type parameters are the input I, the checkpoint S, the result R and the hooks H."
+   ],
+   "is_header": false,
+   "_sig": "TaskDefinition",
+   "zh": "`TaskDefinition`。它的类型参数分别是输入 I、检查点 S、结果 R 和钩子 H。"
   },
   {
    "type": "h2",
    "text": "Five states",
    "page": 64,
+   "_y": 245.2,
    "zh": "五种状态"
   },
   {
@@ -125,6 +216,7 @@
    "type": "small",
    "text": "A task has five states; your code commits checkpoints, waits and outcomes, and the Harness does the rest. Edges from src/harness/scheduler.ts. An abort-marked waiting task also leaves waiting early to run its abort handler; an abort-marked pending or waiting task that no code can take ends orphaned.",
    "page": 64,
+   "_y": 668.7,
    "zh": "一个任务有五种状态；你的代码提交检查点、等待和 outcome，剩下的由 Harness 完成。边取自 `src/harness/scheduler.ts`。一个带中止标记的 waiting 任务也会提前离开 waiting 去运行它的中止处理器；一个带中止标记、又没有任何代码能接手的 pending 或 waiting 任务则最终落到 orphaned。"
   },
   {
@@ -136,6 +228,7 @@
    "type": "h2",
    "text": "The record",
    "page": 65,
+   "_y": 145.5,
    "zh": "记录"
   },
   {
@@ -147,6 +240,7 @@
    "type": "small",
    "text": "order task 7, waiting (commit seq 7) research/capture/task-transitions.txt JSON",
    "page": 65,
+   "_y": 212.6,
    "zh": "order 任务 7，waiting（提交序号 7）research/capture/task-transitions.txt JSON"
   },
   {
@@ -162,19 +256,22 @@
     "\"on\": [8, 9, 10], \"policy\": \"failFast\"",
     "},"
    ],
-   "page": 65
+   "page": 65,
+   "_y": 235.8
   },
   {
    "type": "code",
    "lines": [
     "\"memos\": { \"chargeId\": \"ch_a_1\" } }"
    ],
-   "page": 65
+   "page": 65,
+   "_y": 346.1
   },
   {
    "type": "small",
    "text": "Elided: conversationId, version, input, background, and the checkpoint’s key. Task 7 has no owner field because its conversation owns it.",
    "page": 65,
+   "_y": 381.7,
    "zh": "已省略：`conversationId`、`version`、`input`、`background` 以及检查点的 `key`。任务 7 没有 owner 字段，因为它由自己的会话拥有。"
   },
   {
@@ -183,28 +280,76 @@
    "zh": "state —— 状态；在任务存活期间是检查点，有结果后则是 outcome。`on`、`policy` —— 它等待的任务，以及其中一个失败时会怎样（所有权（p. 76））。`memos` —— 一些小的存储值，先写入者胜（阶段与进度（p. 67））。`abortRequested` —— 持久化的中止标志。`owner` —— 只在子任务上设置。`conversationId` 和 `owner` 永不改变。试图把任务移到另一个会话的提交会被拒绝，报 `Task N cannot change conversations`（`src/session/transaction.ts`）。订单完成后，它的记录会收缩成一张回执：检查点和 memos 被丢弃，state 只保留 outcome：`{\"status\": \"terminal\", \"outcome\": {\"status\": \"completed\", \"result\": {\"chargeId\": \"ch_a_1\", \"boxes\": [...]}}}`（`capture/task-transitions.txt`）。terminal 记录永久保留，所以结果要保持精简。把大数据放进条目或文档，只返回它的 ID（spec §12）。"
   },
   {
-   "type": "small",
-   "text": "completed result the task success; the typed R failed error, result? the task an expected failure, such as a declined card aborted reason?, result? its abort handler aborted, and the task cleaned up orphaned reason the Harness aborted while no code could take it",
+   "type": "table-row",
    "page": 66,
-   "zh": "`completed` `result` 任务成功，即带类型的 R。`failed` `error`、`result?` 任务出现了预期内的失败，比如被拒的卡。`aborted` `reason?`、`result?` 它的中止处理器已中止，任务也清理完毕。`orphaned` `reason` 没有代码能接手该任务，Harness 因而中止了它。"
+   "_y": 110.3,
+   "cells": [
+    "completed result the task success; the typed R"
+   ],
+   "is_header": false,
+   "_sig": "completed",
+   "zh": "`completed`"
   },
   {
-   "type": "code",
-   "lines": [
+   "type": "table-row",
+   "page": 66,
+   "_y": 127.4,
+   "cells": [
+    "failed error, result? the task an expected failure, such as a declined card"
+   ],
+   "is_header": false,
+   "_sig": "failed",
+   "zh": "`failed`"
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 143.9,
+   "cells": [
+    "aborted reason?, result? its abort handler aborted, and the task cleaned up"
+   ],
+   "is_header": false,
+   "_sig": "aborted",
+   "zh": "`aborted`"
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 161.3,
+   "cells": [
+    "orphaned reason the Harness aborted while no code could take it"
+   ],
+   "is_header": false,
+   "_sig": "orphaned",
+   "zh": "`orphaned` `reason` 没有代码能接手该任务，Harness 因而中止了它。"
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 177.8,
+   "cells": [
     "faulted error the Harness a bug: a throw, or a phase that made no progress"
    ],
-   "page": 66
+   "is_header": false,
+   "_sig": "faulted",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "TaskOutcome<R> in src/types.ts. Every error is plain JSON, { message, detail? }, never a runtime Error.",
+   "type": "table-row",
    "page": 66,
-   "zh": "`src/types.ts` 中的 `TaskOutcome<R>`。每个 error 都是纯 JSON，形如 `{ message, detail? }`，绝不是运行时的 `Error`。"
+   "_y": 195.8,
+   "cells": [
+    "TaskOutcome<R> in src/types.ts. Every error is plain JSON, { message, detail? }, never a runtime Error."
+   ],
+   "is_header": false,
+   "_sig": "TaskOutcome",
+   "zh": "`TaskOutcome<R>`。每个 error 都是纯 JSON，形如 `{ message, detail? }`，绝不是运行时的"
   },
   {
    "type": "h2",
    "text": "What a phase can call",
    "page": 66,
+   "_y": 224.2,
    "zh": "阶段能调用什么"
   },
   {
@@ -213,20 +358,81 @@
    "zh": "每个阶段处理器收到 `(task, runtime, context)`。`task` 是存储的记录。`runtime` 是这次任务运行的工具箱，这次运行结束就失效（`src/types.ts`）。"
   },
   {
-   "type": "small",
-   "text": "Commit commit(change, context), memo(name, candidate, context) Read committed state memo(name), getTask, outcomes, entry, context, snapshot, snapshotAsOf, watchDoc Wait waitForTask, sleep(until) Environment agent(), hooks, registry, settings, models, env(), conversation() Identity and clock taskId, conversationId, signal, now(), report() TaskRuntime in src/types.ts.",
-   "page": 66,
-   "zh": "提交 `commit(change, context)`、`memo(name, candidate, context)` 读取已提交状态 `memo(name)`、`getTask`、`outcomes`、`entry`、`context`、`snapshot`、`snapshotAsOf`、`watchDoc` 等待 `waitForTask`、`sleep(until)` 环境 `agent()`、`hooks`、`registry`、`settings`、`models`、`env()`、`conversation()` 身份与时钟 `taskId`、`conversationId`、`signal`、`now()`、`report()`。`src/types.ts` 中的 `TaskRuntime`。"
-  },
-  {
    "type": "p",
    "text": "runtime.commit() is the one way to commit. Your callback receives a transaction and the current record. It may append entries, write documents and create child tasks, and it may return the task’s next state. All of it lands in one atomic commit, so a checkpoint can never disagree with the data it describes. Entries committed this way record the task as their author (byTaskId) spec §5.1. The commit rejects if the run has ended, the Harness is closing, the task is no longer running, or the task carries an abort mark.",
    "zh": "`runtime.commit()` 是唯一的提交方式。你的回调会收到一个事务和当前记录。它可以追加条目、写入文档、创建子任务，也可以返回任务的下一种状态。所有这些都落在同一次原子提交里，所以检查点永远不会和它所描述的数据不一致。以这种方式提交的条目会把该任务记为它们的作者（`byTaskId`）（spec §5.1）。如果这次运行已经结束、Harness 正在关闭、任务已不在 running，或任务带有中止标记，提交都会被拒绝。"
   },
   {
+   "type": "table-row",
+   "page": 66,
+   "_y": 300.6,
+   "cells": [
+    "Commit commit(change, context), memo(name, candidate, context)"
+   ],
+   "is_header": false,
+   "_sig": "Commit",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 317.9,
+   "cells": [
+    "Read committed state memo(name), getTask, outcomes, entry, context, snapshot, snapshotAsOf, watchDoc"
+   ],
+   "is_header": false,
+   "_sig": "Read",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 334.4,
+   "cells": [
+    "Wait waitForTask, sleep(until)"
+   ],
+   "is_header": false,
+   "_sig": "Wait",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 351.6,
+   "cells": [
+    "Environment agent(), hooks, registry, settings, models, env(), conversation()"
+   ],
+   "is_header": false,
+   "_sig": "Environment",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 368.1,
+   "cells": [
+    "Identity and clock taskId, conversationId, signal, now(), report()"
+   ],
+   "is_header": false,
+   "_sig": "Identity",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 66,
+   "_y": 386.3,
+   "cells": [
+    "TaskRuntime in src/types.ts."
+   ],
+   "is_header": false,
+   "_sig": "TaskRuntime",
+   "zh": "`TaskRuntime`。"
+  },
+  {
    "type": "small",
    "text": "Put everything the next phase needs in the checkpoint. Variables do not survive a restart. Treat name as permanent. When the checkpoint’s shape changes, raise version and add migrate. Commit a checkpoint and the data it describes in the same runtime.commit(). Keep outcomes small; store bulk data in a document or an entry.",
    "page": 66,
+   "_y": 513.6,
    "zh": "把下一个阶段需要的一切都放进检查点。变量不会在重启后存活。把 `name` 当作永久的。当检查点的形状变化时，提高 `version` 并加上 `migrate`。在同一次 `runtime.commit()` 里提交检查点和它所描述的数据。outcome 要保持精简；批量数据放进文档或条目。"
   },
   {
@@ -234,14 +440,15 @@
    "lines": [
     "Sources: spec §1, §5.1, §5.3, §12; src/tasks.ts; src/types.ts (TaskDefinition, TaskState, TaskRecord, TaskOutcome, TaskRuntime); src/harness/scheduler.ts; src/session/transaction.ts; ex 12, run 12; research/capture/task-transitions.txt."
    ],
-   "page": 66
+   "page": 66,
+   "_y": 595.4
   },
   {
    "type": "figure",
    "number": "5.2",
    "file": "figures/fig-5.2.png",
-   "title": "THE STEP BEFORE EVERY PHASE\nD E C I S I O N",
-   "caption": "Before each phase the step applies the first matching rule; no progress is a fault. Rules from spec §5.1, implemented in src/harness/scheduler.ts.",
+   "title": "THE STEP BEFORE EVERY PHASE DECISION",
+   "caption": "Beforeeachphasethestepappliesthefirstmatchingrule ; noprogressisafault . Rulesfromspec §5.1, implementedinsrc / harness / scheduler . ts .",
    "page": 67,
    "zh_caption": "每个阶段之前，step 会套用第一条匹配的规则；没有进展就是故障。规则来自 spec §5.1，实现在 `src/harness/scheduler.ts`。"
   },
@@ -249,12 +456,14 @@
    "type": "chapter-title",
    "text": "5 . 2 Phases, steps and progress",
    "page": 67,
+   "_y": 57.4,
    "zh": "5.2 阶段、步骤与进度"
   },
   {
    "type": "lede",
    "text": "A phase that commits nothing new would run forever, so the Harness stops the task with a fault instead.",
    "page": 67,
+   "_y": 106.2,
    "zh": "一个什么新东西都不提交的阶段会永远运行，所以 Harness 改为用故障停掉这个任务。"
   },
   {
@@ -266,6 +475,7 @@
    "type": "h2",
    "text": "One run, many phases",
    "page": 67,
+   "_y": 222.7,
    "zh": "一次运行，多个阶段"
   },
   {
@@ -277,12 +487,14 @@
    "type": "small",
    "text": "Before each phase the step applies the first matching rule; no progress is a fault. Rules from spec §5.1, implemented in src/harness/scheduler.ts.",
    "page": 67,
+   "_y": 634.2,
    "zh": "每个阶段之前，step 会套用第一条匹配的规则；没有进展就是故障。规则来自 spec §5.1，实现在 `src/harness/scheduler.ts`。"
   },
   {
    "type": "h2",
    "text": "The six rules",
    "page": 67,
+   "_y": 663.0,
    "zh": "六条规则"
   },
   {
@@ -314,6 +526,7 @@
    "type": "h2",
    "text": "Why no progress is a fault",
    "page": 68,
+   "_y": 237.0,
    "zh": "为什么没有进展算故障"
   },
   {
@@ -350,6 +563,7 @@
    "type": "h2",
    "text": "Memos: remember a small decision",
    "page": 68,
+   "_y": 426.0,
    "zh": "memos：记住一个小决定"
   },
   {
@@ -361,6 +575,7 @@
    "type": "small",
    "text": "a memo guards an effect inside one phase test/examples/13-recovery.ts TS",
    "page": 68,
+   "_y": 541.9,
    "zh": "一个 memo 在一个阶段内部守住一个效果 test/examples/13-recovery.ts TS"
   },
   {
@@ -374,18 +589,21 @@
     "// …commit { phase: \"tick\", n: n + 1 }, or terminal once n reaches task.input.to",
     "await runtime.sleep(Date.now() + 50, taskContext); },"
    ],
-   "page": 68
+   "page": 68,
+   "_y": 565.1
   },
   {
    "type": "small",
    "text": "The checkpoint commit and a test-only hook are elided.",
    "page": 68,
+   "_y": 678.0,
    "zh": "已省略检查点提交和一个仅供测试的钩子。"
   },
   {
    "type": "small",
    "text": "$ node --conditions=source --experimental-strip-types test/examples/13-recovery.ts tick 1 tick 2",
    "page": 69,
+   "_y": 76.1,
    "zh": "$ node --conditions=source --experimental-strip-types test/examples/13-recovery.ts tick 1 tick 2"
   },
   {
@@ -394,12 +612,14 @@
     "closed; saved checkpoint: { status: 'pending', checkpoint: { phase: 'tick', n: 2 } }",
     "memos: { 'printed-1': true, 'printed-2': true }"
    ],
-   "page": 69
+   "page": 69,
+   "_y": 110.0
   },
   {
    "type": "small",
    "text": "tick 3 tick 4 tick 5",
    "page": 69,
+   "_y": 133.3,
    "zh": "tick 3 tick 4 tick 5"
   },
   {
@@ -407,18 +627,21 @@
    "lines": [
     "after reopen: { status: 'completed', result: 'counted to 5' }"
    ],
-   "page": 69
+   "page": 69,
+   "_y": 167.8
   },
   {
    "type": "small",
    "text": "Run 13, with the memos wrapped onto a second line. The first process closed after printing tick 2 but before committing n: 3. The second process reran tick 2, found the memo printed-2, and skipped the print.",
    "page": 69,
+   "_y": 189.1,
    "zh": "运行 13，memos 被换行到第二行。第一个进程在打印 tick 2 之后、提交 `n: 3` 之前关闭了。第二个进程重跑 tick 2，发现 memo `printed-2`，于是跳过打印。"
   },
   {
    "type": "h2",
    "text": "Sleeping",
    "page": 69,
+   "_y": 230.0,
    "zh": "休眠"
   },
   {
@@ -455,6 +678,7 @@
    "type": "small",
    "text": "End every phase by changing the checkpoint, starting a wait, or finishing. Entries and documents are not progress. Return a new state from runtime.commit(). Use memos for small decisions, such as an ID or a chosen branch. Bulk progress belongs in a document spec §12. Keep deadlines in the checkpoint, not in a sleep.",
    "page": 69,
+   "_y": 434.1,
    "zh": "每个阶段都要以改变检查点、开始一次等待或结束收尾。条目和文档不算进展。从 `runtime.commit()` 返回一个新状态。小决定用 memos，比如一个 ID 或选中的分支。批量进展放进文档（spec §12）。截止时间放进检查点，不要放进 sleep。"
   },
   {
@@ -462,14 +686,15 @@
    "lines": [
     "Sources: spec §5.1, §5.2, §12; src/harness/scheduler.ts; test/harness-tasks.test.ts (task phases, task runtime); ex 13, run 13; ex 24."
    ],
-   "page": 69
+   "page": 69,
+   "_y": 515.9
   },
   {
    "type": "figure",
    "number": "5.3",
    "file": "figures/fig-5.3.png",
-   "title": "INTENT, EFFECT, OUTCOME\nS E Q U E N C E",
-   "caption": "Commit the intent, perform the effect, commit the outcome; a crash in the middle reruns the effect phase. The phases of spec §5.1’s payment example. Step 4’s entry and final state land in one commit.",
+   "title": "INTENT , EFFECT , OUTCOME SEQUENCE",
+   "caption": "Committheintent , performthee ff ect , committheoutcome ; acrashinthemiddlererunsthee ff ectphase . Thephasesofspec §5.1’ spayment example . Step 4’ sentryandfinalstatelandinonecommit .",
    "page": 70,
    "zh_caption": "先提交意图，再执行效果，最后提交结果；中途崩溃会重跑效果阶段。spec §5.1 的支付示例的各个阶段。第 4 步的条目和最终状态落在同一次提交里。"
   },
@@ -477,12 +702,14 @@
    "type": "chapter-title",
    "text": "5 . 3 The effect sandwich",
    "page": 70,
+   "_y": 57.4,
    "zh": "5.3 效果三明治"
   },
   {
    "type": "lede",
    "text": "Commit what you are about to do, do it, then commit what happened; a crash in the middle leaves a clear question, not a silent gap.",
    "page": 70,
+   "_y": 106.2,
    "zh": "提交你打算做的事，执行它，再提交实际发生的事；中途崩溃留下的是一个明确的问题，而不是一段无声的空白。"
   },
   {
@@ -494,6 +721,7 @@
    "type": "h2",
    "text": "Why effects need their own phase",
    "page": 70,
+   "_y": 222.7,
    "zh": "为什么效果需要自己的阶段"
   },
   {
@@ -505,12 +733,14 @@
    "type": "small",
    "text": "commit intent phase perform external effect commit outcome or next phase spec §5.2, verbatim.",
    "page": 70,
+   "_y": 320.0,
    "zh": "提交意图 阶段 执行外部效果 提交结果或下一阶段 spec §5.2，原文。"
   },
   {
    "type": "small",
    "text": "Commit the intent, perform the effect, commit the outcome; a crash in the middle reruns the effect phase. The phases of spec §5.1’s payment example. Step 4’s entry and final state land in one commit.",
    "page": 70,
+   "_y": 707.8,
    "zh": "先提交意图，再执行效果，最后提交结果；中途崩溃会重跑效果阶段。spec §5.1 的支付示例的各个阶段。第 4 步的条目和最终状态落在同一次提交里。"
   },
   {
@@ -522,6 +752,7 @@
    "type": "small",
    "text": "intent, effect, outcome docs/spec.md §5.1 TS // Intent, effect, outcome.",
    "page": 71,
+   "_y": 115.9,
    "zh": "意图、效果、结果 docs/spec.md §5.1 TS // 意图、效果、结果。"
   },
   {
@@ -532,7 +763,8 @@
     "checkpoint: { phase: \"charge\", key: newKey() } }), context);",
     "},"
    ],
-   "page": 71
+   "page": 71,
+   "_y": 150.3
   },
   {
    "type": "code",
@@ -545,7 +777,8 @@
     "}, context);",
     "}, // The abort handler decides the outcome; returning without one faults the task."
    ],
-   "page": 71
+   "page": 71,
+   "_y": 194.6
   },
   {
    "type": "code",
@@ -555,35 +788,20 @@
     "outcome: { status: \"aborted\", reason: \"user\" } }), context);",
     "}, Two long lines are wrapped; nothing else is changed."
    ],
-   "page": 71
+   "page": 71,
+   "_y": 293.6
   },
   {
    "type": "h2",
    "text": "Every crash point, and what reopening finds",
    "page": 71,
+   "_y": 390.7,
    "zh": "每一个崩溃点，以及重开时会发现什么"
   },
   {
    "type": "p",
    "text": "When a new process opens the storage, every task that was running goes back to pending with its checkpoint (the scheduler (p. 73)). The checkpoint, not the process, says where the task stood:",
    "zh": "新进程打开存储时，每一个当时在 running 的任务都会带着它的检查点退回 pending（调度器（p. 73））。是检查点而非进程说明任务当时处在什么位置："
-  },
-  {
-   "type": "small",
-   "text": "before the intent is committed checkpoint prepare prepare again; no charge was sent after the intent, before the charge checkpoint charge the charge, for the first time after the charge, before the outcome checkpoint charge the charge again, with the same key after the outcome is committed terminal nothing",
-   "page": 71,
-   "zh": "意图提交之前 检查点 prepare 再次 prepare；没有发出扣款 意图之后、扣款之前 检查点 charge 首次扣款 扣款之后、结果之前 检查点 charge 用同一个键再次扣款 结果提交之后 terminal 无"
-  },
-  {
-   "type": "code",
-   "lines": [],
-   "page": 71
-  },
-  {
-   "type": "small",
-   "text": "The middle two rows look the same to the new process. In the spec’s words: “Reopening in an intent phase means the effect may have happened.”",
-   "page": 71,
-   "zh": "中间两行对新进程来说没有区别。用规范的话说：「在意图阶段重开，意味着效果可能已经发生。」"
   },
   {
    "type": "p",
@@ -599,6 +817,7 @@
    "type": "h2",
    "text": "The built-in tasks use the same shape",
    "page": 72,
+   "_y": 114.0,
    "zh": "内置任务用的是同一个形状"
   },
   {
@@ -610,34 +829,35 @@
    "type": "small",
    "text": "Pi Durable never undoes an outside effect. A failed commit rolls back only the Harness’s own records (when a commit fails (p. 33)). Undoing a charge is up to the remote system: its idempotency keys, its cancel endpoint, its operation handles (limits and non-goals (p. 168)).",
    "page": 72,
+   "_y": 284.2,
    "zh": "Pi Durable 从不撤销外部效果。提交失败只回滚 Harness 自己的记录（提交失败时（p. 33））。撤销一次扣款是远端系统的事：它的幂等键、它的取消端点、它的操作句柄（限制与非目标（p. 168））。"
   },
   {
    "type": "small",
    "text": "Create the key in the intent phase. A key created inside the effect phase changes on every rerun and defeats deduplication. Example 12 derives it from the task ID; the shop capture commits \"key\": \"charge-a\" at seq 4, before any charge. Commit the outcome and its consequences together. A terminal commit atomically writes the outcome, appends result entries, retires the task’s documents and settles any submissions it answers spec §5.3. Two commits would leave a window where the receipt exists but the task is still live.",
    "page": 72,
+   "_y": 363.6,
    "zh": "在意图阶段创建键。在效果阶段内部创建的键每次重跑都会变，去重就失效了。示例 12 从任务 ID 推导出它；商店抓取在序号 4 处、在任何扣款之前提交了 `\"key\": \"charge-a\"`。把结果和它的后果一起提交。一次 terminal 提交会原子地写入 outcome、追加 result 条目、退休该任务的文档，并结清它所回复的提交项（spec §5.3）。分两次提交会留下一个窗口：回执已经存在，任务却还活着。"
   },
   {
    "type": "small",
    "text": "Guard a second effect in the same phase with a memo. The shop order’s charge phase calls the service only if memo chargeId is empty (seq 5, then seq 6). A crash between the call and the memo still repeats the call, so the call itself must tolerate that.",
    "page": 72,
+   "_y": 431.7,
    "zh": "用一个 memo 守住同一阶段里的第二个效果。商店订单的 charge 阶段只在 memo `chargeId` 为空时才调用服务（序号 5，然后序号 6）。调用与 memo 之间崩溃仍会重复这次调用，所以调用本身必须容忍这一点。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §1 (invariant 4), §5.1 (payment example), §5.2, §5.3, §12; test/harness-tasks-recovery.test.ts (resumes an",
-    "intent/effect/outcome task interrupted after its intent); ex 12; research/capture/task-transitions.txt (scenario A, seq 4–6); src/harness/tool.ts; src/harness/generation.ts."
-   ],
-   "page": 72
+   "type": "small",
+   "text": "Sources: spec §1 (invariant 4), §5.1 (payment example), §5.2, §5.3, §12; test/harness-tasks-recovery.test.ts (resumes an intent/effect/outcome task interrupted after its intent); ex 12; research/capture/task-transitions.txt (scenario A, seq 4–6); src/harness/tool.ts; src/harness/generation.ts.",
+   "page": 72,
+   "_y": 494.1
   },
   {
    "type": "figure",
    "number": "5.4",
    "file": "figures/fig-5.4.png",
-   "title": "LOOKING UP A TASK’S CODE\nD E C I S I O N",
-   "caption": "The scheduler looks up a task’s code by kind; a task no code can take stays pending, and only an abort ends it, as orphaned. The table of spec §5.4, implemented in src/harness/scheduler.ts. A migrated record is committed together with running.",
+   "title": "LOOKING UP A TASK ’ S CODE DECISION",
+   "caption": "Theschedulerlooksupatask ’ scodebykind ; atasknocodecantakestayspending , andonlyanabortendsit , asorphaned . Thetableofspec §5.4, implementedinsrc / harness / scheduler . ts . Amigratedrecordiscommittedtogetherwith runn i n g .",
    "page": 73,
    "zh_caption": "调度器按 kind 查找任务的代码；没有代码能接手的任务会一直停在 pending，只有中止才会让它以 orphaned 结束。spec §5.4 的表格，实现在 `src/harness/scheduler.ts`。迁移过的记录与 running 一起提交。"
   },
@@ -645,12 +865,14 @@
    "type": "chapter-title",
    "text": "5 . 4 The scheduler",
    "page": 73,
+   "_y": 57.4,
    "zh": "5.4 调度器"
   },
   {
    "type": "lede",
    "text": "One part of the Harness decides which task runs next, and it never ends a task just because its code is missing.",
    "page": 73,
+   "_y": 106.2,
    "zh": "Harness 中有一部分决定下一个跑哪个任务，而且它绝不会仅仅因为代码缺失就结束一个任务。"
   },
   {
@@ -662,6 +884,7 @@
    "type": "h2",
    "text": "Starting tasks",
    "page": 73,
+   "_y": 222.7,
    "zh": "启动任务"
   },
   {
@@ -678,12 +901,14 @@
    "type": "small",
    "text": "The scheduler looks up a task’s code by kind; a task no code can take stays pending, and only an abort ends it, as orphaned. The table of spec §5.4, implemented in src/harness/scheduler.ts. A migrated record is committed together with running.",
    "page": 73,
+   "_y": 614.7,
    "zh": "调度器按 kind 查找任务的代码；没有代码能接手的任务会一直停在 pending，只有中止才会让它以 orphaned 结束。spec §5.4 的表格，实现在 `src/harness/scheduler.ts`。迁移过的记录与 running 一起提交。"
   },
   {
    "type": "h2",
    "text": "Blocked tasks",
    "page": 73,
+   "_y": 654.7,
    "zh": "被阻塞的任务"
   },
   {
@@ -692,26 +917,59 @@
    "zh": "当没有已注册的代码适配它时，任务就被阻塞。被阻塞的任务并没有失败。它的记录保持不变，它对空闲等待来说仍算未完成的工作，而注册表每次变化时调度器都会重试。阻塞是「推导出的运行时状态，不是被持久化的任务状态」（spec §5.4）。"
   },
   {
-   "type": "small",
-   "text": "missing_task no code with that name is registered registering it task_too_old the stored version is newer than the code registering code of that version or newer migration_failed the code is newer, and migrate is missing or throws registering a different definition From spec §5.4 and src/harness/scheduler.ts.",
-   "page": 74,
-   "zh": "`missing_task` 没有注册任何同名代码 → 注册它。`task_too_old` 存储的版本比代码新 → 注册该版本或更新的代码。`migration_failed` 代码更新，但 migrate 缺失或抛出 → 注册一个不同的定义。出自 spec §5.4 与 `src/harness/scheduler.ts`。"
-  },
-  {
    "type": "p",
    "text": "In the recovery test, a task with a missing definition stays pending until addTask() registers it, and then completes test/harness-tasks-recovery.test.ts. Use harness.inspect() to find blocked tasks. It reports { kind: \"blocked\", reason } for each one (the task graph and inspect() (p. 137)). Migration runs when the task is reserved. One callback, migrate(input, checkpoint, fromVersion), upgrades records from every older version. If it throws, the error is reported once through onReport, and the scheduler tries again only after a different definition is registered for that kind. A newer definition without migrate blocks with Task test.versioned version 2 has no migration from 1 test/harness-tasks-recovery.test.ts.",
    "zh": "在恢复测试中，一个缺失定义的任务会一直停在 pending，直到 `addTask()` 注册它，然后才完成（`test/harness-tasks-recovery.test.ts`）。用 `harness.inspect()` 找出被阻塞的任务。它为每个任务报告 `{ kind: \"blocked\", reason }`（任务图与 `inspect()`（p. 137））。迁移在任务被预留时运行。一个回调 `migrate(input, checkpoint, fromVersion)` 把记录从每个更旧的版本升级上来。如果它抛出，错误通过 `onReport` 报告一次，调度器要等到为该 kind 注册了一个不同的定义才会再试。一个没有 migrate 的更新定义会阻塞并报 `Task test.versioned version 2 has no migration from 1`（`test/harness-tasks-recovery.test.ts`）。"
   },
   {
-   "type": "small",
-   "text": "“The Harness never terminalizes a task merely because registry code is missing or incompatible, neither at open nor later” spec §5.4. Only an abort ends a blocked task, as orphaned (abort, fault and orphan (p. 80)).",
+   "type": "table-row",
    "page": 74,
-   "zh": "「Harness 绝不会仅仅因为注册表代码缺失或不兼容就把一个任务置为 terminal，无论是在打开时还是之后」（spec §5.4）。只有中止才会结束一个被阻塞的任务，让它成为 orphaned（中止、故障与孤儿（p. 80））。"
+   "_y": 83.1,
+   "cells": [
+    "missing_task no code with that name is registered registering it"
+   ],
+   "is_header": false,
+   "_sig": "missing_task",
+   "zh": "`missing_task` 没有注册任何同名代码 → 注册它。"
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 100.4,
+   "cells": [
+    "task_too_old the stored version is newer than the code registering code of that version or newer"
+   ],
+   "is_header": false,
+   "_sig": "task_too_old",
+   "zh": "`task_too_old` 存储的版本比代码新 → 注册该版本或更新的代码。"
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 115.7,
+   "cells": [
+    "migration_failed the code is newer, and migrate is missing or throws registering a different definition"
+   ],
+   "is_header": false,
+   "_sig": "migration_failed",
+   "zh": "`migration_failed` 代码更新，但 migrate 缺失或抛出 → 注册一个不同的定义。出自 spec §5.4 与"
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 135.0,
+   "cells": [
+    "From spec §5.4 and src/harness/scheduler.ts."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "After a crash: reopening",
    "page": 74,
+   "_y": 340.5,
    "zh": "崩溃之后：重开"
   },
   {
@@ -720,34 +978,10 @@
    "zh": "当你在已有存储上打开一个 Harness 时，调度器会做一次清理提交。每个留在 running 的任务都带着同样的检查点和 memos 退回 pending。此时还不会有什么运行：打开阶段「不分发任何东西」（`src/harness/scheduler.ts`）。处理器在 `resume()` 之后启动，或者在需要进展的调用之后启动，比如 `waitForTask()` 或 `submit()`（spec §2.2）。打开时还会安排第二次提交，应用崩溃留下的任何中止标记和最终结果。"
   },
   {
-   "type": "small",
-   "text": "pending nothing starts after resume running pending; checkpoint, memos and mark kept reruns from the checkpoint waiting nothing resumes when its on is finished completing nothing finishes once its work below is done terminal nothing never runs again From src/harness/scheduler.ts and spec §5.1, §5.5. a pi.tool task after SIGKILL, then after open research/capture/crash-reopen-tasks.txt JSON // the SQLite row left by the killed process",
-   "page": 74,
-   "zh": "pending 打开后在 resume 之前什么也不启动；running → pending，保留检查点、memos 和标记，从检查点重跑；waiting 在它的 on 完成后恢复；completing 在它下方的工作完成后结束；terminal 永不再运行。出自 `src/harness/scheduler.ts` 与 spec §5.1、§5.5。`SIGKILL` 之后、打开之后的一个 `pi.tool` 任务 research/capture/crash-reopen-tasks.txt JSON // 被杀掉进程留下的 SQLite 行"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "{ \"id\": 24, \"kind\": \"pi.tool\", \"owner\": 18, …",
-    "\"state\": { \"status\": \"running\",",
-    "\"checkpoint\": { \"phase\": \"execute\", \"arguments\": { \"target\": \"weekly\" },",
-    "\"replay\": \"safe\" } } }",
-    "// after Harness.open(), before resume(): only the status changed",
-    "\"state\": { \"status\": \"pending\", \"checkpoint\": { … unchanged … } }",
-    "// its owner, generation 18, stays \"waiting\" with \"on\": [24]"
-   ],
-   "page": 74
-  },
-  {
-   "type": "small",
-   "text": "The process was killed mid-tool. Elided (…): conversationId, version, input, background and abortRequested, all unchanged by open.",
-   "page": 74,
-   "zh": "进程在工具执行中途被杀掉。已省略（……）：`conversationId`、`version`、`input`、`background` 和 `abortRequested`，它们都没有被打开改变。"
-  },
-  {
    "type": "h2",
    "text": "Reloading code under a running task",
    "page": 75,
+   "_y": 75.0,
    "zh": "在运行中的任务下重新加载代码"
   },
   {
@@ -759,6 +993,7 @@
    "type": "h2",
    "text": "Closing",
    "page": 75,
+   "_y": 200.7,
    "zh": "关闭"
   },
   {
@@ -795,6 +1030,7 @@
    "type": "small",
    "text": "After a crash, every running task restarts at its last checkpoint. Write each phase so it can run again. A task that sits pending forever is usually blocked. Check harness.inspect(). When a checkpoint’s shape changes, raise version and ship a migrate that accepts every older version. Let handlers honour their signal, so close() and handover are quick.",
    "page": 75,
+   "_y": 403.3,
    "zh": "崩溃之后，每个 running 的任务都从最后一个检查点重新开始。把每个阶段都写成可以再次运行的。永远停在 pending 的任务通常是被阻塞了。检查 `harness.inspect()`。当检查点的形状变化时，提高 `version`，并提供一个接受每个更旧版本的 `migrate`。让处理器尊重它们的 signal，这样 `close()` 和交接都很快。"
   },
   {
@@ -802,14 +1038,15 @@
    "lines": [
     "Sources: spec §2.2, §5.1, §5.4, §12; src/harness/scheduler.ts; test/harness-tasks.test.ts (task scheduling); test/harness-tasks-recovery.test.ts (blocked tasks, definition handover, task crash recovery); research/capture/crash-reopen-tasks.txt."
    ],
-   "page": 75
+   "page": 75,
+   "_y": 486.6
   },
   {
    "type": "figure",
    "number": "5.5",
    "file": "figures/fig-5.5.png",
-   "title": "THE OWNERSHIP TREE\nT R E E",
-   "caption": "Tasks and conversations form one ownership tree, and a background task cuts off the subtree below it. The foreground subagent of README §Abort and Subagents and ex 22, beside the background anchor of ex 23. A generation owns its tool tasks (README §Concepts).",
+   "title": "THE OWNERSHIP TREE TREE",
+   "caption": "Tasksandconversationsformoneownershiptree , andabackgroundtaskcutso ff thesubtreebelowit . TheforegroundsubagentofREADME § Abort andSubagentsandex 22, besidethebackgroundanchorofex 23. Agenerationownsitstooltasks (README § Concepts).",
    "page": 76,
    "zh_caption": "任务与会话构成一棵所有权树，而后台任务会把它下方的子树切掉。README §Abort and Subagents 与示例 22 的前台子智能体，旁边是示例 23 的后台锚点。一个 generation 拥有它的工具任务（README §Concepts）。"
   },
@@ -817,12 +1054,14 @@
    "type": "chapter-title",
    "text": "5 . 5 Ownership and structured concurrency",
    "page": 76,
+   "_y": 57.4,
    "zh": "5.5 所有权与结构化并发"
   },
   {
    "type": "lede",
    "text": "Work a task starts belongs to it: the task cannot finish before that work does, and aborting the task aborts the work.",
    "page": 76,
+   "_y": 106.2,
    "zh": "任务启动的工作归属于它：任务不会早于那些工作结束，而中止任务也会中止那些工作。"
   },
   {
@@ -834,6 +1073,7 @@
    "type": "h2",
    "text": "One ownership tree",
    "page": 76,
+   "_y": 222.7,
    "zh": "一棵所有权树"
   },
   {
@@ -845,6 +1085,7 @@
    "type": "small",
    "text": "Tasks and conversations form one ownership tree, and a background task cuts off the subtree below it. The foreground subagent of README §Abort and Subagents and ex 22, beside the background anchor of ex 23. A generation owns its tool tasks (README §Concepts).",
    "page": 76,
+   "_y": 701.1,
    "zh": "任务与会话构成一棵所有权树，而后台任务会把它下方的子树切掉。README §Abort and Subagents 与示例 22 的前台子智能体，旁边是示例 23 的后台锚点。一个 generation 拥有它的工具任务（README §Concepts）。"
   },
   {
@@ -856,6 +1097,7 @@
    "type": "h2",
    "text": "Foreground and background work",
    "page": 77,
+   "_y": 131.2,
    "zh": "前台与后台工作"
   },
   {
@@ -867,6 +1109,7 @@
    "type": "h2",
    "text": "Waiting on tasks",
    "page": 77,
+   "_y": 228.0,
    "zh": "等待任务"
   },
   {
@@ -878,6 +1121,7 @@
    "type": "small",
    "text": "create children and wait, in one commit test/examples/24-child-tasks.ts TS",
    "page": 77,
+   "_y": 308.6,
    "zh": "在一次提交里创建子任务并等待 test/examples/24-child-tasks.ts TS"
   },
   {
@@ -892,7 +1136,8 @@
     "on: payments, policy: \"failFast\" }; }, taskContext);",
     "}, The ownership literal is hoisted to fit the page. The decide phase reads runtime.outcomes(payments) and commits completed only if every payment completed."
    ],
-   "page": 77
+   "page": 77,
+   "_y": 331.8
   },
   {
    "type": "p",
@@ -928,8 +1173,8 @@
    "type": "figure",
    "number": "5.6",
    "file": "figures/fig-5.6.png",
-   "title": "FAILFAST ON A DECLINED CARD\nT I M E L I N E",
-   "caption": "One failed payment aborts its live siblings in the next commit; the checkout itself is never abort-marked. Example 24’s first scenario, recorded per commit in research/capture/extra-p5/checkout-transitions.txt. Each bar is a committed state that lasts until the next commit rewrites it; a terminal record is never rewritten (hatched). marked is running with an abort mark.",
+   "title": "FAILFAST ON A DECLINED CARD TIMELINE",
+   "caption": "Onefailedpaymentabortsitslivesiblingsinthenextcommit ; thecheckoutitselfisneverabort - marked . Example 24’ sfirstscenario , recordedper commitinresearch / capture / extra - p 5/ checkout - transitions . txt . Eachbarisacommittedstatethatlastsuntilthenextcommitrewritesit ; aterminalrecord isneverrewritten (hatched). m a rk ed is runn i n g withanabortmark .",
    "page": 78,
    "zh_caption": "一次失败的支付会在下一次提交中中止它还存活的兄弟任务；结账本身永远不会被标上中止标记。示例 24 的第一个场景，按提交记录在 research/capture/extra-p5/checkout-transitions.txt。每根条带是一个已提交的状态，一直持续到下一次提交改写它；terminal 记录永不被改写（斜线填充）。marked 表示带着中止标记的 running。"
   },
@@ -937,6 +1182,7 @@
    "type": "small",
    "text": "One failed payment aborts its live siblings in the next commit; the checkout itself is never abort-marked. Example 24’s first scenario, recorded per commit in research/capture/extra-p5/checkout-transitions.txt. Each bar is a committed state that lasts until the next commit rewrites it; a terminal record is never rewritten (hatched). marked is running with an abort mark.",
    "page": 78,
+   "_y": 324.5,
    "zh": "一次失败的支付会在下一次提交中中止它还存活的兄弟任务；结账本身永远不会被标上中止标记。示例 24 的第一个场景，按提交记录在 research/capture/extra-p5/checkout-transitions.txt。每根条带是一个已提交的状态，一直持续到下一次提交改写它；terminal 记录永不被改写（斜线填充）。marked 表示带着中止标记的 running。"
   },
   {
@@ -948,18 +1194,13 @@
    "type": "h2",
    "text": "completing: the owner waits for its work",
    "page": 78,
+   "_y": 432.0,
    "zh": "completing：owner 等待它的工作"
   },
   {
    "type": "p",
    "text": "If a task finishes while its owned work is still running, it is committed as { status: \"completing\", outcome }. The result is fixed, but the task is not done. Once nothing live remains below it, the scheduler commits the final terminal record spec §5.5. The shop order shows it end to end:",
    "zh": "如果一个任务结束时它拥有的工作还在运行，它会被提交为 `{ status: \"completing\", outcome }`。结果已定，但任务还没完成。一旦它下方不再有存活的东西，调度器就提交最终的 terminal 记录（spec §5.5）。商店订单完整展示了这一点："
-  },
-  {
-   "type": "small",
-   "text": "13 7 order running checkpoint finish; creates receipt child 11 in the same commit 14 11 send-receipt running started 15 7 order completing finish commits completed; child 11 is still live 16 11 send-receipt terminal completed, \"sent\" 17 7 order terminal the scheduler’s final commit; waitForTask(7) resolves Scenario A, research/capture/task-transitions.txt.",
-   "page": 78,
-   "zh": "13 7 order running 提交检查点 finish；在同一次提交里创建回执子任务 11；14 11 send-receipt running 已启动；15 7 order completing finish 提交 completed；子任务 11 仍存活；16 11 send-receipt terminal completed，\"sent\"；17 7 order terminal 调度器的最终提交；waitForTask(7) 兑现。场景 A，research/capture/task-transitions.txt。"
   },
   {
    "type": "p",
@@ -1005,37 +1246,34 @@
    "type": "small",
    "text": "Foreground work an extension starts in a subagent’s conversation holds the calling tool, and with it the whole run. Asking a subagent more questions while its tool is completing extends the hold. Create work that should not hold its owner as conversation-owned and background spec §12.",
    "page": 79,
+   "_y": 132.7,
    "zh": "扩展在一个子智能体会话里启动的前台工作会挂住调用它的工具，进而挂住整个运行。在某个工具还在 completing 时再问子智能体更多问题，会延长这个挂起。应该不挂住自己 owner 的工作，就创建成会话拥有的后台任务（spec §12）。"
   },
   {
    "type": "small",
    "text": "Make a task the owner of any work its result depends on. Use failFast for all-or-nothing children, and allSettled when you want every result. Create children in one commit and finish in a later one. Use a background, conversation-owned task for work that must not hold its caller.",
    "page": 79,
+   "_y": 212.8,
    "zh": "让一个任务成为其结果所依赖的任何工作的 owner。对全有或全无的子任务用 failFast，对你想要每个结果的情形用 allSettled。在一次提交里创建子任务，在之后的一次提交里结束。对不该挂住调用者的工作，用会话拥有的后台任务。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §5.4, §5.5, §12; README §Concepts, §Abort and Subagents, §Child Tasks; src/types.ts (TaskOwnership, TaskOptions,"
-   ],
-   "page": 79
-  },
-  {
    "type": "small",
-   "text": "JoinPolicy); src/session/transaction.ts; src/harness/scheduler.ts; test/harness-structured.test.ts; ex 22, 23, 24; run 24; research/capture/task-transitions.txt; research/capture/extra-p5/checkout-transitions.txt.",
+   "text": "Sources: spec §5.4, §5.5, §12; README §Concepts, §Abort and Subagents, §Child Tasks; src/types.ts (TaskOwnership, TaskOptions, JoinPolicy); src/session/transaction.ts; src/harness/scheduler.ts; test/harness-structured.test.ts; ex 22, 23, 24; run 24; research/capture/task-transitions.txt; research/capture/extra-p5/checkout-transitions.txt.",
    "page": 79,
-   "zh": "JoinPolicy）；src/session/transaction.ts；src/harness/scheduler.ts；test/harness-structured.test.ts；示例 22、23、24；运行 24；research/capture/task-transitions.txt；research/capture/extra-p5/checkout-transitions.txt。"
+   "_y": 293.9
   },
   {
    "type": "chapter-title",
    "text": "5 . 6 Abort, fault and orphan",
    "page": 80,
+   "_y": 57.4,
    "zh": "5.6 中止、故障与孤儿"
   },
   {
    "type": "lede",
    "text": "An abort is a committed mark that flows down the tree; each task’s own handler decides how to clean up, after everything below it has finished.",
    "page": 80,
+   "_y": 106.2,
    "zh": "中止是一个会向下流遍整棵树的已提交标记；每个任务自己的处理器决定怎么清理，时机在它下方的一切都结束之后。"
   },
   {
@@ -1047,6 +1285,7 @@
    "type": "h2",
    "text": "How an abort works",
    "page": 80,
+   "_y": 222.7,
    "zh": "中止如何工作"
   },
   {
@@ -1063,6 +1302,7 @@
    "type": "h2",
    "text": "The abort flows down, cleanup runs up",
    "page": 80,
+   "_y": 543.7,
    "zh": "中止向下流，清理向上跑"
   },
   {
@@ -1109,8 +1349,8 @@
    "type": "figure",
    "number": "5.7",
    "file": "figures/fig-5.7.png",
-   "title": "ABORTTASK ON A WAITING CHECKOUT\nS E Q U E N C E",
-   "caption": "An abort mark flows down in its own commit, and abort handlers run from the leaves up. Scenario 2 of research/capture/extra-p5/checkout-transitions.txt; seq numbers are the captured commit order. Run 24 prints the four refunds before checkout aborted.",
+   "title": "ABORTTASK ON A WAITING CHECKOUT SEQUENCE",
+   "caption": "Anabortmarkflowsdowninitsowncommit , andaborthandlersrunfromtheleavesup . Scenario 2 ofresearch / capture / extra - p 5/ checkout - transitions . txt ; seqnumbersarethecapturedcommitorder . Run 24 printsthefourrefundsbefore chec kout ab ort ed .",
    "page": 81,
    "zh_caption": "中止标记在单独一次提交里向下流，中止处理器自叶向上运行。research/capture/extra-p5/checkout-transitions.txt 的场景 2；序号是抓取到的提交顺序。运行 24 会在 checkout aborted 之前打印出四笔退款。"
   },
@@ -1118,30 +1358,15 @@
    "type": "small",
    "text": "An abort mark flows down in its own commit, and abort handlers run from the leaves up. Scenario 2 of research/capture/extra-p5/checkout-transitions.txt; seq numbers are the captured commit order. Run 24 prints the four refunds before checkout aborted.",
    "page": 81,
+   "_y": 520.2,
    "zh": "中止标记在单独一次提交里向下流，中止处理器自叶向上运行。research/capture/extra-p5/checkout-transitions.txt 的场景 2；序号是抓取到的提交顺序。运行 24 会在 checkout aborted 之前打印出四笔退款。"
   },
   {
    "type": "h2",
    "text": "Orphaned, faulted, aborted",
    "page": 81,
+   "_y": 560.2,
    "zh": "orphaned、faulted、aborted"
-  },
-  {
-   "type": "small",
-   "text": "aborted the task’s own abort handler compensated, as far as the handler could orphaned none: no code could take the task “may remain uncleaned” faulted a phase that threw or made no progress, or an abort handler that committed no outcome unknown; nothing compensated",
-   "page": 81,
-   "zh": "`aborted` 任务自己的中止处理器做了补偿，在它能做到的范围内。`orphaned` 没有代码能接手该任务，「可能未经清理」。`faulted` 某个阶段抛出或没有进展，或者中止处理器没有提交结果。`unknown` 什么都没补偿。"
-  },
-  {
-   "type": "code",
-   "lines": [],
-   "page": 81
-  },
-  {
-   "type": "small",
-   "text": "From spec §5.4. failed is not here: it is an outcome the task chose, like completed.",
-   "page": 81,
-   "zh": "出自 spec §5.4。failed 不在这里：它是任务自己选择的一种结果，和 completed 一样。"
   },
   {
    "type": "p",
@@ -1152,6 +1377,7 @@
    "type": "h2",
    "text": "Crashes during an abort",
    "page": 82,
+   "_y": 116.2,
    "zh": "中止过程中的崩溃"
   },
   {
@@ -1160,20 +1386,81 @@
    "zh": "已提交的中止标记就是全部关键，所以每个崩溃点都能从它恢复（`test/harness-tasks-recovery.test.ts`）："
   },
   {
-   "type": "small",
-   "text": "while the mark is being committed no mark; the run resumes after the mark, before the run returned pending with the mark; only the abort handler runs while the abort handler runs a new abort invocation runs it again while its outcome is being committed the abort handler runs again after the final outcome nothing runs; abortTask() returns \"terminal\" The task crash recovery suite. An abort handler can run more than once, so it must be safe to repeat, like any effect phase (the effect sandwich (p. 70)).",
-   "page": 82,
-   "zh": "标记正在提交时 没有标记；这次运行在标记之后恢复；运行返回之前 pending，带标记；只有中止处理器运行时 只运行中止处理器；中止处理器运行一次新的中止 invocation 时 再运行它；结果正在提交时 中止处理器再次运行；最终结果之后 什么都不运行；`abortTask()` 返回 `\"terminal\"`。任务崩溃恢复测试套件。中止处理器可能运行不止一次，所以它必须可安全重复，就像任何效果阶段一样（效果三明治（p. 70））。"
-  },
-  {
    "type": "p",
    "text": "Details: cleanup for the built-in tasks For the two outcomes the Harness writes itself, faulted and orphaned, it runs one cleanup hook in the commit that makes the outcome final src/harness/live.ts; spec §5.4. Only three kinds use it: pi.generation — when it is the current run’s task, a committed partial reply becomes an aborted pi.assistant entry, the run’s inputs become unanswered with reason faulted or the blocked reason, and the run ends (run control (p. 88)). pi.tool — marks the tool call done without a result entry. The run continues, and the missing result is filled in when the model context is built (context (p. 40)). pi.compaction — clears the compaction status (compaction (p. 97)).",
    "zh": "细节：内置任务的清理 —— 对于 Harness 自己写入的两种结果 faulted 和 orphaned，它会在让该结果定下的那次提交里运行一个清理钩子（`src/harness/live.ts`；spec §5.4）。只有三种任务会用它：`pi.generation` —— 当它是当前运行的任务时，一条已提交的半截回复变成一条 aborted 的 `pi.assistant` 条目，该运行的输入变成无人回复，原因为 faulted 或被阻塞的原因，运行结束（运行控制（p. 88））。`pi.tool` —— 把这次工具调用标记为 done，但没有结果条目。运行继续，缺失的结果会在构建模型上下文时补上（context（p. 40））。`pi.compaction` —— 清掉压缩状态（压缩（p. 97））。"
   },
   {
+   "type": "table-row",
+   "page": 82,
+   "_y": 178.5,
+   "cells": [
+    "while the mark is being committed no mark; the run resumes"
+   ],
+   "is_header": false,
+   "_sig": "while",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 82,
+   "_y": 194.5,
+   "cells": [
+    "after the mark, before the run returned pending with the mark; only the abort handler runs"
+   ],
+   "is_header": false,
+   "_sig": "after",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 82,
+   "_y": 212.6,
+   "cells": [
+    "while the abort handler runs a new abort invocation runs it again"
+   ],
+   "is_header": false,
+   "_sig": "while",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 82,
+   "_y": 229.9,
+   "cells": [
+    "while its outcome is being committed the abort handler runs again"
+   ],
+   "is_header": false,
+   "_sig": "while",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 82,
+   "_y": 244.7,
+   "cells": [
+    "after the final outcome nothing runs; abortTask() returns \"terminal\""
+   ],
+   "is_header": false,
+   "_sig": "after",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 82,
+   "_y": 262.7,
+   "cells": [
+    "The task crash recovery suite. An abort handler can run more than once, so it must be safe to repeat, like any effect phase (the effect sandwich (p. 70))."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "Write abort handlers that are safe to run twice. A crash can make them run again. Always commit a final outcome from the abort handler; returning without one faults the task. Compensate inline, or through background tasks. An abort handler cannot create child tasks or wait on them. Treat orphaned and faulted as “nothing cleaned up”. Check the outside world yourself.",
    "page": 82,
+   "_y": 485.1,
    "zh": "写出可以安全运行两次的中止处理器。崩溃可能让它们再次运行。始终从中止处理器提交一个最终结果；不返回结果会让任务进入故障。就地补偿，或通过后台任务补偿。中止处理器不能创建子任务，也不能等待它们。把 orphaned 和 faulted 当作「什么都没清理」。自己去检查外部世界。"
   },
   {
@@ -1182,7 +1469,349 @@
     "Sources: spec §2.2, §5.3, §5.4, §5.5, §12; src/harness/scheduler.ts; src/harness/live.ts (settleSchedulerOutcome); test/harness-tasks.test.ts (task abort); test/harness-tasks-recovery.test.ts; test/harness-structured.test.ts (abort order); test/harness-",
     "ownership.test.ts; ex 24, run 24; research/capture/extra-p5/checkout-transitions.txt."
    ],
-   "page": 82
+   "page": 82,
+   "_y": 566.9
+  },
+  {
+   "type": "table-row",
+   "page": 71,
+   "_y": 467.3,
+   "cells": [
+    "before the intent is committed checkpoint prepare prepare again; no charge was sent"
+   ],
+   "is_header": false,
+   "_sig": "before",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 71,
+   "_y": 482.5,
+   "cells": [
+    "after the intent, before the charge checkpoint charge the charge, for the first time"
+   ],
+   "is_header": false,
+   "_sig": "after",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 71,
+   "_y": 499.7,
+   "cells": [
+    "after the charge, before the outcome checkpoint charge the charge again, with the same key"
+   ],
+   "is_header": false,
+   "_sig": "after",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 71,
+   "_y": 516.2,
+   "cells": [
+    "after the outcome is committed terminal nothing"
+   ],
+   "is_header": false,
+   "_sig": "after",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 71,
+   "_y": 534.2,
+   "cells": [
+    "The middle two rows look the same to the new process. In the spec’s words: “Reopening in an intent phase means the effect may have happened.”"
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 444.2,
+   "cells": [
+    "pending nothing starts after resume"
+   ],
+   "is_header": false,
+   "_sig": "pending",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 462.8,
+   "cells": [
+    "running pending; checkpoint, memos and mark kept reruns from the checkpoint"
+   ],
+   "is_header": false,
+   "_sig": "running",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 479.3,
+   "cells": [
+    "waiting nothing resumes when its on is finished"
+   ],
+   "is_header": false,
+   "_sig": "waiting",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 495.8,
+   "cells": [
+    "completing nothing finishes once its work below is done"
+   ],
+   "is_header": false,
+   "_sig": "completing",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 513.1,
+   "cells": [
+    "terminal nothing never runs again"
+   ],
+   "is_header": false,
+   "_sig": "terminal",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 531.0,
+   "cells": [
+    "From src/harness/scheduler.ts and spec §5.1, §5.5."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 559.1,
+   "cells": [
+    "a pi.tool task after SIGKILL, then after open research/capture/crash-reopen-tasks.txt JSON"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 582.8,
+   "cells": [
+    "// the SQLite row left by the killed process"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 593.6,
+   "cells": [
+    "{ \"id\": 24, \"kind\": \"pi.tool\", \"owner\": 18, …"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 604.8,
+   "cells": [
+    "\"state\": { \"status\": \"running\","
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 615.3,
+   "cells": [
+    "\"checkpoint\": { \"phase\": \"execute\", \"arguments\": { \"target\": \"weekly\" },"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 626.6,
+   "cells": [
+    "\"replay\": \"safe\" } } }"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 648.8,
+   "cells": [
+    "// after Harness.open(), before resume(): only the status changed"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 659.6,
+   "cells": [
+    "\"state\": { \"status\": \"pending\", \"checkpoint\": { … unchanged … } }"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 681.8,
+   "cells": [
+    "// its owner, generation 18, stays \"waiting\" with \"on\": [24]"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 74,
+   "_y": 706.5,
+   "cells": [
+    "The process was killed mid-tool. Elided (…): conversationId, version, input, background and abortRequested, all unchanged by open."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 522.8,
+   "cells": [
+    "13 7 order running checkpoint finish; creates receipt child 11 in the same commit"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 540.0,
+   "cells": [
+    "14 11 send-receipt running started"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 556.5,
+   "cells": [
+    "15 7 order completing finish commits completed; child 11 is still live"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 573.6,
+   "cells": [
+    "16 11 send-receipt terminal completed, \"sent\""
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 590.1,
+   "cells": [
+    "17 7 order terminal the scheduler’s final commit; waitForTask(7) resolves"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 78,
+   "_y": 608.3,
+   "cells": [
+    "Scenario A, research/capture/task-transitions.txt."
+   ],
+   "is_header": false,
+   "_sig": "Scenario",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 81,
+   "_y": 602.3,
+   "cells": [
+    "aborted the task’s own abort handler compensated, as far as the handler could"
+   ],
+   "is_header": false,
+   "_sig": "aborted",
+   "zh": "`aborted` 任务自己的中止处理器做了补偿，在它能做到的范围内。"
+  },
+  {
+   "type": "table-row",
+   "page": 81,
+   "_y": 619.5,
+   "cells": [
+    "orphaned none: no code could take the task “may remain uncleaned”"
+   ],
+   "is_header": false,
+   "_sig": "orphaned",
+   "zh": "`orphaned` 没有代码能接手该任务，「可能未经清理」。"
+  },
+  {
+   "type": "table-row",
+   "page": 81,
+   "_y": 636.0,
+   "cells": [
+    "faulted a phase that threw or made no progress, or an abort handler that committed no outcome unknown; nothing compensated"
+   ],
+   "is_header": false,
+   "_sig": "faulted",
+   "zh": "`faulted` 某个阶段抛出或没有进展，或者中止处理器没有提交结果。"
+  },
+  {
+   "type": "table-row",
+   "page": 81,
+   "_y": 654.0,
+   "cells": [
+    "From spec §5.4. failed is not here: it is an outcome the task chose, like completed."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
   }
  ]
 }

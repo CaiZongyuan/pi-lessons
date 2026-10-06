@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 1 The Model",
    "page": 9,
+   "_y": 83.8,
    "zh": "模型"
   },
   {
    "type": "h2",
    "text": "An agent whose every visible step is a stored commit, so a process that dies mid-turn is just a pause.",
    "page": 9,
+   "_y": 154.8,
    "zh": "每一个可见步骤都是一次存储的提交，因此进程在轮次中途死去，不过是一次暂停。"
   },
   {
    "type": "chapter-title",
    "text": "1 . 1 What Pi Durable is for",
    "page": 10,
+   "_y": 57.4,
    "zh": "1.1 Pi Durable 要解决什么"
   },
   {
    "type": "lede",
    "text": "An agent process can die at any instruction; Pi Durable makes every visible step a stored commit, so a death mid-turn is a pause, not a loss.",
    "page": 10,
+   "_y": 106.2,
    "zh": "智能体进程可能在任意一条指令处死去；Pi Durable 让每一个可见步骤都成为一次存储的提交，因此轮次中途的死亡只是一次暂停，而不是丢失。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "h2",
    "text": "The problem: a turn has four kinds of state",
    "page": 10,
+   "_y": 237.7,
    "zh": "问题：一个轮次有四类状态"
   },
   {
@@ -69,6 +74,7 @@
    "type": "h2",
    "text": "What original Pi keeps",
    "page": 10,
+   "_y": 429.7,
    "zh": "原版 Pi 保留了什么"
   },
   {
@@ -80,8 +86,8 @@
    "type": "figure",
    "number": "1.1",
    "file": "figures/fig-1.1.png",
-   "title": "A CRASH IN THE MIDDLE OF A TOOL CALL\nC O M P A R I S O N",
-   "caption": "A crash mid-tool leaves original Pi a file that ends at the call; Pi Durable reopens an interrupted task. Left of the dashed line is what was written before",
+   "title": "A CRASH IN THE MIDDLE OF A TOOL CALL COMPARISON",
+   "caption": "Acrashmid - toolleavesoriginalPiafilethatendsatthecall ; PiDurablereopensaninterruptedtask . Le ft ofthedashedlineiswhatwaswrittenbefore",
    "page": 11,
    "zh_caption": "工具执行中途崩溃，会让原版 Pi 留下一个停在调用处的文件；Pi Durable 则重新打开一个被中断的任务。虚线左侧是崩溃之前已写入的内容"
   },
@@ -89,12 +95,14 @@
    "type": "small",
    "text": "A crash mid-tool leaves original Pi a file that ends at the call; Pi Durable reopens an interrupted task. Left of the dashed line is what was written before SIGKILL; right is what the next process finds. The Pi Durable rows are conversation 1 of the crash run in research/capture/crash-*.txt, where deploy printed 6 of its 10 lines. The original Pi row follows session-format.md.",
    "page": 11,
+   "_y": 293.1,
    "zh": "工具执行中途崩溃，会让原版 Pi 留下一个停在调用处的文件；Pi Durable 则重新打开一个被中断的任务。虚线左侧是 `SIGKILL` 之前已写入的内容，右侧是下一个进程看到的内容。Pi Durable 那些行是 `research/capture/crash-*.txt` 中崩溃运行的会话 1，其中 `deploy` 打印了 10 行中的 6 行。原版 Pi 那一行遵循 `session-format.md`。"
   },
   {
    "type": "h2",
    "text": "Pi Durable’s answer",
    "page": 11,
+   "_y": 345.0,
    "zh": "Pi Durable 的答案"
   },
   {
@@ -106,6 +114,7 @@
    "type": "small",
    "text": "tool result written on resume, excerpt research/capture/crash-after.txt JSON",
    "page": 12,
+   "_y": 73.9,
    "zh": "恢复时写入的工具结果，节选自 `research/capture/crash-after.txt` `JSON`"
   },
   {
@@ -121,12 +130,14 @@
     "\"isError\": true,",
     "\"timestamp\": 1791211977057 }"
    ],
-   "page": 12
+   "page": 12,
+   "_y": 97.1
   },
   {
    "type": "small",
    "text": "The model message of entry 25. The first text block, cut here, holds all six output lines from the killed process. The entry’s data.diagnostics carries the same error with code: \"interrupted\".",
    "page": 12,
+   "_y": 243.0,
    "zh": "条目 25 的模型消息。第一个文本块（此处截断）包含被杀死进程的全部六行输出。该条目的 `data.diagnostics` 带有同样的错误，`code` 为 `\"interrupted\"`。"
   },
   {
@@ -138,6 +149,7 @@
    "type": "h2",
    "text": "What it is not",
    "page": 12,
+   "_y": 347.2,
    "zh": "它不是什么"
   },
   {
@@ -154,22 +166,21 @@
    "type": "small",
    "text": "Reopen the same storage and resume unfinished work. Safe tools can run again; unsafe tools report an interrupted result. Decide, per tool, whether running it twice is safe. That one choice decides what happens to a call that was cut off. Keep app state in documents, not in memory, so it can never disagree with the transcript. Keep one process per storage, and let your supervisor restart it.",
    "page": 12,
+   "_y": 563.1,
    "zh": "重新打开同一个存储，恢复未完成的工作。安全的工具可以再次运行；不安全的工具报告一个被中断的结果。逐个工具决定运行两次是否安全。这一个选择就决定了被截断的调用会怎样。把应用状态放在文档里，而不是内存里，这样它永远不会与记录（transcript）不一致。每个存储保持一个进程，让你的监督者去重启它。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: README.md (intro, §Concepts, §Watching a Conversation, §Your Own State, §Storage); docs/spec.md §1, §13; src/harness/tool.ts",
-    "(ToolTask phases call, execute); research/capture/crash-README.md, crash-before.txt, crash-reopen-tasks.txt, crash-after.txt; research/pi/packages/coding-agent/docs/session-format.md, sessions.md, how-pi-works.md; earendil.com/posts/pi-durable (Earendil, October 2026)"
-   ],
-   "page": 12
+   "type": "small",
+   "text": "Sources: README.md (intro, §Concepts, §Watching a Conversation, §Your Own State, §Storage); docs/spec.md §1, §13; src/harness/tool.ts (ToolTask phases call, execute); research/capture/crash-README.md, crash-before.txt, crash-reopen-tasks.txt, crash-after.txt; research/pi/packages/coding-agent/docs/session-format.md, sessions.md, how-pi-works.md; earendil.com/posts/pi-durable (Earendil, October 2026)",
+   "page": 12,
+   "_y": 644.1
   },
   {
    "type": "figure",
    "number": "1.2",
    "file": "figures/fig-1.2.png",
-   "title": "THE LAYERS OF A HARNESS\nL A Y E R S",
-   "caption": "The host drives a Harness, the Harness commits through one Session, and the Session writes one storage. The right column is HarnessOptions; Chord is a package dependency, not an option. After src/harness/harness.ts and src/session/session.ts.",
+   "title": "THE LAYERS OF A HARNESS LAYERS",
+   "caption": "ThehostdrivesaHarness , theHarnesscommitsthroughoneSession , andtheSessionwritesonestorage . Therightcolumnis Ha rn e ss O pt i ons ; Chordisapackagedependency , notanoption . A ft ersrc / harness / harness . tsandsrc / session / session . ts .",
    "page": 13,
    "zh_caption": "宿主驱动一个 Harness，Harness 通过一个 `Session` 提交，`Session` 写入一处存储。右列是 `HarnessOptions`；`Chord` 是一个包依赖，不是选项。依据 `src/harness/harness.ts` 与 `src/session/session.ts`。"
   },
@@ -177,18 +188,21 @@
    "type": "chapter-title",
    "text": "1 . 2 The architecture in one page",
    "page": 13,
+   "_y": 57.4,
    "zh": "1.2 一页讲完架构"
   },
   {
    "type": "lede",
    "text": "A Harness is a Session kernel with conversations, submissions and a task scheduler on top, one storage underneath, and everything else plugged in by",
    "page": 13,
+   "_y": 106.2,
    "zh": "Harness 就是一个 `Session` 内核，上面加上面话、提交项和任务调度器，下面垫着一处存储，其余一切由"
   },
   {
    "type": "lede",
    "text": "the host.",
    "page": 13,
+   "_y": 136.9,
    "zh": "宿主插入。"
   },
   {
@@ -200,6 +214,7 @@
    "type": "h2",
    "text": "Four layers",
    "page": 13,
+   "_y": 237.7,
    "zh": "四层"
   },
   {
@@ -211,6 +226,7 @@
    "type": "small",
    "text": "The host drives a Harness, the Harness commits through one Session, and the Session writes one storage. The right column is HarnessOptions; Chord is a package dependency, not an option. After src/harness/harness.ts and src/session/session.ts.",
    "page": 13,
+   "_y": 590.7,
    "zh": "宿主驱动一个 Harness，Harness 通过一个 `Session` 提交，`Session` 写入一处存储。右列是 `HarnessOptions`；`Chord` 是一个包依赖，不是选项。依据 `src/harness/harness.ts` 与 `src/session/session.ts`。"
   },
   {
@@ -222,6 +238,7 @@
    "type": "h2",
    "text": "Inside the Harness",
    "page": 14,
+   "_y": 114.0,
    "zh": "Harness 内部"
   },
   {
@@ -230,27 +247,61 @@
    "zh": "四个组件承担 Harness 的工作，每个都在 `src/harness/` 下的一个文件里。"
   },
   {
-   "type": "code",
-   "lines": [
-    "harness.ts nothing: a handle is an id plus methods; “compare handles by id” README §Concepts"
-   ],
-   "page": 14
-  },
-  {
-   "type": "small",
-   "text": "Conversation handles Submissions submissions.ts, inbox.ts admission of inputs and writes, the per-conversation inbox, and the waiters behind wait() Task scheduler scheduler.ts an in-memory mirror of every live task; reserving, running and aborting them Views view.ts, task-graph.ts, events.ts viewState(), watch(), the task graph and agent events",
-   "page": 14,
-   "zh": "会话句柄｜提交项 `submissions.ts`、`inbox.ts`：输入与写入的受理、每个会话各自的收件箱，以及 `wait()` 背后的等待者｜任务调度器 `scheduler.ts`：每个存活任务的内存镜像；预留、运行和中止它们｜视图 `view.ts`、`task-graph.ts`、`events.ts`：`viewState()`、`watch()`、任务图和智能体事件"
-  },
-  {
    "type": "p",
    "text": "The harness answers inputs with three built-in tasks. pi.generation prepares the prompt and calls the model. pi.tool runs one tool call. pi.compaction summarizes old context spec §8. They “are not an extension and cannot be removed or replaced” src/harness/registry.ts, so always build the registry with createRegistry(); Harness.open() refuses one that lacks them.",
    "zh": "Harness 用三个内置任务来回应输入。`pi.generation` 准备提示词并调用模型。`pi.tool` 运行一次工具调用。`pi.compaction` 概括旧上下文 `spec §8`。它们「不是扩展，不能被移除或替换」`src/harness/registry.ts`，所以永远用 `createRegistry()` 构建注册表；`Harness.open()` 会拒绝缺少它们的注册表。"
   },
   {
+   "type": "table-row",
+   "page": 14,
+   "_y": 176.6,
+   "cells": [
+    "Conversation handles",
+    "harness.ts nothing: a handle is an id plus methods; “compare handles by id” README §Concepts"
+   ],
+   "is_header": false,
+   "_sig": "Conversation",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 203.1,
+   "cells": [
+    "Submissions submissions.ts, inbox.ts admission of inputs and writes, the per-conversation inbox, and the waiters behind wait()"
+   ],
+   "is_header": false,
+   "_sig": "Submissions",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 230.9,
+   "cells": [
+    "Task scheduler scheduler.ts an in-memory mirror of every live task; reserving, running and aborting them"
+   ],
+   "is_header": false,
+   "_sig": "Task",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 247.4,
+   "cells": [
+    "Views view.ts, task-graph.ts, events.ts",
+    "viewState(), watch(), the task graph and agent events"
+   ],
+   "is_header": false,
+   "_sig": "Views",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "What the host plugs in",
    "page": 14,
+   "_y": 342.7,
    "zh": "宿主插入的东西"
   },
   {
@@ -259,28 +310,81 @@
    "zh": "`Harness.open(storage, options, context)` 把其余一切都作为 `HarnessOptions` 接收 `spec §2.2`。"
   },
   {
-   "type": "code",
-   "lines": [
-    "models the pi-ai Models interface; generation calls models.streamSimple() generation (p. 91)",
-    "registry the installed extensions: tools, prompt sections, hooks, wraps and tasks the registry (p. 103)"
-   ],
-   "page": 14
-  },
-  {
-   "type": "small",
-   "text": "settings run policy read at every use and never stored settings and defaults (p. 180) env builds the ExecutionEnv for each tool call and prompt render the environment (p. 155) conversationCreated runs in every commit that creates or forks a conversation access and creation (p. 53) now, onReport the clock, and a sink for errors the harness reports but survives —",
-   "page": 14,
-   "zh": "`settings`：每次使用时读取、从不存储的运行策略｜设置与默认值（p. 180）｜`env`：为每次工具调用和提示词渲染构建 `ExecutionEnv`｜渲染环境（p. 155）｜`conversationCreated`：在每次创建或分叉会话的提交中运行｜访问与创建（p. 53）｜`now`、`onReport`：时钟，以及 Harness 报告但能挺过去的错误的去处——"
-  },
-  {
    "type": "p",
    "text": "Two dependencies are not options: @earendil-works/pi-ai supplies the message types and the faux provider, and @earendil-works/chord supplies document state package.json. Every async call takes a Chord Context; cancelling it cancels the wait, never the work README §Quick Start.",
    "zh": "有两个依赖不是选项：`@earendil-works/pi-ai` 提供消息类型和 faux 供应商，`@earendil-works/chord` 提供文档状态 `package.json`。每个异步调用都接受一个 `Chord Context`；取消它取消的是等待，而不是工作 `README §Quick Start`。"
   },
   {
+   "type": "table-row",
+   "page": 14,
+   "_y": 404.9,
+   "cells": [
+    "models the pi-ai Models interface; generation calls models.streamSimple() generation (p. 91)"
+   ],
+   "is_header": false,
+   "_sig": "models",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 422.3,
+   "cells": [
+    "registry the installed extensions: tools, prompt sections, hooks, wraps and tasks the registry (p. 103)"
+   ],
+   "is_header": false,
+   "_sig": "registry",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 438.8,
+   "cells": [
+    "settings run policy read at every use and never stored settings and defaults (p. 180)"
+   ],
+   "is_header": false,
+   "_sig": "settings",
+   "zh": "`settings`：每次使用时读取、从不存储的运行策略｜设置与默认值（p. 180）｜"
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 456.1,
+   "cells": [
+    "env builds the ExecutionEnv for each tool call and prompt render the environment (p. 155)"
+   ],
+   "is_header": false,
+   "_sig": "env",
+   "zh": "`env`：为每次工具调用和提示词渲染构建"
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 472.6,
+   "cells": [
+    "conversationCreated runs in every commit that creates or forks a conversation access and creation (p. 53)"
+   ],
+   "is_header": false,
+   "_sig": "conversationCreated",
+   "zh": "`conversationCreated`：在每次创建或分叉会话的提交中运行｜访问与创建（p. 53）｜"
+  },
+  {
+   "type": "table-row",
+   "page": 14,
+   "_y": 489.8,
+   "cells": [
+    "now, onReport the clock, and a sink for errors the harness reports but survives —"
+   ],
+   "is_header": false,
+   "_sig": "now",
+   "zh": "`now`、"
+  },
+  {
    "type": "h2",
    "text": "One call through the layers",
    "page": 14,
+   "_y": 574.5,
    "zh": "一次调用穿过各层"
   },
   {
@@ -317,6 +421,7 @@
    "type": "h2",
    "text": "Memory and storage",
    "page": 15,
+   "_y": 139.5,
    "zh": "内存与存储"
   },
   {
@@ -328,6 +433,7 @@
    "type": "h2",
    "text": "Entry points",
    "page": 15,
+   "_y": 345.0,
    "zh": "入口点"
   },
   {
@@ -336,38 +442,11 @@
    "zh": "这个包暴露十条导入路径。依赖 Node 的代码位于以 `/node` 结尾的路径之后；可移植的 `SQLite` 与 `JSONL` 核心也能在 Bun 或 Cloudflare Durable Objects 上运行 `README §Storage`。"
   },
   {
-   "type": "small",
-   "text": "@earendil-works/pi-durable Harness, createRegistry, defineExtension, defineTool, defineTask, defineDoc, entry tokens, built-in docs and tasks, MemoryStorage, createSession …/storage/sqlite/node, …/storage/sqlite",
-   "page": 15,
-   "zh": "`@earendil-works/pi-durable`：`Harness`、`createRegistry`、`defineExtension`、`defineTool`、`defineTask`、`defineDoc`、条目词元、内置文档与内置任务、`MemoryStorage`、`createSession`｜`…/storage/sqlite/node`、`…/storage/sqlite`"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "openNodeSqliteStorage(file); the portable core over an async database facade",
-    "…/storage/jsonl/node, …/storage/jsonl openNodeJsonlStorage(directory, context); the portable core over a FileSystem …/storage/memory MemoryStorage on its own …/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv …/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four …/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks From the exports map of package.json. The package requires Node 22.19.0 or later."
-   ],
-   "page": 15
-  },
-  {
-   "type": "small",
-   "text": "Your code talks to the Harness and its conversation handles, never to storage. Anything you need after a restart must be in a commit; memory is a cache. Handles hold no state. After a restart, get a new one with harness.conversation(id, context).",
-   "page": 15,
-   "zh": "你的代码只与 Harness 及其会话句柄对话，从不直接接触存储。任何重启后还需要的东西，都必须存在于某次提交中；内存只是缓存。句柄不持有状态。重启之后，用 `harness.conversation(id, context)` 重新取一个。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts"
-   ],
-   "page": 15
-  },
-  {
    "type": "figure",
    "number": "1.3",
    "file": "figures/fig-1.3.png",
-   "title": "THE COMMIT AS THE ONLY DOOR\nF L O W",
-   "caption": "Every visible change passes through one commit on the mutation line; effects reach observers only as commits. Stage names follow spec §4: the line is held from the callback through publication.",
+   "title": "THE COMMIT AS THE ONLY DOOR FLOW",
+   "caption": "Everyvisiblechangepassesthroughonecommitonthemutationline ; e ff ectsreachobserversonlyascommits . Stagenamesfollowspec §4: thelineis heldfromthecallbackthroughpublication .",
    "page": 16,
    "zh_caption": "每一个可见的改变，都要经过变更线上的同一次提交；效果只以提交的形式抵达观察者。阶段名称遵循 `spec §4`：变更线从回调一直持有到发布。"
   },
@@ -375,12 +454,14 @@
    "type": "chapter-title",
    "text": "1 . 3 The core rule and its invariants",
    "page": 16,
+   "_y": 57.4,
    "zh": "1.3 核心规则及其不变式"
   },
   {
    "type": "lede",
    "text": "One sentence defines the system: commit everything together, and show nothing that is not committed. Eight invariants make that sentence true.",
    "page": 16,
+   "_y": 106.2,
    "zh": "一句话定义了这个系统：所有东西一起提交，不展示任何未提交的东西。八条不变式让这句话成立。"
   },
   {
@@ -392,6 +473,7 @@
    "type": "h2",
    "text": "The rule",
    "page": 16,
+   "_y": 222.7,
    "zh": "规则"
   },
   {
@@ -403,6 +485,7 @@
    "type": "small",
    "text": "“A Session atomically commits immutable entries, full task records, and Chord-tracked documents. Only committed state is observable.”",
    "page": 16,
+   "_y": 288.7,
    "zh": "「`Session` 原子地提交不可变条目、完整任务记录和由 `Chord` 跟踪的文档。只有已提交的状态是可观测的。」"
   },
   {
@@ -411,16 +494,16 @@
    "zh": "第一句说明一次提交包含什么：记录、任务记录和文档变更，作为一个整体写入。第二句说明别的什么都看不见。屏幕、等待者、观察以及调度器本身，读的都是已提交的状态，而且不存在旁路 `spec`，前言。把它读成一扇门：每个改变都从提交通过，每个观察者都坐在门的另一侧。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Every visible change passes through one commit on the mutation line; effects reach observers only as commits. Stage names follow spec §4: the line is held from the callback through publication."
-   ],
-   "page": 16
+   "type": "small",
+   "text": "Every visible change passes through one commit on the mutation line; effects reach observers only as commits. Stage names follow spec §4: the line is held from the callback through publication.",
+   "page": 16,
+   "_y": 637.3
   },
   {
    "type": "h2",
    "text": "The terms",
    "page": 16,
+   "_y": 678.7,
    "zh": "术语"
   },
   {
@@ -432,18 +515,13 @@
    "type": "h2",
    "text": "The eight invariants",
    "page": 17,
+   "_y": 324.0,
    "zh": "八条不变式"
   },
   {
    "type": "p",
    "text": "Spec §1 then lists eight “required invariants”. Each one closes a specific failure. The table quotes them in short form; the paragraphs below say what each one buys.",
    "zh": "接着规范 §1 列出八条「必需的不变式」。每一条都堵住一种具体的失效。表格以短形式引用它们；下面的段落说明每一条换来了什么。"
-  },
-  {
-   "type": "small",
-   "text": "1 One commit is atomic across all record and document writes. a tool call stored without its task 2 A document update is published only after its storage commit succeeds. a screen shows state a crash erases 3 All visible progress is durable; no volatile publication path. streamed text that never existed after reopen 4 External effects do not run inside the mutation transaction. one slow call stalls every conversation 5 Entries and IDs are immutable and never reused. references point at the wrong record 6 Drafts are revoked when the callback settles; values are copied, strict JSON. writes that bypass the commit 7 The line is held through settlement and adoption; user callbacks run later, off it. a commit built on unadopted state 8 An uncertain storage failure is fatal to the open Session. memory and disk silently diverge",
-   "page": 17,
-   "zh": "1 一次提交在所有记录和文档写入上是原子的。｜被存下却没有任务的工具调用\n2 文档更新只有在其存储提交成功后才发布。｜屏幕显示的状态被崩溃抹掉\n3 所有可见进展都是持久的；不存在易失的发布路径。｜重开之后从未存在过的流式文本\n4 外部效果不在变更事务内运行。｜一个慢调用拖住每一个会话\n5 条目与 ID 不可变且永不复用。｜引用指向错误的记录\n6 草稿在回调结算时被撤销；值是复制的严格 JSON。｜绕过提交的写入\n7 变更线在结算与采纳期间保持持有；用户回调稍后在线外运行。｜建立在未采纳状态上的提交\n8 不确定的存储失败对已打开的 `Session` 是致命的。｜内存与磁盘悄悄分叉"
   },
   {
    "type": "p",
@@ -459,6 +537,7 @@
    "type": "small",
    "text": "Ask one question of any design: is the state you show or act on committed? If not, it does not exist yet. Change related things in one commit, so a crash can never split them. Never call a model, a tool or the network inside a commit callback. If storage fails in a way that may have written, close and reopen; do not retry.",
    "page": 18,
+   "_y": 531.6,
    "zh": "对任何设计都问同一个问题：你展示或据以行动的状态是已提交的吗？如果不是，它就还不存在。在一次提交里改动相关的东西，这样崩溃永远无法把它们拆开。绝不在提交回调内部调用模型、工具或网络。如果存储以一种可能已经写入的方式失败，关闭并重新打开；不要重试。"
   },
   {
@@ -467,18 +546,21 @@
     "Sources: docs/spec.md (preamble, §1, §4); src/session/session.ts (commit, poison check); src/errors.ts (StorageRejected); src/harness/generation.ts (streamResponse); src/harness/tool.ts (call phase); test/session-documents.test.ts (“revokes escaped",
     "drafts”, “poisons the Session after an uncertain Storage failure”); research/capture/sqlite-rows.txt, sqlite-commits.txt, NOTES.md §6"
    ],
-   "page": 18
+   "page": 18,
+   "_y": 613.4
   },
   {
    "type": "chapter-title",
    "text": "1 . 4 The life of one answered input",
    "page": 19,
+   "_y": 57.4,
    "zh": "1.4 一个被回应的输入的一生"
   },
   {
    "type": "lede",
    "text": "One question, one tool call and one answer take seventeen commits, and reading them in order is reading the whole harness.",
    "page": 19,
+   "_y": 106.2,
    "zh": "一个问题、一次工具调用和一个答案要用掉十七次提交；按顺序读它们，就是在读整个 Harness。"
   },
   {
@@ -490,6 +572,7 @@
    "type": "h2",
    "text": "The run",
    "page": 19,
+   "_y": 222.7,
    "zh": "这次运行"
   },
   {
@@ -499,29 +582,45 @@
   },
   {
    "type": "small",
-   "text": "Quick Start, abridged README.md §Quick Start TS",
+   "text": "Quick Start, abridged README.md §Quick Start TS const harness = await Harness.open(",
    "page": 19,
+   "_y": 289.9,
    "zh": "快速开始，节选 `README.md §Quick Start` `TS`"
   },
   {
    "type": "code",
    "lines": [
-    "const harness = await Harness.open(",
     "new MemoryStorage(), { models, registry: createRegistry() }, context",
     "); const root = await harness.root(context, {",
     "agent: { model: { provider: \"openai\", modelId: \"gpt-6-sol\" } },",
     "});",
-    "const submission = await root.submit(",
+    "const submission = await root.submit("
+   ],
+   "page": 19,
+   "_y": 323.6
+  },
+  {
+   "type": "code",
+   "lines": [
     "{ type: \"input\", content: \"What is the capital of France?\" }, context);",
-    "const settled = await submission.wait(context);",
+    "const settled = await submission.wait(context);"
+   ],
+   "page": 19,
+   "_y": 389.6
+  },
+  {
+   "type": "code",
+   "lines": [
     "// settled.answer is the id of the pi.assistant entry that answered await harness.close(context);"
    ],
-   "page": 19
+   "page": 19,
+   "_y": 412.6
   },
   {
    "type": "small",
    "text": "Imports, model setup and reading the answer back are cut. wait() resolves once the input is done or unanswered.",
    "page": 19,
+   "_y": 447.7,
    "zh": "导入语句、模型设置以及把答案读回来这几部分被略去。输入完成或没有得到回答之后，`wait()` 就会 resolve。"
   },
   {
@@ -533,6 +632,7 @@
    "type": "h2",
    "text": "Commits 1–2: a conversation, then an input",
    "page": 19,
+   "_y": 547.5,
    "zh": "提交 1–2：一个会话，然后一个输入"
   },
   {
@@ -544,8 +644,8 @@
    "type": "figure",
    "number": "1.4",
    "file": "figures/fig-1.4.png",
-   "title": "ONE ANSWERED INPUT, COMMITS 1–8\nS E Q U E N C E",
-   "caption": "Commits 1–8 take the input from submit() to a tool call whose intent is durable. From research/capture/sqlite-commits.txt; document operations from research/capture/extra-p1/sqlite-commit-ops.txt.",
+   "title": "ONE ANSWERED INPUT , COMMITS 1–8 SEQUENCE",
+   "caption": "Commits 1–8 taketheinputfromsubmit () toatoolcallwhoseintentisdurable . Fromresearch / capture / sqlite - commits . txt ; documentoperationsfrom research / capture / extra - p 1/ sqlite - commit - ops . txt .",
    "page": 20,
    "zh_caption": "提交 1–8 把输入从 `submit()` 带到一次意图已经持久的工具调用。来自 `research/capture/sqlite-commits.txt`；文档操作来自 `research/capture/extra-p1/sqlite-commit-ops.txt`。"
   },
@@ -553,12 +653,14 @@
    "type": "small",
    "text": "Commits 1–8 take the input from submit() to a tool call whose intent is durable. From research/capture/sqlite-commits.txt; document operations from research/capture/extra-p1/sqlite-commit-ops.txt.",
    "page": 20,
+   "_y": 545.7,
    "zh": "提交 1–8 把输入从 `submit()` 带到一次意图已经持久的工具调用。来自 `research/capture/sqlite-commits.txt`；文档操作来自 `research/capture/extra-p1/sqlite-commit-ops.txt`。"
   },
   {
    "type": "h2",
    "text": "Commits 3–6: the first generation",
    "page": 20,
+   "_y": 585.0,
    "zh": "提交 3–6：第一次生成"
   },
   {
@@ -570,6 +672,7 @@
    "type": "h2",
    "text": "Commits 7–8: intent before effect",
    "page": 21,
+   "_y": 144.7,
    "zh": "提交 7–8：先有意图，后有效果"
   },
   {
@@ -581,6 +684,7 @@
    "type": "small",
    "text": "tool task 12 after commit 8 research/capture/sqlite-rows-midrun.txt JSON",
    "page": 21,
+   "_y": 211.9,
    "zh": "提交 8 之后的工具任务 12 `research/capture/sqlite-rows-midrun.txt` `JSON`"
   },
   {
@@ -600,12 +704,14 @@
     "}",
     "}"
    ],
-   "page": 21
+   "page": 21,
+   "_y": 234.3
   },
   {
    "type": "small",
    "text": "The tasks row, read from a second connection while execute() ran; conversationId, version and two boolean flags are cut. count declares no replay, so the stored policy is \"unsafe\".",
    "page": 21,
+   "_y": 425.2,
    "zh": "这是 `tasks` 表的一行，在 `execute()` 运行期间从第二个连接读出；`conversationId`、`version` 和两个布尔标志被略去。`count` 没有声明重放，因此存下的策略是 `\"unsafe\"`。"
   },
   {
@@ -617,6 +723,7 @@
    "type": "h2",
    "text": "Commits 9–11: output, then the result",
    "page": 21,
+   "_y": 515.2,
    "zh": "提交 9–11：先是输出，然后是结果"
   },
   {
@@ -628,15 +735,16 @@
    "type": "figure",
    "number": "1.5",
    "file": "figures/fig-1.5.png",
-   "title": "ONE ANSWERED INPUT, COMMITS 9–17\nS E Q U E N C E",
-   "caption": "Commits 9–17 carry the tool output, the result, a second generation and the answer. Amber arrows are task-only commits: reservations, and the move to request with no prompt change.",
+   "title": "ONE ANSWERED INPUT , COMMITS 9–17 SEQUENCE",
+   "caption": "Commits 9–17 carrythetooloutput , theresult , asecondgenerationandtheanswer . Amberarrowsaretask - onlycommits : reservations , andthemove to r e qu e st withnopromptchange .",
    "page": 22,
    "zh_caption": "提交 9–17 承载工具输出、结果、第二次生成以及答案。琥珀色的箭头是只涉及任务的提交：预留，以及在提示词没有变化时移到 `request`。"
   },
   {
    "type": "code",
    "lines": [],
-   "page": 22
+   "page": 22,
+   "_y": 643.2
   },
   {
    "type": "small",
@@ -648,6 +756,7 @@
    "type": "h2",
    "text": "Commits 12–17: the second generation and the answer",
    "page": 22,
+   "_y": 683.2,
    "zh": "提交 12–17：第二次生成与答案"
   },
   {
@@ -659,27 +768,494 @@
    "type": "h2",
    "text": "The whole log",
    "page": 23,
+   "_y": 229.5,
    "zh": "完整日志"
   },
   {
-   "type": "small",
-   "text": "1 conversation 1 create 2–6 root() 2 entry 7 pi.user; submission 8 placed; task 9 pending pi.live submit() 3 task 9 running · prepare — scheduler 4 entry 10 pi.system; task 9 · request — generation 9 5 — pi.live generation 9 6 entry 11 pi.assistant; task 9 waiting; task 12 pending pi.live, pi.usage generation 9 7 task 12 running · call — scheduler 8 task 12 · execute pi.live tool 12 9, 10 — pi.live tool 12 progress 11 entry 13 pi.tool-result; task 12 terminal pi.live tool 12 12 task 9 running · tools — scheduler 13 task 14 pending; task 9 terminal pi.live generation 9 14 task 14 running · prepare — scheduler 15 task 14 · request — generation 14 16 — pi.live generation 14 17 entry 15 pi.assistant; submission 8 done; task 14 terminal pi.live, pi.usage generation 14 Every commit of research/capture/sqlite-commits.txt; the JSONL run has the same seventeen.",
-   "page": 23,
-   "zh": "1 conversation 1 create　2–6　`root()`\n2 entry 7 `pi.user`；submission 8 placed；task 9 pending　`pi.live`　`submit()`\n3 task 9 running · prepare —— scheduler\n4 entry 10 `pi.system`；task 9 · request —— generation 9\n5 —— `pi.live`　generation 9\n6 entry 11 `pi.assistant`；task 9 waiting；task 12 pending　`pi.live`、`pi.usage`　generation 9\n7 task 12 running · call —— scheduler\n8 task 12 · execute　`pi.live`　tool 12\n9、10 —— `pi.live`　tool 12 progress\n11 entry 13 `pi.tool-result`；task 12 terminal　`pi.live`　tool 12\n12 task 9 running · tools —— scheduler\n13 task 14 pending；task 9 terminal　`pi.live`　generation 9\n14 task 14 running · prepare —— scheduler\n15 task 14 · request —— generation 14\n16 —— `pi.live`　generation 14\n17 entry 15 `pi.assistant`；submission 8 done；task 14 terminal　`pi.live`、`pi.usage`　generation 14\n以上每一行都出自 `research/capture/sqlite-commits.txt`；`JSONL` 那次运行是同样的十七条。"
+   "type": "table-row",
+   "page": 15,
+   "_y": 421.4,
+   "cells": [
+    "@earendil-works/pi-durable Harness, createRegistry, defineExtension, defineTool, defineTask, defineDoc, entry tokens, built-in docs and tasks, MemoryStorage, createSession"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
   },
   {
-   "type": "small",
-   "text": "The user’s text is safe from commit 2; a resubmit with the same requestId cannot duplicate it. A tool’s intent is committed (commit 8) before any of its code runs, so recovery always knows a call may have started. No commit leaves an answer without its submission settled, or a tool call without a task. Kill the process after any row and it reopens knowing what to do next.",
-   "page": 23,
-   "zh": "从提交 2 起，用户的文本就是安全的；用相同的 `requestId` 重新提交，不会把它复制一份。工具的意图在任何工具代码运行之前就已被提交（提交 8），因此恢复时总能知道某次调用可能已经开始。没有哪次提交会让答案悬在提交项未结算的状态，也没有哪次提交会让工具调用没有任务。在任何一行之后杀掉进程，重开时它都知道下一步该做什么。"
+   "type": "table-row",
+   "page": 15,
+   "_y": 448.4,
+   "cells": [
+    "…/storage/sqlite/node, …/storage/sqlite",
+    "openNodeSqliteStorage(file); the portable core over an async database facade"
+   ],
+   "is_header": false,
+   "_sig": "openNodeSqliteStorage",
+   "zh": null
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);",
+   "type": "table-row",
+   "page": 15,
+   "_y": 476.1,
+   "cells": [
+    "…/storage/jsonl/node, …/storage/jsonl",
+    "openNodeJsonlStorage(directory, context); the portable core over a FileSystem"
+   ],
+   "is_header": false,
+   "_sig": "openNodeJsonlStorage",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 503.1,
+   "cells": [
+    "…/storage/memory MemoryStorage on its own"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 520.4,
+   "cells": [
+    "…/env, …/env/node the ExecutionEnv interfaces; NodeExecutionEnv"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 536.9,
+   "cells": [
+    "…/tools createReadTool(), createWriteTool(), createEditTool(), createBashTool(), and the CodingTools extension of all four"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 563.9,
+   "cells": [
+    "…/testing registerStorageConformance(), registerEnvConformance(), storage benchmarks"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 582.0,
+   "cells": [
+    "From the exports map of package.json. The package requires Node 22.19.0 or later."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 615.8,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 629.1,
+   "cells": [
+    "Your code talks to the Harness and its conversation handles, never to storage."
+   ],
+   "is_header": false,
+   "_sig": "Your",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 642.6,
+   "cells": [
+    "Anything you need after a restart must be in a commit; memory is a cache."
+   ],
+   "is_header": false,
+   "_sig": "Anything",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 657.6,
+   "cells": [
+    "Handles hold no state. After a restart, get a new one with harness.conversation(id, context)."
+   ],
+   "is_header": false,
+   "_sig": "Handles",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 15,
+   "_y": 695.9,
+   "cells": [
+    "Sources: package.json (exports, dependencies, engines); README.md (§Quick Start, §Concepts, §Storage); docs/spec.md §1, §2.2, §8; src/index.ts; src/harness/harness.ts (Harness.open, conversationCreated); src/harness/registry.ts (BUILTIN_TASKS); src/harness/scheduler.ts (TaskScheduler, open); src/session/session.ts (SessionImpl); test/examples/00-conversation.ts"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 400.5,
+   "cells": [
+    "1 One commit is atomic across all record and document writes. a tool call stored without its task"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 416.5,
+   "cells": [
+    "2 A document update is published only after its storage commit succeeds. a screen shows state a crash erases"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 433.0,
+   "cells": [
+    "3 All visible progress is durable; no volatile publication path. streamed text that never existed after reopen"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 450.2,
+   "cells": [
+    "4 External effects do not run inside the mutation transaction. one slow call stalls every conversation"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 468.0,
+   "cells": [
+    "5 Entries and IDs are immutable and never reused. references point at the wrong record"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 484.0,
+   "cells": [
+    "6 Drafts are revoked when the callback settles; values are copied, strict JSON. writes that bypass the commit"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 500.5,
+   "cells": [
+    "7 The line is held through settlement and adoption; user callbacks run later, off it. a commit built on unadopted state"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 17,
+   "_y": 518.3,
+   "cells": [
+    "8 An uncertain storage failure is fatal to the open Session. memory and disk silently diverge"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 271.4,
+   "cells": [
+    "1 conversation 1 create 2–6 root()"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 288.6,
+   "cells": [
+    "2 entry 7 pi.user; submission 8 placed; task 9 pending pi.live submit()"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 305.3,
+   "cells": [
+    "3 task 9 running · prepare — scheduler"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 321.6,
+   "cells": [
+    "4 entry 10 pi.system; task 9 · request — generation 9"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 338.9,
+   "cells": [
+    "5 — pi.live generation 9"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 355.4,
+   "cells": [
+    "6 entry 11 pi.assistant; task 9 waiting; task 12 pending pi.live, pi.usage generation 9"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 372.8,
+   "cells": [
+    "7 task 12 running · call — scheduler"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 389.1,
+   "cells": [
+    "8 task 12 · execute pi.live tool 12"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 406.4,
+   "cells": [
+    "9, 10 — pi.live tool 12 progress"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 422.9,
+   "cells": [
+    "11 entry 13 pi.tool-result; task 12 terminal pi.live tool 12"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 440.3,
+   "cells": [
+    "12 task 9 running · tools — scheduler"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 456.6,
+   "cells": [
+    "13 task 14 pending; task 9 terminal pi.live generation 9"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 473.3,
+   "cells": [
+    "14 task 14 running · prepare — scheduler"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 490.5,
+   "cells": [
+    "15 task 14 · request — generation 14"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 506.9,
+   "cells": [
+    "16 — pi.live generation 14"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 524.1,
+   "cells": [
+    "17 entry 15 pi.assistant; submission 8 done; task 14 terminal pi.live, pi.usage generation 14"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 542.3,
+   "cells": [
+    "Every commit of research/capture/sqlite-commits.txt; the JSONL run has the same seventeen."
+   ],
+   "is_header": false,
+   "_sig": "Every",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 576.1,
+   "cells": [
+    "W H A T T H I S M E A N S F O R Y O U"
+   ],
+   "is_header": true,
+   "_sig": "W",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 588.6,
+   "cells": [
+    "The user’s text is safe from commit 2; a resubmit with the same requestId cannot duplicate it."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 603.6,
+   "cells": [
+    "A tool’s intent is committed (commit 8) before any of its code runs, so recovery always knows a call may have started."
+   ],
+   "is_header": false,
+   "_sig": "A",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 617.1,
+   "cells": [
+    "No commit leaves an answer without its submission settled, or a tool call without a task. Kill the process after any row and it reopens knowing what to do next."
+   ],
+   "is_header": false,
+   "_sig": "No",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 668.1,
+   "cells": [
+    "Sources: README.md (§Quick Start, §Concepts “One answered input”); research/capture/sqlite-commits.txt, sqlite-rows.txt, sqlite-rows-midrun.txt, jsonl-commits.txt, scripts/one-turn.ts, scripts/sqlite-one-turn.ts; research/capture/extra-p1/sqlite-commit-ops.txt (test/capture-p1-ops.ts); src/harness/harness.ts (root, conversationCreated); src/harness/submissions.ts (admitSubmission);"
+   ],
+   "is_header": true,
+   "_sig": "Sources",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 23,
+   "_y": 696.8,
+   "cells": [
     "src/harness/generation.ts (prepare, request, startToolRound, finishToolRound, answer, startRun); src/harness/tool.ts (call, execute); src/harness/scheduler.ts (#reserve); src/session/session.ts (#runCommit)"
    ],
-   "page": 23
+   "is_header": true,
+   "_sig": "src",
+   "zh": null
   }
  ]
 }

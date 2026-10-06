@@ -52,12 +52,23 @@ def snapshot(path: Path):
         if len(norm) >= 24:
             out[("anytype", norm)] = payload
             out[("anystem", norm[:40])] = payload
+        # strongest key: same page and same position is the same node, whatever it was
+        # called before. Column-table detection rebuilds rows from scratch, so this is the
+        # only thing that can put their translations back.
+        if n.get("page") is not None and n.get("_y") is not None:
+            out[("pos", n["page"], round(n["_y"]))] = payload
     return out
 
 
 def _lookup(snap, n):
     text = n.get("text", "")
     norm = " ".join(text.split())
+    # position first for a table row: it is rebuilt from the blocks at that place, so its
+    # own text is new and no text key can match
+    if n["type"] == "table-row" or n.get("_y") is not None:
+        key = ("pos", n.get("page"), round(n["_y"])) if n.get("_y") is not None else None
+        if key and key in snap:
+            return snap[key]
     for key in (
         ("full", n["type"], n.get("page"), text),
         ("norm", n["type"], n.get("page"), norm),

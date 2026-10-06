@@ -4,24 +4,28 @@
    "type": "part-title",
    "text": "P A R T 7 Extensions and the Agent",
    "page": 102,
+   "_y": 83.8,
    "zh": "扩展与 Agent"
   },
   {
    "type": "h2",
    "text": "Code lives in a registry the process owns; conversations store only names, so the code can change while agents run.",
    "page": 102,
+   "_y": 154.8,
    "zh": "代码存放在进程自己拥有的注册表里；会话只存名字，因此代码可以在智能体运行期间改变。"
   },
   {
    "type": "chapter-title",
    "text": "7 . 1 Extensions and the registry",
    "page": 103,
+   "_y": 57.4,
    "zh": "7.1 扩展与注册表"
   },
   {
    "type": "lede",
    "text": "Your code lives in a registry inside the process; storage only ever records the names of the extensions a conversation wants.",
    "page": 103,
+   "_y": 106.2,
    "zh": "你的代码存放在进程内的注册表里；存储层只记录一个会话想要哪些扩展的名字。"
   },
   {
@@ -33,6 +37,7 @@
    "type": "h2",
    "text": "The bundle",
    "page": 103,
+   "_y": 237.7,
    "zh": "这个包"
   },
   {
@@ -44,26 +49,40 @@
    "type": "small",
    "text": "three extensions, one registry README §Extensions · spec §7.1 TS",
    "page": 103,
+   "_y": 381.4,
    "zh": "三个扩展，一个注册表 `README` §Extensions · spec §7.1 `TS`"
   },
   {
    "type": "code",
    "lines": [
     "import { createRegistry, defineExtension, hook, section, ToolTask }",
-    "from \"@earendil-works/pi-durable\";",
-    "import { CodingTools } from \"@earendil-works/pi-durable/tools\";",
-    "const Coding = defineExtension({",
+    "from \"@earendil-works/pi-durable\"; import { CodingTools } from \"@earendil-works/pi-durable/tools\"; const Coding = defineExtension({"
+   ],
+   "page": 103,
+   "_y": 404.6
+  },
+  {
+   "type": "code",
+   "lines": [
     "name: \"coding\", sections: [",
     "section(\"preamble\", () => \"You are a concise coding assistant.\", { tag: false }),",
     "section(\"cwd\", (input) => input.env?.cwd), ],"
    ],
-   "page": 103
+   "page": 103,
+   "_y": 460.1
   },
   {
    "type": "code",
    "lines": [
     "});",
-    "const Permissions = defineExtension({",
+    "const Permissions = defineExtension({"
+   ],
+   "page": 103,
+   "_y": 514.8
+  },
+  {
+   "type": "code",
+   "lines": [
     "name: \"permissions\", hooks: [hook(ToolTask, {",
     "beforeTool: (call) => (isDangerous(call) ? { block: \"Needs approval\" } : undefined),",
     "})], });",
@@ -71,40 +90,96 @@
     "registry.install(Coding);",
     "registry.install(Permissions);"
    ],
-   "page": 103
+   "page": 103,
+   "_y": 537.3
   },
   {
    "type": "small",
    "text": "Install order matters. By default every conversation uses every installed extension in install order, so coding-tools’ tools come before anything coding adds.",
    "page": 103,
+   "_y": 661.5,
    "zh": "安装顺序有影响。默认情况下每个会话都按安装顺序使用全部已安装的扩展，因此 `coding-tools` 的工具排在 `coding` 添加的任何东西之前。"
   },
   {
    "type": "figure",
    "number": "7.1",
    "file": "figures/fig-7.1.png",
-   "title": "NAMES IN STORAGE, CODE IN MEMORY\nS T R U C T U R E",
-   "caption": "Code lives in the process registry; a conversation stores only names. Conversation 1 stores no selection and uses the host default. Conversation 7 names three extensions; skills is not installed in this process, so it is skipped and the stored list is left alone. The first three extensions are the listing’s; the reviewer and skills extensions come from spec §7.1.",
+   "title": "NAMES IN STORAGE , CODE IN MEMORY STRUCTURE",
+   "caption": "Codelivesintheprocessregistry ; aconversationstoresonlynames . Conversation 1 storesnoselectionandusesthehostdefault . Conversation 7 namesthreeextensions ; sk i lls isnotinstalledinthisprocess , soitisskippedandthestoredlistisle ft alone . Thefirstthreeextensionsarethelisting ’ s ; the r e v ie w e r and sk i lls extensionscomefromspec §7.1.",
    "page": 104,
    "zh_caption": "代码存放在进程注册表里；会话只存名字。会话 1 没有存任何选择，使用宿主默认值。会话 7 指定了三个扩展；`skills` 在这个进程里没有安装，于是被跳过，存下的列表原样保留。前三个扩展来自这份列表；`reviewer` 和 `skills` 扩展取自 spec §7.1。"
   },
   {
-   "type": "small",
-   "text": "tools tools the model can call tool name 7.4 (p. 112) sections pieces of the system prompt section key 7.5 (p. 115) hooks handlers the built-in tasks call task name 7.3 (p. 109) wraps decorators for another extension’s tool or section tool name or section key 7.2 (p. 106) tasks your own durable task definitions task name 5.4 (p. 73)",
+   "type": "table-row",
    "page": 104,
-   "zh": "`tools` 模型可以调用的工具 工具名 7.4（p. 112） `sections` 系统提示词的组成部分 小节键 7.5（p. 115） `hooks` 内置任务调用的处理器 任务名 7.3（p. 109） `wraps` 另一个扩展的工具或小节的装饰器 工具名或小节键 7.2（p. 106） `tasks` 你自己的持久任务定义 任务名 5.4（p. 73）"
+   "_y": 83.3,
+   "cells": [
+    "tools tools the model can call tool name 7.4 (p. 112)"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": "`tools` 模型可以调用的工具 工具名 7.4（p. 112）"
   },
   {
-   "type": "code",
-   "lines": [
+   "type": "table-row",
+   "page": 104,
+   "_y": 100.5,
+   "cells": [
+    "sections pieces of the system prompt section key 7.5 (p. 115)"
+   ],
+   "is_header": false,
+   "_sig": "sections",
+   "zh": "`sections` 系统提示词的组成部分 小节键 7.5（p. 115）"
+  },
+  {
+   "type": "table-row",
+   "page": 104,
+   "_y": 117.0,
+   "cells": [
+    "hooks handlers the built-in tasks call task name 7.3 (p. 109)"
+   ],
+   "is_header": false,
+   "_sig": "hooks",
+   "zh": "`hooks` 内置任务调用的处理器 任务名 7.3（p. 109）"
+  },
+  {
+   "type": "table-row",
+   "page": 104,
+   "_y": 134.3,
+   "cells": [
+    "wraps decorators for another extension’s tool or section tool name or section key 7.2 (p. 106)"
+   ],
+   "is_header": false,
+   "_sig": "wraps",
+   "zh": "`wraps` 另一个扩展的工具或小节的装饰器 工具名或小节键 7.2（p. 106）"
+  },
+  {
+   "type": "table-row",
+   "page": 104,
+   "_y": 150.8,
+   "cells": [
+    "tasks your own durable task definitions task name 5.4 (p. 73)"
+   ],
+   "is_header": false,
+   "_sig": "tasks",
+   "zh": "`tasks` 你自己的持久任务定义 任务名 5.4（p. 73）"
+  },
+  {
+   "type": "table-row",
+   "page": 104,
+   "_y": 168.8,
+   "cells": [
     "The Extension interface, src/harness/types.ts."
    ],
-   "page": 104
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Names in storage, code in memory",
    "page": 104,
+   "_y": 197.2,
    "zh": "存储里是名字，内存里是代码"
   },
   {
@@ -116,6 +191,7 @@
    "type": "small",
    "text": "Code lives in the process registry; a conversation stores only names. Conversation 1 stores no selection and uses the host default. Conversation 7 names three extensions; skills is not installed in this process, so it is skipped and the stored list is left alone. The first three extensions are the listing’s; the reviewer and skills extensions come from spec §7.1.",
    "page": 104,
+   "_y": 530.7,
    "zh": "代码存放在进程注册表里；会话只存名字。会话 1 没有存任何选择，使用宿主默认值。会话 7 指定了三个扩展；`skills` 在这个进程里没有安装，于是被跳过，存下的列表原样保留。前三个扩展来自这份列表；`reviewer` 和 `skills` 扩展取自 spec §7.1。"
   },
   {
@@ -127,8 +203,8 @@
    "type": "figure",
    "number": "7.2",
    "file": "figures/fig-7.2.png",
-   "title": "INSTALL ORDER\nT I M E L I N E",
-   "caption": "A same-name install replaces in place; uninstalling and installing again moves the extension to the end. The operations and the subscriber’s log [\"a\",",
+   "title": "INSTALL ORDER TIMELINE",
+   "caption": "Asame - nameinstallreplacesinplace ; uninstallingandinstallingagainmovestheextensiontotheend . Theoperationsandthesubscriber ’ slog [\" a \",",
    "page": 105,
    "zh_caption": "同名安装会就地替换；卸载后再安装会把扩展移到末尾。这些操作以及订阅者的日志 `[\"a\","
   },
@@ -136,6 +212,7 @@
    "type": "h2",
    "text": "Install, replace, uninstall",
    "page": 105,
+   "_y": 75.0,
    "zh": "安装、替换、卸载"
   },
   {
@@ -145,16 +222,10 @@
   },
   {
    "type": "small",
-   "text": "A same-name install replaces in place; uninstalling and installing again moves the extension to the end. The operations and the subscriber’s log [\"a\",",
+   "text": "A same-name install replaces in place; uninstalling and installing again moves the extension to the end. The operations and the subscriber’s log [\"a\", \"a,b\", \"a,b\", \"b\", \"b,a\"] come from one case of test/harness-registry.test.ts. The last row is a separate case of the same file: an extension that declares read twice is rejected. Uninstalling an absent name and a rejected install publish nothing.",
    "page": 105,
+   "_y": 410.0,
    "zh": "同名安装会就地替换；卸载后再安装会把扩展移到末尾。这些操作以及订阅者的日志 `[\"a\","
-  },
-  {
-   "type": "code",
-   "lines": [
-    "\"a,b\", \"a,b\", \"b\", \"b,a\"] come from one case of test/harness-registry.test.ts. The last row is a separate case of the same file: an extension that declares read twice is rejected. Uninstalling an absent name and a rejected install publish nothing."
-   ],
-   "page": 105
   },
   {
    "type": "p",
@@ -165,26 +236,27 @@
    "type": "small",
    "text": "Install every extension before Harness.open(), in the order you want precedence. Never rename an extension, tool or task that conversations already use: stored names stop matching. To ship a fix, install the new object under the same name. Install and uninstall call no cleanup code, so free shared resources yourself, and only once old calls finish spec §12.",
    "page": 105,
+   "_y": 584.1,
    "zh": "在 `Harness.open()` 之前按你想要的优先级顺序安装每个扩展。绝不要重命名会话已经在用的扩展、工具或任务：存下的名字会失配。要发布修复，就用同一个名字安装新的对象。安装和卸载不调用任何清理代码，所以共享资源要你自己释放，而且要等旧调用结束后只释放一次 spec §12。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: src/harness/registry.ts; src/harness/define.ts; src/harness/types.ts (Extension, Registry, RegistrySnapshot);",
-    "src/harness/harness.ts:410–435; spec §7.1, §2.2, §12; README §Extensions; test/harness-registry.test.ts; research/capture/sqlite-rows.txt"
-   ],
-   "page": 105
+   "type": "small",
+   "text": "Sources: src/harness/registry.ts; src/harness/define.ts; src/harness/types.ts (Extension, Registry, RegistrySnapshot); src/harness/harness.ts:410–435; spec §7.1, §2.2, §12; README §Extensions; test/harness-registry.test.ts; research/capture/sqlite-rows.txt",
+   "page": 105,
+   "_y": 662.9
   },
   {
    "type": "chapter-title",
    "text": "7 . 2 The per-conversation agent",
    "page": 106,
+   "_y": 57.4,
    "zh": "7.2 按会话的智能体"
   },
   {
    "type": "lede",
    "text": "Each conversation stores its choices as names; the Harness turns them into real tools and prompt sections each time it needs them.",
    "page": 106,
+   "_y": 106.2,
    "zh": "每个会话把自己的选择存成名字；`Harness` 每次需要时把它们变成真正的工具和提示词小节。"
   },
   {
@@ -196,6 +268,7 @@
    "type": "h2",
    "text": "Stored choices, resolved agent",
    "page": 106,
+   "_y": 237.7,
    "zh": "存下的选择，解析出的智能体"
   },
   {
@@ -204,35 +277,106 @@
    "zh": "智能体有两种形态。存下的形态 `AgentState` 活在会话的 `pi.agent` 文档里，只持有名字。你从不设置的字段跟随宿主的默认值。解析出的形态 `Agent` 是 `Harness` 在需要真实对象时，用存下的名字、当前的注册表和宿主设置构建出来的东西。存下的文档随它的会话一起分叉和回溯（内置文档（p. 60））。"
   },
   {
-   "type": "small",
-   "text": "model { provider, modelId } no model; a request fails with no_model thinkingLevel a pi-ai level \"off\"",
-   "page": 106,
-   "zh": "`model` `{ provider, modelId }`：无模型；没有模型时一次请求以 `no_model` 失败。`thinkingLevel`：一个 `pi-ai` 级别 `\"off\"`。"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "extensions a list of names, or { add?, remove? } the host default: every installed extension",
-    "tools a list of names, or { remove } every tool of the selected extensions instructions a string none; when set, rendered as the last prompt section cwd a path none; passed to the host’s environment factory (9.5 (p. 155)) AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent()."
-   ],
-   "page": 106
-  },
-  {
    "type": "p",
    "text": "Conversation.configure(change, context) edits the stored agent. Each field follows one rule: “a given field replaces the stored one, null clears it, undefined changes nothing” src/harness/agent.ts. You may pass extension and tool objects; they are stored as their names. The standalone configure(tx, id, change) does the same inside a larger commit, an atomic save: everything in it is stored together, or nothing is. Example 7 shows what each call stores.",
    "zh": "`Conversation.configure(change, context)` 编辑存下的智能体。每个字段遵循一条规则：「给出的字段替换存下的字段，`null` 清空它，`undefined` 不做改变」`src/harness/agent.ts`。你可以传扩展对象和工具对象；它们按名字存下。独立的 `configure(tx, id, change)` 在更大的一次提交里做同样的事，也就是一次原子保存：其中的一切要么一起存下，要么都不存。示例 7 展示了每次调用存下什么。"
   },
   {
+   "type": "table-row",
+   "page": 106,
+   "_y": 342.6,
+   "cells": [
+    "model { provider, modelId } no model; a request fails with no_model"
+   ],
+   "is_header": false,
+   "_sig": "model",
+   "zh": "`model` `{ provider, modelId }`：无模型；没有模型时一次请求以"
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 359.1,
+   "cells": [
+    "thinkingLevel a pi-ai level \"off\""
+   ],
+   "is_header": false,
+   "_sig": "thinkingLevel",
+   "zh": "`thinkingLevel`：一个"
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 375.6,
+   "cells": [
+    "extensions a list of names, or { add?, remove? } the host default: every installed extension"
+   ],
+   "is_header": false,
+   "_sig": "extensions",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 392.9,
+   "cells": [
+    "tools a list of names, or { remove } every tool of the selected extensions"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 409.5,
+   "cells": [
+    "instructions a string none; when set, rendered as the last prompt section"
+   ],
+   "is_header": false,
+   "_sig": "instructions",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 426.8,
+   "cells": [
+    "cwd a path none; passed to the host’s environment factory (9.5 (p. 155))"
+   ],
+   "is_header": false,
+   "_sig": "cwd",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 106,
+   "_y": 444.8,
+   "cells": [
+    "AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent()."
+   ],
+   "is_header": false,
+   "_sig": "AgentState",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "configure, then read back ex 07 · research/runs/07-configuration.txt TS",
    "page": 106,
+   "_y": 538.1,
    "zh": "先 configure，再读回来 ex 07 · `research/runs/07-configuration.txt` `TS`"
   },
   {
    "type": "code",
    "lines": [
     "// default tools: [ 'read', 'write', 'grep' ]",
-    "await root.configure({",
+    "await root.configure({"
+   ],
+   "page": 106,
+   "_y": 561.8
+  },
+  {
+   "type": "code",
+   "lines": [
     "model: { provider: \"anthropic\", modelId: \"claude-sonnet-4-5\" }, thinkingLevel: \"high\",",
     "tools: [write, read], // objects in, names stored",
     "}, context); // stored: { model: {…}, thinkingLevel: 'high', tools: [ 'write', 'read' ] }",
@@ -241,12 +385,14 @@
     "await root.configure({ extensions: [Files, Search] }, context);",
     "registry.uninstall(Files); // files uninstalled: [ 'grep' ] registry.install(Files); // files reinstalled: [ 'read', 'write', 'grep' ]"
    ],
-   "page": 106
+   "page": 106,
+   "_y": 583.8
   },
   {
    "type": "small",
    "text": "The comments are the example’s printed output. null clears the tool filter, so every tool of the selection is offered again.",
    "page": 106,
+   "_y": 728.4,
    "zh": "注释就是示例打印出的输出。`null` 清空工具过滤器，于是所选的每个工具又都会被提供。"
   },
   {
@@ -258,8 +404,8 @@
    "type": "figure",
    "number": "7.3",
    "file": "figures/fig-7.3.png",
-   "title": "RESOLVING TOOLS\nF L O W",
-   "caption": "Resolution collects tools in extension order, replaces same names in place, wraps the winner, then filters. Extensions, descriptions and filter from test/harness-registry.test.ts. The last row shows what the stored filter keeps from the row above it.",
+   "title": "RESOLVING TOOLS FLOW",
+   "caption": "Resolutioncollectstoolsinextensionorder , replacessamenamesinplace , wrapsthewinner , thenfilters . Extensions , descriptionsandfilterfrom test / harness - registry . test . ts . Thelastrowshowswhatthestoredfilterkeepsfromtherowaboveit .",
    "page": 107,
    "zh_caption": "解析按扩展顺序收集工具，就地替换同名者，包装胜出的那个，然后过滤。扩展、描述和过滤器取自 `test/harness-registry.test.ts`。最后一行显示存下的过滤器从上一行保留了哪些。"
   },
@@ -267,6 +413,7 @@
    "type": "h2",
    "text": "From names to tools",
    "page": 107,
+   "_y": 116.2,
    "zh": "从名字到工具"
   },
   {
@@ -293,6 +440,7 @@
    "type": "small",
    "text": "Resolution collects tools in extension order, replaces same names in place, wraps the winner, then filters. Extensions, descriptions and filter from test/harness-registry.test.ts. The last row shows what the stored filter keeps from the row above it.",
    "page": 107,
+   "_y": 521.0,
    "zh": "解析按扩展顺序收集工具，就地替换同名者，包装胜出的那个，然后过滤。扩展、描述和过滤器取自 `test/harness-registry.test.ts`。最后一行显示存下的过滤器从上一行保留了哪些。"
   },
   {
@@ -304,6 +452,7 @@
    "type": "h2",
    "text": "When a change takes effect",
    "page": 107,
+   "_y": 617.2,
    "zh": "一个改动何时生效"
   },
   {
@@ -312,20 +461,92 @@
    "zh": "`Harness` 在每个决策点重新解析智能体，绝不是每次运行只解析一次：「每个读取者在每个决策点解析一次」spec §7.1。宿主设置同理。`HarnessOptions.settings` 保存 `Harness` 全局的策略（默认选择、重试、压缩、工具执行模式、队列模式）。它从不被复制或存储，所以一个带 getter 的设置对象会「跟随用户偏好而无需一次 `Session` 写入」spec §2.2。默认值见「设置与默认值」（p. 180）。"
   },
   {
-   "type": "small",
-   "text": "a model request model, tools, prompt, stream options once, while preparing that request a tool call the called tool’s code when the call starts, and again on recovery any task phase hooks once per phase, from that phase’s registry snapshot a tool round parallel or sequential execution once per round an input boundary steering and follow-up queue modes at each boundary tools and prompt sections the environment for the current cwd at each use Condensed from spec §7.1, “Who resolves what, and when”.",
-   "page": 108,
-   "zh": "一次模型请求：模型、工具、提示词、流选项，一次，在准备那次请求时。一次工具调用：被调用工具的代码，在调用开始时，以及在恢复时再一次。任务的任何阶段：钩子，每阶段一次，取自该阶段的注册表快照。一轮工具调用：并行或顺序执行，每轮一次。一个输入边界：引导与后续队列模式，在每个边界。工具与提示词小节：当前 `cwd` 的环境，在每次使用时。整理自 spec §7.1「谁解析什么，以及何时解析」。"
-  },
-  {
    "type": "p",
    "text": "So a change made during a turn reaches the next model request. A call the model already made resolves its tool when it runs. If you removed that tool in between, the call gets tool_unavailable; if you changed cwd, the call sees the new directory README §Per-Conversation Agent.",
    "zh": "所以一轮次期间做出的改动会到达下一次模型请求。模型已经发出的调用在它运行时解析自己的工具。如果你在中间移除了那个工具，这个调用会得到 `tool_unavailable`；如果你改了 `cwd`，这个调用会看到新目录 `README` §Per-Conversation Agent。"
   },
   {
+   "type": "table-row",
+   "page": 108,
+   "_y": 83.3,
+   "cells": [
+    "a model request model, tools, prompt, stream options once, while preparing that request"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 100.5,
+   "cells": [
+    "a tool call the called tool’s code when the call starts, and again on recovery"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 117.0,
+   "cells": [
+    "any task phase hooks once per phase, from that phase’s registry snapshot"
+   ],
+   "is_header": false,
+   "_sig": "any",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 134.6,
+   "cells": [
+    "a tool round parallel or sequential execution once per round"
+   ],
+   "is_header": false,
+   "_sig": "a",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 150.8,
+   "cells": [
+    "an input boundary steering and follow-up queue modes at each boundary"
+   ],
+   "is_header": false,
+   "_sig": "an",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 167.3,
+   "cells": [
+    "tools and prompt sections the environment for the current cwd at each use"
+   ],
+   "is_header": false,
+   "_sig": "tools",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 108,
+   "_y": 185.3,
+   "cells": [
+    "Condensed from spec §7.1, “Who resolves what, and when”."
+   ],
+   "is_header": false,
+   "_sig": "Condensed",
+   "zh": null
+  },
+  {
    "type": "h2",
    "text": "Copies at creation",
    "page": 108,
+   "_y": 266.2,
    "zh": "创建时的副本"
   },
   {
@@ -337,12 +558,14 @@
    "type": "small",
    "text": "{ add, remove } “always edits the host default selection”, never a copied list. A child that copied the list [\"a\", \"b\"] and then receives { remove: [b] } ends up with the host default minus b, not [\"a\"]. To edit a copied list, read the resolved agent’s extensions and write the new list spec §2.2, §12.",
    "page": 108,
+   "_y": 456.0,
    "zh": "`{ add, remove }`「总是编辑宿主默认选择」，而不是一份复制来的列表。一个复制了列表 `[\"a\", \"b\"]` 的子会话随后收到 `{ remove: [b] }`，最后得到的是宿主默认值减去 `b`，而不是 `[\"a\"]`。要编辑一份复制来的列表，读出解析后智能体的 `extensions`，再写回新列表 spec §2.2、§12。"
   },
   {
    "type": "small",
    "text": "Leave fields unset when the conversation should follow the host; set them only to differ. Use a stored list when a conversation needs an exact, stable tool set, such as a reviewer. Expect configuration changes to apply at the next model request, not mid-request.",
    "page": 108,
+   "_y": 534.6,
    "zh": "会话应当跟随宿主时，就把字段留空；只在需要不同的时候才设置。会话需要一个精确、稳定的工具集（比如一个评审者）时，用存下的列表。预期配置改动在下一次模型请求时生效，而不是请求中途。"
   },
   {
@@ -350,24 +573,28 @@
    "lines": [
     "Sources: src/harness/agent.ts; src/harness/types.ts (AgentState, AgentChange, Agent, HarnessSettings, Settings); src/harness/scheduler.ts; spec §2.2, §7.1, §12; README §Per-Conversation Agent, §Settings; ex 07 and run 07; test/harness-"
    ],
-   "page": 108
+   "page": 108,
+   "_y": 602.1
   },
   {
    "type": "small",
    "text": "registry.test.ts",
    "page": 108,
+   "_y": 621.8,
    "zh": "`registry.test.ts`"
   },
   {
    "type": "chapter-title",
    "text": "7 . 3 Hooks",
    "page": 109,
+   "_y": 57.4,
    "zh": "7.3 钩子"
   },
   {
    "type": "lede",
    "text": "A hook is a question a built-in task asks your extensions just before it commits a decision; your answer shapes what gets written.",
    "page": 109,
+   "_y": 106.2,
    "zh": "钩子是内置任务在提交某个决策之前向你的扩展提出的一个问题；你的回答决定写入什么。"
   },
   {
@@ -379,6 +606,7 @@
    "type": "h2",
    "text": "Who gets asked",
    "page": 109,
+   "_y": 222.7,
    "zh": "谁会被问到"
   },
   {
@@ -390,6 +618,7 @@
    "type": "h2",
    "text": "The seven hooks",
    "page": 109,
+   "_y": 339.7,
    "zh": "七种钩子"
   },
   {
@@ -398,17 +627,11 @@
    "zh": "生成任务问四种钩子，工具任务问两种，压缩任务问一种。多个扩展都回答时，每种钩子用自己的方式合并这些回答。"
   },
   {
-   "type": "small",
-   "text": "beforeRequest generation replace the messages of this one request; each handler gets the previous one’s result reported, ignored afterResponse generation observe every model response reported, ignored onYield generation answer a final answer with { continue }; the first wins reported, ignored afterTools generation observe a finished round of tool results reported, ignored beforeTool tool rewrite the arguments, or block the call; the first block wins the call is blocked afterTool tool replace the result, handler by handler reported, ignored beforeCompact compaction decline, or supply a summary; the first decision wins reported, ignored GenerationHooks, ToolHooks and CompactionHooks, src/harness/types.ts; spec §7.2; src/harness/tool.ts. “Reported” means passed to HarnessOptions.onReport. Handlers run in extension order. A throwing guard blocks: it fails closed.",
-   "page": 109,
-   "zh": "`beforeRequest` generation：替换这一次请求的消息；每个处理器拿到前一个的结果。已上报，被忽略。 `afterResponse` generation：观察每一个模型响应。已上报，被忽略。 `onYield` generation：用 `{ continue }` 回答一个最终答案；第一个胜出。已上报，被忽略。 `afterTools` generation：观察一轮结束的工具结果。已上报，被忽略。 `beforeTool` tool：改写参数，或拦下这次调用；第一个拦截胜出。这次调用被拦下。 `afterTool` tool：替换结果，逐个处理器进行。已上报，被忽略。 `beforeCompact` compaction：拒绝，或提供一份摘要；第一个决定胜出。已上报，被忽略。 `GenerationHooks`、`ToolHooks` 和 `CompactionHooks`，`src/harness/types.ts`；spec §7.2；`src/harness/tool.ts`。「已上报」指传给 `HarnessOptions.onReport`。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。"
-  },
-  {
    "type": "figure",
    "number": "7.4",
    "file": "figures/fig-7.4.png",
-   "title": "WHERE HOOKS ARE ASKED\nS E Q U E N C E",
-   "caption": "Every hook is a question a built-in task asks before the commit it informs. One tool-using turn and its final answer, from src/harness/generation.ts and tool.ts; the guard, beforeTool, is in bold. beforeCompact is asked after compaction picks its range and before it summarizes (compaction (p. 97)).",
+   "title": "WHERE HOOKS ARE ASKED SEQUENCE",
+   "caption": "Everyhookisaquestionabuilt - intaskasksbeforethecommititinforms . Onetool - usingturnanditsfinalanswer , fromsrc / harness / generation . tsand tool . ts ; theguard , bef or eT ool , isinbold . bef or eC omp ac t isaskeda ft ercompactionpicksitsrangeandbeforeitsummarizes (compaction (p . 97)).",
    "page": 110,
    "zh_caption": "每个钩子都是内置任务在它所影响的提交之前提出的一个问题。一个使用工具的轮次及其最终答案，取自 `src/harness/generation.ts` 和 `tool.ts`；守卫 `beforeTool` 用粗体标出。`beforeCompact` 在压缩选定范围之后、做摘要之前被问到（压缩（p. 97））。"
   },
@@ -416,12 +639,14 @@
    "type": "small",
    "text": "Every hook is a question a built-in task asks before the commit it informs. One tool-using turn and its final answer, from src/harness/generation.ts and tool.ts; the guard, beforeTool, is in bold. beforeCompact is asked after compaction picks its range and before it summarizes (compaction (p. 97)).",
    "page": 110,
+   "_y": 463.2,
    "zh": "每个钩子都是内置任务在它所影响的提交之前提出的一个问题。一个使用工具的轮次及其最终答案，取自 `src/harness/generation.ts` 和 `tool.ts`；守卫 `beforeTool` 用粗体标出。`beforeCompact` 在压缩选定范围之后、做摘要之前被问到（压缩（p. 97））。"
   },
   {
    "type": "h2",
    "text": "Make decisions crash-safe with memos",
    "page": 110,
+   "_y": 502.5,
    "zh": "用 memo 让决策崩溃安全"
   },
   {
@@ -433,6 +658,7 @@
    "type": "h2",
    "text": "Keep state in documents",
    "page": 110,
+   "_y": 612.7,
    "zh": "把状态放在文档里"
   },
   {
@@ -444,6 +670,7 @@
    "type": "small",
    "text": "a hook driven by an extension document spec §7.2 TS",
    "page": 111,
+   "_y": 64.1,
    "zh": "一个由扩展文档驱动的钩子 spec §7.2 `TS`"
   },
   {
@@ -452,16 +679,25 @@
     "const PlanModeDoc = defineDoc<{ enabled: boolean }>({",
     "kind: \"app.plan-mode\", version: 1, scope: \"conversation\",",
     "history: \"latest\", fork: \"current\", initial: () => ({ enabled: false }), });",
-    "export const PlanMode = defineExtension({",
+    "export const PlanMode = defineExtension({"
+   ],
+   "page": 111,
+   "_y": 86.6
+  },
+  {
+   "type": "code",
+   "lines": [
     "name: \"plan-mode\",",
     "hooks: [hook(ToolTask, {"
    ],
-   "page": 111
+   "page": 111,
+   "_y": 142.1
   },
   {
    "type": "small",
    "text": "// An absent document means plan mode is off.",
    "page": 111,
+   "_y": 164.3,
    "zh": "// 文档不存在就意味着计划模式是关的。"
   },
   {
@@ -471,7 +707,8 @@
     "(await api.snapshot(PlanModeDoc, api.conversationId, context))?.enabled",
     "&& writes(call)"
    ],
-   "page": 111
+   "page": 111,
+   "_y": 175.1
   },
   {
    "type": "code",
@@ -483,12 +720,14 @@
     "(await tx.doc(PlanModeDoc, root.id)).enabled = true;",
     "}, context);"
    ],
-   "page": 111
+   "page": 111,
+   "_y": 208.1
   },
   {
    "type": "small",
    "text": "Extensions get no setup step when a conversation is created, so a hook treats a missing document as “off”. Example 27 builds the other variant, a mode switched by changing the selection (building a coding agent (p. 159)).",
    "page": 111,
+   "_y": 309.1,
    "zh": "会话创建时扩展不会得到任何安装步骤，所以一个钩子把缺失的文档当作「关」。示例 27 构建了另一个变体：一种通过改变选择来切换的模式（构建一个编码智能体（p. 159））。"
   },
   {
@@ -500,26 +739,27 @@
    "type": "small",
    "text": "Put guards in beforeTool; a throw blocks, which is the safe default. Select a guard’s extension in every conversation that needs it, including subagents that use a stored extension list. Store any decision a human made in a memo, and any mode in a document.",
    "page": 111,
+   "_y": 509.8,
    "zh": "把守卫放在 `beforeTool` 里；抛出异常就拦截，这是安全的默认值。在每个需要它的会话里都选中守卫所在的扩展，包括使用存下扩展列表的子智能体。凡是人做出的决定都存进 memo，任何模式都存进文档。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: src/harness/define.ts hook(); src/harness/types.ts (HookApi, GenerationHooks, ToolHooks, CompactionHooks);",
-    "src/harness/scheduler.ts; src/harness/agent.ts; src/harness/tool.ts; src/harness/generation.ts; spec §7.2, §7.3, §12; README §Hooks; test/harness-tools.test.ts"
-   ],
-   "page": 111
+   "type": "small",
+   "text": "Sources: src/harness/define.ts hook(); src/harness/types.ts (HookApi, GenerationHooks, ToolHooks, CompactionHooks); src/harness/scheduler.ts; src/harness/agent.ts; src/harness/tool.ts; src/harness/generation.ts; spec §7.2, §7.3, §12; README §Hooks; test/harness-tools.test.ts",
+   "page": 111,
+   "_y": 575.9
   },
   {
    "type": "chapter-title",
    "text": "7 . 4 Defining tools",
    "page": 112,
+   "_y": 57.4,
    "zh": "7.4 定义工具"
   },
   {
    "type": "lede",
    "text": "A tool is a schema, a replay policy and an execute() function; the Harness turns what it reports into exactly one result entry.",
    "page": 112,
+   "_y": 105.9,
    "zh": "工具是一个 schema、一条重放策略和一个 `execute()` 函数；`Harness` 把它报告的内容变成恰好一个结果条目。"
   },
   {
@@ -531,6 +771,7 @@
    "type": "h2",
    "text": "A tool in eleven lines",
    "page": 112,
+   "_y": 222.7,
    "zh": "十一行写一个工具"
   },
   {
@@ -540,30 +781,38 @@
   },
   {
    "type": "small",
-   "text": "the count tool README §Tools · research/capture/scripts/one-turn.ts TS",
+   "text": "the count tool README §Tools · research/capture/scripts/one-turn.ts TS import { Type } from \"@earendil-works/pi-ai\"; const count = defineTool({",
    "page": 112,
+   "_y": 289.9,
    "zh": "`count` 工具 `README` §Tools · `research/capture/scripts/one-turn.ts` `TS`"
   },
   {
    "type": "code",
    "lines": [
-    "import { Type } from \"@earendil-works/pi-ai\";",
-    "const count = defineTool({",
     "name: \"count\",",
     "description: \"Count from 1 to n\",",
     "parameters: Type.Object({ n: Type.Number() }),",
     "execute: async (args, api) => {",
     "for (let i = 1; i <= args.n; i++) api.output(`${i}\\n`);",
-    "return {};",
+    "return {};"
+   ],
+   "page": 112,
+   "_y": 345.3
+  },
+  {
+   "type": "code",
+   "lines": [
     "}, });",
     "registry.install(defineExtension({ name: \"count\", tools: [count] }));"
    ],
-   "page": 112
+   "page": 112,
+   "_y": 412.1
   },
   {
    "type": "small",
    "text": "execute() returns no content, so the text it wrote with api.output() becomes the result.",
    "page": 112,
+   "_y": 459.0,
    "zh": "`execute()` 不返回内容，所以它用 `api.output()` 写下的文本就成了结果。"
   },
   {
@@ -572,15 +821,65 @@
    "zh": "只有标准的 `pi-ai` 工具字段（`name`、`description`、`parameters`）会发给模型。你自己的字段，比如一段提示词文本，留在你的代码里（系统提示词（p. 115））。四个可选字段用来设定策略："
   },
   {
-   "type": "small",
-   "text": "replay \"unsafe\" may a call cut short by a crash run again on restart? executionMode \"parallel\" \"sequential\" makes the whole round of calls run one at a time prepareArguments none repairs arguments before they are checked, such as a JSON string where an array belongs outputLimits 50 KiB, 2,000 lines, keep the head bounds the output kept for the result ToolRegistration, src/harness/types.ts; limits from src/truncate.ts. The execution mode default comes from settings’ toolExecution.",
+   "type": "table-row",
    "page": 112,
-   "zh": "`replay`：`\"unsafe\"`——一次被崩溃打断的调用，重启后可以再跑吗？ `executionMode`：`\"parallel\"`、`\"sequential\"`——让整轮调用一个一个地跑。 `prepareArguments`：无——在检查之前修补参数，比如该放数组的地方给了一个 JSON 字符串。 `outputLimits`：50 KiB、2,000 行、保留头部——为结果保留的输出上限。`ToolRegistration`，`src/harness/types.ts`；上限取自 `src/truncate.ts`。执行模式的默认值来自 `settings` 的 `toolExecution`。"
+   "_y": 532.4,
+   "cells": [
+    "replay \"unsafe\" may a call cut short by a crash run again on restart?"
+   ],
+   "is_header": false,
+   "_sig": "replay",
+   "zh": "`replay`：`\"unsafe\"`——一次被崩溃打断的调用，重启后可以再跑吗？"
+  },
+  {
+   "type": "table-row",
+   "page": 112,
+   "_y": 549.6,
+   "cells": [
+    "executionMode \"parallel\" \"sequential\" makes the whole round of calls run one at a time"
+   ],
+   "is_header": false,
+   "_sig": "executionMode",
+   "zh": "`executionMode`：`\"parallel\"`、`\"sequential\"`——让整轮调用一个一个地跑。"
+  },
+  {
+   "type": "table-row",
+   "page": 112,
+   "_y": 566.3,
+   "cells": [
+    "prepareArguments none repairs arguments before they are checked, such as a JSON string where an array belongs"
+   ],
+   "is_header": false,
+   "_sig": "prepareArguments",
+   "zh": "`prepareArguments`：无——在检查之前修补参数，比如该放数组的地方给了一个 JSON 字符串。"
+  },
+  {
+   "type": "table-row",
+   "page": 112,
+   "_y": 582.8,
+   "cells": [
+    "outputLimits 50 KiB, 2,000 lines, keep the head bounds the output kept for the result"
+   ],
+   "is_header": false,
+   "_sig": "outputLimits",
+   "zh": "`outputLimits`：50 KiB、2,000 行、保留头部——为结果保留的输出上限。"
+  },
+  {
+   "type": "table-row",
+   "page": 112,
+   "_y": 601.5,
+   "cells": [
+    "ToolRegistration, src/harness/types.ts; limits from src/truncate.ts. The execution mode default comes from settings’ toolExecution."
+   ],
+   "is_header": false,
+   "_sig": "ToolRegistration",
+   "zh": "`ToolRegistration`，"
   },
   {
    "type": "h2",
    "text": "Choose a replay policy",
    "page": 112,
+   "_y": 630.0,
    "zh": "选择一条重放策略"
   },
   {
@@ -592,8 +891,8 @@
    "type": "figure",
    "number": "7.5",
    "file": "figures/fig-7.5.png",
-   "title": "ANATOMY OF A RESULT ENTRY\nA N A T O M Y",
-   "caption": "A tool-result entry stores exactly what the model saw, plus the structured diagnostics. Entry 13 of research/capture/sqlite-rows.txt, the count tool’s answer to count {\"n\": 3}, keys in captured order.",
+   "title": "ANATOMY OF A RESULT ENTRY ANATOMY",
+   "caption": "Atool - resultentrystoresexactlywhatthemodelsaw , plusthestructureddiagnostics . Entry 13 ofresearch / capture / sqlite - rows . txt , thecounttool ’ s answerto c ount {\" n \": 3} , keysincapturedorder .",
    "page": 113,
    "zh_caption": "一个 `tool-result` 条目存的正是模型看到的东西，外加结构化诊断。`research/capture/sqlite-rows.txt` 的第 13 条，`count` 工具对 `count {\"n\": 3}` 的回答，键按抓取顺序排列。"
   },
@@ -601,6 +900,7 @@
    "type": "h2",
    "text": "From result to entry",
    "page": 113,
+   "_y": 75.0,
    "zh": "从结果到条目"
   },
   {
@@ -613,7 +913,8 @@
    "lines": [
     "A tool-result entry stores exactly what the model saw, plus the structured diagnostics. Entry 13 of research/capture/sqlite-rows.txt, the count tool’s answer to count {\"n\": 3}, keys in captured order."
    ],
-   "page": 113
+   "page": 113,
+   "_y": 427.2
   },
   {
    "type": "p",
@@ -624,6 +925,7 @@
    "type": "h2",
    "text": "What execute() receives",
    "page": 113,
+   "_y": 585.7,
    "zh": "`execute()` 收到什么"
   },
   {
@@ -635,6 +937,7 @@
    "type": "h2",
    "text": "Built-in tools and wrappers",
    "page": 114,
+   "_y": 231.0,
    "zh": "内置工具与包装器"
   },
   {
@@ -646,6 +949,7 @@
    "type": "small",
    "text": "Leave replay unsafe unless a rerun is harmless; record anything random in a memo first. Return isError: true for expected failures; throw only when the call’s own work should be aborted. Use diagnostic() for remarks to the model, not the tool’s output.",
    "page": 114,
+   "_y": 395.1,
    "zh": "除非重跑无害，否则保持重载不安全；任何随机的值先用 memo 记下。预期内的失败返回 `isError: true`；只有当这次调用自身的工作应该被中止时才抛异常。给模型的说明用 `diagnostic()`，不要用工具的输出。"
   },
   {
@@ -653,14 +957,15 @@
    "lines": [
     "Sources: src/harness/define.ts; src/harness/types.ts (ToolRegistration, ToolExecutionApi, ToolExecutionResult); src/harness/tool.ts; src/truncate.ts; src/tools/index.ts, bash.ts, env.ts; spec §7.3, §8.5; README §Tools; ex 30, run 30; research/capture/sqlite-rows.txt"
    ],
-   "page": 114
+   "page": 114,
+   "_y": 461.1
   },
   {
    "type": "figure",
    "number": "7.6",
    "file": "figures/fig-7.6.png",
-   "title": "SECTIONS PER CONVERSATION\nC O M P A R I S O N",
-   "caption": "Sections render in extension order, wrappers apply, deselected extensions drop out, and instructions come last. Rendered values from research/runs/15-system-prompt.txt; line breaks inside each tag are shown as spaces.",
+   "title": "SECTIONS PER CONVERSATION COMPARISON",
+   "caption": "Sectionsrenderinextensionorder , wrappersapply , deselectedextensionsdropout , andinstructionscomelast . Renderedvaluesfrom research / runs /15-system - prompt . txt ; linebreaksinsideeachtagareshownasspaces .",
    "page": 115,
    "zh_caption": "小节按扩展顺序渲染，包装器生效，未选中的扩展退出，`instructions` 在最后。渲染出的值取自 `research/runs/15-system-prompt.txt`；每个标签内部的换行显示为空格。"
   },
@@ -668,12 +973,14 @@
    "type": "chapter-title",
    "text": "7 . 5 The system prompt",
    "page": 115,
+   "_y": 57.4,
    "zh": "7.5 系统提示词"
   },
   {
    "type": "lede",
    "text": "Nothing stores the prompt; each request renders it from sections, and only what changed is added to the transcript.",
    "page": 115,
+   "_y": 106.2,
    "zh": "没有什么存下提示词；每次请求都从小节渲染它，而只有变化的部分被加进记录。"
   },
   {
@@ -685,6 +992,7 @@
    "type": "h2",
    "text": "Sections",
    "page": 115,
+   "_y": 224.0,
    "zh": "小节"
   },
   {
@@ -696,6 +1004,7 @@
    "type": "small",
    "text": "Sections render in extension order, wrappers apply, deselected extensions drop out, and instructions come last. Rendered values from research/runs/15-system-prompt.txt; line breaks inside each tag are shown as spaces.",
    "page": 115,
+   "_y": 602.8,
    "zh": "小节按扩展顺序渲染，包装器生效，未选中的扩展退出，`instructions` 在最后。渲染出的值取自 `research/runs/15-system-prompt.txt`；每个标签内部的换行显示为空格。"
   },
   {
@@ -707,8 +1016,8 @@
    "type": "figure",
    "number": "7.7",
    "file": "figures/fig-7.7.png",
-   "title": "THE DELTA\nS T R U C T U R E",
-   "caption": "A later request appends only the section that changed, at its place in the transcript. The root conversation of ex 15; the second pi.system entry is {",
+   "title": "THE DELTA STRUCTURE",
+   "caption": "Alaterrequestappendsonlythesectionthatchanged , atitsplaceinthetranscript . Therootconversationofex 15; thesecond p i . syst e m entryis {",
    "page": 116,
    "zh_caption": "后一次请求只追加变化的那一个小节，放在它在记录中的位置。ex 15 的根会话；第二条 `pi.system` 条目是 {"
   },
@@ -716,6 +1025,7 @@
    "type": "h2",
    "text": "Only the difference is sent",
    "page": 116,
+   "_y": 75.0,
    "zh": "只发送差异"
   },
   {
@@ -727,6 +1037,7 @@
    "type": "small",
    "text": "the first request’s baseline research/capture/sqlite-rows.txt, entry 10 JSON",
    "page": 116,
+   "_y": 169.9,
    "zh": "第一次请求的基线 `research/capture/sqlite-rows.txt`，第 10 条 `JSON`"
   },
   {
@@ -744,12 +1055,14 @@
     "\"conversationId\": 1, \"byTaskId\": 9",
     "}"
    ],
-   "page": 116
+   "page": 116,
+   "_y": 193.1
   },
   {
    "type": "small",
    "text": "The first request of a conversation writes the full baseline: one untagged preamble and the count tool (declaration elided). It follows user entry 7, the message it answers. This capture’s preamble differs from example 15’s, which the two figures in this section use.",
    "page": 116,
+   "_y": 361.5,
    "zh": "一个会话的第一次请求写出完整的基线：一段不带标签的 `preamble` 和 `count` 工具（声明省略）。它跟在用户条目 7 之后，也就是它所回答的那条消息。这次抓取的 `preamble` 与示例 15 的不同，本节的两幅图用的是后者。"
   },
   {
@@ -758,12 +1071,18 @@
    "zh": "重放按记录顺序应用系统条目。一个字符串就地添加或替换一个小节，`null` 移除它。所以 `cwd` 改动之后，下一次请求追加一个只有单个键的补丁，提示词的其余部分保住它的位置和缓存。"
   },
   {
+   "type": "small",
+   "text": "A later request appends only the section that changed, at its place in the transcript. The root conversation of ex 15; the second pi.system entry is {",
+   "page": 116,
+   "_y": 667.2
+  },
+  {
    "type": "code",
    "lines": [
-    "A later request appends only the section that changed, at its place in the transcript. The root conversation of ex 15; the second pi.system entry is {",
     "sections: { cwd: '<cwd>\\n/repo/packages\\n</cwd>' } } in research/runs/15-system-prompt.txt."
    ],
-   "page": 116
+   "page": 116,
+   "_y": 678.5
   },
   {
    "type": "p",
@@ -784,26 +1103,27 @@
    "type": "small",
    "text": "Keep renderers deterministic: an embedded timestamp changes the text, appends a delta and breaks the provider’s cache spec §7.4. Give long-lived conversations a stable extension list; the host default moves whenever you install something spec §12. Add tools later through a filter or control.addTools: that appends one small delta and keeps the earlier prefix intact.",
    "page": 117,
+   "_y": 290.8,
    "zh": "让渲染器保持确定性：一个嵌进去的时间戳会改变文本、追加一个增量并破坏供应商的缓存 spec §7.4。给长寿命的会话一份稳定的扩展列表；宿主默认值会在你安装任何东西时移动 spec §12。以后通过过滤器或 `control.addTools` 添加工具：那只会追加一个小的增量，并保持先前的前缀完整。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: src/harness/prompt.ts; src/harness/define.ts section(), wrapSection(); src/harness/generation.ts; src/harness/types.ts",
-    "(PromptInput, PromptSection); spec §7.4, §2.2, §12; README §System Prompt; ex 15, 27 and runs 15, 27; research/capture/sqlite-rows.txt; research/capture/NOTES.md"
-   ],
-   "page": 117
+   "type": "small",
+   "text": "Sources: src/harness/prompt.ts; src/harness/define.ts section(), wrapSection(); src/harness/generation.ts; src/harness/types.ts (PromptInput, PromptSection); spec §7.4, §2.2, §12; README §System Prompt; ex 15, 27 and runs 15, 27; research/capture/sqlite-rows.txt; research/capture/NOTES.md",
+   "page": 117,
+   "_y": 369.6
   },
   {
    "type": "chapter-title",
    "text": "7 . 6 Reload while running",
    "page": 118,
+   "_y": 57.4,
    "zh": "7.6 边运行边重载"
   },
   {
    "type": "lede",
    "text": "Installing a new version under the same name swaps the code for all future work at once; work already running finishes on the code it started with.",
    "page": 118,
+   "_y": 106.2,
    "zh": "用同一个名字安装一个新版本，会一次性把所有未来工作的代码换掉；已经在运行的工作用它启动时的代码跑完。"
   },
   {
@@ -815,6 +1135,7 @@
    "type": "h2",
    "text": "Reload is an install",
    "page": 118,
+   "_y": 222.7,
    "zh": "重载就是一次安装"
   },
   {
@@ -826,6 +1147,7 @@
    "type": "small",
    "text": "reload mid-call, then restart ex 31 (abridged) TS",
    "page": 118,
+   "_y": 303.4,
    "zh": "调用中途重载，然后重启 ex 31（节选）`TS`"
   },
   {
@@ -835,54 +1157,49 @@
     "await running; // execute() of v1 has started",
     "registry.install(loadVersioned(\"v2\")); // same name \"versioned\" release();",
     "await submission.wait(context); // call running during the reload: v1",
-    "await (await root.submit({ type: \"input\", content: \"And now?\" }, context)).wait(context);"
+    "await (await root.submit({ type: \"input\", content: \"And now?\" }, context)).wait(context);",
+    "// next call: v2 await harness.close(context); registry = createRegistry(); // second process: nothing installed harness = await open(registry);"
    ],
-   "page": 118
-  },
-  {
-   "type": "small",
-   "text": "// next call: v2",
    "page": 118,
-   "zh": "// 下一次调用：v2"
+   "_y": 326.6
   },
   {
    "type": "code",
    "lines": [
-    "await harness.close(context);",
-    "registry = createRegistry(); // second process: nothing installed",
-    "harness = await open(registry);",
     "root = await harness.root(context); // after restart, before install: []",
     "registry.install(loadVersioned(\"v3\"));",
     "// after install: [ 'version' ]"
    ],
-   "page": 118
+   "page": 118,
+   "_y": 448.1
   },
   {
    "type": "small",
    "text": "The comments are research/runs/31-reload-and-restart.txt. Both processes use one SQLite file; the conversation selected the extension by name.",
    "page": 118,
+   "_y": 506.2,
    "zh": "注释来自 `research/runs/31-reload-and-restart.txt`。两个进程用同一个 `SQLite` 文件；会话按名字选中了那个扩展。"
   },
   {
    "type": "figure",
    "number": "7.8",
    "file": "figures/fig-7.8.png",
-   "title": "A RELOAD MID-CALL\nT I M E L I N E",
-   "caption": "Running work keeps the code it took; the next request or call uses the replacement. Example 31: the call started under v1 and returns “v1”; the next request is prepared under v2 and its call returns “v2”. After the restart the stored selection is unchanged and binds to v3. Dashed lines mark the installs.",
+   "title": "A RELOAD MID - CALL TIMELINE",
+   "caption": "Runningworkkeepsthecodeittook ; thenextrequestorcallusesthereplacement . Example 31: thecallstartedunderv 1 andreturns “ v 1”; thenext requestispreparedunderv 2 anditscallreturns “ v 2”. A ft ertherestartthestoredselectionisunchangedandbindstov 3. Dashedlinesmarktheinstalls .",
    "page": 119,
    "zh_caption": "运行中的工作保住它拿到的那份代码；下一次请求或调用使用替换后的那份。示例 31：这次调用在 v1 下开始，返回「v1」；下一次请求在 v2 下准备，它的调用返回「v2」。重启之后存下的选择没有变，并绑定到 v3。虚线标出各次安装。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Running work keeps the code it took; the next request or call uses the replacement. Example 31: the call started under v1 and returns “v1”; the next request is prepared under v2 and its call returns “v2”. After the restart the stored selection is unchanged and binds to v3. Dashed lines mark the installs."
-   ],
-   "page": 119
+   "type": "small",
+   "text": "Running work keeps the code it took; the next request or call uses the replacement. Example 31: the call started under v1 and returns “v1”; the next request is prepared under v2 and its call returns “v2”. After the restart the stored selection is unchanged and binds to v3. Dashed lines mark the installs.",
+   "page": 119,
+   "_y": 346.2
   },
   {
    "type": "h2",
    "text": "Who sees which code",
    "page": 119,
+   "_y": 385.5,
    "zh": "谁看到哪份代码"
   },
   {
@@ -899,6 +1216,7 @@
    "type": "h2",
    "text": "Task definitions hand over",
    "page": 119,
+   "_y": 619.5,
    "zh": "任务定义会交接"
   },
   {
@@ -910,6 +1228,7 @@
    "type": "h2",
    "text": "What a reload does not touch",
    "page": 120,
+   "_y": 75.0,
    "zh": "重载不触及的东西"
   },
   {
@@ -921,12 +1240,14 @@
    "type": "small",
    "text": "Early cleanup: replacing an extension “only stops new use”. Closing a database pool or a child process right after install() breaks calls still running on the old object. Moving tasks: moving a task definition from one extension to another “leaves a gap between the two installs in which its pending tasks are blocked” spec §7.5, §12.",
    "page": 120,
+   "_y": 231.0,
    "zh": "过早清理：替换一个扩展「只会停止新的使用」。紧跟在 `install()` 之后关闭数据库连接池或子进程，会破坏仍在旧对象上运行的调用。移动任务：把一个任务定义从一个扩展移到另一个扩展，「会在两次安装之间留下一段空档，其待处理任务被阻塞」spec §7.5、§12。"
   },
   {
    "type": "small",
    "text": "Reload by installing under the same name; there is nothing else to call. Bump a task’s version when the meaning of its stored input or checkpoints changes. If old code ignores cancellation and never finishes, close() still waits for it. Only running extensions in a separate worker or process lets you kill them spec §7.5, §13.",
    "page": 120,
+   "_y": 312.6,
    "zh": "用同一个名字安装来重载；没有别的可调。当一个任务存下的输入或检查点的含义变化时，提升它的版本。如果旧代码忽略取消且永远不结束，`close()` 仍然会等它。只有把扩展跑在一个独立的 worker 或进程里，你才能杀掉它们 spec §7.5、§13。"
   },
   {
@@ -934,24 +1255,28 @@
    "lines": [
     "Sources: src/harness/registry.ts; src/harness/scheduler.ts; src/harness/tool.ts; spec §7.1, §7.5, §12, §13; README §Reload; ex 10, 31 and runs 10, 31; test/harness-tools.test.ts"
    ],
-   "page": 120
+   "page": 120,
+   "_y": 391.4
   },
   {
    "type": "chapter-title",
    "text": "7 . 7 Subagents",
    "page": 121,
+   "_y": 57.4,
    "zh": "7.7 子智能体"
   },
   {
    "type": "lede",
    "text": "A subagent is an ordinary conversation owned by the work that created it; ownership and request IDs make it abortable and crash-safe without a",
    "page": 121,
+   "_y": 106.2,
    "zh": "子智能体是一个普通会话，由创建它的工作所拥有；所有权和请求 ID 让它可中止、崩溃安全，而不需要一套"
   },
   {
    "type": "lede",
    "text": "subagent API.",
    "page": 121,
+   "_y": 136.9,
    "zh": "子智能体 API。"
   },
   {
@@ -963,6 +1288,7 @@
    "type": "h2",
    "text": "The foreground pattern",
    "page": 121,
+   "_y": 237.7,
    "zh": "前台模式"
   },
   {
@@ -974,6 +1300,7 @@
    "type": "small",
    "text": "the subagent tool ex 22 (abridged) TS",
    "page": 121,
+   "_y": 304.9,
    "zh": "`subagent` 工具 ex 22（节选）`TS`"
   },
   {
@@ -985,28 +1312,43 @@
     "execute: async (args, api, ctx) => {",
     "const child = await api.commit(async (tx) => {",
     "const found = await tx.scanConversations({ ownerTaskId: api.taskId }, 1);",
-    "const existing = found.items[0];",
+    "const existing = found.items[0];"
+   ],
+   "page": 121,
+   "_y": 328.1
+  },
+  {
+   "type": "code",
+   "lines": [
     "if (existing !== undefined) return existing.id; const created = await tx.createConversation({",
     "ownership: { kind: \"task\", taskId: api.taskId },",
     "}); await configure(tx, created.id, { extensions: { remove: [Subagent] } });",
-    "return created.id;",
+    "return created.id;"
+   ],
+   "page": 121,
+   "_y": 405.3
+  },
+  {
+   "type": "code",
+   "lines": [
     "}, ctx); await api.details({ conversationId: child }, ctx);",
     "const handle = (await api.conversation(child, ctx))!;",
     "const request = { type: \"input\", content: args.task,",
     "requestId: `subagent:${api.taskId}` } as const;",
     "const settled = await (await handle.submit(request, ctx)).wait(ctx);",
-    "// … throw unless settled is an answered input (elided) const text = await answerText(api, settled.answer, ctx);",
-    "return { content: [{ type: \"text\", text }] };",
-    "}, })"
+    "// … throw unless settled is an answered input (elided) const text = await answerText(api, settled.answer, ctx);"
    ],
-   "page": 121
+   "page": 121,
+   "_y": 471.3
   },
   {
    "type": "code",
    "lines": [
-    "Run 22 prints the child’s assistant: 2, 3, and 5. and the parent’s The subagent says: 2, 3, and 5."
+    "return { content: [{ type: \"text\", text }] };",
+    "}, }) Run 22 prints the child’s assistant: 2, 3, and 5. and the parent’s The subagent says: 2, 3, and 5."
    ],
-   "page": 121
+   "page": 121,
+   "_y": 559.1
   },
   {
    "type": "p",
@@ -1017,8 +1359,8 @@
    "type": "figure",
    "number": "7.9",
    "file": "figures/fig-7.9.png",
-   "title": "ONE SUBAGENT CALL\nS E Q U E N C E",
-   "caption": "A replay-safe subagent call finds its child by owner and its submission by request ID. The steps of ex 22’s tool and UI. Step 1 is one commit; step 4 submits the job, step 5 is the child’s own run, and step 6 is the tool’s wait().",
+   "title": "ONE SUBAGENT CALL SEQUENCE",
+   "caption": "Areplay - safesubagentcallfindsitschildbyowneranditssubmissionbyrequestID . Thestepsofex 22’ stoolandUI . Step 1 isonecommit ; step 4 submitsthejob , step 5 isthechild ’ sownrun , andstep 6 isthetool ’ s w ai t () .",
    "page": 122,
    "zh_caption": "一次可重放安全的子智能体调用按所有者找到它的子会话，按请求 ID 找到它的提交项。ex 22 中工具与界面的各个步骤。第 1 步是一次提交；第 4 步提交这个活，第 5 步是子会话自己的运行，第 6 步是工具的 `wait()`。"
   },
@@ -1026,6 +1368,7 @@
    "type": "small",
    "text": "A replay-safe subagent call finds its child by owner and its submission by request ID. The steps of ex 22’s tool and UI. Step 1 is one commit; step 4 submits the job, step 5 is the child’s own run, and step 6 is the tool’s wait().",
    "page": 122,
+   "_y": 506.7,
    "zh": "一次可重放安全的子智能体调用按所有者找到它的子会话，按请求 ID 找到它的提交项。ex 22 中工具与界面的各个步骤。第 1 步是一次提交；第 4 步提交这个活，第 5 步是子会话自己的运行，第 6 步是工具的 `wait()`。"
   },
   {
@@ -1037,6 +1380,7 @@
    "type": "h2",
    "text": "Ownership decides abort and idle",
    "page": 122,
+   "_y": 588.7,
    "zh": "所有权决定中止与空闲"
   },
   {
@@ -1048,22 +1392,22 @@
    "type": "figure",
    "number": "7.10",
    "file": "figures/fig-7.10.png",
-   "title": "TWO OWNERSHIP SHAPES\nT R E E",
-   "caption": "A foreground child belongs to the call; a background child hangs off a background anchor. Arrows point from owner to owned. Left: ex 22. Right: ex 23, where the anchor completes at once and a reporter task delivers each message to the child and posts the answer back to the parent. The dashed line is the background boundary: the parent’s Esc and idle waits stop there.",
+   "title": "TWO OWNERSHIP SHAPES TREE",
+   "caption": "Aforegroundchildbelongstothecall ; abackgroundchildhangso ff abackgroundanchor . Arrowspointfromownertoowned . Le ft : ex 22. Right : ex 23, wheretheanchorcompletesatonceandareportertaskdeliverseachmessagetothechildandpoststheanswerbacktotheparent . Thedashedlineis thebackgroundboundary : theparent ’ sEscandidlewaitsstopthere .",
    "page": 123,
    "zh_caption": "前台子会话属于这次调用；后台子会话挂在一个后台锚点上。箭头从所有者指向被拥有者。左：ex 22。右：ex 23，锚点立刻完成，一个 reporter 任务把每条消息送给子会话，再把答案发回给父方。虚线是后台的边界：父方的 Esc 和空闲等待止步于此。"
   },
   {
-   "type": "code",
-   "lines": [
-    "A foreground child belongs to the call; a background child hangs off a background anchor. Arrows point from owner to owned. Left: ex 22. Right: ex 23, where the anchor completes at once and a reporter task delivers each message to the child and posts the answer back to the parent. The dashed line is the background boundary: the parent’s Esc and idle waits stop there."
-   ],
-   "page": 123
+   "type": "small",
+   "text": "A foreground child belongs to the call; a background child hangs off a background anchor. Arrows point from owner to owned. Left: ex 22. Right: ex 23, where the anchor completes at once and a reporter task delivers each message to the child and posts the answer back to the parent. The dashed line is the background boundary: the parent’s Esc and idle waits stop there.",
+   "page": 123,
+   "_y": 320.8
   },
   {
    "type": "h2",
    "text": "The background pattern",
    "page": 123,
+   "_y": 372.7,
    "zh": "后台模式"
   },
   {
@@ -1085,6 +1429,7 @@
    "type": "small",
    "text": "Key every durable action: find the child by owner, and derive request IDs from a task ID. Pick foreground for a job inside one answer, background for an agent the user talks to later. Never report the child’s spend as the tool’s usage; it would count twice (usage and cost (p. 100)).",
    "page": 123,
+   "_y": 613.3,
    "zh": "为每个持久动作加上键：按所有者找子会话，并从任务 ID 派生请求 ID。一个答案内部的活选前台，用户之后还会对话的智能体选后台。绝不要把子会话的开销报成工具的 `usage`；那会被计两次（用量与成本（p. 100））。"
   },
   {
@@ -1092,7 +1437,107 @@
    "lines": [
     "Sources: spec §7.3, §5.4, §12; README §Abort and Subagents; ex 22, 23 and runs 22, 23; src/harness/harness.ts; src/harness/agent.ts; src/harness/tool.ts"
    ],
-   "page": 123
+   "page": 123,
+   "_y": 680.1
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 416.3,
+   "cells": [
+    "beforeRequest generation replace the messages of this one request; each handler gets the previous one’s result reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "beforeRequest",
+   "zh": "`beforeRequest` generation：替换这一次请求的消息；每个处理器拿到前一个的结果。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 432.8,
+   "cells": [
+    "afterResponse generation observe every model response reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "afterResponse",
+   "zh": "`afterResponse` generation：观察每一个模型响应。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 449.9,
+   "cells": [
+    "onYield generation answer a final answer with { continue }; the first wins reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "onYield",
+   "zh": "`onYield` generation：用 `{ continue }` 回答一个最终答案；第一个胜出。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 466.5,
+   "cells": [
+    "afterTools generation observe a finished round of tool results reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "afterTools",
+   "zh": "`afterTools` generation：观察一轮结束的工具结果。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 483.8,
+   "cells": [
+    "beforeTool tool rewrite the arguments, or block the call; the first block wins the call is blocked"
+   ],
+   "is_header": false,
+   "_sig": "beforeTool",
+   "zh": "`beforeTool` tool：改写参数，或拦下这次调用；第一个拦截胜出。这次调用被拦下。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 500.3,
+   "cells": [
+    "afterTool tool replace the result, handler by handler reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "afterTool",
+   "zh": "`afterTool` tool：替换结果，逐个处理器进行。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 517.5,
+   "cells": [
+    "beforeCompact compaction decline, or supply a summary; the first decision wins reported, ignored"
+   ],
+   "is_header": false,
+   "_sig": "beforeCompact",
+   "zh": "`beforeCompact` compaction：拒绝，或提供一份摘要；第一个决定胜出。已上报，被忽略。"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 535.5,
+   "cells": [
+    "GenerationHooks, ToolHooks and CompactionHooks, src/harness/types.ts; spec §7.2; src/harness/tool.ts. “Reported” means passed to"
+   ],
+   "is_header": false,
+   "_sig": "GenerationHooks",
+   "zh": "`GenerationHooks`、"
+  },
+  {
+   "type": "table-row",
+   "page": 109,
+   "_y": 546.8,
+   "cells": [
+    "HarnessOptions.onReport. Handlers run in extension order. A throwing guard blocks: it fails closed."
+   ],
+   "is_header": false,
+   "_sig": "HarnessOptions",
+   "zh": "`HarnessOptions.onReport`。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。"
   }
  ]
 }

@@ -23,6 +23,9 @@ await runtime.commit(() => ({ status: "running", checkpoint }), taskContext); },
 charge: async (task, runtime, taskContext) => {
 const key = task.state.checkpoint.key; if (!payments.has(key)) payments.set(key, task.input.amount * 100);
 const receipt = payments.get(key)!;
+```
+
+```ts
 const outcome = { status: "completed", result: { receipt } } as const; await runtime.commit(() => ({ status: "terminal", outcome }), taskContext);
 },
 ```
@@ -33,22 +36,27 @@ const outcome = { status: "aborted" } as const;
 await runtime.commit(() => ({ status: "terminal", outcome }), taskContext);
 }, });
 registry.install(defineExtension({ name: "payments", tasks: [Payment] }));
-Two inline state literals are hoisted into checkpoint and outcome constants to fit the page. Run 12 prints { status: 'completed', result: { receipt:
-500 } }.
 ```
 
+<aside class="note">Two inline state literals are hoisted into checkpoint and outcome constants to fit the page. Run 12 prints { status: 'completed', result: { receipt: 500 } }.</aside>
 自上而下读一遍。`initial` 给出第一个检查点。`prepare` 挑一个幂等键，并把它提交在检查点 `{ phase: "charge", key }` 里。`charge` 从 `task.state.checkpoint` 把键读回来，而不是从一个变量读，因为重启后那个变量就没了。然后它提交最终 outcome。只有有人中止这个任务时，`abort` 才会运行。
 
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.1.png" alt="THE TASK STATE MACHINE
-S T A T E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.1.png" alt="THE TASK STATE MACHINE STATE" loading="lazy">
 
 *一个任务有五种状态；你的代码提交检查点、等待和 outcome，剩下的由 Harness 完成。边取自 `src/harness/scheduler.ts`。一个带中止标记的 waiting 任务也会提前离开 waiting 去运行它的中止处理器；一个带中止标记、又没有任何代码能接手的 pending 或 waiting 任务则最终落到 orphaned。*
 
-<aside class="note">`name` 任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。`version` 与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。`initial(input)` 第一个检查点，在任务创建时提交。`phases` 每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。`abort` 在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。`migrate?` 升级旧版本存储的输入和检查点。`hooks?` 其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。</aside>
-```
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>name The task’s kind, stored in every record. Renaming it strands stored tasks of the old name.</td><td>任务的种类，存进每一条记录。改名会让已存的旧名任务搁浅。</td><td></td></tr>
+<tr><td>version Stored with every record. A newer definition must migrate older records (the scheduler (p. 73)).</td><td>与每条记录一起存储，更新的定义必须迁移旧记录（调度器（p. 73））。</td><td></td></tr>
+<tr><td>initial(input) The first checkpoint, committed when the task is created.</td><td>第一个检查点，在任务创建时提交。</td><td></td></tr>
+<tr><td>phases One handler per phase name. Each handler sees the task narrowed to its own phase.</td><td>每个阶段名一个处理器。每个处理器看到的任务都已收窄到它自己的阶段。</td><td></td></tr>
+<tr><td>abort Runs after an abort and must commit a final outcome (abort, fault and orphan (p. 80)).</td><td>在中止之后运行，必须提交一个最终 outcome（中止、故障与孤儿（p. 80））。</td><td></td></tr>
+<tr><td>migrate? Upgrades the input and checkpoint stored by an older version.</td><td>升级旧版本存储的输入和检查点。</td><td></td></tr>
+<tr><td>hooks? Hooks other extensions may attach to this task (hooks (p. 109)).</td><td>其他扩展可以挂到这个任务上的钩子（钩子（p. 109））。</td><td></td></tr>
+<tr><td>TaskDefinition in src/types.ts. Its type parameters are the input I, the checkpoint S, the result R and the hooks H.</td><td>。它的类型参数分别是输入 I、检查点 S、结果 R 和钩子 H。</td><td></td></tr>
+</table>
 
-<aside class="note">`src/types.ts` 中的 `TaskDefinition`。它的类型参数分别是输入 I、检查点 S、结果 R 和钩子 H。</aside>
 ### 五种状态
 
 任务永远处于五种状态之一（`src/types.ts`）。其中三种是活的。`pending` 表示它在排队等待运行。`running` 表示此刻有代码在执行它。`waiting` 表示它已暂停，直到其他任务完成。另外两种持有结果。`completing` 表示结果已定，但它启动的工作还在运行。`terminal` 表示它已彻底结束，此时记录就是一张回执。
@@ -80,26 +88,38 @@ S T A T E" loading="lazy">
 <aside class="note">已省略：`conversationId`、`version`、`input`、`background` 以及检查点的 `key`。任务 7 没有 owner 字段，因为它由自己的会话拥有。</aside>
 state —— 状态；在任务存活期间是检查点，有结果后则是 outcome。`on`、`policy` —— 它等待的任务，以及其中一个失败时会怎样（所有权（p. 76））。`memos` —— 一些小的存储值，先写入者胜（阶段与进度（p. 67））。`abortRequested` —— 持久化的中止标志。`owner` —— 只在子任务上设置。`conversationId` 和 `owner` 永不改变。试图把任务移到另一个会话的提交会被拒绝，报 `Task N cannot change conversations`（`src/session/transaction.ts`）。订单完成后，它的记录会收缩成一张回执：检查点和 memos 被丢弃，state 只保留 outcome：`{"status": "terminal", "outcome": {"status": "completed", "result": {"chargeId": "ch_a_1", "boxes": [...]}}}`（`capture/task-transitions.txt`）。terminal 记录永久保留，所以结果要保持精简。把大数据放进条目或文档，只返回它的 ID（spec §12）。
 
-<aside class="note">`completed` `result` 任务成功，即带类型的 R。`failed` `error`、`result?` 任务出现了预期内的失败，比如被拒的卡。`aborted` `reason?`、`result?` 它的中止处理器已中止，任务也清理完毕。`orphaned` `reason` 没有代码能接手该任务，Harness 因而中止了它。</aside>
-```
-faulted error the Harness a bug: a throw, or a phase that made no progress
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>completed result the task success; the typed R</td><td></td><td></td></tr>
+<tr><td>failed error, result? the task an expected failure, such as a declined card</td><td></td><td></td></tr>
+<tr><td>aborted reason?, result? its abort handler aborted, and the task cleaned up</td><td></td><td></td></tr>
+<tr><td>orphaned reason the Harness aborted while no code could take it</td><td><code>reason</code> 没有代码能接手该任务，Harness 因而中止了它。</td><td></td></tr>
+<tr><td>faulted error the Harness a bug: a throw, or a phase that made no progress</td><td></td><td></td></tr>
+<tr><td>TaskOutcome&lt;R&gt; in src/types.ts. Every error is plain JSON, { message, detail? }, never a runtime Error.</td><td>。每个 error 都是纯 JSON，形如 <code>{ message, detail? }</code>，绝不是运行时的</td><td></td></tr>
+</table>
 
-<aside class="note">`src/types.ts` 中的 `TaskOutcome<R>`。每个 error 都是纯 JSON，形如 `{ message, detail? }`，绝不是运行时的 `Error`。</aside>
 ### 阶段能调用什么
 
 每个阶段处理器收到 `(task, runtime, context)`。`task` 是存储的记录。`runtime` 是这次任务运行的工具箱，这次运行结束就失效（`src/types.ts`）。
 
-<aside class="note">提交 `commit(change, context)`、`memo(name, candidate, context)` 读取已提交状态 `memo(name)`、`getTask`、`outcomes`、`entry`、`context`、`snapshot`、`snapshotAsOf`、`watchDoc` 等待 `waitForTask`、`sleep(until)` 环境 `agent()`、`hooks`、`registry`、`settings`、`models`、`env()`、`conversation()` 身份与时钟 `taskId`、`conversationId`、`signal`、`now()`、`report()`。`src/types.ts` 中的 `TaskRuntime`。</aside>
 `runtime.commit()` 是唯一的提交方式。你的回调会收到一个事务和当前记录。它可以追加条目、写入文档、创建子任务，也可以返回任务的下一种状态。所有这些都落在同一次原子提交里，所以检查点永远不会和它所描述的数据不一致。以这种方式提交的条目会把该任务记为它们的作者（`byTaskId`）（spec §5.1）。如果这次运行已经结束、Harness 正在关闭、任务已不在 running，或任务带有中止标记，提交都会被拒绝。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>Commit commit(change, context), memo(name, candidate, context)</td><td></td><td></td></tr>
+<tr><td>Read committed state memo(name), getTask, outcomes, entry, context, snapshot, snapshotAsOf, watchDoc</td><td></td><td></td></tr>
+<tr><td>Wait waitForTask, sleep(until)</td><td></td><td></td></tr>
+<tr><td>Environment agent(), hooks, registry, settings, models, env(), conversation()</td><td></td><td></td></tr>
+<tr><td>Identity and clock taskId, conversationId, signal, now(), report()</td><td></td><td></td></tr>
+<tr><td>TaskRuntime in src/types.ts.</td><td>。</td><td></td></tr>
+</table>
 
 <aside class="note">把下一个阶段需要的一切都放进检查点。变量不会在重启后存活。把 `name` 当作永久的。当检查点的形状变化时，提高 `version` 并加上 `migrate`。在同一次 `runtime.commit()` 里提交检查点和它所描述的数据。outcome 要保持精简；批量数据放进文档或条目。</aside>
 ```
 Sources: spec §1, §5.1, §5.3, §12; src/tasks.ts; src/types.ts (TaskDefinition, TaskState, TaskRecord, TaskOutcome, TaskRuntime); src/harness/scheduler.ts; src/session/transaction.ts; ex 12, run 12; research/capture/task-transitions.txt.
 ```
 
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.2.png" alt="THE STEP BEFORE EVERY PHASE
-D E C I S I O N" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.2.png" alt="THE STEP BEFORE EVERY PHASE DECISION" loading="lazy">
 
 *每个阶段之前，step 会套用第一条匹配的规则；没有进展就是故障。规则来自 spec §5.1，实现在 `src/harness/scheduler.ts`。*
 
@@ -177,8 +197,7 @@ after reopen: { status: 'completed', result: 'counted to 5' }
 Sources: spec §5.1, §5.2, §12; src/harness/scheduler.ts; test/harness-tasks.test.ts (task phases, task runtime); ex 13, run 13; ex 24.
 ```
 
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.3.png" alt="INTENT, EFFECT, OUTCOME
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.3.png" alt="INTENT , EFFECT , OUTCOME SEQUENCE" loading="lazy">
 
 *先提交意图，再执行效果，最后提交结果；中途崩溃会重跑效果阶段。spec §5.1 的支付示例的各个阶段。第 4 步的条目和最终状态落在同一次提交里。*
 
@@ -226,11 +245,6 @@ outcome: { status: "aborted", reason: "user" } }), context);
 
 新进程打开存储时，每一个当时在 running 的任务都会带着它的检查点退回 pending（调度器（p. 73））。是检查点而非进程说明任务当时处在什么位置：
 
-<aside class="note">意图提交之前 检查点 prepare 再次 prepare；没有发出扣款 意图之后、扣款之前 检查点 charge 首次扣款 扣款之后、结果之前 检查点 charge 用同一个键再次扣款 结果提交之后 terminal 无</aside>
-```
-```
-
-<aside class="note">中间两行对新进程来说没有区别。用规范的话说：「在意图阶段重开，意味着效果可能已经发生。」</aside>
 Harness 无法知道在进程死掉之前请求有没有到达支付服务，所以你的阶段无论如何都必须正确。规范给出三种方式：「阶段处理器安全地重试、轮询一个外部句柄，或记录中断」（spec §5.2）。
 
 安全地重试 —— 发送一个在意图阶段创建、并存在检查点里的幂等键。在恢复测试中，转账服务跨了一次关闭与重开被调用了两次，却只应用了一次转账，因为两次调用都带着 `transfer-N`（`test/harness-tasks-recovery.test.ts`）。轮询句柄 —— 当远端系统返回一个操作 ID 时，先把它提交下来再去等待，然后向远端系统询问结果。generation 任务对延迟的模型调用就是这么做的（generation（p. 91））。记录中断 —— 两者都做不到时，提交一个说明效果可能发生也可能没发生的 outcome。未被标记为可重放的工具调用，也就是 `"safe"` 的，就采用这个做法（工具调用与重放（p. 94））。
@@ -242,13 +256,8 @@ Harness 自己的任务也遵循这个三明治，所以它们的恢复是可预
 <aside class="note">Pi Durable 从不撤销外部效果。提交失败只回滚 Harness 自己的记录（提交失败时（p. 33））。撤销一次扣款是远端系统的事：它的幂等键、它的取消端点、它的操作句柄（限制与非目标（p. 168））。</aside>
 <aside class="note">在意图阶段创建键。在效果阶段内部创建的键每次重跑都会变，去重就失效了。示例 12 从任务 ID 推导出它；商店抓取在序号 4 处、在任何扣款之前提交了 `"key": "charge-a"`。把结果和它的后果一起提交。一次 terminal 提交会原子地写入 outcome、追加 result 条目、退休该任务的文档，并结清它所回复的提交项（spec §5.3）。分两次提交会留下一个窗口：回执已经存在，任务却还活着。</aside>
 <aside class="note">用一个 memo 守住同一阶段里的第二个效果。商店订单的 charge 阶段只在 memo `chargeId` 为空时才调用服务（序号 5，然后序号 6）。调用与 memo 之间崩溃仍会重复这次调用，所以调用本身必须容忍这一点。</aside>
-```
-Sources: spec §1 (invariant 4), §5.1 (payment example), §5.2, §5.3, §12; test/harness-tasks-recovery.test.ts (resumes an
-intent/effect/outcome task interrupted after its intent); ex 12; research/capture/task-transitions.txt (scenario A, seq 4–6); src/harness/tool.ts; src/harness/generation.ts.
-```
-
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.4.png" alt="LOOKING UP A TASK’S CODE
-D E C I S I O N" loading="lazy">
+<aside class="note">Sources: spec §1 (invariant 4), §5.1 (payment example), §5.2, §5.3, §12; test/harness-tasks-recovery.test.ts (resumes an intent/effect/outcome task interrupted after its intent); ex 12; research/capture/task-transitions.txt (scenario A, seq 4–6); src/harness/tool.ts; src/harness/generation.ts.</aside>
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.4.png" alt="LOOKING UP A TASK ’ S CODE DECISION" loading="lazy">
 
 *调度器按 kind 查找任务的代码；没有代码能接手的任务会一直停在 pending，只有中止才会让它以 orphaned 结束。spec §5.4 的表格，实现在 `src/harness/scheduler.ts`。迁移过的记录与 running 一起提交。*
 
@@ -270,26 +279,20 @@ D E C I S I O N" loading="lazy">
 
 当没有已注册的代码适配它时，任务就被阻塞。被阻塞的任务并没有失败。它的记录保持不变，它对空闲等待来说仍算未完成的工作，而注册表每次变化时调度器都会重试。阻塞是「推导出的运行时状态，不是被持久化的任务状态」（spec §5.4）。
 
-<aside class="note">`missing_task` 没有注册任何同名代码 → 注册它。`task_too_old` 存储的版本比代码新 → 注册该版本或更新的代码。`migration_failed` 代码更新，但 migrate 缺失或抛出 → 注册一个不同的定义。出自 spec §5.4 与 `src/harness/scheduler.ts`。</aside>
 在恢复测试中，一个缺失定义的任务会一直停在 pending，直到 `addTask()` 注册它，然后才完成（`test/harness-tasks-recovery.test.ts`）。用 `harness.inspect()` 找出被阻塞的任务。它为每个任务报告 `{ kind: "blocked", reason }`（任务图与 `inspect()`（p. 137））。迁移在任务被预留时运行。一个回调 `migrate(input, checkpoint, fromVersion)` 把记录从每个更旧的版本升级上来。如果它抛出，错误通过 `onReport` 报告一次，调度器要等到为该 kind 注册了一个不同的定义才会再试。一个没有 migrate 的更新定义会阻塞并报 `Task test.versioned version 2 has no migration from 1`（`test/harness-tasks-recovery.test.ts`）。
 
-<aside class="note">「Harness 绝不会仅仅因为注册表代码缺失或不兼容就把一个任务置为 terminal，无论是在打开时还是之后」（spec §5.4）。只有中止才会结束一个被阻塞的任务，让它成为 orphaned（中止、故障与孤儿（p. 80））。</aside>
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>missing_task no code with that name is registered registering it</td><td>没有注册任何同名代码 → 注册它。</td><td></td></tr>
+<tr><td>task_too_old the stored version is newer than the code registering code of that version or newer</td><td>存储的版本比代码新 → 注册该版本或更新的代码。</td><td></td></tr>
+<tr><td>migration_failed the code is newer, and migrate is missing or throws registering a different definition</td><td>代码更新，但 migrate 缺失或抛出 → 注册一个不同的定义。出自 spec §5.4 与</td><td></td></tr>
+<tr><td>From spec §5.4 and src/harness/scheduler.ts.</td><td></td><td></td></tr>
+</table>
+
 ### 崩溃之后：重开
 
 当你在已有存储上打开一个 Harness 时，调度器会做一次清理提交。每个留在 running 的任务都带着同样的检查点和 memos 退回 pending。此时还不会有什么运行：打开阶段「不分发任何东西」（`src/harness/scheduler.ts`）。处理器在 `resume()` 之后启动，或者在需要进展的调用之后启动，比如 `waitForTask()` 或 `submit()`（spec §2.2）。打开时还会安排第二次提交，应用崩溃留下的任何中止标记和最终结果。
 
-<aside class="note">pending 打开后在 resume 之前什么也不启动；running → pending，保留检查点、memos 和标记，从检查点重跑；waiting 在它的 on 完成后恢复；completing 在它下方的工作完成后结束；terminal 永不再运行。出自 `src/harness/scheduler.ts` 与 spec §5.1、§5.5。`SIGKILL` 之后、打开之后的一个 `pi.tool` 任务 research/capture/crash-reopen-tasks.txt JSON // 被杀掉进程留下的 SQLite 行</aside>
-```json
-{ "id": 24, "kind": "pi.tool", "owner": 18, …
-"state": { "status": "running",
-"checkpoint": { "phase": "execute", "arguments": { "target": "weekly" },
-"replay": "safe" } } }
-// after Harness.open(), before resume(): only the status changed
-"state": { "status": "pending", "checkpoint": { … unchanged … } }
-// its owner, generation 18, stays "waiting" with "on": [24]
-```
-
-<aside class="note">进程在工具执行中途被杀掉。已省略（……）：`conversationId`、`version`、`input`、`background` 和 `abortRequested`，它们都没有被打开改变。</aside>
 ### 在运行中的任务下重新加载代码
 
 一个运行中的 invocation 会一直用它启动时的代码。在每个阶段边界，step 都会重新检查注册表。如果现在为该 kind 注册了另一个定义并且它能接手这个任务（同一版本，或带 migrate 的更新版本），任务就交接。step 把它带着检查点、memos 和中止标记置回 pending，下一次预留就在新代码下运行它（spec §5.4）。交接测试会记录 `old:a start`、`old:a end`、`new:b start`，新旧代码从不重叠（`test/harness-tasks-recovery.test.ts`）。如果新代码接不了手，旧代码继续运行，问题被报告一次。「一个永不settle 的处理器永不交接。」「在运行时重新加载」（p. 118）在实践中展示了这一点。
@@ -308,8 +311,7 @@ D E C I S I O N" loading="lazy">
 Sources: spec §2.2, §5.1, §5.4, §12; src/harness/scheduler.ts; test/harness-tasks.test.ts (task scheduling); test/harness-tasks-recovery.test.ts (blocked tasks, definition handover, task crash recovery); research/capture/crash-reopen-tasks.txt.
 ```
 
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.5.png" alt="THE OWNERSHIP TREE
-T R E E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.5.png" alt="THE OWNERSHIP TREE TREE" loading="lazy">
 
 *任务与会话构成一棵所有权树，而后台任务会把它下方的子树切掉。README §Abort and Subagents 与示例 22 的前台子智能体，旁边是示例 23 的后台锚点。一个 generation 拥有它的工具任务（README §Concepts）。*
 
@@ -355,8 +357,7 @@ on: payments, policy: "failFast" }; }, taskContext);
 - 中止处理器完全不能等待。
 allSettled 还是 failFast —— 策略决定一个任务失败时其他任务会怎样。用 `allSettled` 时什么也不会发生：最后一个任务结束时等待者就恢复，不管结果如何。用 `failFast` 时，「`on` 中第一个挂起或以非 completed 结果结束的任务，会在下一次对账提交中给 `on` 里其他每个存活任务打上中止标记」（spec §5.5）。等待者自身不会被中止。它恢复后自己决定结果。
 
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.6.png" alt="FAILFAST ON A DECLINED CARD
-T I M E L I N E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.6.png" alt="FAILFAST ON A DECLINED CARD TIMELINE" loading="lazy">
 
 *一次失败的支付会在下一次提交中中止它还存活的兄弟任务；结账本身永远不会被标上中止标记。示例 24 的第一个场景，按提交记录在 research/capture/extra-p5/checkout-transitions.txt。每根条带是一个已提交的状态，一直持续到下一次提交改写它；terminal 记录永不被改写（斜线填充）。marked 表示带着中止标记的 running。*
 
@@ -366,7 +367,6 @@ T I M E L I N E" loading="lazy">
 
 如果一个任务结束时它拥有的工作还在运行，它会被提交为 `{ status: "completing", outcome }`。结果已定，但任务还没完成。一旦它下方不再有存活的东西，调度器就提交最终的 terminal 记录（spec §5.5）。商店订单完整展示了这一点：
 
-<aside class="note">13 7 order running 提交检查点 finish；在同一次提交里创建回执子任务 11；14 11 send-receipt running 已启动；15 7 order completing finish 提交 completed；子任务 11 仍存活；16 11 send-receipt terminal completed，"sent"；17 7 order terminal 调度器的最终提交；waitForTask(7) 兑现。场景 A，research/capture/task-transitions.txt。</aside>
 被挂起的结果遵循五条规则（spec §5.5）：
 
 - 它是最终的。不会再有阶段或中止处理器运行，任务也不会被重启或迁移。
@@ -378,11 +378,7 @@ T I M E L I N E" loading="lazy">
 - 等待者、空闲等待和 `inspect()` 都把 completing 的任务视为存活。
 <aside class="note">扩展在一个子智能体会话里启动的前台工作会挂住调用它的工具，进而挂住整个运行。在某个工具还在 completing 时再问子智能体更多问题，会延长这个挂起。应该不挂住自己 owner 的工作，就创建成会话拥有的后台任务（spec §12）。</aside>
 <aside class="note">让一个任务成为其结果所依赖的任何工作的 owner。对全有或全无的子任务用 failFast，对你想要每个结果的情形用 allSettled。在一次提交里创建子任务，在之后的一次提交里结束。对不该挂住调用者的工作，用会话拥有的后台任务。</aside>
-```
-Sources: spec §5.4, §5.5, §12; README §Concepts, §Abort and Subagents, §Child Tasks; src/types.ts (TaskOwnership, TaskOptions,
-```
-
-<aside class="note">JoinPolicy）；src/session/transaction.ts；src/harness/scheduler.ts；test/harness-structured.test.ts；示例 22、23、24；运行 24；research/capture/task-transitions.txt；research/capture/extra-p5/checkout-transitions.txt。</aside>
+<aside class="note">Sources: spec §5.4, §5.5, §12; README §Concepts, §Abort and Subagents, §Child Tasks; src/types.ts (TaskOwnership, TaskOptions, JoinPolicy); src/session/transaction.ts; src/harness/scheduler.ts; test/harness-structured.test.ts; ex 22, 23, 24; run 24; research/capture/task-transitions.txt; research/capture/extra-p5/checkout-transitions.txt.</aside>
 <a id="sec-5-6"></a>
 
 ## 5.6 中止、故障与孤儿
@@ -407,29 +403,67 @@ Sources: spec §5.4, §5.5, §12; README §Concepts, §Abort and Subagents, §Ch
 - 级联到达的每个会话都按 `Conversation.abort()` 对待：它排队的输入变成无人回复，
 - 原因为 aborted，排队的写入保留（提交项与收件箱（p. 84））。被中止任务自己的会话保留其
 - 队列。
-<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.7.png" alt="ABORTTASK ON A WAITING CHECKOUT
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/05-tasks/fig-5.7.png" alt="ABORTTASK ON A WAITING CHECKOUT SEQUENCE" loading="lazy">
 
 *中止标记在单独一次提交里向下流，中止处理器自叶向上运行。research/capture/extra-p5/checkout-transitions.txt 的场景 2；序号是抓取到的提交顺序。运行 24 会在 checkout aborted 之前打印出四笔退款。*
 
 ### orphaned、faulted、aborted
 
-<aside class="note">`aborted` 任务自己的中止处理器做了补偿，在它能做到的范围内。`orphaned` 没有代码能接手该任务，「可能未经清理」。`faulted` 某个阶段抛出或没有进展，或者中止处理器没有提交结果。`unknown` 什么都没补偿。</aside>
-```
-```
-
-<aside class="note">出自 spec §5.4。failed 不在这里：它是任务自己选择的一种结果，和 completed 一样。</aside>
 orphaned —— 被阻塞的任务无法运行它的中止处理器，因为那份代码缺失或接不了这个任务。所以中止它会让它以 orphaned 结束，reason 就是被阻塞的原因。恢复测试在 `resume()` 之前中止一个缺失定义的任务，读到 `{ status: "orphaned", reason: "missing_task" }`，该任务的文档已被退休（`test/harness-tasks-recovery.test.ts`）。只有中止会让一个任务成为孤儿。仅仅代码缺失永远不会。faulted —— 故障来自任务 bug、格式不合的供应商数据，或一次被存储干净地拒绝的提交（`StorageRejected`）。不确定的存储失败会改为停掉 Session 且不写 outcome（提交失败时（p. 33））。如果存储连这条故障也拒绝，任务会保持 running，并在下一次预留时再次运行（`test/harness-tasks.test.ts`）。
 
 ### 中止过程中的崩溃
 
 已提交的中止标记就是全部关键，所以每个崩溃点都能从它恢复（`test/harness-tasks-recovery.test.ts`）：
 
-<aside class="note">标记正在提交时 没有标记；这次运行在标记之后恢复；运行返回之前 pending，带标记；只有中止处理器运行时 只运行中止处理器；中止处理器运行一次新的中止 invocation 时 再运行它；结果正在提交时 中止处理器再次运行；最终结果之后 什么都不运行；`abortTask()` 返回 `"terminal"`。任务崩溃恢复测试套件。中止处理器可能运行不止一次，所以它必须可安全重复，就像任何效果阶段一样（效果三明治（p. 70））。</aside>
 细节：内置任务的清理 —— 对于 Harness 自己写入的两种结果 faulted 和 orphaned，它会在让该结果定下的那次提交里运行一个清理钩子（`src/harness/live.ts`；spec §5.4）。只有三种任务会用它：`pi.generation` —— 当它是当前运行的任务时，一条已提交的半截回复变成一条 aborted 的 `pi.assistant` 条目，该运行的输入变成无人回复，原因为 faulted 或被阻塞的原因，运行结束（运行控制（p. 88））。`pi.tool` —— 把这次工具调用标记为 done，但没有结果条目。运行继续，缺失的结果会在构建模型上下文时补上（context（p. 40））。`pi.compaction` —— 清掉压缩状态（压缩（p. 97））。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>while the mark is being committed no mark; the run resumes</td><td></td><td></td></tr>
+<tr><td>after the mark, before the run returned pending with the mark; only the abort handler runs</td><td></td><td></td></tr>
+<tr><td>while the abort handler runs a new abort invocation runs it again</td><td></td><td></td></tr>
+<tr><td>while its outcome is being committed the abort handler runs again</td><td></td><td></td></tr>
+<tr><td>after the final outcome nothing runs; abortTask() returns "terminal"</td><td></td><td></td></tr>
+<tr><td>The task crash recovery suite. An abort handler can run more than once, so it must be safe to repeat, like any effect phase (the effect sandwich (p. 70)).</td><td></td><td></td></tr>
+</table>
 
 <aside class="note">写出可以安全运行两次的中止处理器。崩溃可能让它们再次运行。始终从中止处理器提交一个最终结果；不返回结果会让任务进入故障。就地补偿，或通过后台任务补偿。中止处理器不能创建子任务，也不能等待它们。把 orphaned 和 faulted 当作「什么都没清理」。自己去检查外部世界。</aside>
 ```
 Sources: spec §2.2, §5.3, §5.4, §5.5, §12; src/harness/scheduler.ts; src/harness/live.ts (settleSchedulerOutcome); test/harness-tasks.test.ts (task abort); test/harness-tasks-recovery.test.ts; test/harness-structured.test.ts (abort order); test/harness-
 ownership.test.ts; ex 24, run 24; research/capture/extra-p5/checkout-transitions.txt.
 ```
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>before the intent is committed checkpoint prepare prepare again; no charge was sent</td><td></td><td></td></tr>
+<tr><td>after the intent, before the charge checkpoint charge the charge, for the first time</td><td></td><td></td></tr>
+<tr><td>after the charge, before the outcome checkpoint charge the charge again, with the same key</td><td></td><td></td></tr>
+<tr><td>after the outcome is committed terminal nothing</td><td></td><td></td></tr>
+<tr><td>The middle two rows look the same to the new process. In the spec’s words: “Reopening in an intent phase means the effect may have happened.”</td><td></td><td></td></tr>
+<tr><td>pending nothing starts after resume</td><td></td><td></td></tr>
+<tr><td>running pending; checkpoint, memos and mark kept reruns from the checkpoint</td><td></td><td></td></tr>
+<tr><td>waiting nothing resumes when its on is finished</td><td></td><td></td></tr>
+<tr><td>completing nothing finishes once its work below is done</td><td></td><td></td></tr>
+<tr><td>terminal nothing never runs again</td><td></td><td></td></tr>
+<tr><td>From src/harness/scheduler.ts and spec §5.1, §5.5.</td><td></td><td></td></tr>
+<tr><td>a pi.tool task after SIGKILL, then after open research/capture/crash-reopen-tasks.txt JSON</td><td></td><td></td></tr>
+<tr><td>// the SQLite row left by the killed process</td><td></td><td></td></tr>
+<tr><td>{ "id": 24, "kind": "pi.tool", "owner": 18, …</td><td></td><td></td></tr>
+<tr><td>"state": { "status": "running",</td><td></td><td></td></tr>
+<tr><td>"checkpoint": { "phase": "execute", "arguments": { "target": "weekly" },</td><td></td><td></td></tr>
+<tr><td>"replay": "safe" } } }</td><td></td><td></td></tr>
+<tr><td>// after Harness.open(), before resume(): only the status changed</td><td></td><td></td></tr>
+<tr><td>"state": { "status": "pending", "checkpoint": { … unchanged … } }</td><td></td><td></td></tr>
+<tr><td>// its owner, generation 18, stays "waiting" with "on": [24]</td><td></td><td></td></tr>
+<tr><td>The process was killed mid-tool. Elided (…): conversationId, version, input, background and abortRequested, all unchanged by open.</td><td></td><td></td></tr>
+<tr><td>13 7 order running checkpoint finish; creates receipt child 11 in the same commit</td><td></td><td></td></tr>
+<tr><td>14 11 send-receipt running started</td><td></td><td></td></tr>
+<tr><td>15 7 order completing finish commits completed; child 11 is still live</td><td></td><td></td></tr>
+<tr><td>16 11 send-receipt terminal completed, "sent"</td><td></td><td></td></tr>
+<tr><td>17 7 order terminal the scheduler’s final commit; waitForTask(7) resolves</td><td></td><td></td></tr>
+<tr><td>Scenario A, research/capture/task-transitions.txt.</td><td></td><td></td></tr>
+<tr><td>aborted the task’s own abort handler compensated, as far as the handler could</td><td>任务自己的中止处理器做了补偿，在它能做到的范围内。</td><td></td></tr>
+<tr><td>orphaned none: no code could take the task “may remain uncleaned”</td><td>没有代码能接手该任务，「可能未经清理」。</td><td></td></tr>
+<tr><td>faulted a phase that threw or made no progress, or an abort handler that committed no outcome unknown; nothing compensated</td><td>某个阶段抛出或没有进展，或者中止处理器没有提交结果。</td><td></td></tr>
+<tr><td>From spec §5.4. failed is not here: it is an outcome the task chose, like completed.</td><td></td><td></td></tr>
+</table>

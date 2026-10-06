@@ -9,19 +9,25 @@
 
 文档构建在 Chord（`@earendil-works/chord`）之上，这是一个用于复制式 JSON 状态的小库。要观察一个文档，你需要它的两个概念（基线与增量（p. 56））：Revision（修订）—— 一个不可变的 JSON 值，每次改变文档的提交都会产生一个新的。Operations（操作）—— 从一个修订到下一个修订的确切编辑，写成小元组；另一处的副本应用它们即可保持同步。观察者只读。Pi Durable 是唯一的写入者，被观察的状态没有任何能修改它的方法 spec §9.1。每个操作都是一个元组：一个单字母名称，然后是通往该值的键与数组下标构成的路径。
 
-<aside class="note">`["r", value]` 替换整个值；`["s", path, value]` 设置一个属性或数组元素；`["d", path]` 删除一个属性或数组元素；`["a", path, text]` 追加到字符串；`["t", path, count]` 从字符串前端移除 count 个 UTF-16 码元；`["p", path, index, remove, items]` 拼接数组</aside>
-```json
-["m", path, permutation] Reorder an array: new[i] = old[permutation[i]]
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>["r", value] Replace the whole value</td><td></td><td></td></tr>
+<tr><td>["s", path, value] Set a property or array element</td><td></td><td></td></tr>
+<tr><td>["d", path] Delete a property or array element</td><td></td><td></td></tr>
+<tr><td>["a", path, text] Append to a string</td><td></td><td></td></tr>
+<tr><td>["t", path, count] Remove count UTF-16 code units from a string’s front</td><td></td><td></td></tr>
+<tr><td>["p", path, index, remove, items] Splice an array</td><td></td><td></td></tr>
+<tr><td>["m", path, permutation] Reorder an array: new[i] = old[permutation[i]]</td><td></td><td></td></tr>
+<tr><td>From research/pi/packages/chord/src/delta/README.md. The same change can be written with different tuples, and a large edit may arrive as one s or r. Only the</td><td></td><td></td></tr>
+<tr><td>resulting value is guaranteed.</td><td></td><td></td></tr>
+</table>
 
-<aside class="note">摘自 `research/pi/packages/chord/src/delta/README.md`。同一个变更可以用不同的元组写出，一次大编辑也可能以单个 `s` 或 `r` 到达。只有结果值是有保证的。</aside>
 ### 观察一个文档的两种方式
 
 <aside class="note">`watchDoc()`：一个供你订阅的只读状态。它以当前值开始，并在每次提交之后调用你的监听器。用它驱动界面。帧流：每次提交一帧，包含新值、它的操作以及该提交的 Context；你的回调每次处理一帧。用它按序转发变更（观察契约（p. 129））。</aside>
 两者接受的参数与 `snapshot()` 相同，并且有两条规则同时成立。其一是观察从不创建：文档不存在时返回 `undefined`，只有 `tx.doc()` 会创建（访问与创建（p. 53））。其二是观察者只跟随一个化身，也就是它当初附着的那份存储副本；如果该文档被退役后重新创建，观察者不会跟过去。
 
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.1.png" alt="FROM COMMIT TO CHORD STATE
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.1.png" alt="FROM COMMIT TO CHORD STATE SEQUENCE" loading="lazy">
 
 *文档状态只有在存储持有某次提交之后才会看到它；你的监听器在 `commit()` 兑现之前于一个微任务中运行。第 1 步运行在 Session 的变更线上，因此从取到首个值到完成附着之间不可能有提交插进来；`subscribe()` 随后立刻把该值作为 `hydrate` 0 投递。*
 
@@ -31,8 +37,7 @@ S E Q U E N C E" loading="lazy">
 
 示例 4 创建一个文本为 "first" 的会话文档，附上一个状态并提交一次变更。
 
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.2.png" alt="ONE DOCUMENT’S REVISIONS
-A N A T O M Y" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.2.png" alt="ONE DOCUMENT ’ S REVISIONS ANATOMY" loading="lazy">
 
 *每次提交都产生一个新的不可变修订，以及产生它的确切操作。一个以 Session 为作用域的 `app.board`，通过*
 
@@ -43,15 +48,9 @@ console.log("Chord notes:", delivery.kind, delivery.sequence, value);
 }); await session.commit(async (tx) => {
 (await tx.doc(Notes, chat.id)).text = "published through Chord";
 }, context);
-$ node --conditions=source --experimental-strip-types test/examples/04-chord-state.ts
+$ node --conditions=source --experimental-strip-types test/examples/04-chord-state.ts Chord notes: hydrate 0 { text: 'first' } Chord notes: update 1 { text: 'published through Chord' } The Notes definition, the creating commit, the undefined check and the final stopNotes() and dispose() are elided. subscribe delivers the current value at once as hydrate, then one update per commit. Output from run 04.
 ```
 
-```
-Chord notes: hydrate 0 { text: 'first' }
-Chord notes: update 1 { text: 'published through Chord' }
-```
-
-<aside class="note">`Notes` 的定义、创建它的那次提交、`undefined` 检查以及末尾的 `stopNotes()` 和 `dispose()` 均已省略。`subscribe` 立刻把当前值作为 `hydrate` 投递，然后每次提交一次 `update`。输出来自 run 04。</aside>
 `delivery.sequence` 从 0 开始计数这个状态自己的投递次数。它不是提交编号，也没有任何东西存储它 spec §9.1。同一文档上的两个状态彼此独立。释放其中一个只停掉那个观察者，绝不会停掉文档。
 
 ### 修订不可变且共享
@@ -103,8 +102,7 @@ Sources: spec §1, §2.2, §9.1, §12; src/session/observation.ts; src/session/s
 
 Harness 为每个会话维护一个共享视图。它在首次使用时从存储构建，并在最后一个观察者离开时被丢弃 `src/harness/view.ts`。每次触及该会话的提交都产生一帧：一批把旧视图变成新视图的操作。
 
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.3.png" alt="FROM A COMMIT TO A VIEW FRAME
-F L O W" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.3.png" alt="FROM A COMMIT TO A VIEW FRAME FLOW" loading="lazy">
 
 *一个视图帧就是该提交的文档变更，随后是它的新条目，全部改写成通往同一个值的路径。取自 `src/harness/view.ts` 中的 `advance()`。第一行是 `research/capture/watch-ops.txt` 的第 3 帧；第 1 帧展示了顺序：先设置 `pi.live`，再对条目 7 做拼接。*
 
@@ -134,12 +132,20 @@ A view frame is the commit’s document changes, then its new entries, rewritten
 4. 这个 context 是该提交的 context，但不含其中止信号；你的监听器启动的工作由你自己负责中止。5. `stop()` 可以重复调用，它丢弃待投递的帧，并返回该观察流是如何结束。已经在运行的回调不会
 
 - 被中止。
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.4.png" alt="A SLOW CONSUMER’S BUFFER
-S T A T E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.4.png" alt="A SLOW CONSUMER ’ S BUFFER STATE" loading="lazy">
 
 *一个观察流保留 100 个未投递的帧；下一次提交会用最新值把它们全部替换掉。正在投递的那个帧永远不会被替换。规则出自 spec §9.2 和 `src/session/observation.ts`。一个测试在 `start()` 之前提交 101 个条目，收到的只有一帧 `[["r", view]]`，其中包含全部 101 个条目。*
 
-<aside class="note">`stopped` —— 调用了 `stop()`；`cancelled` —— 附着时传入的 Context 被中止；`session_closed` —— Session 开始关闭；`retired` —— 已退役文档的 null 帧被投递；`listener_error` —— 你的监听器抛错，带有 `error`，且只有该观察流结束 `src/types.ts`（`WatchEnd`）。以最先出现的 reason 为准。在任务或工具内部打开的观察流，也会在那次调用结束时停止（`src/harness/scheduler.ts`）。</aside>
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>stopped stop() was called</td><td>—— 调用了</td><td></td></tr>
+<tr><td>cancelled The Context passed when attaching was aborted</td><td>—— 附着时传入的 Context 被中止；</td><td></td></tr>
+<tr><td>session_closed The Session began closing</td><td>—— Session 开始关闭；</td><td></td></tr>
+<tr><td>retired The null frame of a retired document was delivered</td><td>—— 已退役文档的 null 帧被投递；</td><td></td></tr>
+<tr><td>listener_error Your listener threw; carries error, and only this watch ends</td><td>—— 你的监听器抛错，带有</td><td></td></tr>
+<tr><td>src/types.ts (WatchEnd). The first reason wins. A watch opened inside a task or a tool also stops when that invocation ends (src/harness/scheduler.ts).</td><td>（</td><td></td></tr>
+</table>
+
 ### 缓慢与迟到的消费者
 
 观察流从不让提交等待。如果你的监听器落后超过 100 帧，等待中的帧会被丢弃，换成一帧持有最新值的帧。
@@ -152,14 +158,14 @@ S T A T E" loading="lazy">
 <aside class="note">$ node --conditions=source --experimental-strip-types test/examples/21-late-join.ts</aside>
 ```
 view entries: [ 'pi.user', 'pi.system', 'pi.assistant' ]
-view tool slot: running "1\n2\n3\n4\n5\n"
-view output now: "1\n2\n3\n4\n5\n"
-snapshot tools: [ 'count running' ]
-view output now: "1\n2\n3\n4\n5\n6\n"
-event output now: "1\n2\n3\n4\n5\n6\n"
 ```
 
-<aside class="note">摘自 `research/runs/21-late-join.txt` 的开头几行。视图里已经包含了已提交的输出；8.3（p. 133）中的事件流也从同一状态开始。</aside>
+<aside class="note">view tool slot: running "1\n2\n3\n4\n5\n" view output now: "1\n2\n3\n4\n5\n"</aside>
+```
+snapshot tools: [ 'count running' ]
+view output now: "1\n2\n3\n4\n5\n6\n" event output now: "1\n2\n3\n4\n5\n6\n" First lines of research/runs/21-late-join.txt. The view already holds the committed output; the event stream of 8.3 (p. 133) starts from the same state.
+```
+
 迟到的客户端看到五行，是因为每一行都已被提交。工具进度的默认最小提交间隔是 100 ms（`settings.progress`）。崩溃会丢失自上次成功提交以来的进度，而这个间隔可能更长（运行控制与实时文档（p. 88））。
 
 <aside class="note">同一进程、只需要最新值：`viewState()`。远程副本：`watch()` 加 `applyImmutable()`。在流的任何位置都要把 `["r", value]` 当作整体替换。不要把观察流当审计日志用——请用条目、文档或 `Submission.wait()`。重连时再次附着并重发 `watch.value`。</aside>
@@ -183,21 +189,14 @@ research/capture/watch-ops.txt; research/capture/NOTES.md (note 14)
 
 每次提交最多产生一批事件。下表跟随捕获中的一次轮次：模型思考、调用 `count {n: 3}`，然后作答。一次生成就是一次模型调用，以任务的方式运行。
 
-<aside class="note">1 用户消息已提交；运行开始 `message_start`、`message_end`、`submission`、`run_start`、`turn_start`；2 系统提示词条目 `message_start`、`message_end`；3 该生成的第 1 次尝试开始：无；4 第一个流式分片 `message_start`；5–7 思考与文本逐块流入，每个都发 `message_update`；8 助手消息已提交；工具调用入队 `message_end`、`usage_changed`；9 该工具开始运行 `tool_execution_start`；10–13 工具输出与细节，每个都发 `tool_execution_update`；14 工具完成；其结果条目已提交 `tool_execution_end`、`message_start`、`message_end`；15 下一次生成取代上一次 `turn_end`、`turn_start`；16 第 1 次尝试开始：无；17–19 回答流入 `message_start`、`message_update` ×2；20 回答已提交；运行结束 `message_end`、`turn_end`、`run_end`、`submission`、`usage_changed`。`research/capture/watch-ops.txt`（20 帧）与 `agent-events.txt`（18 批），来自 `test/capture/view-ops.ts` 的一次运行。</aside>
 第 3 次和第 16 次提交不产生任何批次：开始一次尝试并没有改变任何事件所描述的东西。工具的开始要等到第 9 次提交，也就是调用真正运行时才发出。在第 15 次提交里，一次生成结束、另一次开始，因此 `turn_end` 和 `turn_start` 共处一批。批次内部的顺序是固定的，且与编码智能体一致：先是进展，然后是新条目，然后是结束，开头放在最后——所以一个工具的结束紧挨在它的结果消息之前，而一个已完成的运行会在下一个开始之前结束。
 
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.5.png" alt="THE ORDER OF ONE BATCH
-S T R U C T U R E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.5.png" alt="THE ORDER OF ONE BATCH STRUCTURE" loading="lazy">
 
 *一批之内，先是进展，然后是条目，然后是结束，开头放在最后。右图：测试所期望的那一批，来自一次提交——它结束了一个运行，并把排队的后续任务作为下一个运行启动（`test/harness-events.test.ts`）。*
 
-```
-```
-
-<aside class="note">一批之内，先是进展，然后是条目，然后是结束，开头放在最后。右图：测试所期望的那一批，来自一次提交——它结束了一个运行，并把排队的后续任务作为下一个运行启动（`test/harness-events.test.ts`）。</aside>
 ### 每个事件的含义
 
-<aside class="note">`run_start` / `run_end` —— 开始或结束一次运行；加入正在运行之中运行的引导输入不算新运行。`turn_start` / `turn_end` —— 让运行进入新的一次生成 / 提交某次生成的结果。`message_start` / `message_end` —— 提交某次尝试的第一个流式分片，或提交一条本来没有分片的消息条目 / 追加一条带模型消息的条目。`message_update` —— 改动流式分片，携带 usage 和 changes。`entry_appended` —— 追加一条不含模型消息的条目，例如一条普通的 `pi.reset`。`tool_execution_*` —— 开始一次工具调用 / 改动它的输出、细节或诊断信息 / 结束它，或随其运行一起丢弃它。`submission` —— 写入本会话的一条提交项记录。`inbox_update`、`agent_changed`、`usage_changed` —— 改动对应文档。`auto_retry_start` / `_end`、`deferred_poll` —— 开始或结束一次重试等待；调度或移动一个延迟轮询。`task_failed` —— 以 `faulted` 或 `orphaned` 了结会话中的某个任务。`compaction_start` / `_end` —— 开始或完成一次压缩。spec §9.4；`src/harness/events.ts`。</aside>
 每个 `message_start` 都会得到一个 `message_end`，即使运行在流式中途被中止。分片只有在有了内容之后才会被提交，而每一条清除分片的内置路径也会追加那条已完成的条目。跨崩溃也是同样的：重新打开时，generation 会把残留的分片变成一条已中止的 `pi.assistant` 条目（生成（p. 91）），流则以此结束那条消息 spec §9.4；`test/harness-events.test.ts`。
 
 ### 增量，而非值
@@ -262,37 +261,34 @@ Sources: spec §9.4; README §Agent Events (Experimental); src/harness/events.ts
 "abortRequested": false,
 "state": { "status": "waiting", "phase": "done", "on": [7], "policy": "allSettled" }, "conversations": []
 }
-No owner key: a conversation owns this task. A node owned by another task carries "owner": <TaskId>. abortRequested turns true in the commit that aborts the task.
-pending phase Committed and not yet picked up; also every task that was running when the process died, until it runs again running phase Picked up by the scheduler in this process waiting phase, on, policy The stored wait, exactly as committed completing outcome Finished, holding its outcome until its owned work ends src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63).
 ```
+
+<aside class="note">No owner key: a conversation owns this task. A node owned by another task carries "owner": <TaskId>. abortRequested turns true in the commit that aborts the task.</aside>
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>pending phase Committed and not yet picked up; also every task that was running when the process died, until it runs again</td><td></td><td></td></tr>
+<tr><td>running phase Picked up by the scheduler in this process</td><td></td><td></td></tr>
+<tr><td>waiting phase, on, policy The stored wait, exactly as committed</td><td>的任务。</td><td></td></tr>
+<tr><td>completing outcome Finished, holding its outcome until its owned work ends</td><td></td><td></td></tr>
+<tr><td>src/harness/task-graph.ts; spec §9.5. Statuses are defined in tasks as state machines (p. 63).</td><td></td><td></td></tr>
+</table>
 
 ### 任务图如何变化
 
 一个节点在创建其任务的那次提交中出现，在结束它的那次提交中消失。不改变任何节点的提交（例如写一条 memo）不产生任何帧。任务图展示的是已提交的事实，所以要带着三条规则来读它；紧随其后的图展示了第一条规则在一个真实帧中的样子。`on` 是存储的——它列出等待所命名的每个任务，包括已完成的，`inspect()` 告诉你哪些还活着。`running` 指的是本进程——重新打开 Harness 会把仍然存活的 running 任务变回 `pending`（调度器（p. 73）），它们会显示为 `pending` 直到再次被领走。只列存活任务——一旦某个后台子智能体的任务结束，就没有节点再列出它的会话；要把后续任务放到那里，请用该会话的 owner，会话视图也携带它（子智能体（p. 121））。
 
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.6.png" alt="TWO FRAMES OF THE TASK GRAPH
-T R E E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.6.png" alt="TWO FRAMES OF THE TASK GRAPH TREE" loading="lazy">
 
 *任务图是实时的所有权树；一个已完成的任务在结束它的那次提交中离开这棵树。`research/capture/task-graph.txt` 中场景 A 的第 6 帧和第 7 帧：一个 order 以 `failFast` 等待三个 pack，第一个完成的 pack 被删除，而该 order 存储的 `on` 仍然列着它。会话方框由 `conversationId` 画出；任务图只持有任务节点。*
 
-```
-The task graph is the live ownership tree; a finished task leaves it in the commit that ends it. Frames 6 and 7 of scenario A in research/capture/task-graph.txt: an order waits failFast on three packs, and the first pack to finish is deleted while the order’s stored on still names it. The conversation box is drawn from conversationId; the graph holds task nodes only.
-```
-
+<aside class="note">The task graph is the live ownership tree; a finished task leaves it in the commit that ends it. Frames 6 and 7 of scenario A in research/capture/task-graph.txt: an order waits failFast on three packs, and the first pack to finish is deleted while the order’s stored on still names it. The conversation box is drawn from conversationId; the graph holds task nodes only.</aside>
 `taskGraph()` 返回一个 Chord 状态；`watchTaskGraph()` 返回一个遵循 8.2（p. 129）规则的观察流。两者都不会启动调度，因此查看者可以附着到一个已暂停的 Harness 上而不开始任何工作 spec §9.5。
 
 ### `inspect()`：调度器会做什么
 
 `harness.inspect(context)` 不写任何东西，也不运行任何任务代码。它返回调度状态（在第一次 `resume()` 之前是 `paused`、`running` 或 `closing`）、每个存活任务的完整记录与一个推导出的状态，以及排队中和已放置的提交项。
 
-<aside class="note">`running` —— 它的代码正在本进程中运行。`completing` —— 它的结果被持有，直到它所拥有的工作结束。`waiting`、`on` —— 它仍在等待的存活任务。</aside>
-```
-blocked, reason No installed definition can run it: missing_task, task_too_old, or migration_failed (with error)
-ready, migrates The next scheduling pass picks it up; migrates when a newer definition will migrate it first src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration.
-```
-
-<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.7.png" alt="ONE SET OF TASKS, TWO READINGS
-C O M P A R I S O N" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/08-watching/fig-8.7.png" alt="ONE SET OF TASKS , TWO READINGS COMPARISON" loading="lazy">
 
 *任务图展示已提交的内容；`inspect()` 补上在这份注册表下调度器会做什么。一次提交创建四个任务，在闸门运行期间读取。`app.legacy` 由版本 2 的定义存储，而只安装了版本 1；`app.retired` 未安装。摘自 `research/capture/extra-p8/inspect-vs-graph.txt`。*
 
@@ -317,7 +313,39 @@ C O M P A R I S O N" loading="lazy">
 - 等待或工具输出（实时文档（p. 88））。
 排队的提交项要等它前面的运行；已放置的提交项属于某个尚未作答的运行（6.1（p. 84））。已完成的任务不在 `inspect()` 里，用 `getTask()` 读取它们。
 
-```
-Sources: spec §2.2 (inspect()), §5.4, §9.5; README §Task Graph; src/harness/task-graph.ts; src/harness/harness.ts (inspect, taskGraph,
-watchTaskGraph); src/harness/types.ts (TaskInspection, HarnessInspection); src/harness/scheduler.ts; test/harness-task-graph.test.ts; test/harness-inspect.test.ts; research/capture/task-graph.txt; research/capture/NOTES.md (note 9); research/capture/extra-p8/inspect- vs-graph.txt (script test/capture-p8-observe.ts)
-```
+<aside class="note">Sources: spec §2.2 (inspect()), §5.4, §9.5; README §Task Graph; src/harness/task-graph.ts; src/harness/harness.ts (inspect, taskGraph, watchTaskGraph); src/harness/types.ts (TaskInspection, HarnessInspection); src/harness/scheduler.ts; test/harness-task-graph.test.ts; test/harness-inspect.test.ts; research/capture/task-graph.txt; research/capture/NOTES.md (note 9); research/capture/extra-p8/inspect- vs-graph.txt (script test/capture-p8-observe.ts)</aside>
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>1 user message committed; the run starts message_start, message_end, submission, run_start, turn_start</td><td></td><td></td></tr>
+<tr><td>2 system prompt entry message_start, message_end</td><td></td><td></td></tr>
+<tr><td>3 attempt 1 of the generation begins none</td><td></td><td></td></tr>
+<tr><td>4 first streamed partial message_start</td><td></td><td></td></tr>
+<tr><td>5–7 thinking and text stream in message_update each</td><td></td><td></td></tr>
+<tr><td>8 assistant message committed; tool call queued message_end, usage_changed</td><td></td><td></td></tr>
+<tr><td>9 the tool starts running tool_execution_start</td><td></td><td></td></tr>
+<tr><td>10–13 tool output and details tool_execution_update each</td><td></td><td></td></tr>
+<tr><td>14 tool done; its result entry committed tool_execution_end, message_start, message_end</td><td></td><td></td></tr>
+<tr><td>15 the next generation replaces the first turn_end, turn_start</td><td></td><td></td></tr>
+<tr><td>16 attempt 1 begins none</td><td></td><td></td></tr>
+<tr><td>17–19 the answer streams in message_start, message_update ×2</td><td></td><td></td></tr>
+<tr><td>20 answer committed; the run ends message_end, turn_end, run_end, submission, usage_changed</td><td></td><td></td></tr>
+<tr><td>research/capture/watch-ops.txt (20 frames) and agent-events.txt (18 batches), one run of test/capture/view-ops.ts.</td><td>（20 帧）与</td><td></td></tr>
+<tr><td>run_start / run_end starts or ends a run. Steering input that joins a running run is not a new run</td><td>/</td><td></td></tr>
+<tr><td>turn_start / turn_end moves the run to a new generation / commits a generation’s outcome</td><td>/</td><td></td></tr>
+<tr><td>message_start / message_end commits an attempt’s first streamed partial, or a message entry that had none / appends an entry with model messages</td><td>/</td><td></td></tr>
+<tr><td>message_update changes the streamed partial; carries usage and changes</td><td>—— 改动流式分片，携带 usage 和 changes。</td><td></td></tr>
+<tr><td>entry_appended appends an entry with no model messages, such as a plain pi.reset</td><td>—— 追加一条不含模型消息的条目，例如一条普通的</td><td></td></tr>
+<tr><td>tool_execution_* starts a tool call / changes its output, details or diagnostics / finishes it, or drops it with its run</td><td>—— 开始一次工具调用 / 改动它的输出、细节或诊断信息 / 结束它，或随其运行一起丢弃它。</td><td></td></tr>
+<tr><td>submission writes a submission record of this conversation</td><td>—— 写入本会话的一条提交项记录。</td><td></td></tr>
+<tr><td>inbox_update, agent_changed, usage_changed</td><td></td><td></td></tr>
+<tr><td>auto_retry_start / _end, deferred_poll starts or ends a retry wait; schedules or moves a deferred poll</td><td>/</td><td></td></tr>
+<tr><td>task_failed settles a task of the conversation faulted or orphaned</td><td>—— 以</td><td></td></tr>
+<tr><td>compaction_start / _end starts or finishes a compaction</td><td>/ <code>_end</code> —— 开始或完成一次压缩。spec §9.4；</td><td></td></tr>
+<tr><td>spec §9.4; src/harness/events.ts.</td><td></td><td></td></tr>
+<tr><td>running Its code is running in this process</td><td>—— 它的代码正在本进程中运行。</td><td></td></tr>
+<tr><td>completing Its outcome is held until its owned work ends</td><td>—— 它的结果被持有，直到它所拥有的工作结束。</td><td></td></tr>
+<tr><td>waiting, on The live tasks it still waits for</td><td></td><td></td></tr>
+<tr><td>blocked, reason No installed definition can run it: missing_task, task_too_old, or migration_failed (with error)</td><td></td><td></td></tr>
+<tr><td>ready, migrates The next scheduling pass picks it up; migrates when a newer definition will migrate it first</td><td></td><td></td></tr>
+<tr><td>src/harness/scheduler.ts. migration_failed appears only after the scheduler tried; inspection never runs a migration.</td><td></td><td></td></tr>
+</table>

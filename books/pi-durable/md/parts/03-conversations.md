@@ -1,5 +1,4 @@
-<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.1.png" alt="ANATOMY OF AN ENTRY
-A N A T O M Y" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.1.png" alt="ANATOMY OF AN ENTRY ANATOMY" loading="lazy">
 
 *一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。*
 
@@ -15,14 +14,25 @@ A N A T O M Y" loading="lazy">
 一个会话就是一份记录，而条目是其中「一条不可变的记录条目」（规范 §1）。每个条目由系统的三个不同部分读取，各自读自己的字段：模型读取 `model`：这条条目为下一次请求添加的消息。你的代码读取 `data`：模型永远看不到的 JSON。上下文构建读取 `head` 和 `edits`：模型的上下文从哪里开始，以及哪些较早的条目要隐藏或替换。已存储的内容不会被改写。
 
 <aside class="note">一个条目把模型看到的内容、应用看到的内容以及上下文从哪里开始分开存放。research/capture/context.txt 的第 20 条条目，由一次手动压缩写入；摘要文本在三个词之后被截断。</aside>
-<aside class="note">`id` 一个 `EntryId`，在整个 `Session` 内有序；`conversationId` 该条目所属的会话；`Session` `kind` 指明条目是什么的字符串；`writer` 是否为 `model`？面向模型的消息，用于展示或记账时不存在；`writer` 是否为 `data`？面向视图、扩展和你的代码的 JSON；`writer` 是否为 `head`？模型上下文从此刻起的第一个条目，`writer` 为 `"self"` 表示该条目自身；`edits`？仅在上下文里隐藏或替换较早的条目；`writer` 是否为 `byTaskId`？其提交追加了它的任务；`Session`　以上是 `EntryRecord` 的字段，改写自 src/types.ts 中的字段注释。</aside>
 条目在一次提交中写入，也就是一次原子保存：其中的内容要么一起存下，要么都不存。你永远不需要设置 `id`、`conversationId` 或 `byTaskId`。`tx.appendEntry()` 会填好它们，并把 `head: "self"` 换成新的 ID。因此 `byTaskId` 是记录哪个任务写了该条目的可靠依据。你从宿主用 `Conversation.commit()` 追加的条目没有这些字段。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>id an EntryId, ordered across the whole Session the Session</td><td>一个</td><td></td></tr>
+<tr><td>conversationId the conversation it belongs to the Session</td><td>该条目所属的会话；<code>Session</code></td><td></td></tr>
+<tr><td>kind a string naming what the entry is the writer</td><td>指明条目是什么的字符串；</td><td></td></tr>
+<tr><td>model? messages for the model; absent for display or bookkeeping the writer</td><td>？面向模型的消息，用于展示或记账时不存在；<code>writer</code> 是否为</td><td></td></tr>
+<tr><td>data? JSON for views, extensions and your code the writer</td><td>？面向视图、扩展和你的代码的 JSON；<code>writer</code> 是否为</td><td></td></tr>
+<tr><td>head? the first entry of the model’s context from now on the writer; "self" means this entry</td><td>？模型上下文从此刻起的第一个条目，<code>writer</code> 为 <code>"self"</code> 表示该条目自身；</td><td></td></tr>
+<tr><td>edits? hide or replace earlier entries, in context only the writer</td><td>？仅在上下文里隐藏或替换较早的条目；<code>writer</code> 是否为</td><td></td></tr>
+<tr><td>byTaskId? the task whose commit appended it the Session</td><td>？其提交追加了它的任务；<code>Session</code>　以上是</td><td></td></tr>
+<tr><td>The fields of EntryRecord, paraphrased from its field comments in src/types.ts.</td><td></td><td></td></tr>
+</table>
 
 ### 内置种类
 
 `Harness` 会写入六种种类。每一种都作为带类型的 Entry token 导出（src/entries.ts）。其中只有两种携带 `data`（规范 §8.1）。
 
-<aside class="note">`pi.user` 一条用户消息 —— 提交项；`pi.assistant` 一条助手消息，任意停止原因 —— 生成；`pi.system` 一条系统消息，作为一次变更 —— 生成，位于请求之前；`pi.tool-result` 一条工具结果消息 `{ diagnostics }` 工具任务；`pi.reset` 无内容，或作为用户消息的交接 —— `reset()`、某个工具的交接；`pi.compaction` 作为用户消息的摘要 `{ reason }` 压缩。来自规范 §8.1 和 src/entries.ts。对应的 token 是 `UserEntry`、`AssistantEntry`、`SystemEntry`、`ToolResultEntry`、`ResetEntry` 和 `CompactionEntry`。</aside>
 `pi.assistant` 记录每一次回复，包括失败：「回答、带着错误文本和用量的失败尝试，以及被转换的、停止原因为 `aborted` 的部分回复」（规范 §8.1）。记录不隐藏任何东西，所以花掉的每个 token 都仍然可见。上下文构建随后会把失败的那些排除在后续请求之外（上下文推导（第 40 页））。系统条目是变更，不是头部　一个 `pi.system` 条目并不保存整份提示词。它保存的是在记录的某个位置上对提示词和工具列表的一次变更。下面是某次被捕获运行的第一个：
 
 <aside class="note">条目 10，某会话的第一个 `pi.system`　research/capture/sqlite-rows.txt JSON</aside>
@@ -48,11 +58,10 @@ A N A T O M Y" loading="lazy">
 <aside class="note">一个带类型的应用条目　src/entries.ts · src/types.ts (Tx) TS</aside>
 ```ts
 const NoteEntry = defineEntry<{ text: string }>("app.note");
+// No `model`, so the model never sees it. await root.commit(
 ```
 
-<aside class="note">// 没有 `model`，所以模型永远看不到它。</aside>
-```ts
-await root.commit(
+```
 (tx) => tx.appendEntry(NoteEntry, root.id, { data: { text: "user pinned b.md" } }), context,
 );
 ```
@@ -85,25 +94,29 @@ Sources: spec §1, §2, §8.1, §12; src/types.ts (EntryRecord, EntryDraft, Tx.a
 
 规范把推导过程定义为九条有序规则（规范 §2.1）。右列指向下面的实例。
 
-<aside class="note">1 找到最新的、带 `head` 的条目。　#20　2 上下文从该 `head` 开始，若无则从头开始。　#10　3 从那里读到末尾的每一条条目。　#10–#20</aside>
-```
-4 Apply edits: the newest edit of an entry wins; omit hides it, replace swaps its messages. #19 replaces #11
-5 Put the head entry first, then the others in order. #20 first 6 Keep every system message where it was written. #10 kept 7 Move each call’s results directly after the assistant message that made the call, in call order. #16, #14 after #13 8 Add an error result for every call that has none; drop results with no call. call-c 9 Leave out entries with no model, and assistant messages that stopped as aborted, error or deferred. #12, #18 Paraphrased from spec §2.1.
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>1 Find the newest entry that has a head. #20</td><td></td><td></td></tr>
+<tr><td>2 Context starts at that head, or at the beginning if there is none. #10</td><td></td><td></td></tr>
+<tr><td>3 Read every entry from there to the end. #10–#20</td><td></td><td></td></tr>
+<tr><td>4 Apply edits: the newest edit of an entry wins; omit hides it, replace swaps its messages. #19 replaces #11</td><td></td><td></td></tr>
+<tr><td>5 Put the head entry first, then the others in order. #20 first</td><td></td><td></td></tr>
+<tr><td>6 Keep every system message where it was written. #10 kept</td><td></td><td></td></tr>
+<tr><td>7 Move each call’s results directly after the assistant message that made the call, in call order. #16, #14 after #13</td><td></td><td></td></tr>
+<tr><td>8 Add an error result for every call that has none; drop results with no call. call-c</td><td></td><td></td></tr>
+<tr><td>9 Leave out entries with no model, and assistant messages that stopped as aborted, error or deferred. #12, #18</td><td></td><td></td></tr>
+<tr><td>Paraphrased from spec §2.1.</td><td></td><td></td></tr>
+</table>
 
 ### 一个实例
 
 这份记录是逐条写入、再用 `context()` 读回来的。一个智能体被要求修复两个文件。一条回复被中止。两次读取乱序返回，中间夹着一条用户消息。第三次读取始终没完成。应用随后添加了一条备注，纠正了用户的措辞，并写入一份其 `head` 跳过了开头那段对话的摘要。
 
-<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.2.png" alt="ONE TRANSCRIPT, TWO READINGS
-F L O W" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.2.png" alt="ONE TRANSCRIPT , TWO READINGS FLOW" loading="lazy">
 
 *上下文推导把一份已存储的记录读成九条请求消息。条目 #8–#20 和推导出的消息取自 research/capture/extra-p23/context-derivation.txt。画阴影线的条目位于 `head` 范围之前；虚线条目在范围内，但不贡献任何消息。画得更深的第 9 条消息没有对应条目：因为 call-c 没有存储结果，推导过程合成了它。*
 
-```
-Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result.
-```
-
+<aside class="note">Context derivation reads a stored transcript as nine request messages. Entries #8–#20 and the derived messages are from research/capture/extra-p23/context-derivation.txt. Hatched entries lie before the head’s range; dashed ones are in the range but contribute no message. Message 9, drawn deeper, has no entry: derivation synthesizes it because call-c has no stored result.</aside>
 范围（规则 1–3）。最新的带 `head` 的条目是摘要 #20，而它的 `head` 是 #10。所以上下文覆盖 #10 到 #20。条目 #8 和 #9 仍然存储、仍然可读；只是不会被发送。编辑（规则 4）。#19 替换 #11。消息 3 是纠正后的文本「Fix the typos in a.md and b.md」，而不是原文。只有落在范围内的 `edit` 才算数。
 
 顺序（规则 5 和 6）。摘要 #20 成为消息 1。系统条目 #10 留在原处，作为消息 2。被排除的（规则 9）。被中止的回复 #12 和备注 #18 什么都不添加。#19 也不添加，它只做编辑。工具结果（规则 7 和 8）。#13 先调用 call-a，再调用 call-b。它们的结果 #16 和 #14 向前移动，紧跟在 #13 之后，按调用顺序，并排在用户消息 #15 之前。最后一条助手消息 #17 调用了 call-c 却没有任何回应，于是为它补出一个结果：
@@ -115,6 +128,9 @@ Context derivation reads a stored transcript as nine request messages. Entries #
 "toolCallId": "call-c",
 "toolName": "read", "content": [{ "type": "text",
 "text": "Tool result unavailable: history ends before this call completed." }],
+```
+
+```
 "isError": true,
 "details": { "reason": "missing_result" }, "timestamp": 1791300010000
 }
@@ -139,13 +155,16 @@ Sources: spec §2.1, §2.2 (ContextView), §5.4, §8.1; src/harness/context.ts; 
 
 ### 获得会话的四种方式
 
-<aside class="note">`harness.root(context, options)`　会话 1，首次调用时创建；之后的调用不写入任何东西</aside>
-```
-harness.createConversation(options, context) a new, empty conversation; ownership is required
-conversation.fork(at, options, context) a branch that shares history up to entry at tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init.
-```
-
 创建是一次提交。它会写入该会话、它的五份内置文档（内置文档（第 60 页））、任何 agent 设置，以及你的 `init(tx, id)` 写入的内容。不会出现创建了一半的状态（规范 §2.2）。创建会话和发送它的第一条消息是两个独立的调用。如果你的进程可能在两者之间崩溃，就在 `init` 里写一个键以便再次找到该会话，然后用带请求 ID 的提交项提交，这样重试不会被发送两次（规范 §2.2）。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>harness.root(context, options) conversation 1, created on first call; later calls write nothing</td><td></td><td></td></tr>
+<tr><td>harness.createConversation(options, context) a new, empty conversation; ownership is required</td><td>会话 1，首次调用时创建；之后的调用不写入任何东西</td><td></td></tr>
+<tr><td>conversation.fork(at, options, context) a branch that shares history up to entry at</td><td></td><td></td></tr>
+<tr><td>tx.createConversation(), tx.forkConversation() the same, inside any commit, such as a tool’s</td><td></td><td></td></tr>
+<tr><td>From spec §2.2 and src/harness/harness.ts. The options are ownership, agent and init.</td><td></td><td></td></tr>
+</table>
 
 ### 分叉
 
@@ -162,27 +181,27 @@ grand.fork(#9) -> Entry 9 is not visible from conversation 17 From research/capt
 
 `head` 也会跨分叉传递。在压缩之后分出的分叉，其上下文从父会话的摘要开始（research/capture/context.txt，第 6 阶段）。在工具调用与其结果之间分出的分叉，其上下文中会得到一个错误结果（上下文推导（第 40 页））。
 
-<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.3.png" alt="FORKS, CAPS AND AN OWNED CONVERSATION
-T R E E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.3.png" alt="FORKS , CAPS AND AN OWNED CONVERSATION TREE" loading="lazy">
 
 *分叉先看到自己的条目，然后是每一层祖先直到 `parent.at` cap 为止的条目。会话 32 没有父会话；住在会话 1 中的任务 31 拥有它。会话、条目与可见性取自 research/capture/extra-p23/forks.txt。*
 
 分叉继承什么
 
-<aside class="note">共享到 E 为止的条目，绝不复制</aside>
-```
-fork: "asOf" documents a copy of the parent’s value at E
-fork: "current" documents a copy of the parent’s value now
-fork: "initial" documents nothing; created fresh on first use
-pi.agent the parent’s agent settings as of E
-```
-
-```
-pi.provider a new provider session ID, never the parent’s
-```
-
-<aside class="note">live state、inbox、usage 为空；任务和任务文档绝不复制；`Session` 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。</aside>
 这次捕获展示了 `asOf` 规则。根会话的 agent 指令在写入 #8 时是 "v1: be brief"，后来变成了 "v2: be thorough"。在 #8 处分出的分叉以 v1 开头，并且拥有自己的供应商 session ID（research/capture/extra-p23/forks.txt）。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>entries shared up to E, never copied</td><td></td><td></td></tr>
+<tr><td>fork: "asOf" documents a copy of the parent’s value at E</td><td></td><td></td></tr>
+<tr><td>fork: "current" documents a copy of the parent’s value now</td><td></td><td></td></tr>
+<tr><td>fork: "initial" documents nothing; created fresh on first use</td><td></td><td></td></tr>
+<tr><td>pi.agent the parent’s agent settings as of E</td><td></td><td></td></tr>
+<tr><td>pi.provider a new provider session ID, never the parent’s</td><td></td><td></td></tr>
+<tr><td>live state, inbox, usage empty</td><td></td><td></td></tr>
+<tr><td>tasks and task documents never copied</td><td></td><td></td></tr>
+<tr><td>Session documents shared, not copied</td><td>live state、inbox、usage 为空；任务和任务文档绝不复制；<code>Session</code> 文档共享，不复制　来自规范 §2.2、§3.7。文档分叉策略见定义文档（第 50 页）。</td><td></td></tr>
+<tr><td>From spec §2.2, §3.7. Document fork policies are in defining a document (p. 50).</td><td></td><td></td></tr>
+</table>
 
 ### 被拥有的会话
 
@@ -227,8 +246,7 @@ Sources: spec §2, §2.1, §2.2, §3.3, §3.7; src/harness/harness.ts (root, cre
 <aside class="note">for Ada. Continue from 5+5."</aside>
 `reset(undefined)` —— 该条目没有消息，所以上下文为空，直到下一次输入（research/capture/extra-p23/heads.txt）。重置和其他写入一样排队。如果会话空闲，它立刻落地；如果有运行正在进行，它会等到下一个边界，也就是模型步与工具步之间的安全点（提交项与收件箱（第 84 页））。在工具轮次中落地会结束该运行，并把它的输入按 reason `reset` 报告为未答复；在一次回答之后落地则不改变那次回答（规范 §6）。`reset()` 在提交项被提交后返回，而不是在条目落地时返回；要看到它落地，请观察该会话。下图跟踪一段被捕获的会话经过五个阶段：三个提问、一次压缩、一轮对话、一次重置，以及最后一轮带纠正的对话。
 
-<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.4.png" alt="THE ACTIVE RANGE MOVING WITH HEADS
-T I M E L I N E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/03-conversations/fig-3.4.png" alt="THE ACTIVE RANGE MOVING WITH HEADS TIMELINE" loading="lazy">
 
 *头指针把上下文的起点向前移动；每个条目都仍然保留。research/capture/context.txt 的第 1–5 阶段；`context().entries` 各行直接取自它。*
 
@@ -255,3 +273,15 @@ write with head=#11 (inside the range): status "done", entry 13 context entries 
 Sources: spec §2.1, §2.2 (reset, pi.provider), §6, §7.3, §7.4, §8.1, §12; src/types.ts (EntryRecord.head); src/harness/harness.ts (reset); src/harness/submissions.ts; src/harness/inbox.ts; src/harness/generation.ts; src/harness/types.ts (ToolControl);
 research/capture/context.txt; research/capture/extra-p23/heads.txt
 ```
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>pi.user one user message — submissions</td><td></td><td></td></tr>
+<tr><td>pi.assistant one assistant message, any stop reason — generation</td><td></td><td></td></tr>
+<tr><td>pi.system one system message, as a change — generation, before a request</td><td></td><td></td></tr>
+<tr><td>pi.tool-result one tool result message { diagnostics } tool tasks</td><td></td><td></td></tr>
+<tr><td>pi.reset none, or the handoff as a user message — reset(), a tool’s handoff</td><td></td><td></td></tr>
+<tr><td>pi.compaction the summary as a user message { reason } compaction</td><td>一条用户消息 —— 提交项；<code>pi.assistant</code> 一条助手消息，任意停止原因 —— 生成；<code>pi.system</code> 一条系统消息，作为一次变更 —— 生成，位于请求之前；<code>pi.tool-result</code> 一条工具结果消息 <code>{ diagnostics }</code> 工具任务；<code>pi.reset</code> 无内容，或作为用户消息的交接 ——</td><td></td></tr>
+<tr><td>From spec §8.1 and src/entries.ts. The tokens are UserEntry, AssistantEntry, SystemEntry, ToolResultEntry, ResetEntry and</td><td></td><td></td></tr>
+<tr><td>CompactionEntry.</td><td>。</td><td></td></tr>
+</table>

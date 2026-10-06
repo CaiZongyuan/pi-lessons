@@ -126,11 +126,14 @@ def merge_blocks(pages):
                     nodes[-1]["_last_y"] = y
                     continue
                 flush()
-                nodes.append({"type": kind, "text": txt, "page": pno, "_last_y": y})
+                # `_y` is the first line's position; the reference appendix's captions sit
+                # beside their row, and column detection needs to find them again.
+                nodes.append({"type": kind, "text": txt, "page": pno,
+                              "_last_y": y, "_y": y})
                 continue
             if role == "code":
                 flush()
-                nodes.append({"type": "code", "lines": [txt], "page": pno})
+                nodes.append({"type": "code", "lines": [txt], "page": pno, "_y": y})
                 continue
 
             # body-ish: list item if indented
@@ -203,6 +206,85 @@ def split_caption_lines(nodes):
                                  "page": n.get("page")})
 
 
+def is_table_header(text: str, size: float) -> bool:
+    """A reference table's header row: small, upper case, and *not* letter-spaced.
+
+    The source sets these as `COMPONENT FILE OWNS` — words separated by single spaces. The
+    running head on every page is also upper case at a similar size but is tracked
+    (`P I D U R A B L E T E C H N I C A L M A N U A L`), so the two are told apart by the
+    gap: a header's longest run between spaces is a real word, a tracked line's is one
+    letter. Testing `text.isupper()` alone matches both, which is how a first attempt ended
+    up treating the page furniture as a table and swallowing every paragraph with it.
+    """
+    if size >= 7.0 or len(text) < 8 or not text.isupper():
+        return False
+    words = text.split()
+    return len(words) > 1 and max(len(w) for w in words) > 1
+
+
+def detect_column_tables(pages):
+    """Rebuild the reference appendix's tables from column-positioned blocks.
+
+    Appendix R is a run of reference tables: a header row, then one row per entry. The
+    source sets most of a row as a single block — signature, description and section pointer
+    run together at x≈58 — and only splits a row across blocks when the description is long
+    enough to reach the middle column. The extractor emits each block separately, so without
+    this the signature arrives classed as `code`, the pointer as `small`, and the renderer
+    wraps prose in a code fence.
+
+    A table runs from its header to the next heading or paragraph, which is what keeps
+    ordinary body text out: those are set at 9.3 and above, the rows at 7.3–7.4.
+    """
+    right_edge = 500.0    # the section pointer is hard against the right margin
+    rows = []
+    for page in pages:
+        # content.json blocks carry `role`, not the PyMuPDF `type` flag
+        blocks = [b for b in page.get("blocks", []) if b.get("role") != "image"]
+        blocks = [b for b in blocks if 55 < b["bbox"][1] < 735]   # drop running heads
+        if not blocks:
+            continue
+
+        buckets: dict[int, list] = {}
+        for b in blocks:
+            buckets.setdefault(round(b["bbox"][1] / 3), []).append(b)
+
+        raw = []
+        in_table = False
+        for key in sorted(buckets):
+            group = sorted(buckets[key], key=lambda b: b["bbox"][0])
+            cells = [clean(" ".join(b.get("text", "").split())).strip() for b in group]
+            xs = [b["bbox"][0] for b in group]
+            size = max(b.get("size", 0) for b in group)
+            y = group[0]["bbox"][1]
+            text = " ".join(c for c in cells if c)
+            if not text:
+                continue
+
+            if is_table_header(text, size):
+                in_table = True
+                continue
+            if size >= 9.0:          # a heading or a paragraph ends the table
+                in_table = False
+                continue
+            if not in_table:
+                continue
+
+            # The section pointer is set in two pieces when it does not fit: `3.3` hard
+            # against the right margin, `(p. 43)` on the line below in the same column.
+            # Left alone the second piece becomes a row of its own, which reads as an
+            # entry with no signature.
+            cont = (xs[0] >= right_edge and text.startswith("(p.")
+                    and raw and raw[-1]["cells"][-1].strip())
+            if cont:
+                raw[-1]["cells"][-1] = f"{raw[-1]['cells'][-1]} {text}".strip()
+                continue
+
+            raw.append({"page": page["page"], "raw_y": y, "cells": cells, "size": size})
+
+        rows.extend(raw)
+    return rows
+
+
 def looks_like_prose(line: str) -> bool:
     s = line.strip()
     # A code listing that wrapped across a page boundary resumes mid-statement, so its
@@ -253,6 +335,67 @@ def is_code_fragment(text: str) -> bool:
     return s.count("{") != s.count("}") or s.count("(") != s.count(")")
 
 
+def apply_column_tables(nodes, rows):
+    """Swap the code/small pairs of a reference table for real rows.
+
+    A detected row covers the blocks it was built from, so the matching nodes are removed
+    and a `table-row` node takes their place, in reading order. Anything not covered is
+    left alone, so ordinary listings on the same page are unaffected.
+    """
+    if not rows:
+        return nodes, 0
+    claimed = set()
+    table_nodes = []
+    for row in rows:
+        table_nodes.append({
+            "type": "table-row",
+            "page": row["page"],
+            # kept so `rebuild.py` can find this node's translation again: the row is built
+            # from scratch, so no text key would match
+            "_y": row["raw_y"],
+            "cells": row["cells"],
+            "is_header": row["size"] < 7.0,
+        })
+        # Claim the nodes this row was built from. A node can span several rows — the extractor
+        # merges every line sharing an x into one block — so its `_y` is the *first* of the
+        # lines it absorbed and can sit well above the row carrying its text. Matching row
+        # by row misses those, and an unclaimed node surfaces as a stray caption under the
+        # table: `(p. 103) createSession (storage) a bare Session …` set as a note in the
+        # middle of the entries.
+        #
+        # So the claim is by containment: a `code`/`small` node belongs to a table when the
+        # table's own run of rows brackets it.
+        table_rows: dict[int, list[float]] = {}
+    for r in rows:
+        table_rows.setdefault(r["page"], []).append(r["raw_y"])
+    for ys in table_rows.values():
+        ys.sort()
+        for n in nodes:
+            if id(n) in claimed or n["type"] not in ("code", "small"):
+                continue
+            ny = n.get("_y")
+            if ny is None:
+                continue
+            ys = table_rows.get(n.get("page"))
+            if not ys:
+                continue
+            # the row band is [first row, last row + one line]; a node merged from above the
+            # first row still starts inside it, and one merged past the last still ends there
+            if ys[0] - 3 <= ny <= ys[-1] + 12:
+                claimed.add(id(n))
+
+    out = [n for n in nodes if id(n) not in claimed]
+    # Re-insert each row where the nodes it replaced were. Putting them all at the position
+    # of the first one collapses the whole appendix into a single table: the headings
+    # between the tables stay behind and every row ends up under the first heading.
+    for node in table_nodes:
+        anchor = next((i for i, n in enumerate(out)
+                       if n.get("page") == node["page"]
+                       and (n.get("_y") or 0) > node["_y"]), len(out))
+        out.insert(anchor, node)
+    return out, len(table_nodes)
+
+
 def normalize(src_dir: Path):
     data = load(src_dir / "content.json")
     nodes = merge_blocks(data["pages"])
@@ -282,7 +425,18 @@ def normalize(src_dir: Path):
     split_caption_lines(merged)
     reattach_code_fragments(merged)
 
-    merged = [{k: v for k, v in n.items() if not k.startswith("_")} for n in merged]
+    # The reference appendix is laid out as multi-column tables; without this the columns
+    # arrive as separate blocks and a signature line gets wrapped in a code fence.
+    rows = detect_column_tables(data["pages"])
+    merged, n_rows = apply_column_tables(merged, rows)
+    if n_rows:
+        print(f"column table rows: {n_rows}")
+
+    # `_y` survives: `rebuild.py` needs it to put a table row's translation back after the
+    # row has been rebuilt from the blocks at that position.
+    merged = [{k: v for k, v in n.items()
+               if not k.startswith("_") or k == "_y"}
+              for n in merged]
     out = src_dir / "ir.json"
     out.write_text(json.dumps({"nodes": merged}, ensure_ascii=False, indent=1), encoding="utf-8")
     from collections import Counter

@@ -4,20 +4,22 @@
    "type": "part-title",
    "text": "P A R T 2 Sessions and Commits",
    "page": 24,
+   "_y": 83.8,
    "zh": "Session 与提交"
   },
   {
    "type": "h2",
    "text": "One mutation line, one atomic commit at a time, and nothing published until storage says it is stored.",
    "page": 24,
+   "_y": 154.8,
    "zh": "一次只走一条变更线、一次原子提交，在存储确认写入之前不发布任何东西。"
   },
   {
    "type": "figure",
    "number": "2.1",
    "file": "figures/fig-2.1.png",
-   "title": "THE RECORD FAMILY\nS T R U C T U R E",
-   "caption": "Five record types share one ID space, and their references are typed IDs. Field names are from src/types.ts; the numbers in the card heads are the sections that cover each type in depth.",
+   "title": "THE RECORD FAMILY STRUCTURE",
+   "caption": "FiverecordtypesshareoneIDspace , andtheirreferencesaretypedIDs . Fieldnamesarefrom sr c / typ e s . ts ; thenumbersinthecardheadsarethe sectionsthatcovereachtypeindepth .",
    "page": 25,
    "zh_caption": "五种记录类型共用一个 ID 空间，对它们的引用都是带类型的 ID。字段名取自 `src/types.ts`；卡片标题上的数字是深入讲解对应类型的小节。"
   },
@@ -25,12 +27,14 @@
    "type": "chapter-title",
    "text": "2 . 1 Records and IDs",
    "page": 25,
+   "_y": 57.4,
    "zh": "2.1 记录与 ID"
   },
   {
    "type": "lede",
    "text": "Five record types and one number space hold everything a Session stores, and two of the edges between records look alike but mean different things.",
    "page": 25,
+   "_y": 106.2,
    "zh": "五种记录类型、一个编号空间，装着 Session 存储的全部内容；记录之间的两条边看着一样，含义却不同。"
   },
   {
@@ -42,6 +46,7 @@
    "type": "h2",
    "text": "Four tables and the documents",
    "page": 25,
+   "_y": 207.7,
    "zh": "四张表与文档"
   },
   {
@@ -50,11 +55,10 @@
    "zh": "一个 Session 存四类表记录，外加文档：「表就是会话、条目、任务和提交项」spec §4。文档是你应用的 `JSON` 状态，本身另有一条小记录（documents（第 53 页））。每条记录都是一个普通的 `JSON` 对象，在 `src/types.ts` 中声明为 `TypeScript` 类型。图中给出全部五种类型，以及每个字段的用途。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Five record types share one ID space, and their references are typed IDs. Field names are from src/types.ts; the numbers in the card heads are the sections that cover each type in depth."
-   ],
-   "page": 25
+   "type": "small",
+   "text": "Five record types share one ID space, and their references are typed IDs. Field names are from src/types.ts; the numbers in the card heads are the sections that cover each type in depth.",
+   "page": 25,
+   "_y": 652.2
   },
   {
    "type": "p",
@@ -95,6 +99,7 @@
    "type": "h2",
    "text": "IDs are plain numbers with a type label",
    "page": 26,
+   "_y": 346.5,
    "zh": "ID 是带类型标签的普通数字"
   },
   {
@@ -104,20 +109,18 @@
   },
   {
    "type": "small",
-   "text": "IDs, Seq and the root src/types.ts TS",
+   "text": "IDs, Seq and the root src/types.ts TS export type ConversationId = Id<\"conversation\">; export type EntryId = Id<\"entry\">;",
    "page": 26,
-   "zh": "ID、`Seq` 与根会话　`src/types.ts`　TS"
+   "_y": 412.9
   },
   {
    "type": "code",
    "lines": [
-    "export type ConversationId = Id<\"conversation\">;",
-    "export type EntryId = Id<\"entry\">;",
     "export type TaskId<Result = unknown> = Id<\"task\", Result>; export type SubmissionId = Id<\"submission\">;",
-    "export type DocumentId = Id<\"document\">;",
-    "/** Strictly increasing sequence assigned to one atomic storage commit; gaps are permitted. */"
+    "export type DocumentId = Id<\"document\">; /** Strictly increasing sequence assigned to one atomic storage commit; gaps are permitted. */"
    ],
-   "page": 26
+   "page": 26,
+   "_y": 457.7
   },
   {
    "type": "code",
@@ -125,7 +128,14 @@
     "export type Seq = number & { readonly [seqBrand]: \"sequence\" };",
     "/** The root conversation always uses this reserved ID. */ export const ROOT_CONVERSATION_ID = 1 as ConversationId;"
    ],
-   "page": 26
+   "page": 26,
+   "_y": 512.4
+  },
+  {
+   "type": "code",
+   "lines": [],
+   "page": 26,
+   "_y": 571.5
   },
   {
    "type": "small",
@@ -142,6 +152,7 @@
    "type": "h2",
    "text": "One counter for every record",
    "page": 26,
+   "_y": 661.5,
    "zh": "所有记录共用一个计数器"
   },
   {
@@ -153,8 +164,8 @@
    "type": "figure",
    "number": "2.2",
    "file": "figures/fig-2.2.png",
-   "title": "ONE ANSWERED INPUT, BY ID AND BY SEQ\nS T R U C T U R E",
-   "caption": "Every record but the root draws its ID from one counter; commits are numbered separately. ID 1 is reserved for the root conversation, so commit 1 mints only the five document IDs 2–6. Each line joins a group of IDs to the commit that minted it; ten of the 17 commits minted none. The dashed cells are",
+   "title": "ONE ANSWERED INPUT , BY ID AND BY SEQ STRUCTURE",
+   "caption": "EveryrecordbuttherootdrawsitsIDfromonecounter ; commitsarenumberedseparately . ID 1 isreservedfortherootconversation , socommit 1 mintsonlythefivedocumentIDs 2–6. EachlinejoinsagroupofIDstothecommitthatmintedit ; tenofthe 17 commitsmintednone . Thedashedcellsare",
    "page": 27,
    "zh_caption": "除根记录之外，每条记录的 ID 都取自同一个计数器；提交则单独编号。ID 1 保留给根会话，所以提交 1 只铸出五个文档 ID 2–6。每一行把一组 ID 连到铸出它的那次提交；17 次提交中有十次一个 ID 也没铸。虚线格子是"
   },
@@ -162,6 +173,7 @@
    "type": "small",
    "text": "Every record but the root draws its ID from one counter; commits are numbered separately. ID 1 is reserved for the root conversation, so commit 1 mints only the five document IDs 2–6. Each line joins a group of IDs to the commit that minted it; ten of the 17 commits minted none. The dashed cells are next_id and next_seq from durable_metadata. IDs and types from record_ids in research/capture/sqlite-rows.txt, commits from research/capture/sqlite-commits.txt.",
    "page": 27,
+   "_y": 244.2,
    "zh": "除根记录之外，每条记录的 ID 都取自同一个计数器；提交则单独编号。ID 1 保留给根会话，所以提交 1 只铸出五个文档 ID 2–6。每一行把一组 ID 连到铸出它的那次提交；17 次提交中有十次一个 ID 也没铸。虚线格子是 `durable_metadata` 的 `next_id` 与 `next_seq`。ID 和类型取自 `research/capture/sqlite-rows.txt` 中的 `record_ids`，提交取自 `research/capture/sqlite-commits.txt`。"
   },
   {
@@ -178,6 +190,7 @@
    "type": "h2",
    "text": "Two edges: parent and owner",
    "page": 27,
+   "_y": 598.5,
    "zh": "两条边：parent 与 owner"
   },
   {
@@ -189,21 +202,8 @@
    "type": "small",
    "text": "PARENT OWNER",
    "page": 28,
+   "_y": 66.3,
    "zh": "PARENT　OWNER"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "Shape { conversationId, at: EntryId } { conversationId, taskId: TaskId }",
-    "Set by a fork at entry at creation with { kind: \"task\", taskId } ownership"
-   ],
-   "page": 28
-  },
-  {
-   "type": "small",
-   "text": "Controls inherited entries and historical documents attribution, subtree abort, idle traversal Caller supplies the parent conversation and entry only the task ID; the Session derives the conversation After the task ends — stays recorded From spec §2 and the field comments in src/types.ts.",
-   "page": 28,
-   "zh": "决定被继承的条目和历史文档　归属、子树中止、空闲遍历　调用方只提供父会话和 entry，只提供任务 ID，由 `Session` 推导会话　任务结束之后仍然保留记录　引自 spec §2 和 `src/types.ts` 中的字段注释。"
   },
   {
    "type": "p",
@@ -211,9 +211,76 @@
    "zh": "owner 边「不是访问控制能力」spec §2；它记录是谁创建了这个会话。创建时总会说明归属，要么是 `{ kind: \"ownerless\" }`，要么是 `{ kind: \"task\", taskId }`，而会话由 `Session` 自己补上任务所属的会话。分叉可以同时带两条边：它从一个会话继承历史，同时由另一个会话里的任务拥有。记录还有三条用同样 ID 的边。任务的 owner 是一个 `TaskId`，用它构建任务树（归属与结构化并发（第 76 页））。条目的 `byTaskId` 指明是哪个任务的提交追加了它。提交项的 entry 和 answer 指明它所放置的用户条目，以及作出回答的助手条目。抓取到的提交项 8 最终是 `{ status: \"done\", entry: 7, answer: 15 }` `research/capture/sqlite-rows.txt`。"
   },
   {
+   "type": "table-row",
+   "page": 28,
+   "_y": 83.1,
+   "cells": [
+    "Shape { conversationId, at: EntryId } { conversationId, taskId: TaskId }"
+   ],
+   "is_header": false,
+   "_sig": "Shape",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 28,
+   "_y": 100.4,
+   "cells": [
+    "Set by a fork at entry at creation with { kind: \"task\", taskId } ownership"
+   ],
+   "is_header": false,
+   "_sig": "Set",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 28,
+   "_y": 117.0,
+   "cells": [
+    "Controls inherited entries and historical documents attribution, subtree abort, idle traversal"
+   ],
+   "is_header": false,
+   "_sig": "Controls",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 28,
+   "_y": 134.3,
+   "cells": [
+    "Caller supplies the parent conversation and entry only the task ID; the Session derives the conversation"
+   ],
+   "is_header": false,
+   "_sig": "Caller",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 28,
+   "_y": 149.5,
+   "cells": [
+    "After the task ends — stays recorded"
+   ],
+   "is_header": false,
+   "_sig": "After",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 28,
+   "_y": 168.8,
+   "cells": [
+    "From spec §2 and the field comments in src/types.ts."
+   ],
+   "is_header": false,
+   "_sig": "From",
+   "zh": null
+  },
+  {
    "type": "small",
    "text": "An ID is unique across all record types, but the number does not say which type it is. Keep the type with it, and let the brands catch mix-ups. Expect gaps. A failed commit burns the IDs it minted, and that is normal. Use parent to ask “where did this history come from” and owner to ask “which task made this”.",
    "page": 28,
+   "_y": 331.3,
    "zh": "ID 在所有记录类型之间都是唯一的，但数字本身不说明它是哪种类型。把类型一起带上，让 brand 去抓混用。要预期有间隔。一次失败的提交会烧掉它铸出的 ID，这是正常的。用 `parent` 问「这段历史从哪里来」，用 `owner` 问「是哪个任务做的」。"
   },
   {
@@ -222,18 +289,21 @@
     "Sources: spec §1 (invariant 5), §2, §2.1, §3.3, §4; src/types.ts (Id, Seq, ROOT_CONVERSATION_ID, ConversationRecord, EntryRecord, TaskRecord, SubmissionRecord, DocumentRecord, Storage.mintId, Storage.entry); src/index.ts; src/session/transaction.ts (conversation",
     "creation); src/storage/memory.ts (nextId); run 00; research/capture/sqlite-rows.txt; research/capture/sqlite-commits.txt; research/capture/extra-p23/commit-failures.txt"
    ],
-   "page": 28
+   "page": 28,
+   "_y": 410.1
   },
   {
    "type": "chapter-title",
    "text": "2 . 2 The commit and the mutation line",
    "page": 29,
+   "_y": 57.4,
    "zh": "2.2 提交与变更线"
   },
   {
    "type": "lede",
    "text": "Every write goes through one serialized callback; its writes are stored together or not at all, and observers see nothing until storage has said yes.",
    "page": 29,
+   "_y": 106.2,
    "zh": "每次写入都经过一个串行化的回调；它的写入要么一起存储，要么全不存储，而在存储点头之前观察者看不到任何东西。"
   },
   {
@@ -245,6 +315,7 @@
    "type": "h2",
    "text": "One way to write",
    "page": 29,
+   "_y": 222.7,
    "zh": "唯一的写入路径"
   },
   {
@@ -256,6 +327,7 @@
    "type": "small",
    "text": "a commit that reads, appends, edits a document and creates a task docs/spec.md §4 TS",
    "page": 29,
+   "_y": 317.6,
    "zh": "一次读取、追加条目、编辑文档并创建任务的提交　docs/spec.md §4　TS"
   },
   {
@@ -263,23 +335,32 @@
    "lines": [
     "await session.commit(async tx => {",
     "const conversation = await tx.conversation(conversationId); // table read const live = await tx.doc(LiveDoc, conversationId);",
-    "await tx.appendEntry(conversationId, message); // first table write",
-    "delete live.generation; // document mutation remains valid await tx.createTask(Follow, {}, {",
+    "await tx.appendEntry(conversationId, message); // first table write delete live.generation; // document mutation remains valid await tx.createTask(Follow, {}, {"
+   ],
+   "page": 29,
+   "_y": 340.8
+  },
+  {
+   "type": "code",
+   "lines": [
     "ownership: { kind: \"conversation\" }, conversationId,",
     "}); // further table writes are fine }, context);"
    ],
-   "page": 29
+   "page": 29,
+   "_y": 418.1
   },
   {
    "type": "small",
    "text": "The read comes first because it must; the document draft stays usable after the first write.",
    "page": 29,
+   "_y": 463.6,
    "zh": "读取在前，因为必须在前；文档草稿在第一次写入之后仍然可用。"
   },
   {
    "type": "h2",
    "text": "The mutation line",
    "page": 29,
+   "_y": 492.7,
    "zh": "变更线"
   },
   {
@@ -296,29 +377,10 @@
    "type": "figure",
    "number": "2.3",
    "file": "figures/fig-2.3.png",
-   "title": "ONE COMMIT ON THE LINE\nS E Q U E N C E",
-   "caption": "The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts.",
+   "title": "ONE COMMIT ON THE LINE SEQUENCE",
+   "caption": "Thelineisheldfromadmissionuntilthepublicationisenqueued ; callbacksruna ft er . Theaquabaristheheldline . A ft ersrc / session / session . tsand src / session / transaction . ts .",
    "page": 30,
    "zh_caption": "这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
-  },
-  {
-   "type": "small",
-   "text": "conversation, entry, task, scanConversations, scanEntries, latestHeadMarker, scanTasks, submissionByRequest Table reads only before the first table write createConversation, forkConversation, appendEntry, createTask, createSubmission, settleSubmission, placeSubmission Table writes return the created record or ID Docs doc (get or create), retireDoc usable before and after table writes",
-   "page": 30,
-   "zh": "conversation、entry、task、`scanConversations`、`scanEntries`、`latestHeadMarker`、`scanTasks`、`submissionByRequest`　只在第一次表写入之前的表读取　`createConversation`、`forkConversation`、`appendEntry`、`createTask`、`createSubmission`、`settleSubmission`、`placeSubmission`　表写入，返回创建出的记录或 ID　Docs　`doc`（取或建）、`retireDoc`　在表写入之前和之后都可用"
-  },
-  {
-   "type": "code",
-   "lines": [
-    "The Tx interface in src/types.ts; the rules are spec §4."
-   ],
-   "page": 30
-  },
-  {
-   "type": "small",
-   "text": "The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts.",
-   "page": 30,
-   "zh": "这条线从准入一直被占用到发布入队；回调在其后运行。那条水绿色的横条就是被占用的线。依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
   },
   {
    "type": "p",
@@ -329,12 +391,14 @@
    "type": "small",
    "text": "commit seq 6, as a commit observer saw it research/capture/sqlite-commits.txt TEXT commit seq=6 entry 11 kind=pi.assistant byTask=9 task 9 pi.generation status=waiting phase=tools on=[12] policy=allSettled task 12 pi.tool status=pending phase=call document pi.live (2) 2 op(s) document pi.usage (4) 1 op(s)",
    "page": 31,
+   "_y": 263.6,
    "zh": "提交 seq 6，提交观察者看到的样子　`research/capture/sqlite-commits.txt`　TEXT　commit seq=6 entry 11 kind=pi.assistant byTask=9 task 9 pi.generation status=waiting phase=tools on=[12] policy=allSettled task 12 pi.tool status=pending phase=call document pi.live (2) 2 op(s) document pi.usage (4) 1 op(s)"
   },
   {
    "type": "code",
    "lines": [],
-   "page": 31
+   "page": 31,
+   "_y": 366.7
   },
   {
    "type": "small",
@@ -351,6 +415,7 @@
    "type": "h2",
    "text": "Never await an effect inside a commit",
    "page": 31,
+   "_y": 456.7,
    "zh": "绝不要在提交里 await 一个副作用"
   },
   {
@@ -362,12 +427,14 @@
    "type": "small",
    "text": "Work started inside the callback and left running can still change the open transaction, and then fails once it settles. The spec calls this unsupported spec §12. Await every tx call, and start background work only after commit() resolves.",
    "page": 31,
+   "_y": 645.7,
    "zh": "在回调内部启动、然后就丢着不管的工作，仍然可能改动那个尚未落定的事务，并在落定时失败。规范把这称为不支持 spec §12。每一个 `tx` 调用都要 await，后台工作只在 `commit()` 兑现之后启动。"
   },
   {
    "type": "small",
    "text": "Do all table reads first, then writes. Documents can be read and changed at any point. Await every tx call, and keep the callback short and free of I/O. Put only JSON in drafts, and never keep a draft after the callback. React to changes in watches, not in commit observers.",
    "page": 32,
+   "_y": 92.8,
    "zh": "先做完所有表读取，再做写入。文档在任何时点都可以读取和修改。每一个 `tx` 调用都要 await，回调要短，并且不碰 I/O。草稿里只放 `JSON`，回调之后绝不保留草稿。对改动的反应放在 watch 里，不要放在提交观察者里。"
   },
   {
@@ -376,19 +443,17 @@
    "zh": "细节 —— 尽管只有一条变更线，读取依然便宜。提交过的值被缓存的文档无需排队就能读到 `src/session/session.ts`（snapshot）。存储只把这一批借用到 `Storage.commit()` 落定为止，而且「每次存储读取都返回一个独立的 `JSON` 值」spec §4，所以你手里的东西不会与已存储的状态共享引用。批次检查会校验分叉来源、owner 和任务替换，退役那些在本次提交中结束的任务的文档，最后运行每个文档的 `checkpointWhen` 谓词来决定用完整副本还是用增量（基线与增量（第 56 页））`src/session/transaction.ts`。"
   },
   {
-   "type": "code",
-   "lines": [
-    "Sources: spec §1 (invariants 1, 4, 6, 7), §2.2, §3.3, §4, §12; src/session/session.ts (commit, publication, snapshot);",
-    "src/session/transaction.ts (Tx operations, settlement, batch assembly, adoption); src/errors.ts (ReadAfterWrite); src/types.ts (Tx, StorageWrite, CommitPublication, Storage.commit); ex 00; research/capture/sqlite-commits.txt; research/capture/extra-p23/commit- failures.txt"
-   ],
-   "page": 32
+   "type": "small",
+   "text": "Sources: spec §1 (invariants 1, 4, 6, 7), §2.2, §3.3, §4, §12; src/session/session.ts (commit, publication, snapshot); src/session/transaction.ts (Tx operations, settlement, batch assembly, adoption); src/errors.ts (ReadAfterWrite); src/types.ts (Tx, StorageWrite, CommitPublication, Storage.commit); ex 00; research/capture/sqlite-commits.txt; research/capture/extra-p23/commit- failures.txt",
+   "page": 32,
+   "_y": 275.1
   },
   {
    "type": "figure",
    "number": "2.4",
    "file": "figures/fig-2.4.png",
-   "title": "FAILURE OUTCOMES BY PHASE\nD E C I S I O N",
-   "caption": "Failures before Storage admission roll back; an uncertain Storage result, or an adoption that fails after Storage committed, poisons the Session. The bottom row is what to do next in each case. Branches from src/session/session.ts and src/session/transaction.ts.",
+   "title": "FAILURE OUTCOMES BY PHASE DECISION",
+   "caption": "FailuresbeforeStorageadmissionrollback ; anuncertainStorageresult , oranadoptionthatfailsa ft erStoragecommitted , poisonstheSession . The bottomrowiswhattodonextineachcase . Branchesfromsrc / session / session . tsandsrc / session / transaction . ts .",
    "page": 33,
    "zh_caption": "存储准入之前的失败会回滚；不确定的存储结果，或者存储已提交之后的接管失败，会让 `Session` 中毒。最下面一行是各种情况下接下来该做什么。分支依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
   },
@@ -396,18 +461,21 @@
    "type": "chapter-title",
    "text": "2 . 3 When a commit fails",
    "page": 33,
+   "_y": 57.4,
    "zh": "2.3 提交失败时"
   },
   {
    "type": "lede",
    "text": "Where a failure happens decides its outcome: before storage it is an ordinary rollback, and inside storage it is either a guaranteed rejection or a fatal",
    "page": 33,
+   "_y": 106.2,
    "zh": "失败发生在哪里决定了结果：在存储之前它只是一次普通的回滚，在存储之内它要么是确定被拒绝，要么是致命的"
   },
   {
    "type": "lede",
    "text": "uncertainty.",
    "page": 33,
+   "_y": 136.9,
    "zh": "不确定性。"
   },
   {
@@ -419,6 +487,7 @@
    "type": "h2",
    "text": "Three outcomes",
    "page": 33,
+   "_y": 237.7,
    "zh": "三种结果"
   },
   {
@@ -430,6 +499,7 @@
    "type": "small",
    "text": "Failures before Storage admission roll back; an uncertain Storage result, or an adoption that fails after Storage committed, poisons the Session. The bottom row is what to do next in each case. Branches from src/session/session.ts and src/session/transaction.ts.",
    "page": 33,
+   "_y": 546.6,
    "zh": "存储准入之前的失败会回滚；不确定的存储结果，或者存储已提交之后的接管失败，会让 `Session` 中毒。最下面一行是各种情况下接下来该做什么。分支依据 `src/session/session.ts` 与 `src/session/transaction.ts`。"
   },
   {
@@ -439,40 +509,34 @@
   },
   {
    "type": "small",
-   "text": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts",
+   "text": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts read after write -> ReadAfterWrite: Tx.conversation() cannot read tables after the first table write callback throws -> Error: validation failed empty commit -> ok \"nothing written\" storage rejects -> StorageRejected: rejected before any durable effect",
    "page": 34,
+   "_y": 76.1,
    "zh": "$ node --conditions=source --experimental-strip-types test/capture-p23-context.ts"
   },
   {
    "type": "code",
    "lines": [
-    "read after write -> ReadAfterWrite: Tx.conversation() cannot read tables after the first table write",
-    "callback throws -> Error: validation failed empty commit -> ok \"nothing written\" storage rejects -> StorageRejected: rejected before any durable effect"
-   ],
-   "page": 34
-  },
-  {
-   "type": "code",
-   "lines": [
     "next commit -> ok {\"kind\":\"app.note\",\"data\":\"after rejection\",\"id\":6,\"conversationId\":2}",
-    "uncertain storage failure -> Error: disk vanished"
+    "uncertain storage failure -> Error: disk vanished next commit -> Error: Session is poisoned by a failed commit after storage admission;"
    ],
-   "page": 34
+   "page": 34,
+   "_y": 133.3
   },
   {
    "type": "code",
    "lines": [
-    "next commit -> Error: Session is poisoned by a failed commit after storage admission;",
     "reopen it (cause: Error: disk vanished)",
-    "snapshot -> Error: Session is poisoned by a failed commit after storage admission; …",
-    "close -> ok undefined From research/capture/extra-p23/commit-failures.txt; the long poisoned line is wrapped and the second one cut. The rejection and the two failures before it burnt IDs 3–5."
+    "snapshot -> Error: Session is poisoned by a failed commit after storage admission; … close -> ok undefined From research/capture/extra-p23/commit-failures.txt; the long poisoned line is wrapped and the second one cut. The rejection and the two failures before it burnt IDs 3–5."
    ],
-   "page": 34
+   "page": 34,
+   "_y": 167.8
   },
   {
    "type": "h2",
    "text": "Before storage: an ordinary rollback",
    "page": 34,
+   "_y": 252.0,
    "zh": "存储之前：一次普通的回滚"
   },
   {
@@ -484,6 +548,7 @@
    "type": "h2",
    "text": "Inside storage: rejected or uncertain",
    "page": 34,
+   "_y": 459.7,
    "zh": "存储之内：被拒绝或不确定"
   },
   {
@@ -492,15 +557,109 @@
    "zh": "这一批一旦交给 `Storage.commit()`，`Session` 就再也不能假定任何事。存储契约定义了唯一那个安全的异常：「`StorageRejected` 表示这一批在任何持久副作用之前就被拒绝，保证没有提交。`Session` 会正常回滚这样一批；存储准入之后的未知失败依然是致命的，因为它们的提交状态不确定」spec §10。后端把它用于那些能证明没有产生任何副作用的失败。例如 `SQLite` 会把失败的 fork 副本报告为 `Document copy N was rejected` `src/storage/sqlite/storage.ts`。其他任何存储错误都会让 `Session` 中毒：它把自己标记为不可用。存储刚成功之后、`Session` 换上新值的时候失败也是如此，因为那时存储持有一个内存并未反映的提交 `src/session/session.ts`。中毒的 `Session` 会拒绝一切需要它状态的东西。之后每次提交、`snapshot()`、`state`、watch 和线读取都抛出 `Session is poisoned by a failed commit after storage admission; reopen it`，并把原始错误作为 cause `src/session/session.ts`。失败的那一批什么都不会发布，所以没有观察者看到一个可能并不存在的值 `test/session-documents.test.ts`。`Session` 不重试，因为两种猜测都不安全：如果那一批确实提交了，内存就落后于存储；如果没有提交，在内存里应用它就会发布一个并不存在的改动。只有存储知道，而新的 `Session` 读到的正是它自己持有的东西。「不要捕获这个错误并继续使用它」spec §12。`JSONL` 存储在一次不确定的追加之后也会让自己中毒（`JSONL`（第 148 页））。"
   },
   {
-   "type": "small",
-   "text": "ReadAfterWrite table read after a table write usable …settled before its pending Tx operations callback returned early usable Transaction has settled Tx or draft used after settlement usable StorageRejected storage, before any durable effect usable any other storage error storage, outcome unknown poisoned adoption error after storage committed poisoned Session is closed any call after close() began closing Messages from src/errors.ts, src/session/session.ts and src/session/transaction.ts. ConversationBusy, the third exported error class, is an admission result, not a commit failure (submissions (p. 84)).",
+   "type": "table-row",
    "page": 35,
-   "zh": "ReadAfterWrite　表写入之后的表读取　可用　…settled before its pending Tx operations　回调提前返回　可用　Transaction has settled　在落定之后使用 Tx 或草稿　可用　StorageRejected　存储，在任何持久副作用之前　可用　任何其他存储错误　存储，结果未知　中毒　adoption error after storage committed　中毒　Session is closed　`close()` 开始之后的任何调用　正在关闭　消息取自 `src/errors.ts`、`src/session/session.ts` 和 `src/session/transaction.ts`。`ConversationBusy` 是导出的第三个错误类，它是一个准入结果，不是提交失败（submissions（第 84 页））。"
+   "_y": 82.0,
+   "cells": [
+    "ReadAfterWrite table read after a table write usable"
+   ],
+   "is_header": false,
+   "_sig": "ReadAfterWrite",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 100.4,
+   "cells": [
+    "…settled before its pending Tx operations callback returned early usable"
+   ],
+   "is_header": false,
+   "_sig": "",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 115.7,
+   "cells": [
+    "Transaction has settled Tx or draft used after settlement usable"
+   ],
+   "is_header": false,
+   "_sig": "Transaction",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 133.0,
+   "cells": [
+    "StorageRejected storage, before any durable effect usable"
+   ],
+   "is_header": false,
+   "_sig": "StorageRejected",
+   "zh": "`StorageRejected`。"
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 150.8,
+   "cells": [
+    "any other storage error storage, outcome unknown poisoned"
+   ],
+   "is_header": false,
+   "_sig": "any",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 166.0,
+   "cells": [
+    "adoption error after storage committed poisoned"
+   ],
+   "is_header": false,
+   "_sig": "adoption",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 183.2,
+   "cells": [
+    "Session is closed any call after close() began closing"
+   ],
+   "is_header": false,
+   "_sig": "Session",
+   "zh": "`Session` 现在已经中毒。绝不要捕获中毒错误然后继续用。关掉"
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 202.5,
+   "cells": [
+    "Messages from src/errors.ts, src/session/session.ts and src/session/transaction.ts. ConversationBusy, the third exported error class, is an admission result, not a"
+   ],
+   "is_header": false,
+   "_sig": "Messages",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 35,
+   "_y": 213.8,
+   "cells": [
+    "commit failure (submissions (p. 84))."
+   ],
+   "is_header": false,
+   "_sig": "commit",
+   "zh": null
   },
   {
    "type": "h2",
    "text": "Close, then reopen",
    "page": 35,
+   "_y": 242.2,
    "zh": "先关闭，再重开"
   },
   {
@@ -517,22 +676,89 @@
    "type": "small",
    "text": "A crash inside Storage.commit() is the uncertain case with no process left to poison. SQLite stores each commit in one SQL transaction, and JSONL publishes a commit marker only after its sidecars. Either way, reopening finds the batch entirely present or entirely absent (SQLite (p. 144), JSONL (p. 148)).",
    "page": 35,
+   "_y": 548.2,
    "zh": "`Storage.commit()` 内部的崩溃就是那种不确定的情况，只不过没有进程留下来去中毒。`SQLite` 把每次提交放在一个 SQL 事务里，`JSONL` 则只在它的 sidecar 之后才发布提交标记。无论哪种情况，重开都会发现这一批要么完整存在，要么完全不存在（`SQLite`（第 144 页）、`JSONL`（第 148 页））。"
   },
   {
    "type": "small",
    "text": "Treat a thrown commit as “nothing happened” unless the Session is now poisoned. Never catch a poison error and carry on. Close the Harness and open the storage again. If you write a storage backend, throw StorageRejected only when you can prove nothing was stored.",
    "page": 35,
+   "_y": 629.8,
    "zh": "把一次抛出的提交当作「什么都没发生」，除非 `Session` 现在已经中毒。绝不要捕获中毒错误然后继续用。关掉 `Harness`，重新打开存储。如果你要写一个存储后端，只有在能证明什么都没存下时才抛 `StorageRejected`。"
+  },
+  {
+   "type": "small",
+   "text": "Sources: spec §1 (invariant 8), §2.2 (close and reopen), §4, §10, §12; src/session/session.ts (commit, poison checks, close);",
+   "page": 35,
+   "_y": 695.9
   },
   {
    "type": "code",
    "lines": [
-    "Sources: spec §1 (invariant 8), §2.2 (close and reopen), §4, §10, §12; src/session/session.ts (commit, poison checks, close);",
     "src/session/transaction.ts (failure and success settlement, batch assembly); src/errors.ts; src/storage/sqlite/storage.ts (document copy rejection); test/session-documents.test.ts (rollback and poison tests); test/session-forks.test.ts (StorageRejected rollback);",
     "research/capture/extra-p23/commit-failures.txt; research/capture/NOTES.md (notes 1 and 6)"
    ],
-   "page": 35
+   "page": 35,
+   "_y": 706.5
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 83.6,
+   "cells": [
+    "Table reads",
+    "conversation, entry, task, scanConversations, scanEntries, latestHeadMarker, scanTasks, submissionByRequest",
+    "only before the first table write"
+   ],
+   "is_header": false,
+   "_sig": "Table",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 111.4,
+   "cells": [
+    "Table writes",
+    "createConversation, forkConversation, appendEntry, createTask, createSubmission, settleSubmission, placeSubmission",
+    "return the created record or ID"
+   ],
+   "is_header": false,
+   "_sig": "Table",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 136.7,
+   "cells": [
+    "Docs doc (get or create), retireDoc usable before and after table writes"
+   ],
+   "is_header": false,
+   "_sig": "Docs",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 166.5,
+   "cells": [
+    "The Tx interface in src/types.ts; the rules are spec §4."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
+  },
+  {
+   "type": "table-row",
+   "page": 30,
+   "_y": 606.6,
+   "cells": [
+    "The line is held from admission until the publication is enqueued; callbacks run after. The aqua bar is the held line. After src/session/session.ts and src/session/transaction.ts."
+   ],
+   "is_header": false,
+   "_sig": "The",
+   "zh": null
   }
  ]
 }

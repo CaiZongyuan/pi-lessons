@@ -49,6 +49,47 @@ LANG_HINTS = [
 ]
 
 
+def signature_of(text: str) -> str:
+    m = re.match(r"\s*([A-Za-z_][\w]*)", text)
+    return m.group(1) if m else ""
+
+
+def strip_edge_details(zh: str, entry: str, pointer: str) -> str:
+    """Drop a translation's leading signature and trailing section pointer.
+
+    A row's translation was written as a self-contained sentence, so it opens by naming
+    the signature in backticks and closes with the section reference. Both already have
+    their own column, and repeating them inside the translation makes one fact read as
+    three.
+    """
+    if not zh:
+        return ""
+    sig = signature_of(entry)
+    if sig:
+        zh = re.sub(r"^`" + re.escape(sig) + r"[^`]*`\s*", "", zh)
+    if pointer:
+        zh = re.sub(r"\s*" + re.escape(pointer) + r"\s*$", "", zh)
+    # a pointer belonging to the *next* row can trail this one
+    zh = re.sub(r"\s*\d+\.\d+\s*(\(p\.\s*\d+\))?\s*$", "", zh)
+    # splitting on the backticked signatures leaves the list punctuation that separated
+    # them: `、token`、`、常量 1` read as fragments rather than as translations
+    zh = re.sub(r"^[\s、,，;；]+", "", zh)
+    return zh.strip()
+
+
+def esc(text: str) -> str:
+    """Escape for an HTML table cell, keeping inline code spans intact."""
+    import html as _html
+    parts = INLINE_CODE.split(text)
+    return "".join(f"<code>{_html.escape(p, quote=False)}</code>" if i % 2 else
+                   _html.escape(p, quote=False) for i, p in enumerate(parts))
+
+
+POINTER_ONLY = re.compile(r"^[\d.]+\s*(\(p\.\s*\d+\))?$")
+
+INLINE_CODE = re.compile(r"`([^`]+)`")
+
+
 def guess_lang(lines) -> str:
     blob = "\n".join(lines)
     for rx, lang in LANG_HINTS:
@@ -130,9 +171,47 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
     skip_caption_until = -1
     last_was_figure = False
     prev_caption = ""
+    table: list[tuple[list[str], str | None]] = []
+
+    def flush_table():
+        """Emit the buffered reference rows as one HTML table.
+
+        The extractor sees columns, not meaning: one entry may come through as
+        "signature — description — pointer" and the next as "signature — pointer". Padding
+        those to a common width put a description under the pointer column, so the rows
+        are classified instead: the section pointer is the trailing cell that is only a
+        reference, and whatever remains is the signature with its description.
+        """
+        if not table:
+            return
+        rows = []
+        for cells, zh in table:
+            rest = [c for c in cells if c]
+            pointer = ""
+            # the section reference is the trailing cell when it is only a reference
+            if len(rest) > 1 and POINTER_ONLY.match(rest[-1].strip()):
+                pointer = rest.pop()
+            entry = rest[0] if rest else ""
+            # the merged translation restates the row's own signature and section pointer,
+            # which the neighbouring columns already show — showing them three times reads
+            # as three facts rather than as one
+            zh = strip_edge_details(zh, entry, pointer)
+            rows.append((entry, zh, pointer))
+
+        out.append("<table>")
+        out.append("<tr><th>导出</th><th>译文</th><th>参见</th></tr>")
+        for entry, zh, pointer in rows:
+            out.append("<tr>" + "".join(f"<td>{esc(c)}</td>" for c in
+                                        (entry, zh, pointer)) + "</tr>")
+        out.append("</table>")
+        out.append("")
+        table.clear()
 
     for n in nodes[start:]:
         t = n["type"]
+
+        if t not in ("table-row",):
+            flush_table()
 
         if t == "part-title":
             bump("part-title")
@@ -162,6 +241,7 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
             continue
 
         if t == "h2":
+            flush_table()
             out.append(f"### {zh_of(n)}")
             out.append("")
             bump("h2")
@@ -193,7 +273,18 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
             last_was_figure = False
             continue
 
+        if t == "table-row":
+            cells = [c for c in n.get("cells", []) if c]
+            if not cells:
+                continue
+            zh = n.get("zh")
+            table.append((cells, zh))
+            bump("table-row")
+            last_was_figure = False
+            continue
+
         if t == "figure":
+            flush_table()
             cap = n.get("zh_caption") or n.get("caption", "")
             out.append(f'<img src="{asset_prefix}{n["file"].split("/")[-1]}" '
                        f'alt="{n.get("title", "")}" loading="lazy">')
@@ -222,6 +313,7 @@ def convert(ir_path: Path, bilingual_mode: bool, asset_prefix: str = "") -> tupl
         bump("unknown:" + t)
 
     # collapse runs of blank lines
+    flush_table()
     md = re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip() + "\n"
     return md, stats
 

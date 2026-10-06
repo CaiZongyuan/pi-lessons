@@ -279,30 +279,91 @@
   margin-block: 0.5em;
 }
 
-/* ------------------------------------------------------------------ tables */
+/* ------------------------------------------------------------------ tables
+   The source draws its reference tables as a plain grid, but a full box around every
+   cell is noisy at web reading sizes. This keeps the row rules that matter for scanning
+   and drops the verticals, which is what makes a wide table legible.
+
+   A three-column reference table cannot live inside the prose measure — at 40rem every
+   cell wraps to four lines — so the table is allowed to break out to the full content
+   width and scroll beyond it on narrow screens. */
 .sl-markdown-content table {
   width: 100%;
+  max-width: min(64rem, calc(100vw - 3rem));
   border-collapse: collapse;
   font-family: var(--sans);
-  font-size: 0.78rem;
-  line-height: 1.55;
+  font-size: 0.8rem;
+  line-height: 1.6;
   margin: 1.9em 0;
   display: block;
   overflow-x: auto;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
 }
 
 .sl-markdown-content th,
 .sl-markdown-content td {
-  padding: 0.5em 0.7em;
-  border: 1px solid var(--rule);
+  padding: 0.55em 0.8em;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
   text-align: left;
   vertical-align: top;
 }
 
 .sl-markdown-content th {
-  background: var(--tint);
+  font-size: 0.72rem;
   font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: none;
+  border-bottom: 1px solid var(--ink);
   white-space: nowrap;
+}
+
+.sl-markdown-content tbody tr:last-child td,
+.sl-markdown-content tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Column widths for the reference tables. The exporter emits 导出 / 译文 / 参见; the
+   section reference is a short number and must not take a third of the width. */
+.sl-markdown-content table th:last-child,
+.sl-markdown-content table td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 0.85em;
+}
+
+.sl-markdown-content table th:nth-child(2),
+.sl-markdown-content table td:nth-child(2) {
+  width: 42%;
+}
+
+/* First column holds a signature or a type name: set it in mono so it reads as code
+   rather than as another sentence. */
+.sl-markdown-content td:first-child {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  color: var(--ink);
+  width: 55%;
+}
+
+.sl-markdown-content td code {
+  font-size: 0.92em;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.sl-markdown-content th code {
+  background: none;
+  border: 0;
+  padding: 0;
 }
 
 /* ------------------------------------------------------------------ figures */

@@ -12,9 +12,10 @@
 <aside class="note">三个扩展，一个注册表 `README` §Extensions · spec §7.1 `TS`</aside>
 ```ts
 import { createRegistry, defineExtension, hook, section, ToolTask }
-from "@earendil-works/pi-durable";
-import { CodingTools } from "@earendil-works/pi-durable/tools";
-const Coding = defineExtension({
+from "@earendil-works/pi-durable"; import { CodingTools } from "@earendil-works/pi-durable/tools"; const Coding = defineExtension({
+```
+
+```
 name: "coding", sections: [
 section("preamble", () => "You are a concise coding assistant.", { tag: false }),
 section("cwd", (input) => input.env?.cwd), ],
@@ -23,6 +24,9 @@ section("cwd", (input) => input.env?.cwd), ],
 ```ts
 });
 const Permissions = defineExtension({
+```
+
+```ts
 name: "permissions", hooks: [hook(ToolTask, {
 beforeTool: (call) => (isDangerous(call) ? { block: "Needs approval" } : undefined),
 })], });
@@ -32,15 +36,19 @@ registry.install(Permissions);
 ```
 
 <aside class="note">安装顺序有影响。默认情况下每个会话都按安装顺序使用全部已安装的扩展，因此 `coding-tools` 的工具排在 `coding` 添加的任何东西之前。</aside>
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.1.png" alt="NAMES IN STORAGE, CODE IN MEMORY
-S T R U C T U R E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.1.png" alt="NAMES IN STORAGE , CODE IN MEMORY STRUCTURE" loading="lazy">
 
 *代码存放在进程注册表里；会话只存名字。会话 1 没有存任何选择，使用宿主默认值。会话 7 指定了三个扩展；`skills` 在这个进程里没有安装，于是被跳过，存下的列表原样保留。前三个扩展来自这份列表；`reviewer` 和 `skills` 扩展取自 spec §7.1。*
 
-<aside class="note">`tools` 模型可以调用的工具 工具名 7.4（p. 112） `sections` 系统提示词的组成部分 小节键 7.5（p. 115） `hooks` 内置任务调用的处理器 任务名 7.3（p. 109） `wraps` 另一个扩展的工具或小节的装饰器 工具名或小节键 7.2（p. 106） `tasks` 你自己的持久任务定义 任务名 5.4（p. 73）</aside>
-```
-The Extension interface, src/harness/types.ts.
-```
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>tools tools the model can call tool name 7.4 (p. 112)</td><td>模型可以调用的工具 工具名 7.4（p. 112）</td><td></td></tr>
+<tr><td>sections pieces of the system prompt section key 7.5 (p. 115)</td><td>系统提示词的组成部分 小节键 7.5（p. 115）</td><td></td></tr>
+<tr><td>hooks handlers the built-in tasks call task name 7.3 (p. 109)</td><td>内置任务调用的处理器 任务名 7.3（p. 109）</td><td></td></tr>
+<tr><td>wraps decorators for another extension’s tool or section tool name or section key 7.2 (p. 106)</td><td>另一个扩展的工具或小节的装饰器 工具名或小节键 7.2（p. 106）</td><td></td></tr>
+<tr><td>tasks your own durable task definitions task name 5.4 (p. 73)</td><td>你自己的持久任务定义 任务名 5.4（p. 73）</td><td></td></tr>
+<tr><td>The Extension interface, src/harness/types.ts.</td><td></td><td></td></tr>
+</table>
 
 ### 存储里是名字，内存里是代码
 
@@ -49,8 +57,7 @@ The Extension interface, src/harness/types.ts.
 <aside class="note">代码存放在进程注册表里；会话只存名字。会话 1 没有存任何选择，使用宿主默认值。会话 7 指定了三个扩展；`skills` 在这个进程里没有安装，于是被跳过，存下的列表原样保留。前三个扩展来自这份列表；`reviewer` 和 `skills` 扩展取自 spec §7.1。</aside>
 这种划分正是让重启变得廉价的原因。抓取到的数据库中，一个已回答轮次把根的智能体存成 `{"model": {"provider": "faux", "modelId": "faux-1"}}`，别的什么都没有：没有工具代码，也没有提示词代码 `research/capture/sqlite-rows.txt`，文档 6。一个新进程安装自己的扩展，打开同一份存储，每个存下的名字就绑定到此刻承载它的代码上。没有已安装扩展的名字会被跳过，不是错误，并且它「在被再次安装时重新生效」spec §2.2。任务定义的机制完全一样。存下的任务把它的 kind 记成一个名字。如果没有任何已安装的扩展定义了这个名字，任务就被阻塞：它在等待，不是失败。之后安装这个扩展会解除阻塞（调度器（p. 73））。不管怎样，都在 `open()` 之前把一切装好，这样恢复的工作能立刻继续。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.2.png" alt="INSTALL ORDER
-T I M E L I N E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.2.png" alt="INSTALL ORDER TIMELINE" loading="lazy">
 
 *同名安装会就地替换；卸载后再安装会把扩展移到末尾。这些操作以及订阅者的日志 `["a",*
 
@@ -59,18 +66,10 @@ T I M E L I N E" loading="lazy">
 注册表有两个操作。`install(extension)` 在末尾添加一个新名字，或者在同一个位置上替换已经占用该名字的扩展。`uninstall(extension)` 移除持有该名字的任何东西。每次改动立刻生效，并且「一个扩展就是重载的单位」spec §7.1。
 
 <aside class="note">同名安装会就地替换；卸载后再安装会把扩展移到末尾。这些操作以及订阅者的日志 `["a",</aside>
-```
-"a,b", "a,b", "b", "b,a"] come from one case of test/harness-registry.test.ts. The last row is a separate case of the same file: an extension that declares read twice is rejected. Uninstalling an absent name and a rejected install publish nothing.
-```
-
 位置就是优先级。两个扩展定义同名工具时，后面的那个胜出，后面的钩子也更晚运行（钩子（p. 109））。因为替换保留了位置，重载一个扩展永远不会改变谁胜出。一个会让注册表变得无效的安装会抛错，什么都不改变。一个扩展内部，工具名和小节键必须唯一；跨扩展时，重复的工具名正是一个扩展覆盖另一个的方式。小节键是小写的（`^[a-z][a-z0-9_-]*$`），而且绝不是 `instructions`，后者是保留的。任务名必须在整个注册表内唯一。已经在运行的工作绝不会看到脚下的注册表变化（边运行边重载（p. 118））。
 
 <aside class="note">在 `Harness.open()` 之前按你想要的优先级顺序安装每个扩展。绝不要重命名会话已经在用的扩展、工具或任务：存下的名字会失配。要发布修复，就用同一个名字安装新的对象。安装和卸载不调用任何清理代码，所以共享资源要你自己释放，而且要等旧调用结束后只释放一次 spec §12。</aside>
-```
-Sources: src/harness/registry.ts; src/harness/define.ts; src/harness/types.ts (Extension, Registry, RegistrySnapshot);
-src/harness/harness.ts:410–435; spec §7.1, §2.2, §12; README §Extensions; test/harness-registry.test.ts; research/capture/sqlite-rows.txt
-```
-
+<aside class="note">Sources: src/harness/registry.ts; src/harness/define.ts; src/harness/types.ts (Extension, Registry, RegistrySnapshot); src/harness/harness.ts:410–435; spec §7.1, §2.2, §12; README §Extensions; test/harness-registry.test.ts; research/capture/sqlite-rows.txt</aside>
 <a id="sec-7-2"></a>
 
 ## 7.2 按会话的智能体
@@ -82,18 +81,26 @@ src/harness/harness.ts:410–435; spec §7.1, §2.2, §12; README §Extensions; 
 
 智能体有两种形态。存下的形态 `AgentState` 活在会话的 `pi.agent` 文档里，只持有名字。你从不设置的字段跟随宿主的默认值。解析出的形态 `Agent` 是 `Harness` 在需要真实对象时，用存下的名字、当前的注册表和宿主设置构建出来的东西。存下的文档随它的会话一起分叉和回溯（内置文档（p. 60））。
 
-<aside class="note">`model` `{ provider, modelId }`：无模型；没有模型时一次请求以 `no_model` 失败。`thinkingLevel`：一个 `pi-ai` 级别 `"off"`。</aside>
-```
-extensions a list of names, or { add?, remove? } the host default: every installed extension
-tools a list of names, or { remove } every tool of the selected extensions instructions a string none; when set, rendered as the last prompt section cwd a path none; passed to the host’s environment factory (9.5 (p. 155)) AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent().
-```
-
 `Conversation.configure(change, context)` 编辑存下的智能体。每个字段遵循一条规则：「给出的字段替换存下的字段，`null` 清空它，`undefined` 不做改变」`src/harness/agent.ts`。你可以传扩展对象和工具对象；它们按名字存下。独立的 `configure(tx, id, change)` 在更大的一次提交里做同样的事，也就是一次原子保存：其中的一切要么一起存下，要么都不存。示例 7 展示了每次调用存下什么。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>model { provider, modelId } no model; a request fails with no_model</td><td><code>{ provider, modelId }</code>：无模型；没有模型时一次请求以</td><td></td></tr>
+<tr><td>thinkingLevel a pi-ai level "off"</td><td>：一个</td><td></td></tr>
+<tr><td>extensions a list of names, or { add?, remove? } the host default: every installed extension</td><td></td><td></td></tr>
+<tr><td>tools a list of names, or { remove } every tool of the selected extensions</td><td></td><td></td></tr>
+<tr><td>instructions a string none; when set, rendered as the last prompt section</td><td></td><td></td></tr>
+<tr><td>cwd a path none; passed to the host’s environment factory (9.5 (p. 155))</td><td></td><td></td></tr>
+<tr><td>AgentState and its defaults, src/harness/types.ts and src/harness/agent.ts resolveAgent().</td><td></td><td></td></tr>
+</table>
 
 <aside class="note">先 configure，再读回来 ex 07 · `research/runs/07-configuration.txt` `TS`</aside>
 ```ts
 // default tools: [ 'read', 'write', 'grep' ]
 await root.configure({
+```
+
+```ts
 model: { provider: "anthropic", modelId: "claude-sonnet-4-5" }, thinkingLevel: "high",
 tools: [write, read], // objects in, names stored
 }, context); // stored: { model: {…}, thinkingLevel: 'high', tools: [ 'write', 'read' ] }
@@ -106,8 +113,7 @@ registry.uninstall(Files); // files uninstalled: [ 'grep' ] registry.install(Fil
 <aside class="note">注释就是示例打印出的输出。`null` 清空工具过滤器，于是所选的每个工具又都会被提供。</aside>
 因为一个字段是被整体替换的，`{ remove }` 列表不会累加。先移除 `edit` 再移除 `bash`，最后只有 `bash` 被移除：「`edit` 又会被提供」spec §2.2。一个界面开关必须先读当前列表，再写回新列表。配置不会往记录里追加任何东西；下一次模型请求会带上这个改动。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.3.png" alt="RESOLVING TOOLS
-F L O W" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.3.png" alt="RESOLVING TOOLS FLOW" loading="lazy">
 
 *解析按扩展顺序收集工具，就地替换同名者，包装胜出的那个，然后过滤。扩展、描述和过滤器取自 `test/harness-registry.test.ts`。最后一行显示存下的过滤器从上一行保留了哪些。*
 
@@ -126,8 +132,18 @@ F L O W" loading="lazy">
 
 `Harness` 在每个决策点重新解析智能体，绝不是每次运行只解析一次：「每个读取者在每个决策点解析一次」spec §7.1。宿主设置同理。`HarnessOptions.settings` 保存 `Harness` 全局的策略（默认选择、重试、压缩、工具执行模式、队列模式）。它从不被复制或存储，所以一个带 getter 的设置对象会「跟随用户偏好而无需一次 `Session` 写入」spec §2.2。默认值见「设置与默认值」（p. 180）。
 
-<aside class="note">一次模型请求：模型、工具、提示词、流选项，一次，在准备那次请求时。一次工具调用：被调用工具的代码，在调用开始时，以及在恢复时再一次。任务的任何阶段：钩子，每阶段一次，取自该阶段的注册表快照。一轮工具调用：并行或顺序执行，每轮一次。一个输入边界：引导与后续队列模式，在每个边界。工具与提示词小节：当前 `cwd` 的环境，在每次使用时。整理自 spec §7.1「谁解析什么，以及何时解析」。</aside>
 所以一轮次期间做出的改动会到达下一次模型请求。模型已经发出的调用在它运行时解析自己的工具。如果你在中间移除了那个工具，这个调用会得到 `tool_unavailable`；如果你改了 `cwd`，这个调用会看到新目录 `README` §Per-Conversation Agent。
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>a model request model, tools, prompt, stream options once, while preparing that request</td><td></td><td></td></tr>
+<tr><td>a tool call the called tool’s code when the call starts, and again on recovery</td><td></td><td></td></tr>
+<tr><td>any task phase hooks once per phase, from that phase’s registry snapshot</td><td></td><td></td></tr>
+<tr><td>a tool round parallel or sequential execution once per round</td><td></td><td></td></tr>
+<tr><td>an input boundary steering and follow-up queue modes at each boundary</td><td></td><td></td></tr>
+<tr><td>tools and prompt sections the environment for the current cwd at each use</td><td></td><td></td></tr>
+<tr><td>Condensed from spec §7.1, “Who resolves what, and when”.</td><td></td><td></td></tr>
+</table>
 
 ### 创建时的副本
 
@@ -155,9 +171,7 @@ Sources: src/harness/agent.ts; src/harness/types.ts (AgentState, AgentChange, Ag
 
 生成任务问四种钩子，工具任务问两种，压缩任务问一种。多个扩展都回答时，每种钩子用自己的方式合并这些回答。
 
-<aside class="note">`beforeRequest` generation：替换这一次请求的消息；每个处理器拿到前一个的结果。已上报，被忽略。 `afterResponse` generation：观察每一个模型响应。已上报，被忽略。 `onYield` generation：用 `{ continue }` 回答一个最终答案；第一个胜出。已上报，被忽略。 `afterTools` generation：观察一轮结束的工具结果。已上报，被忽略。 `beforeTool` tool：改写参数，或拦下这次调用；第一个拦截胜出。这次调用被拦下。 `afterTool` tool：替换结果，逐个处理器进行。已上报，被忽略。 `beforeCompact` compaction：拒绝，或提供一份摘要；第一个决定胜出。已上报，被忽略。 `GenerationHooks`、`ToolHooks` 和 `CompactionHooks`，`src/harness/types.ts`；spec §7.2；`src/harness/tool.ts`。「已上报」指传给 `HarnessOptions.onReport`。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。</aside>
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.4.png" alt="WHERE HOOKS ARE ASKED
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.4.png" alt="WHERE HOOKS ARE ASKED SEQUENCE" loading="lazy">
 
 *每个钩子都是内置任务在它所影响的提交之前提出的一个问题。一个使用工具的轮次及其最终答案，取自 `src/harness/generation.ts` 和 `tool.ts`；守卫 `beforeTool` 用粗体标出。`beforeCompact` 在压缩选定范围之后、做摘要之前被问到（压缩（p. 97））。*
 
@@ -175,6 +189,9 @@ const PlanModeDoc = defineDoc<{ enabled: boolean }>({
 kind: "app.plan-mode", version: 1, scope: "conversation",
 history: "latest", fork: "current", initial: () => ({ enabled: false }), });
 export const PlanMode = defineExtension({
+```
+
+```
 name: "plan-mode",
 hooks: [hook(ToolTask, {
 ```
@@ -199,11 +216,7 @@ beforeTool: async (call, api, context) =>
 详解 参数被检查两次——在 `beforeTool` 之前按工具的 schema 检查一次，之后再检查一次。破坏 schema 的改写给出 `invalid_arguments`；一次拦截给出 `blocked`。意图之后不会重跑 `beforeTool`——一旦这次调用的意图被提交，恢复会复用存下的参数（工具调用与重放（p. 94））。钩子工作会占住这个任务——钩子创建的任务归提问的任务所有，并让它保持开启直到结束 spec §12。
 
 <aside class="note">把守卫放在 `beforeTool` 里；抛出异常就拦截，这是安全的默认值。在每个需要它的会话里都选中守卫所在的扩展，包括使用存下扩展列表的子智能体。凡是人做出的决定都存进 memo，任何模式都存进文档。</aside>
-```
-Sources: src/harness/define.ts hook(); src/harness/types.ts (HookApi, GenerationHooks, ToolHooks, CompactionHooks);
-src/harness/scheduler.ts; src/harness/agent.ts; src/harness/tool.ts; src/harness/generation.ts; spec §7.2, §7.3, §12; README §Hooks; test/harness-tools.test.ts
-```
-
+<aside class="note">Sources: src/harness/define.ts hook(); src/harness/types.ts (HookApi, GenerationHooks, ToolHooks, CompactionHooks); src/harness/scheduler.ts; src/harness/agent.ts; src/harness/tool.ts; src/harness/generation.ts; spec §7.2, §7.3, §12; README §Hooks; test/harness-tools.test.ts</aside>
 <a id="sec-7-4"></a>
 
 ## 7.4 定义工具
@@ -217,14 +230,15 @@ src/harness/scheduler.ts; src/harness/agent.ts; src/harness/tool.ts; src/harness
 
 <aside class="note">`count` 工具 `README` §Tools · `research/capture/scripts/one-turn.ts` `TS`</aside>
 ```ts
-import { Type } from "@earendil-works/pi-ai";
-const count = defineTool({
 name: "count",
 description: "Count from 1 to n",
 parameters: Type.Object({ n: Type.Number() }),
 execute: async (args, api) => {
 for (let i = 1; i <= args.n; i++) api.output(`${i}\n`);
 return {};
+```
+
+```
 }, });
 registry.install(defineExtension({ name: "count", tools: [count] }));
 ```
@@ -232,13 +246,20 @@ registry.install(defineExtension({ name: "count", tools: [count] }));
 <aside class="note">`execute()` 不返回内容，所以它用 `api.output()` 写下的文本就成了结果。</aside>
 只有标准的 `pi-ai` 工具字段（`name`、`description`、`parameters`）会发给模型。你自己的字段，比如一段提示词文本，留在你的代码里（系统提示词（p. 115））。四个可选字段用来设定策略：
 
-<aside class="note">`replay`：`"unsafe"`——一次被崩溃打断的调用，重启后可以再跑吗？ `executionMode`：`"parallel"`、`"sequential"`——让整轮调用一个一个地跑。 `prepareArguments`：无——在检查之前修补参数，比如该放数组的地方给了一个 JSON 字符串。 `outputLimits`：50 KiB、2,000 行、保留头部——为结果保留的输出上限。`ToolRegistration`，`src/harness/types.ts`；上限取自 `src/truncate.ts`。执行模式的默认值来自 `settings` 的 `toolExecution`。</aside>
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>replay "unsafe" may a call cut short by a crash run again on restart?</td><td>：<code>"unsafe"</code>——一次被崩溃打断的调用，重启后可以再跑吗？</td><td></td></tr>
+<tr><td>executionMode "parallel" "sequential" makes the whole round of calls run one at a time</td><td>：<code>"parallel"</code>、<code>"sequential"</code>——让整轮调用一个一个地跑。</td><td></td></tr>
+<tr><td>prepareArguments none repairs arguments before they are checked, such as a JSON string where an array belongs</td><td>：无——在检查之前修补参数，比如该放数组的地方给了一个 JSON 字符串。</td><td></td></tr>
+<tr><td>outputLimits 50 KiB, 2,000 lines, keep the head bounds the output kept for the result</td><td>：50 KiB、2,000 行、保留头部——为结果保留的输出上限。</td><td></td></tr>
+<tr><td>ToolRegistration, src/harness/types.ts; limits from src/truncate.ts. The execution mode default comes from settings’ toolExecution.</td><td></td><td></td></tr>
+</table>
+
 ### 选择一条重放策略
 
 每个工具作者都必须回答一个问题：如果进程在我的工具运行时死了，它可以再跑一次吗？在运行一次调用之前，工具任务把最终参数和策略写到磁盘上。重启时，只有存下的工具和当前的工具都说是 `"safe"`，它才重跑这次调用。否则它写下一个 `interrupted` 错误结果，带着当时保存下来的输出。只有以同样的参数跑两次无害时才声明 `safe`。完整的故事，连同一次抓取到的崩溃，见「工具调用与重放」（p. 94）。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.5.png" alt="ANATOMY OF A RESULT ENTRY
-A N A T O M Y" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.5.png" alt="ANATOMY OF A RESULT ENTRY ANATOMY" loading="lazy">
 
 *一个 `tool-result` 条目存的正是模型看到的东西，外加结构化诊断。`research/capture/sqlite-rows.txt` 的第 13 条，`count` 工具对 `count {"n": 3}` 的回答，键按抓取顺序排列。*
 
@@ -265,8 +286,7 @@ A tool-result entry stores exactly what the model saw, plus the structured diagn
 Sources: src/harness/define.ts; src/harness/types.ts (ToolRegistration, ToolExecutionApi, ToolExecutionResult); src/harness/tool.ts; src/truncate.ts; src/tools/index.ts, bash.ts, env.ts; spec §7.3, §8.5; README §Tools; ex 30, run 30; research/capture/sqlite-rows.txt
 ```
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.6.png" alt="SECTIONS PER CONVERSATION
-C O M P A R I S O N" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.6.png" alt="SECTIONS PER CONVERSATION COMPARISON" loading="lazy">
 
 *小节按扩展顺序渲染，包装器生效，未选中的扩展退出，`instructions` 在最后。渲染出的值取自 `research/runs/15-system-prompt.txt`；每个标签内部的换行显示为空格。*
 
@@ -284,8 +304,7 @@ C O M P A R I S O N" loading="lazy">
 <aside class="note">小节按扩展顺序渲染，包装器生效，未选中的扩展退出，`instructions` 在最后。渲染出的值取自 `research/runs/15-system-prompt.txt`；每个标签内部的换行显示为空格。</aside>
 抛出异常的小节不会让这次请求失败。它保留自己上次展示的文本（如果有），错误被上报。小节不该关心自己在哪里运行：「没有小节会检查自己是否跑在子智能体里」。一个会话的提示词只通过它的选择、它的 `instructions`、它的环境和它的文档而不同 spec §7.4。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.7.png" alt="THE DELTA
-S T R U C T U R E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.7.png" alt="THE DELTA STRUCTURE" loading="lazy">
 
 *后一次请求只追加变化的那一个小节，放在它在记录中的位置。ex 15 的根会话；第二条 `pi.system` 条目是 {*
 
@@ -311,8 +330,8 @@ S T R U C T U R E" loading="lazy">
 <aside class="note">一个会话的第一次请求写出完整的基线：一段不带标签的 `preamble` 和 `count` 工具（声明省略）。它跟在用户条目 7 之后，也就是它所回答的那条消息。这次抓取的 `preamble` 与示例 15 的不同，本节的两幅图用的是后者。</aside>
 重放按记录顺序应用系统条目。一个字符串就地添加或替换一个小节，`null` 移除它。所以 `cwd` 改动之后，下一次请求追加一个只有单个键的补丁，提示词的其余部分保住它的位置和缓存。
 
+<aside class="note">A later request appends only the section that changed, at its place in the transcript. The root conversation of ex 15; the second pi.system entry is {</aside>
 ```
-A later request appends only the section that changed, at its place in the transcript. The root conversation of ex 15; the second pi.system entry is {
 sections: { cwd: '<cwd>\n/repo/packages\n</cwd>' } } in research/runs/15-system-prompt.txt.
 ```
 
@@ -323,11 +342,7 @@ sections: { cwd: '<cwd>\n/repo/packages\n</cwd>' } } in research/runs/15-system-
 历史是权威的——存进旧条目的渲染文本就保持原样，即使渲染器变了。
 
 <aside class="note">让渲染器保持确定性：一个嵌进去的时间戳会改变文本、追加一个增量并破坏供应商的缓存 spec §7.4。给长寿命的会话一份稳定的扩展列表；宿主默认值会在你安装任何东西时移动 spec §12。以后通过过滤器或 `control.addTools` 添加工具：那只会追加一个小的增量，并保持先前的前缀完整。</aside>
-```
-Sources: src/harness/prompt.ts; src/harness/define.ts section(), wrapSection(); src/harness/generation.ts; src/harness/types.ts
-(PromptInput, PromptSection); spec §7.4, §2.2, §12; README §System Prompt; ex 15, 27 and runs 15, 27; research/capture/sqlite-rows.txt; research/capture/NOTES.md
-```
-
+<aside class="note">Sources: src/harness/prompt.ts; src/harness/define.ts section(), wrapSection(); src/harness/generation.ts; src/harness/types.ts (PromptInput, PromptSection); spec §7.4, §2.2, §12; README §System Prompt; ex 15, 27 and runs 15, 27; research/capture/sqlite-rows.txt; research/capture/NOTES.md</aside>
 <a id="sec-7-6"></a>
 
 ## 7.6 边运行边重载
@@ -346,28 +361,21 @@ await running; // execute() of v1 has started
 registry.install(loadVersioned("v2")); // same name "versioned" release();
 await submission.wait(context); // call running during the reload: v1
 await (await root.submit({ type: "input", content: "And now?" }, context)).wait(context);
+// next call: v2 await harness.close(context); registry = createRegistry(); // second process: nothing installed harness = await open(registry);
 ```
 
-<aside class="note">// 下一次调用：v2</aside>
 ```ts
-await harness.close(context);
-registry = createRegistry(); // second process: nothing installed
-harness = await open(registry);
 root = await harness.root(context); // after restart, before install: []
 registry.install(loadVersioned("v3"));
 // after install: [ 'version' ]
 ```
 
 <aside class="note">注释来自 `research/runs/31-reload-and-restart.txt`。两个进程用同一个 `SQLite` 文件；会话按名字选中了那个扩展。</aside>
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.8.png" alt="A RELOAD MID-CALL
-T I M E L I N E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.8.png" alt="A RELOAD MID - CALL TIMELINE" loading="lazy">
 
 *运行中的工作保住它拿到的那份代码；下一次请求或调用使用替换后的那份。示例 31：这次调用在 v1 下开始，返回「v1」；下一次请求在 v2 下准备，它的调用返回「v2」。重启之后存下的选择没有变，并绑定到 v3。虚线标出各次安装。*
 
-```
-Running work keeps the code it took; the next request or call uses the replacement. Example 31: the call started under v1 and returns “v1”; the next request is prepared under v2 and its call returns “v2”. After the restart the stored selection is unchanged and binds to v3. Dashed lines mark the installs.
-```
-
+<aside class="note">Running work keeps the code it took; the next request or call uses the replacement. Example 31: the call started under v1 and returns “v1”; the next request is prepared under v2 and its call returns “v2”. After the restart the stored selection is unchanged and binds to v3. Dashed lines mark the installs.</aside>
 ### 谁看到哪份代码
 
 三条规则决定它：一个阶段保住自己的代码——任务的每个阶段（两个检查点之间的一次处理器运行）都从它开始时取的注册表快照出发。它的钩子和智能体固定不变直到结束 `src/harness/scheduler.ts`。下一个阶段看到新代码——每个新阶段取一份新快照。同一次运行的不同阶段可能用不同版本：「没有什么要求一次运行只能看到一个注册表状态」spec §7.1。一次工具调用被钉住直到完成——这次调用在同一个阶段里找到它的工具、运行它的钩子、执行并写出结果，「所以不会有什么把解析和落定分开」`src/harness/tool.ts`。
@@ -409,28 +417,32 @@ execute: async (args, api, ctx) => {
 const child = await api.commit(async (tx) => {
 const found = await tx.scanConversations({ ownerTaskId: api.taskId }, 1);
 const existing = found.items[0];
+```
+
+```ts
 if (existing !== undefined) return existing.id; const created = await tx.createConversation({
 ownership: { kind: "task", taskId: api.taskId },
 }); await configure(tx, created.id, { extensions: { remove: [Subagent] } });
 return created.id;
+```
+
+```ts
 }, ctx); await api.details({ conversationId: child }, ctx);
 const handle = (await api.conversation(child, ctx))!;
 const request = { type: "input", content: args.task,
 requestId: `subagent:${api.taskId}` } as const;
 const settled = await (await handle.submit(request, ctx)).wait(ctx);
 // … throw unless settled is an answered input (elided) const text = await answerText(api, settled.answer, ctx);
-return { content: [{ type: "text", text }] };
-}, })
 ```
 
-```
-Run 22 prints the child’s assistant: 2, 3, and 5. and the parent’s The subagent says: 2, 3, and 5.
+```ts
+return { content: [{ type: "text", text }] };
+}, }) Run 22 prints the child’s assistant: 2, 3, and 5. and the parent’s The subagent says: 2, 3, and 5.
 ```
 
 每一部分都在回答一个崩溃问题：先找后建——子会话由这个工具的任务拥有，所以重跑会用 `scanConversations({ ownerTaskId })` 找到它，而不是造出第二个。一次提交完成创建与配置——子会话从父方智能体的副本开始（创建时的副本（p. 106））；同一次提交移除 `subagent` 扩展，让子会话自己不能启动子智能体。来自这个任务的请求 ID——重跑时，带同一个 ID 的 `submit()` 返回第一次的提交项，而不是把活发两遍。绝不要用供应商的调用 ID：它「在一个 `Session` 内不唯一」spec §7.3。`details` 把界面指向子会话——界面在 `tool_execution_update` 事件里看到 `{ conversationId }`，并接到子会话的事件上（智能体事件（p. 133））。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.9.png" alt="ONE SUBAGENT CALL
-S E Q U E N C E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.9.png" alt="ONE SUBAGENT CALL SEQUENCE" loading="lazy">
 
 *一次可重放安全的子智能体调用按所有者找到它的子会话，按请求 ID 找到它的提交项。ex 22 中工具与界面的各个步骤。第 1 步是一次提交；第 4 步提交这个活，第 5 步是子会话自己的运行，第 6 步是工具的 `wait()`。*
 
@@ -440,15 +452,11 @@ S E Q U E N C E" loading="lazy">
 
 拥有子会话让它成为这次调用工作的一部分。「中止这次调用就会中止子会话」，这次调用失败也一样；「父方只有在子会话之后才空闲」`README` §Abort and Subagents。一个拥有运行中工作的工具任务会保持开启直到那份工作结束（所有权与结构化并发（p. 76），中止、故障与孤儿（p. 80））。
 
-<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.10.png" alt="TWO OWNERSHIP SHAPES
-T R E E" loading="lazy">
+<img src="/pi-lessons/_assets/pi-durable/07-extensions/fig-7.10.png" alt="TWO OWNERSHIP SHAPES TREE" loading="lazy">
 
 *前台子会话属于这次调用；后台子会话挂在一个后台锚点上。箭头从所有者指向被拥有者。左：ex 22。右：ex 23，锚点立刻完成，一个 reporter 任务把每条消息送给子会话，再把答案发回给父方。虚线是后台的边界：父方的 Esc 和空闲等待止步于此。*
 
-```
-A foreground child belongs to the call; a background child hangs off a background anchor. Arrows point from owner to owned. Left: ex 22. Right: ex 23, where the anchor completes at once and a reporter task delivers each message to the child and posts the answer back to the parent. The dashed line is the background boundary: the parent’s Esc and idle waits stop there.
-```
-
+<aside class="note">A foreground child belongs to the call; a background child hangs off a background anchor. Arrows point from owner to owned. Left: ex 22. Right: ex 23, where the anchor completes at once and a reporter task delivers each message to the child and posts the answer back to the parent. The dashed line is the background boundary: the parent’s Esc and idle waits stop there.</aside>
 ### 后台模式
 
 一个后台子智能体活得比父方的轮次更久：用户可以给它发消息、停掉它，以后再列出它。示例 23 把这放在一个带 `spawn`、`send`、`stop` 和 `status` 四个动作的 `subagent` 工具后面。一次 `spawn` 一次提交三样东西。一个锚点任务 `app.subagent-anchor` 是父会话的后台任务；它立刻完成，并在子会话工作期间保持开启。子会话由这个锚点拥有，不带 `subagent` 扩展，并有自己的 `instructions`。父方的 `app.subagents` 文档把子智能体的名字映射到子会话；父方的一个分叉开始时它是空的。
@@ -461,3 +469,16 @@ background 标志是一堵墙。父方的 Esc 和空闲等待止步于锚点，�
 ```
 Sources: spec §7.3, §5.4, §12; README §Abort and Subagents; ex 22, 23 and runs 22, 23; src/harness/harness.ts; src/harness/agent.ts; src/harness/tool.ts
 ```
+
+<table>
+<tr><th>导出</th><th>译文</th><th>参见</th></tr>
+<tr><td>beforeRequest generation replace the messages of this one request; each handler gets the previous one’s result reported, ignored</td><td>generation：替换这一次请求的消息；每个处理器拿到前一个的结果。已上报，被忽略。</td><td></td></tr>
+<tr><td>afterResponse generation observe every model response reported, ignored</td><td>generation：观察每一个模型响应。已上报，被忽略。</td><td></td></tr>
+<tr><td>onYield generation answer a final answer with { continue }; the first wins reported, ignored</td><td>generation：用 <code>{ continue }</code> 回答一个最终答案；第一个胜出。已上报，被忽略。</td><td></td></tr>
+<tr><td>afterTools generation observe a finished round of tool results reported, ignored</td><td>generation：观察一轮结束的工具结果。已上报，被忽略。</td><td></td></tr>
+<tr><td>beforeTool tool rewrite the arguments, or block the call; the first block wins the call is blocked</td><td>tool：改写参数，或拦下这次调用；第一个拦截胜出。这次调用被拦下。</td><td></td></tr>
+<tr><td>afterTool tool replace the result, handler by handler reported, ignored</td><td>tool：替换结果，逐个处理器进行。已上报，被忽略。</td><td></td></tr>
+<tr><td>beforeCompact compaction decline, or supply a summary; the first decision wins reported, ignored</td><td>compaction：拒绝，或提供一份摘要；第一个决定胜出。已上报，被忽略。</td><td></td></tr>
+<tr><td>GenerationHooks, ToolHooks and CompactionHooks, src/harness/types.ts; spec §7.2; src/harness/tool.ts. “Reported” means passed to</td><td></td><td></td></tr>
+<tr><td>HarnessOptions.onReport. Handlers run in extension order. A throwing guard blocks: it fails closed.</td><td>。处理器按扩展顺序运行。一个抛出异常的守卫会拦截：它失败时封闭。</td><td></td></tr>
+</table>
