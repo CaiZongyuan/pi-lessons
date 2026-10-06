@@ -37,8 +37,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-          cache-dependency-path: docs/package-lock.json
 
       # ---- content validation ---------------------------------------------
       # Runs before the Node toolchain is installed so a broken translation fails in
@@ -60,20 +58,17 @@ jobs:
         run: python tools/docs.py check
 
       # ---- site build -----------------------------------------------------
-      # A lock file generated on Windows records only the win32 variants of packages
-      # that ship per-platform binaries. `fix_lock_platforms.py` copies the missing
-      # variants in from the dependency ranges rollup already declares, so `npm ci`
-      # resolves the runner's platform instead of failing with
-      # "Cannot find module @rollup/rollup-linux-x64-gnu" (npm/cli#4828).
-      # The lock is committed fixed, so this is a no-op in CI and only matters after a
-      # local dependency change.
-      - name: Complete platform entries in the lock file
-        run: |
-          python tools/fix_lock_platforms.py
-
+      # No lock file is committed, and `npm install` resolves dependencies fresh.
+      #
+      # A lock generated on Windows cannot be used here: it records only the win32
+      # variants of packages that ship per-platform binaries, so a Linux runner installs
+      # without @rollup/rollup-linux-x64-gnu and the build dies in astro check. A lock
+      # generated on Linux breaks local Windows installs instead. The site is built in
+      # both places, so neither lock is correct for both, and the resolver's own
+      # platform handling is the only thing that works.
       - name: Install dependencies
         working-directory: docs
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund
 
       - name: Astro check
         working-directory: docs

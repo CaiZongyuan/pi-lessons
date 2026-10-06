@@ -1,21 +1,16 @@
 ---
 /**
- * Page title with the book context.
+ * Page title, prefixed with the part label.
  *
- * Starlight's default renders `title` then the site name. For a docs site with two
- * multi-part books, the part number is the more useful qualifier, so the frontmatter
- * `sidebar.label` (set by tools/docs.py from book.json) is preferred when present.
+ * Starlight's default renders `title` then the site name. With two multi-part books the
+ * part number is the more useful qualifier, so the frontmatter `sidebar.label` (set by
+ * tools/docs.py from book.json) is used when present.
  */
 import Default from '@astrojs/starlight/components/PageTitle.astro';
-import type { Props } from '@astrojs/starlight/components/PageTitle.astro';
 
-type Extra = Props & { entry?: { data: Record<string, any> } };
-
-const { entry, ...rest } = Astro.props as Extra;
+const { entry, ...rest } = Astro.props;
 const label: string | undefined = entry?.data?.sidebar?.label;
+const title: string = entry?.data?.title ?? '';
 ---
 
-<Default {...rest}>
-  {label ? `${label} · ${Astro.props.entry.data.title}` : undefined}
-  <slot />
-</Default>
+<Default {...rest}>{label ? `${label} · ${title}` : title}<slot /></Default>
