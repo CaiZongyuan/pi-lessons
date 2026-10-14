@@ -1,0 +1,466 @@
+{
+  "scope": "front and chapters 1–5",
+  "figures": [
+    {
+      "id": "D.front.1",
+      "kind": "original",
+      "reason": "Composite cover plate includes non-hatch inline raster decoration; exact original retained.",
+      "page": 1,
+      "image": "sources/durable/Pi Durable 技术手册/图片和附件/image.png"
+    },
+    {
+      "id": "D.front.2",
+      "kind": "diagram",
+      "page": 8,
+      "pdfFigure": "0.1",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        408.75
+      ],
+      "sourceImage": "sources/durable/Pi Durable 技术手册/图片和附件/image 1.png",
+      "nodes": 32,
+      "paths": 383,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.1.1",
+      "kind": "diagram",
+      "page": 11,
+      "pdfFigure": "1.1",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        287.25
+      ],
+      "sourceImage": "sources/durable/1.模型-durable/图片和附件/image 2.png",
+      "nodes": 39,
+      "paths": 676,
+      "hatchRegions": 2
+    },
+    {
+      "id": "D.1.2",
+      "kind": "diagram",
+      "page": 13,
+      "pdfFigure": "1.2",
+      "crop": [
+        57.75,
+        316.5,
+        554.25,
+        583.5
+      ],
+      "sourceImage": "sources/durable/1.模型-durable/图片和附件/image 4.png",
+      "nodes": 45,
+      "paths": 792,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.1.3",
+      "kind": "diagram",
+      "page": 16,
+      "pdfFigure": "1.3",
+      "crop": [
+        57.75,
+        374.25,
+        554.25,
+        631.5
+      ],
+      "sourceImage": "sources/durable/1.模型-durable/图片和附件/image 1.png",
+      "nodes": 41,
+      "paths": 553,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.1.4",
+      "kind": "diagram",
+      "page": 20,
+      "pdfFigure": "1.4",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        538.5
+      ],
+      "sourceImage": "sources/durable/1.模型-durable/图片和附件/image.png",
+      "nodes": 42,
+      "paths": 529,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.1.5",
+      "kind": "diagram",
+      "page": 22,
+      "pdfFigure": "1.5",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        636.0
+      ],
+      "sourceImage": "sources/durable/1.模型-durable/图片和附件/image 3.png",
+      "nodes": 49,
+      "paths": 633,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.2.1",
+      "kind": "diagram",
+      "page": 25,
+      "pdfFigure": "2.1",
+      "crop": [
+        57.75,
+        285.75,
+        554.25,
+        645.0
+      ],
+      "sourceImage": "sources/durable/2.会话与提交/图片和附件/image 3.png",
+      "nodes": 85,
+      "paths": 1319,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.2.2",
+      "kind": "diagram",
+      "page": 27,
+      "pdfFigure": "2.2",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        237.0
+      ],
+      "sourceImage": "sources/durable/2.会话与提交/图片和附件/image 2.png",
+      "nodes": 75,
+      "paths": 432,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.2.3",
+      "kind": "diagram",
+      "page": 30,
+      "pdfFigure": "2.3",
+      "crop": [
+        57.75,
+        191.25,
+        554.25,
+        600.75
+      ],
+      "sourceImage": "sources/durable/2.会话与提交/图片和附件/image.png",
+      "nodes": 37,
+      "paths": 586,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.2.4",
+      "kind": "diagram",
+      "page": 33,
+      "pdfFigure": "2.4",
+      "crop": [
+        57.75,
+        316.5,
+        554.25,
+        540.75
+      ],
+      "sourceImage": "sources/durable/2.会话与提交/图片和附件/image 1.png",
+      "nodes": 38,
+      "paths": 651,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.3.1",
+      "kind": "diagram",
+      "page": 37,
+      "pdfFigure": "3.1",
+      "crop": [
+        57.75,
+        387.75,
+        554.25,
+        691.5
+      ],
+      "sourceImage": "sources/durable/3.对话与上下文/图片和附件/image.png",
+      "nodes": 53,
+      "paths": 628,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.3.2",
+      "kind": "diagram",
+      "page": 41,
+      "pdfFigure": "3.2",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        444.0
+      ],
+      "sourceImage": "sources/durable/3.对话与上下文/图片和附件/image 3.png",
+      "nodes": 74,
+      "paths": 861,
+      "hatchRegions": 2
+    },
+    {
+      "id": "D.3.3",
+      "kind": "diagram",
+      "page": 44,
+      "pdfFigure": "3.3",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        333.75
+      ],
+      "sourceImage": "sources/durable/3.对话与上下文/图片和附件/image 1.png",
+      "nodes": 33,
+      "paths": 434,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.3.4",
+      "kind": "diagram",
+      "page": 47,
+      "pdfFigure": "3.4",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        406.5
+      ],
+      "sourceImage": "sources/durable/3.对话与上下文/图片和附件/image 2.png",
+      "nodes": 127,
+      "paths": 822,
+      "hatchRegions": 31
+    },
+    {
+      "id": "D.4.1",
+      "kind": "diagram",
+      "page": 51,
+      "pdfFigure": "4.1",
+      "crop": [
+        57.75,
+        326.25,
+        554.25,
+        595.5
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image 2.png",
+      "nodes": 40,
+      "paths": 576,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.4.2",
+      "kind": "diagram",
+      "page": 53,
+      "pdfFigure": "4.2",
+      "crop": [
+        57.75,
+        360.75,
+        554.25,
+        660.75
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image 1.png",
+      "nodes": 29,
+      "paths": 377,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.4.3",
+      "kind": "diagram",
+      "page": 54,
+      "pdfFigure": "4.3",
+      "crop": [
+        57.75,
+        483.75,
+        554.25,
+        660.75
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image.png",
+      "nodes": 40,
+      "paths": 336,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.4.4",
+      "kind": "diagram",
+      "page": 56,
+      "pdfFigure": null,
+      "crop": [
+        64.75,
+        449.0,
+        374.0,
+        540.0
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image 3.png",
+      "nodes": 8,
+      "paths": 293,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.4.5",
+      "kind": "diagram",
+      "page": 57,
+      "pdfFigure": "4.4",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        288.0
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image 4.png",
+      "nodes": 44,
+      "paths": 537,
+      "hatchRegions": 3
+    },
+    {
+      "id": "D.4.6",
+      "kind": "diagram",
+      "page": 58,
+      "pdfFigure": "4.5",
+      "crop": [
+        57.75,
+        483.75,
+        554.25,
+        705.0
+      ],
+      "sourceImage": "sources/durable/4.文档/图片和附件/image 5.png",
+      "nodes": 34,
+      "paths": 528,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.1",
+      "kind": "diagram",
+      "page": 64,
+      "pdfFigure": "5.1",
+      "crop": [
+        57.75,
+        337.5,
+        554.25,
+        661.5
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 2.png",
+      "nodes": 40,
+      "paths": 600,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.2",
+      "kind": "diagram",
+      "page": 67,
+      "pdfFigure": "5.2",
+      "crop": [
+        57.75,
+        350.25,
+        554.25,
+        627.0
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 3.png",
+      "nodes": 41,
+      "paths": 695,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.3",
+      "kind": "diagram",
+      "page": 70,
+      "pdfFigure": "5.3",
+      "crop": [
+        57.75,
+        390.0,
+        554.25,
+        702.0
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 4.png",
+      "nodes": 31,
+      "paths": 498,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.4",
+      "kind": "diagram",
+      "page": 73,
+      "pdfFigure": "5.4",
+      "crop": [
+        57.75,
+        363.75,
+        554.25,
+        607.5
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image.png",
+      "nodes": 32,
+      "paths": 610,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.5",
+      "kind": "diagram",
+      "page": 76,
+      "pdfFigure": "5.5",
+      "crop": [
+        57.75,
+        382.5,
+        554.25,
+        695.25
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 5.png",
+      "nodes": 29,
+      "paths": 540,
+      "hatchRegions": 0
+    },
+    {
+      "id": "D.5.6",
+      "kind": "diagram",
+      "page": 78,
+      "pdfFigure": "5.6",
+      "crop": [
+        57.75,
+        71.25,
+        554.25,
+        317.25
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 1.png",
+      "nodes": 49,
+      "paths": 518,
+      "hatchRegions": 4
+    },
+    {
+      "id": "D.5.7",
+      "kind": "diagram",
+      "page": 81,
+      "pdfFigure": "5.7",
+      "crop": [
+        57.75,
+        162.0,
+        554.25,
+        513.0
+      ],
+      "sourceImage": "sources/durable/5.任务/图片和附件/image 6.png",
+      "nodes": 31,
+      "paths": 466,
+      "hatchRegions": 0
+    }
+  ],
+  "count": 28,
+  "native": 27,
+  "original": 1,
+  "method": "True source-extracted SVG path geometry, outlined glyphs, clipped paint order; accessible native hotspots. Warm-gray hatch textures alone reconstructed as lines.",
+  "sourcePDF": "/workspace/shared/pi-durable-input/Pi-Durable-Technical-Manual.pdf",
+  "qa": "All 28 supplied source images inspected. All 27 native figures rendered with Inkscape and visually checked against source images and PDF render crops. Native glyph reference clipping verified after wrapper correction. All IDs, source paths, bounds, glyph refs, and clips validated.",
+  "qaContactSheets": [
+    "/tmp/durable-early/qa/contact-0.png",
+    "/tmp/durable-early/qa/contact-1.png",
+    "/tmp/durable-early/qa/contact-2.png",
+    "/tmp/durable-early/qa/contact-3.png",
+    "/tmp/durable-early/qa/contact-4.png"
+  ],
+  "catalogBytes": 7741166,
+  "catalogGzipBytes": 1941551,
+  "nodeCount": 1218,
+  "limits": [
+    "Cover plate D.front.1 retained as zoomable original because its composite artwork contains non-hatch raster decoration.",
+    "Source Type3 labels retain exact native outlines with deduplicated glyph definitions. sourceText provides selectable text; transparent semantic nodes provide keyboard interaction.",
+    "PDF hatch fills reconstructed as clipped diagonal SVG lines. All shapes, edge directions, labels, order, and timeline scales source-extracted.",
+    "Chromium CLI unavailable due local socket restrictions; SVG rendering QA used Inkscape. Parent owns integrated browser interaction QA."
+  ]
+}

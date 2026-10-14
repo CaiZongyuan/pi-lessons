@@ -1,0 +1,1208 @@
+[
+  {
+    "id": "R.1",
+    "title": "会话写入的位置",
+    "label": "FIG. R.1",
+    "page": 186,
+    "image": "/figures/reference/image.webp",
+    "source": "CA/src/main.ts:688 · CA/src/core/session-manager.ts:589",
+    "caption": "第一个已设置的来源生效，并且设置层会在决定是否信任项目之前读取。顺序来自 main()（CA/src/main.ts:688）；默认路径来自 CA/src/core/session-manager.ts:589。即使后来拒绝项目，项目设置仍能改变会话文件位置。",
+    "kind": "diagram",
+    "width": 1382,
+    "height": 195,
+    "nodes": [
+      {
+        "id": "n0",
+        "x": 20,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "① --session-dir\nCLI 标志\n最先匹配，立即生效",
+        "detail": "命令行 --session-dir 的优先级最高。",
+        "tone": "config"
+      },
+      {
+        "id": "n1",
+        "x": 364,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "② PI_CODING_AGENT_SESSION_DIR\n环境变量\n展开 ~",
+        "detail": "只有前一来源未设置时检查环境变量，路径中的 ~ 会展开。",
+        "tone": "config"
+      },
+      {
+        "id": "n2",
+        "x": 708,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "③ sessionDir\n项目或全局 settings.json\n决定信任前读取",
+        "detail": "sessionDir 来自项目或全局设置；读取发生在项目是否受信任的判断之前。",
+        "tone": "config"
+      },
+      {
+        "id": "n3",
+        "x": 1052,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "④ default\n<agent dir>/sessions/--<cwd>--",
+        "detail": "以上均未设置时，使用由工作目录编码而成的默认会话目录。",
+        "tone": "config"
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1"
+      },
+      {
+        "from": "n1",
+        "to": "n2"
+      },
+      {
+        "from": "n2",
+        "to": "n3"
+      }
+    ]
+  },
+  {
+    "id": "R.2",
+    "title": "设置值如何解析",
+    "label": "FIG. R.2",
+    "page": 202,
+    "image": "/figures/reference/image 1.webp",
+    "source": "CA/src/core/settings-manager.ts:195,225,300,474",
+    "caption": "项目列表替换全局列表，项目对象合并到全局对象。defaultTools 仅含 +name/-name 时追加到继承列表；其余数组整体替换。",
+    "kind": "diagram",
+    "width": 1726,
+    "height": 195,
+    "nodes": [
+      {
+        "id": "n0",
+        "x": 20,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "① global\n<agent dir>/settings.json\nsetter 写入此处",
+        "detail": "全局设置首先读取，setter 始终写入全局文件。",
+        "tone": "config"
+      },
+      {
+        "id": "n1",
+        "x": 364,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "② project\n<cwd>/.pi/settings.json\n仅当项目受信任",
+        "detail": "受信任的项目才加载项目设置。",
+        "tone": "config"
+      },
+      {
+        "id": "n2",
+        "x": 708,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "③ merge\n对象合并 · 数组替换\ndefaultTools ± 追加",
+        "detail": "对象递归合并，数组整体替换；defaultTools 的修饰符列表有自己的追加规则。",
+        "tone": "config"
+      },
+      {
+        "id": "n3",
+        "x": 1052,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "④ CLI override\napplyOverrides()\n启动时，仅 --theme",
+        "detail": "CLI 使用 applyOverrides()；图中的例外为启动时的 --theme。",
+        "tone": "indigo"
+      },
+      {
+        "id": "n4",
+        "x": 1396,
+        "y": 25,
+        "w": 310,
+        "h": 135,
+        "label": "⑤ getter\nvalue ?? default",
+        "detail": "getter 使用空值合并运算应用默认值；文件本身不填充默认值。",
+        "tone": "config"
+      }
+    ],
+    "edges": [
+      {
+        "from": "n0",
+        "to": "n1"
+      },
+      {
+        "from": "n1",
+        "to": "n2"
+      },
+      {
+        "from": "n2",
+        "to": "n3"
+      },
+      {
+        "from": "n3",
+        "to": "n4"
+      }
+    ]
+  },
+  {
+    "id": "front-run",
+    "title": "一次真实运行：从提示到 JSONL",
+    "label": "FIG. 1 · 开篇",
+    "page": 1,
+    "image": "/figures/front/image.webp",
+    "source": "research/out/one-turn.txt · 原书封面",
+    "caption": "使用 faux 提供商实际运行一次 AgentSession。脚本化模型要求读取文件，read 工具执行，随后模型回答。每条完成的消息成为一行 JSONL，其 parentId 指向上一行。",
+    "kind": "diagram",
+    "theme": "dark",
+    "width": 1380,
+    "height": 710,
+    "nodes": [
+      {
+        "id": "user",
+        "x": 16,
+        "y": 35,
+        "w": 520,
+        "h": 34,
+        "label": "USER",
+        "detail": "USER",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "loop",
+        "x": 16,
+        "y": 151,
+        "w": 520,
+        "h": 34,
+        "label": "AGENT LOOP · PI-AGENT-CORE",
+        "detail": "AGENT LOOP · PI-AGENT-CORE",
+        "tone": "amber",
+        "shape": "label"
+      },
+      {
+        "id": "model",
+        "x": 16,
+        "y": 263,
+        "w": 520,
+        "h": 34,
+        "label": "MODEL · PI-AI STREAM",
+        "detail": "MODEL · PI-AI STREAM",
+        "tone": "plum",
+        "shape": "label"
+      },
+      {
+        "id": "tool",
+        "x": 16,
+        "y": 375,
+        "w": 520,
+        "h": 34,
+        "label": "TOOL",
+        "detail": "TOOL",
+        "tone": "green",
+        "shape": "label"
+      },
+      {
+        "id": "disk",
+        "x": 16,
+        "y": 487,
+        "w": 520,
+        "h": 34,
+        "label": "SESSION FILE · JSONL",
+        "detail": "SESSION FILE · JSONL",
+        "tone": "teal",
+        "shape": "label"
+      },
+      {
+        "id": "prompt",
+        "x": 178,
+        "y": 62,
+        "w": 520,
+        "h": 35,
+        "label": "prompt(\"What does hello.txt say?\")",
+        "detail": "用户提示，从 AgentSessionEvent 第1项开始。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "answer",
+        "x": 565,
+        "y": 94,
+        "w": 475,
+        "h": 35,
+        "label": "\"It says: Hello from the capture kit.\"",
+        "detail": "最终文本回答。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "turn1",
+        "x": 210,
+        "y": 178,
+        "w": 505,
+        "h": 39,
+        "label": "turn 1 · tool use",
+        "detail": "原图第一轮的绘制区间；请求模型并执行 read。",
+        "tone": "amber",
+        "shape": "rect"
+      },
+      {
+        "id": "turn2",
+        "x": 745,
+        "y": 178,
+        "w": 208,
+        "h": 39,
+        "label": "turn 2 · answer",
+        "detail": "原图第二轮的绘制区间；模型返回最终答案。",
+        "tone": "amber",
+        "shape": "rect"
+      },
+      {
+        "id": "settled",
+        "x": 1001,
+        "y": 185,
+        "w": 24,
+        "h": 24,
+        "label": "",
+        "detail": "agent_settled：整个会话运行收束，原图位于第29个事件。",
+        "tone": "amber",
+        "shape": "circle"
+      },
+      {
+        "id": "settled-label",
+        "x": 881,
+        "y": 222,
+        "w": 165,
+        "h": 30,
+        "label": "agent_settled",
+        "detail": "最后一个事件为 agent_settled。",
+        "tone": "amber",
+        "shape": "label"
+      },
+      {
+        "id": "stream1",
+        "x": 358,
+        "y": 290,
+        "w": 209,
+        "h": 39,
+        "label": "text + toolCall",
+        "detail": "第一轮模型输出文本及 read 工具调用。",
+        "tone": "plum",
+        "shape": "rect"
+      },
+      {
+        "id": "stream2",
+        "x": 774,
+        "y": 290,
+        "w": 149,
+        "h": 39,
+        "label": "text",
+        "detail": "第二轮模型输出最终文本。",
+        "tone": "plum",
+        "shape": "rect"
+      },
+      {
+        "id": "deltas",
+        "x": 510,
+        "y": 330,
+        "w": 210,
+        "h": 35,
+        "label": "*_delta events",
+        "detail": "流式增量事件；这里只保留原图标记，不产生模拟计数。",
+        "tone": "plum",
+        "shape": "label"
+      },
+      {
+        "id": "read-mark",
+        "x": 595,
+        "y": 405,
+        "w": 30,
+        "h": 36,
+        "label": "",
+        "detail": "read 工具执行。",
+        "tone": "green",
+        "shape": "rect"
+      },
+      {
+        "id": "read",
+        "x": 638,
+        "y": 404,
+        "w": 260,
+        "h": 40,
+        "label": "read hello.txt",
+        "detail": "实际工具读取 hello.txt，结果成为第7行记录。",
+        "tone": "green",
+        "shape": "label"
+      },
+      {
+        "id": "row1",
+        "x": 34,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "1",
+        "detail": "会话文件第1行：session；header · version 3。文件头，不是树条目。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle1",
+        "x": 1102,
+        "y": 81,
+        "w": 28,
+        "h": 28,
+        "label": "1",
+        "detail": "会话文件第1行：session。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key1",
+        "x": 1137,
+        "y": 73,
+        "w": 230,
+        "h": 58,
+        "label": "session\nheader · version 3",
+        "detail": "对应左侧第1条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row2",
+        "x": 70,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "2",
+        "detail": "会话文件第2行：model_change；faux / faux-1。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle2",
+        "x": 1102,
+        "y": 145,
+        "w": 28,
+        "h": 28,
+        "label": "2",
+        "detail": "会话文件第2行：model_change。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key2",
+        "x": 1137,
+        "y": 137,
+        "w": 230,
+        "h": 58,
+        "label": "model_change\nfaux / faux-1",
+        "detail": "对应左侧第2条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row3",
+        "x": 107,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "3",
+        "detail": "会话文件第3行：thinking_level_change；off。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle3",
+        "x": 1102,
+        "y": 209,
+        "w": 28,
+        "h": 28,
+        "label": "3",
+        "detail": "会话文件第3行：thinking_level_change。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key3",
+        "x": 1137,
+        "y": 201,
+        "w": 230,
+        "h": 58,
+        "label": "thinking_level_change\noff",
+        "detail": "对应左侧第3条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row4",
+        "x": 253,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "4",
+        "detail": "会话文件第4行：message · system；preamble, tools, rules, docs…。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle4",
+        "x": 1102,
+        "y": 273,
+        "w": 28,
+        "h": 28,
+        "label": "4",
+        "detail": "会话文件第4行：message · system。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key4",
+        "x": 1137,
+        "y": 265,
+        "w": 230,
+        "h": 58,
+        "label": "message · system\npreamble, tools, rules, docs…",
+        "detail": "对应左侧第4条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row5",
+        "x": 313,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "5",
+        "detail": "会话文件第5行：message · user；the prompt。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle5",
+        "x": 1102,
+        "y": 337,
+        "w": 28,
+        "h": 28,
+        "label": "5",
+        "detail": "会话文件第5行：message · user。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key5",
+        "x": 1137,
+        "y": 329,
+        "w": 230,
+        "h": 58,
+        "label": "message · user\nthe prompt",
+        "detail": "对应左侧第5条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row6",
+        "x": 550,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "6",
+        "detail": "会话文件第6行：message · assistant；text + toolCall read。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle6",
+        "x": 1102,
+        "y": 401,
+        "w": 28,
+        "h": 28,
+        "label": "6",
+        "detail": "会话文件第6行：message · assistant。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key6",
+        "x": 1137,
+        "y": 393,
+        "w": 230,
+        "h": 58,
+        "label": "message · assistant\ntext + toolCall read",
+        "detail": "对应左侧第6条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row7",
+        "x": 669,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "7",
+        "detail": "会话文件第7行：message · toolResult；hello.txt contents。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle7",
+        "x": 1102,
+        "y": 465,
+        "w": 28,
+        "h": 28,
+        "label": "7",
+        "detail": "会话文件第7行：message · toolResult。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key7",
+        "x": 1137,
+        "y": 457,
+        "w": 230,
+        "h": 58,
+        "label": "message · toolResult\nhello.txt contents",
+        "detail": "对应左侧第7条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row8",
+        "x": 907,
+        "y": 519,
+        "w": 32,
+        "h": 32,
+        "label": "8",
+        "detail": "会话文件第8行：message · assistant；the answer。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key-circle8",
+        "x": 1102,
+        "y": 529,
+        "w": 28,
+        "h": 28,
+        "label": "8",
+        "detail": "会话文件第8行：message · assistant。",
+        "tone": "teal",
+        "shape": "circle",
+        "align": "center"
+      },
+      {
+        "id": "key8",
+        "x": 1137,
+        "y": 521,
+        "w": 230,
+        "h": 58,
+        "label": "message · assistant\nthe answer",
+        "detail": "对应左侧第8条会话记录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "construction",
+        "x": 16,
+        "y": 558,
+        "w": 300,
+        "h": 35,
+        "label": "at createAgentSession",
+        "detail": "第1–3条元数据在 createAgentSession 中生成；不是三个模型消息。",
+        "tone": "teal",
+        "shape": "label"
+      },
+      {
+        "id": "persist",
+        "x": 355,
+        "y": 558,
+        "w": 365,
+        "h": 35,
+        "label": "one line per message_end",
+        "detail": "每条完成的消息在 message_end 处对应一行 JSONL。",
+        "tone": "teal",
+        "shape": "label"
+      },
+      {
+        "id": "key-title",
+        "x": 1100,
+        "y": 14,
+        "w": 255,
+        "h": 61,
+        "label": "KEY · THE SESSION\nFILE, LINE BY LINE",
+        "detail": "右侧逐行解释；不是额外的事件流。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "tick1",
+        "x": 164.0,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "1",
+        "detail": "按发出顺序排列的第 1 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick5",
+        "x": 283.1428571428571,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "5",
+        "detail": "按发出顺序排列的第 5 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick10",
+        "x": 432.07142857142856,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "10",
+        "detail": "按发出顺序排列的第 10 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick15",
+        "x": 581.0,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "15",
+        "detail": "按发出顺序排列的第 15 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick20",
+        "x": 729.9285714285714,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "20",
+        "detail": "按发出顺序排列的第 20 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick25",
+        "x": 878.8571428571429,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "25",
+        "detail": "按发出顺序排列的第 25 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "tick29",
+        "x": 998.0,
+        "y": 639,
+        "w": 30,
+        "h": 26,
+        "label": "29",
+        "detail": "按发出顺序排列的第 29 个 AgentSessionEvent。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "axis-title",
+        "x": 330,
+        "y": 669,
+        "w": 605,
+        "h": 29,
+        "label": "AgentSessionEvent number, in emission order · 29 events",
+        "detail": "横轴是事件序号，不是时间；轴与写入对齐保留原图坐标。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "from": "user",
+        "to": "user",
+        "points": [
+          [
+            20,
+            83
+          ],
+          [
+            1028,
+            83
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "loop",
+        "to": "loop",
+        "points": [
+          [
+            20,
+            199
+          ],
+          [
+            1028,
+            199
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "model",
+        "to": "model",
+        "points": [
+          [
+            20,
+            311
+          ],
+          [
+            1028,
+            311
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "tool",
+        "to": "tool",
+        "points": [
+          [
+            20,
+            423
+          ],
+          [
+            1028,
+            423
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "disk",
+        "to": "disk",
+        "points": [
+          [
+            20,
+            535
+          ],
+          [
+            1028,
+            535
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "turn1",
+        "to": "turn2",
+        "points": [
+          [
+            179,
+            197
+          ],
+          [
+            982,
+            197
+          ]
+        ],
+        "color": "#deb16b",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "stream1",
+        "to": "stream1",
+        "points": [
+          [
+            417,
+            334
+          ],
+          [
+            417,
+            347
+          ]
+        ],
+        "color": "#b598bd",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "stream1",
+        "to": "stream1",
+        "points": [
+          [
+            506,
+            334
+          ],
+          [
+            506,
+            347
+          ]
+        ],
+        "color": "#b598bd",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "stream2",
+        "to": "stream2",
+        "points": [
+          [
+            834,
+            334
+          ],
+          [
+            834,
+            347
+          ]
+        ],
+        "color": "#b598bd",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "stream2",
+        "to": "stream2",
+        "points": [
+          [
+            864,
+            334
+          ],
+          [
+            864,
+            347
+          ]
+        ],
+        "color": "#b598bd",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "row4",
+        "to": "row4",
+        "points": [
+          [
+            269,
+            217
+          ],
+          [
+            269,
+            519
+          ]
+        ],
+        "color": "#81bfc2",
+        "dashed": true,
+        "width": 1.2,
+        "arrow": false
+      },
+      {
+        "from": "row5",
+        "to": "row5",
+        "points": [
+          [
+            329,
+            217
+          ],
+          [
+            329,
+            519
+          ]
+        ],
+        "color": "#81bfc2",
+        "dashed": true,
+        "width": 1.2,
+        "arrow": false
+      },
+      {
+        "from": "row6",
+        "to": "row6",
+        "points": [
+          [
+            566,
+            329
+          ],
+          [
+            566,
+            519
+          ]
+        ],
+        "color": "#81bfc2",
+        "dashed": true,
+        "width": 1.2,
+        "arrow": false
+      },
+      {
+        "from": "row7",
+        "to": "row7",
+        "points": [
+          [
+            685,
+            443
+          ],
+          [
+            685,
+            519
+          ]
+        ],
+        "color": "#81bfc2",
+        "dashed": true,
+        "width": 1.2,
+        "arrow": false
+      },
+      {
+        "from": "row8",
+        "to": "row8",
+        "points": [
+          [
+            923,
+            329
+          ],
+          [
+            923,
+            519
+          ]
+        ],
+        "color": "#81bfc2",
+        "dashed": true,
+        "width": 1.2,
+        "arrow": false
+      },
+      {
+        "from": "answer",
+        "to": "answer",
+        "points": [
+          [
+            923,
+            127
+          ],
+          [
+            923,
+            290
+          ]
+        ],
+        "color": "#9ba6b5",
+        "dashed": true,
+        "width": 1,
+        "arrow": false
+      },
+      {
+        "from": "disk",
+        "to": "disk",
+        "points": [
+          [
+            1077,
+            18
+          ],
+          [
+            1077,
+            603
+          ]
+        ],
+        "color": "#3b4858",
+        "dashed": false,
+        "width": 2,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            179,
+            625
+          ],
+          [
+            1013,
+            625
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            179.0,
+            618
+          ],
+          [
+            179.0,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            298.1428571428571,
+            618
+          ],
+          [
+            298.1428571428571,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            447.07142857142856,
+            618
+          ],
+          [
+            447.07142857142856,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            596.0,
+            618
+          ],
+          [
+            596.0,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            744.9285714285714,
+            618
+          ],
+          [
+            744.9285714285714,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            893.8571428571429,
+            618
+          ],
+          [
+            893.8571428571429,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      },
+      {
+        "from": "axis-title",
+        "to": "axis-title",
+        "points": [
+          [
+            1013.0,
+            618
+          ],
+          [
+            1013.0,
+            633
+          ]
+        ],
+        "color": "#8d99a9",
+        "dashed": false,
+        "width": 1.3,
+        "arrow": false
+      }
+    ],
+    "notes": [
+      "横轴保留原图的 1 / 5 / 10 / 15 / 20 / 25 / 29 事件序号。第1–3条记录在 createAgentSession 处；系统、用户、助手、工具结果与最终助手消息的写入位置按原图对齐。",
+      "文件头不是树条目；图中不添加原书没有的 parentId 箭头。"
+    ]
+  }
+]

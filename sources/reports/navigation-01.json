@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Pi 的用途",
+    "link": "/pi-104/ch01/what-pi-is-for",
+    "page": 7,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  },
+  {
+    "title": "一页看懂 monorepo",
+    "link": "/pi-104/ch01/monorepo",
+    "page": 11,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  },
+  {
+    "title": "一个提示的生命周期",
+    "link": "/pi-104/ch01/prompt-lifecycle",
+    "page": 15,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  }
+]

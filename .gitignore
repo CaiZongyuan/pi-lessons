@@ -1,0 +1,14 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+qa/
+*.log
+
+sources/original.txt
+.DS_Store
+
+__pycache__/
+docs/.vitepress/staging/
+
+# Nested input archives are preserved outside the runnable delivery.
+sources/durable/*.zip

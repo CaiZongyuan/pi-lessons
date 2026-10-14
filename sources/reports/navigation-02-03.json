@@ -1,0 +1,90 @@
+[
+  {
+    "chapter": 2,
+    "section": "2.1",
+    "title": "提供商与模型",
+    "route": "/pi-104/ch02/providers-models",
+    "pageRange": [
+      24,
+      29
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md"
+  },
+  {
+    "chapter": 2,
+    "section": "2.2",
+    "title": "流式事件协议",
+    "route": "/pi-104/ch02/streaming-events",
+    "pageRange": [
+      30,
+      35
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md"
+  },
+  {
+    "chapter": 2,
+    "section": "2.3",
+    "title": "传输 API 与跨提供商交接",
+    "route": "/pi-104/ch02/wire-apis",
+    "pageRange": [
+      36,
+      40
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md"
+  },
+  {
+    "chapter": 2,
+    "section": "2.4",
+    "title": "身份验证、费用、重试与模型目录",
+    "route": "/pi-104/ch02/auth-cost-retries",
+    "pageRange": [
+      41,
+      47
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md"
+  },
+  {
+    "chapter": 3,
+    "section": "3.1",
+    "title": "智能体循环",
+    "route": "/pi-104/ch03/agent-loop",
+    "pageRange": [
+      49,
+      56
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md"
+  },
+  {
+    "chapter": 3,
+    "section": "3.2",
+    "title": "智能体事件与 Agent 类",
+    "route": "/pi-104/ch03/agent-events",
+    "pageRange": [
+      57,
+      60
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md"
+  },
+  {
+    "chapter": 3,
+    "section": "3.3",
+    "title": "AgentSession：组装运行时",
+    "route": "/pi-104/ch03/agent-session",
+    "pageRange": [
+      61,
+      66
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md"
+  },
+  {
+    "chapter": 3,
+    "section": "3.4",
+    "title": "从 prompt() 到 agent_settled",
+    "route": "/pi-104/ch03/prompt-lifecycle",
+    "pageRange": [
+      67,
+      73
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md"
+  }
+]

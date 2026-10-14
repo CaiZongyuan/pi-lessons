@@ -1,0 +1,426 @@
+[
+  {
+    "chapter": "1",
+    "number": "1.1",
+    "title": "Pi Durable 的用途",
+    "link": "/pi-durable/ch01/section-01",
+    "page": 10,
+    "chapterTitle": "模型"
+  },
+  {
+    "chapter": "1",
+    "number": "1.2",
+    "title": "一页看懂架构",
+    "link": "/pi-durable/ch01/section-02",
+    "page": 13,
+    "chapterTitle": "模型"
+  },
+  {
+    "chapter": "1",
+    "number": "1.3",
+    "title": "核心规则及其不变量",
+    "link": "/pi-durable/ch01/section-03",
+    "page": 16,
+    "chapterTitle": "模型"
+  },
+  {
+    "chapter": "1",
+    "number": "1.4",
+    "title": "一次输入得到回答的全过程",
+    "link": "/pi-durable/ch01/section-04",
+    "page": 19,
+    "chapterTitle": "模型"
+  },
+  {
+    "chapter": "2",
+    "number": "2.1",
+    "title": "记录与 ID",
+    "link": "/pi-durable/ch02/section-01",
+    "page": 25,
+    "chapterTitle": "会话与提交"
+  },
+  {
+    "chapter": "2",
+    "number": "2.2",
+    "title": "提交与变更串行队列",
+    "link": "/pi-durable/ch02/section-02",
+    "page": 29,
+    "chapterTitle": "会话与提交"
+  },
+  {
+    "chapter": "2",
+    "number": "2.3",
+    "title": "提交失败时会怎样",
+    "link": "/pi-durable/ch02/section-03",
+    "page": 33,
+    "chapterTitle": "会话与提交"
+  },
+  {
+    "chapter": "3",
+    "number": "3.1",
+    "title": "条目与内置种类",
+    "link": "/pi-durable/ch03/section-01",
+    "page": 37,
+    "chapterTitle": "对话与上下文"
+  },
+  {
+    "chapter": "3",
+    "number": "3.2",
+    "title": "从对话记录到模型上下文",
+    "link": "/pi-durable/ch03/section-02",
+    "page": 40,
+    "chapterTitle": "对话与上下文"
+  },
+  {
+    "chapter": "3",
+    "number": "3.3",
+    "title": "分叉与有所有者的对话",
+    "link": "/pi-durable/ch03/section-03",
+    "page": 43,
+    "chapterTitle": "对话与上下文"
+  },
+  {
+    "chapter": "3",
+    "number": "3.4",
+    "title": "重置、交接与头指针",
+    "link": "/pi-durable/ch03/section-04",
+    "page": 46,
+    "chapterTitle": "对话与上下文"
+  },
+  {
+    "chapter": "4",
+    "number": "4.1",
+    "title": "定义文档",
+    "link": "/pi-durable/ch04/section-01",
+    "page": 50,
+    "chapterTitle": "文档"
+  },
+  {
+    "chapter": "4",
+    "number": "4.2",
+    "title": "访问、创建与生命周期",
+    "link": "/pi-durable/ch04/section-02",
+    "page": 53,
+    "chapterTitle": "文档"
+  },
+  {
+    "chapter": "4",
+    "number": "4.3",
+    "title": "基值、增量与迁移",
+    "link": "/pi-durable/ch04/section-03",
+    "page": 56,
+    "chapterTitle": "文档"
+  },
+  {
+    "chapter": "4",
+    "number": "4.4",
+    "title": "内置文档",
+    "link": "/pi-durable/ch04/section-04",
+    "page": 60,
+    "chapterTitle": "文档"
+  },
+  {
+    "chapter": "5",
+    "number": "5.1",
+    "title": "作为状态机的任务",
+    "link": "/pi-durable/ch05/section-01",
+    "page": 63,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "5",
+    "number": "5.2",
+    "title": "阶段、步骤与进展",
+    "link": "/pi-durable/ch05/section-02",
+    "page": 67,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "5",
+    "number": "5.3",
+    "title": "副作用三明治",
+    "link": "/pi-durable/ch05/section-03",
+    "page": 70,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "5",
+    "number": "5.4",
+    "title": "调度器",
+    "link": "/pi-durable/ch05/section-04",
+    "page": 73,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "5",
+    "number": "5.5",
+    "title": "所有权与结构化并发",
+    "link": "/pi-durable/ch05/section-05",
+    "page": 76,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "5",
+    "number": "5.6",
+    "title": "中止、故障与孤立",
+    "link": "/pi-durable/ch05/section-06",
+    "page": 80,
+    "chapterTitle": "任务"
+  },
+  {
+    "chapter": "6",
+    "number": "6.1",
+    "title": "提交请求与收件箱",
+    "link": "/pi-durable/ch06/section-01",
+    "page": 84,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "6",
+    "number": "6.2",
+    "title": "运行控制与实时文档",
+    "link": "/pi-durable/ch06/section-02",
+    "page": 88,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "6",
+    "number": "6.3",
+    "title": "生成",
+    "link": "/pi-durable/ch06/section-03",
+    "page": 91,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "6",
+    "number": "6.4",
+    "title": "工具调用与重放",
+    "link": "/pi-durable/ch06/section-04",
+    "page": 94,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "6",
+    "number": "6.5",
+    "title": "压缩",
+    "link": "/pi-durable/ch06/section-05",
+    "page": 97,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "6",
+    "number": "6.6",
+    "title": "用量与费用",
+    "link": "/pi-durable/ch06/section-06",
+    "page": 100,
+    "chapterTitle": "运行"
+  },
+  {
+    "chapter": "7",
+    "number": "7.1",
+    "title": "扩展与注册表",
+    "link": "/pi-durable/ch07/section-01",
+    "page": 103,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.2",
+    "title": "每个对话的智能体",
+    "link": "/pi-durable/ch07/section-02",
+    "page": 106,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.3",
+    "title": "钩子",
+    "link": "/pi-durable/ch07/section-03",
+    "page": 109,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.4",
+    "title": "定义工具",
+    "link": "/pi-durable/ch07/section-04",
+    "page": 112,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.5",
+    "title": "系统提示词",
+    "link": "/pi-durable/ch07/section-05",
+    "page": 115,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.6",
+    "title": "运行期间重新加载",
+    "link": "/pi-durable/ch07/section-06",
+    "page": 118,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "7",
+    "number": "7.7",
+    "title": "子智能体",
+    "link": "/pi-durable/ch07/section-07",
+    "page": 121,
+    "chapterTitle": "扩展与智能体"
+  },
+  {
+    "chapter": "8",
+    "number": "8.1",
+    "title": "Chord 与文档状态",
+    "link": "/pi-durable/ch08/section-01",
+    "page": 125,
+    "chapterTitle": "观察"
+  },
+  {
+    "chapter": "8",
+    "number": "8.2",
+    "title": "对话视图与 watch()",
+    "link": "/pi-durable/ch08/section-02",
+    "page": 129,
+    "chapterTitle": "观察"
+  },
+  {
+    "chapter": "8",
+    "number": "8.3",
+    "title": "智能体事件",
+    "link": "/pi-durable/ch08/section-03",
+    "page": 133,
+    "chapterTitle": "观察"
+  },
+  {
+    "chapter": "8",
+    "number": "8.4",
+    "title": "任务图与 inspect()",
+    "link": "/pi-durable/ch08/section-04",
+    "page": 137,
+    "chapterTitle": "观察"
+  },
+  {
+    "chapter": "9",
+    "number": "9.1",
+    "title": "存储契约",
+    "link": "/pi-durable/ch09/section-01",
+    "page": 141,
+    "chapterTitle": "存储与环境"
+  },
+  {
+    "chapter": "9",
+    "number": "9.2",
+    "title": "SQLite",
+    "link": "/pi-durable/ch09/section-02",
+    "page": 144,
+    "chapterTitle": "存储与环境"
+  },
+  {
+    "chapter": "9",
+    "number": "9.3",
+    "title": "JSONL",
+    "link": "/pi-durable/ch09/section-03",
+    "page": 148,
+    "chapterTitle": "存储与环境"
+  },
+  {
+    "chapter": "9",
+    "number": "9.4",
+    "title": "内存、一致性与可移植性",
+    "link": "/pi-durable/ch09/section-04",
+    "page": 152,
+    "chapterTitle": "存储与环境"
+  },
+  {
+    "chapter": "9",
+    "number": "9.5",
+    "title": "执行环境",
+    "link": "/pi-durable/ch09/section-05",
+    "page": 155,
+    "chapterTitle": "存储与环境"
+  },
+  {
+    "chapter": "10",
+    "number": "10.1",
+    "title": "构建编码智能体",
+    "link": "/pi-durable/ch10/section-01",
+    "page": 159,
+    "chapterTitle": "实践"
+  },
+  {
+    "chapter": "10",
+    "number": "10.2",
+    "title": "容易踩坑的契约",
+    "link": "/pi-durable/ch10/section-02",
+    "page": 163,
+    "chapterTitle": "实践"
+  },
+  {
+    "chapter": "10",
+    "number": "10.3",
+    "title": "限制与非目标",
+    "link": "/pi-durable/ch10/section-03",
+    "page": 168,
+    "chapterTitle": "实践"
+  },
+  {
+    "chapter": "R",
+    "number": "R.1",
+    "title": "Harness 与 Conversation API",
+    "link": "/pi-durable/reference/section-01",
+    "page": 172,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.2",
+    "title": "内置种类",
+    "link": "/pi-durable/reference/section-02",
+    "page": 179,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.3",
+    "title": "设置与默认值",
+    "link": "/pi-durable/reference/section-03",
+    "page": 180,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.4",
+    "title": "错误与原因",
+    "link": "/pi-durable/reference/section-04",
+    "page": 183,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.5",
+    "title": "术语表",
+    "link": "/pi-durable/reference/section-05",
+    "page": 185,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.6",
+    "title": "来源",
+    "link": "/pi-durable/reference/section-06",
+    "page": 187,
+    "chapterTitle": "参考"
+  },
+  {
+    "chapter": "R",
+    "number": "R.7",
+    "title": "图表索引",
+    "link": "/pi-durable/reference/section-07",
+    "page": 189,
+    "chapterTitle": "参考"
+  }
+]

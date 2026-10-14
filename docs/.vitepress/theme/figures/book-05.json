@@ -1,0 +1,3246 @@
+[
+  {
+    "id": "5.1",
+    "title": "Pi 的文件位置",
+    "label": "FIG. 5.1",
+    "source": "config.ts · auth-storage.ts:25 · session-manager.ts:592 · package-manager.ts:232 · trust-manager.ts:30",
+    "page": 100,
+    "image": "/figures/ch05/image 5.webp",
+    "caption": "一个目录始终加载，另一个等待信任。路径对应于固定提交。会话目录名称由工作目录转换而来：删除开头的斜杠，将每个 /、\\ 和 : 替换为 -，再在两端加上 --，见 CA/src/core/session-manager.ts:592。来源：config.ts、auth-storage.ts:25、extensions/mcp/log.ts:10、package-manager.ts:232 和 trust-manager.ts:30。",
+    "kind": "diagram",
+    "width": 1680,
+    "height": 1220,
+    "nodes": [
+      {
+        "id": "user-root",
+        "x": 42,
+        "y": 20,
+        "w": 785,
+        "h": 72,
+        "label": "~/.pi/agent/\n用户作用域 · 始终加载",
+        "detail": "用户作用域的智能体目录；下方十五项都直属此目录。",
+        "tone": "green",
+        "shape": "label"
+      },
+      {
+        "id": "user-settings",
+        "x": 96,
+        "y": 108,
+        "w": 735,
+        "h": 58,
+        "label": "settings.json\n严格 JSON；使用文件锁",
+        "detail": "严格 JSON；使用文件锁。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-keybindings",
+        "x": 96,
+        "y": 172,
+        "w": 735,
+        "h": 58,
+        "label": "keybindings.json",
+        "detail": "按键绑定配置文件。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-models",
+        "x": 96,
+        "y": 236,
+        "w": 735,
+        "h": 58,
+        "label": "models.json\n自定义提供商与模型；允许注释",
+        "detail": "自定义提供商与模型，允许注释。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-models-store",
+        "x": 96,
+        "y": 300,
+        "w": 735,
+        "h": 58,
+        "label": "models-store.json\n动态模型目录缓存",
+        "detail": "动态目录缓存。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-auth",
+        "x": 96,
+        "y": 364,
+        "w": 735,
+        "h": 58,
+        "label": "auth.json\n凭据；创建时文件 0600、目录 0700",
+        "detail": "文件权限 0600、目录权限 0700，仅在创建时设置。",
+        "tone": "teal",
+        "shape": "label"
+      },
+      {
+        "id": "user-mcp",
+        "x": 96,
+        "y": 428,
+        "w": 735,
+        "h": 58,
+        "label": "mcp.json · mcp-auth.json · mcp.log\n日志超过 5 MB 时轮转为 mcp.log.1",
+        "detail": "同级的 MCP 配置、身份验证和日志文件；日志超过 5 MB 时轮转。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-trust",
+        "x": 96,
+        "y": 492,
+        "w": 735,
+        "h": 58,
+        "label": "trust.json\n项目信任决定",
+        "detail": "保存项目信任决定。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-context",
+        "x": 96,
+        "y": 556,
+        "w": 735,
+        "h": 58,
+        "label": "AGENTS.md | CLAUDE.md\n全局上下文文件",
+        "detail": "用户作用域全局上下文文件。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-system",
+        "x": 96,
+        "y": 620,
+        "w": 735,
+        "h": 58,
+        "label": "SYSTEM.md · APPEND_SYSTEM.md\n替换或追加系统提示词",
+        "detail": "分别替换或追加系统提示词。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-resources",
+        "x": 96,
+        "y": 684,
+        "w": 735,
+        "h": 58,
+        "label": "extensions/ skills/ prompts/ themes/\n自动发现",
+        "detail": "自动发现的扩展、技能、提示词模板和主题目录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-sessions",
+        "x": 96,
+        "y": 748,
+        "w": 735,
+        "h": 58,
+        "label": "sessions/--<cwd>--/*.jsonl\n每个工作目录各有一个目录",
+        "detail": "使用原图及 PDF 的 *.jsonl 拼写；供稿代码中的 *.json 原样保留并另作差异说明。",
+        "tone": "teal",
+        "shape": "label"
+      },
+      {
+        "id": "user-packages",
+        "x": 96,
+        "y": 812,
+        "w": 735,
+        "h": 58,
+        "label": "npm/node_modules/ · git/<host>/<path>\n用户作用域包",
+        "detail": "用户作用域 npm 和 git 包路径。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-temp",
+        "x": 96,
+        "y": 876,
+        "w": 735,
+        "h": 58,
+        "label": "tmp/extensions/\n一次性 -e 安装；权限 0700",
+        "detail": "一次性命令行扩展安装目录，权限 0700。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-bin",
+        "x": 96,
+        "y": 940,
+        "w": 735,
+        "h": 58,
+        "label": "bin/\n托管的 fd 和 rg",
+        "detail": "托管搜索工具 fd 和 rg。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-crashes",
+        "x": 96,
+        "y": 1004,
+        "w": 735,
+        "h": 58,
+        "label": "crashes.json · pi-debug.log",
+        "detail": "崩溃记录与调试日志。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "user-agent-skills",
+        "x": 42,
+        "y": 1100,
+        "w": 785,
+        "h": 78,
+        "label": "~/.agents/skills/\nAgent Skills 标准 · 用户作用域",
+        "detail": "独立于 ~/.pi/agent 的用户作用域标准技能目录。",
+        "tone": "green",
+        "shape": "label"
+      },
+      {
+        "id": "project-root",
+        "x": 930,
+        "y": 20,
+        "w": 705,
+        "h": 72,
+        "label": "<project>/.pi/\n仅在项目受信任时加载",
+        "detail": "项目作用域目录，下方三组资源直属此目录。",
+        "tone": "rose",
+        "shape": "label"
+      },
+      {
+        "id": "project-files",
+        "x": 986,
+        "y": 108,
+        "w": 650,
+        "h": 96,
+        "label": "settings.json · mcp.json\nSYSTEM.md · APPEND_SYSTEM.md",
+        "detail": "项目设置、MCP 配置和替换/追加系统提示词文件。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "project-resources",
+        "x": 986,
+        "y": 230,
+        "w": 650,
+        "h": 96,
+        "label": "extensions/ skills/ prompts/ themes/",
+        "detail": "项目扩展、技能、提示词模板和主题目录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "project-packages",
+        "x": 986,
+        "y": 352,
+        "w": 650,
+        "h": 96,
+        "label": "npm/ · git/\n项目作用域包",
+        "detail": "项目作用域 npm 和 git 包目录。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "project-agent-skills",
+        "x": 930,
+        "y": 540,
+        "w": 705,
+        "h": 105,
+        "label": "<project>/.agents/skills/\n从 cwd 向上直到 git 根目录 · 仅限受信任项目",
+        "detail": "项目标准技能目录。发现范围从工作目录向上直到 git 根目录；需要信任。",
+        "tone": "rose",
+        "shape": "label"
+      },
+      {
+        "id": "ancestor-context",
+        "x": 930,
+        "y": 748,
+        "w": 705,
+        "h": 116,
+        "label": "<every ancestor>/AGENTS.md | CLAUDE.md\n每一级祖先目录的上下文文件 · 无须信任",
+        "detail": "此项不属于 .pi 目录，也不受项目信任控制；因此不连接到项目目录树。",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [
+      {
+        "to": "user-settings",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            137
+          ],
+          [
+            92,
+            137
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-keybindings",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            201
+          ],
+          [
+            92,
+            201
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-models",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            265
+          ],
+          [
+            92,
+            265
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-models-store",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            329
+          ],
+          [
+            92,
+            329
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-auth",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            393
+          ],
+          [
+            92,
+            393
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-mcp",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            457
+          ],
+          [
+            92,
+            457
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-trust",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            521
+          ],
+          [
+            92,
+            521
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-context",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            585
+          ],
+          [
+            92,
+            585
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-system",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            649
+          ],
+          [
+            92,
+            649
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-resources",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            713
+          ],
+          [
+            92,
+            713
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-sessions",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            777
+          ],
+          [
+            92,
+            777
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-packages",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            841
+          ],
+          [
+            92,
+            841
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-temp",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            905
+          ],
+          [
+            92,
+            905
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-bin",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            969
+          ],
+          [
+            92,
+            969
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "user-crashes",
+        "from": "user-root",
+        "points": [
+          [
+            64,
+            92
+          ],
+          [
+            64,
+            1033
+          ],
+          [
+            92,
+            1033
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "project-files",
+        "from": "project-root",
+        "points": [
+          [
+            952,
+            92
+          ],
+          [
+            952,
+            156
+          ],
+          [
+            982,
+            156
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "project-resources",
+        "from": "project-root",
+        "points": [
+          [
+            952,
+            92
+          ],
+          [
+            952,
+            278
+          ],
+          [
+            982,
+            278
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "project-packages",
+        "from": "project-root",
+        "points": [
+          [
+            952,
+            92
+          ],
+          [
+            952,
+            400
+          ],
+          [
+            982,
+            400
+          ]
+        ],
+        "arrow": false
+      }
+    ],
+    "notes": [
+      "按用户和项目作用域分列，保留原图每一条目录分支。树枝表示目录归属，不表示加载流程；独立的标准技能目录和祖先上下文文件不接到 .pi 树上。",
+      "原图/PDF 的 sessions 路径为 *.jsonl；供稿 Markdown 代码为 *.json。原生图遵循原图，紧接其后的供稿代码原样保留。"
+    ]
+  },
+  {
+    "id": "5.2",
+    "title": "设置优先级",
+    "label": "FIG. 5.2",
+    "source": "settings-manager.ts:195, 225, 1023, 1100, 1176 · main.ts:594",
+    "page": 101,
+    "image": "/figures/ch05/image 2.webp",
+    "caption": "除四项设置外，所有冲突都由项目设置胜出。此图为示意图。合并规则来自 deepMergeObjects 和 mergeDefaultTools，见 CA/src/core/settings-manager.ts:195；只读取全局值的位置见 settings-manager.ts:1023、:1100、:1176 和 main.ts:594。",
+    "kind": "diagram",
+    "width": 1140,
+    "height": 385,
+    "nodes": [
+      {
+        "id": "global",
+        "x": 20,
+        "y": 20,
+        "w": 305,
+        "h": 100,
+        "label": "~/.pi/agent/settings.json\n全局设置",
+        "detail": "用户作用域配置。",
+        "tone": "green"
+      },
+      {
+        "id": "project",
+        "x": 20,
+        "y": 135,
+        "w": 305,
+        "h": 100,
+        "label": ".pi/settings.json\n仅受信任项目；否则 {}",
+        "detail": "未经信任的项目提供空对象。",
+        "tone": "rose"
+      },
+      {
+        "id": "merge",
+        "x": 395,
+        "y": 20,
+        "w": 330,
+        "h": 215,
+        "label": "deepMergeSettings\n(global, project)\n对象递归合并\n数组和标量由项目替换\ndefaultTools 的 ±name 追加",
+        "detail": "只递归合并普通对象。defaultTools 完全由 +name / -name 组成时追加，修改继承选择。",
+        "tone": "green"
+      },
+      {
+        "id": "effective",
+        "x": 795,
+        "y": 20,
+        "w": 325,
+        "h": 215,
+        "label": "effective Settings\n生效设置",
+        "detail": "除下方四项外，项目值优先。",
+        "tone": "green"
+      },
+      {
+        "id": "global-only",
+        "x": 20,
+        "y": 275,
+        "w": 510,
+        "h": 90,
+        "label": "仅全局设置",
+        "detail": "此分支绕过合并。",
+        "tone": "green"
+      },
+      {
+        "id": "four-keys",
+        "x": 605,
+        "y": 275,
+        "w": 515,
+        "h": 90,
+        "label": "defaultProjectTrust · cacheWarming\nhttpProxy · deviceId\n始终从全局文件读取，不合并",
+        "detail": "项目文件即使填写这些键，也不会生效。",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "merge",
+        "from": "global",
+        "points": [
+          [
+            325,
+            70
+          ],
+          [
+            360,
+            70
+          ],
+          [
+            360,
+            126
+          ],
+          [
+            395,
+            126
+          ]
+        ]
+      },
+      {
+        "to": "merge",
+        "from": "project",
+        "points": [
+          [
+            325,
+            185
+          ],
+          [
+            360,
+            185
+          ],
+          [
+            360,
+            126
+          ],
+          [
+            395,
+            126
+          ]
+        ]
+      },
+      {
+        "to": "effective",
+        "from": "merge"
+      },
+      {
+        "to": "four-keys",
+        "from": "global-only"
+      }
+    ]
+  },
+  {
+    "id": "5.3",
+    "title": "API 密钥解析",
+    "label": "FIG. 5.3",
+    "source": "provider-composer.ts:457 · runtime-credentials.ts:24 · docs/models.md",
+    "page": 104,
+    "image": "/figures/ch05/image 8.webp",
+    "caption": "存储的登录凭据优先于配置的密钥。第一个匹配项胜出。步骤 1 是 RuntimeCredentials.read() 在存储内容之前返回的凭据，见 CA/src/core/runtime-credentials.ts:24，因此它进入的分支与步骤 2 相同。步骤 2–4 是 resolve() 的三个分支。CA/docs/models.md 也给出了相同的顺序。",
+    "kind": "diagram",
+    "width": 1146,
+    "height": 225,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 245,
+        "h": 185,
+        "label": "1 · --api-key\nRuntimeCredentials\n仅本进程",
+        "detail": "需要先确定模型。运行时凭据覆盖存储的凭据。",
+        "tone": "rose"
+      },
+      {
+        "id": "n2",
+        "x": 307,
+        "y": 20,
+        "w": 245,
+        "h": 185,
+        "label": "2 · auth.json\n/login 或 pi auth\n持久化凭据",
+        "detail": "来自 /login 或 pi auth 的存储凭据，优先于配置密钥。",
+        "tone": "teal"
+      },
+      {
+        "id": "n3",
+        "x": 594,
+        "y": 20,
+        "w": 245,
+        "h": 185,
+        "label": "3 · apiKey\n扩展 registerProvider\n否则 models.json",
+        "detail": "先使用扩展配置的 apiKey，否则使用 models.json。",
+        "tone": "purple"
+      },
+      {
+        "id": "n4",
+        "x": 881,
+        "y": 20,
+        "w": 245,
+        "h": 185,
+        "label": "4 · 内置解析器\n提供商环境变量\n云环境凭据",
+        "detail": "前面的来源都不适用时，使用提供商内置解析器。",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      }
+    ],
+    "notes": [
+      "按原图从左到右，首个适用来源胜出；不是把多个密钥合并。"
+    ]
+  },
+  {
+    "id": "5.4",
+    "title": "初始模型",
+    "label": "FIG. 5.4",
+    "source": "main.ts:475, 499 · sdk.ts:214 · model-resolver.ts:676, 691",
+    "page": 105,
+    "image": "/figures/ch05/image 10.webp",
+    "caption": "恢复的会话会保留原来的模型，除非命令行将其覆盖。第一个匹配项胜出。步骤 1–2 在 buildSessionOptions() 中执行，步骤 3 在 createAgentSession() 中执行，步骤 4–5 在 findInitialModel() 中执行。",
+    "kind": "diagram",
+    "width": 1408,
+    "height": 270,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 240,
+        "h": 230,
+        "label": "1 · --model / --provider\nresolveCliModel\n未知模型直接报错\nmain.ts:475",
+        "detail": "最高优先级的命令行覆盖。",
+        "tone": "purple"
+      },
+      {
+        "id": "n2",
+        "x": 302,
+        "y": 20,
+        "w": 240,
+        "h": 230,
+        "label": "2 · scoped models\n范围内的保存默认值\n否则第一项\n恢复会话时跳过\nmain.ts:499",
+        "detail": "范围模型选择只用于非恢复启动。",
+        "tone": "purple"
+      },
+      {
+        "id": "n3",
+        "x": 584,
+        "y": 20,
+        "w": 240,
+        "h": 230,
+        "label": "3 · session\n分支最后的 model_change\n需要已配置身份验证\nsdk.ts:214",
+        "detail": "恢复会话保留原模型。",
+        "tone": "teal"
+      },
+      {
+        "id": "n4",
+        "x": 866,
+        "y": 20,
+        "w": 240,
+        "h": 230,
+        "label": "4 · settings default\ndefaultProvider +\ndefaultModel\n需要已配置身份验证\nmodel-resolver.ts:676",
+        "detail": "会话没有可用模型时，尝试设置中的默认模型。",
+        "tone": "green"
+      },
+      {
+        "id": "n5",
+        "x": 1148,
+        "y": 20,
+        "w": 240,
+        "h": 230,
+        "label": "5 · first available\n已知提供商的默认模型\n否则第一项\nmodel-resolver.ts:691",
+        "detail": "最低优先级的可用模型。",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      },
+      {
+        "to": "n5",
+        "from": "n4"
+      }
+    ],
+    "notes": [
+      "首个匹配项胜出；完整模型选择分布在 buildSessionOptions、createAgentSession 和 findInitialModel 三个函数中。"
+    ]
+  },
+  {
+    "id": "5.5",
+    "title": "DefaultResourceLoader.reload()",
+    "label": "FIG. 5.5",
+    "source": "resource-loader.ts:509–674, 747",
+    "page": 107,
+    "image": "/figures/ch05/image 1.webp",
+    "caption": "在读取任何项目本地内容之前，先决定信任状态。步骤按源码顺序排列，见 resource-loader.ts:509–674。在信任前加载阶段载入的扩展会在步骤 5 中复用，不会导入两次，见 CA/src/core/resource-loader.ts:747。",
+    "kind": "diagram",
+    "width": 2182,
+    "height": 285,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "1 · pre-trust pass\n用户与 CLI 扩展\n发出 project_trust\n仅当信任尚未确定",
+        "detail": "项目强制为不受信任；暂不加载内置扩展。",
+        "tone": "purple"
+      },
+      {
+        "id": "n2",
+        "x": 332,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "2 · settings reload\n未受信任时项目设置 {}\nsettingsManager.reload()",
+        "detail": "先决定信任，再读取项目设置。",
+        "tone": "green"
+      },
+      {
+        "id": "n3",
+        "x": 644,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "3 · packageManager.resolve()\n包、设置、约定目录\n内置扩展；按排名排序\n得到资源路径",
+        "detail": "汇集并按 resourcePrecedenceRank 排序。",
+        "tone": "green"
+      },
+      {
+        "id": "n4",
+        "x": 956,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "4 · CLI -e sources\nresolveExtensionSources\n{ temporary: true }\n临时作用域",
+        "detail": "解析命令行指定的扩展来源。",
+        "tone": "green"
+      },
+      {
+        "id": "n5",
+        "x": 1268,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "5 · extensions\nCLI 优先，随后已解析路径\n导入；移除被替代的内置项\njiti",
+        "detail": "信任前加载的扩展被复用，不重复导入。",
+        "tone": "purple"
+      },
+      {
+        "id": "n6",
+        "x": 1580,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "6 · skills · prompts · themes\n-e 包副本 → 已解析资源\n→ --skill / --prompt-template\n/ --theme\n同名第一项胜出",
+        "detail": "保持原图的三类资源与内部优先级。",
+        "tone": "green"
+      },
+      {
+        "id": "n7",
+        "x": 1892,
+        "y": 20,
+        "w": 270,
+        "h": 245,
+        "label": "7 · context and prompt files\nAGENTS.md 链\nSYSTEM.md / APPEND_SYSTEM.md\n项目副本仅在受信任时",
+        "detail": "上下文文件本身无须信任；此处的项目信任限制适用于项目提示词副本。",
+        "tone": "green"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      },
+      {
+        "to": "n5",
+        "from": "n4"
+      },
+      {
+        "to": "n6",
+        "from": "n5"
+      },
+      {
+        "to": "n7",
+        "from": "n6"
+      }
+    ]
+  },
+  {
+    "id": "5.6",
+    "title": "项目是否受信任？",
+    "label": "FIG. 5.6",
+    "source": "extensions/runner.ts:295 · trust-manager.ts:45 · project-trust.ts:46",
+    "page": 107,
+    "image": "/figures/ch05/image 6.webp",
+    "caption": "返回“未决定”的处理器会把问题传给优先级链的下一环。第一个匹配项胜出。处理器顺序就是扩展加载顺序，见 CA/src/core/extensions/runner.ts:295。步骤 4 使用 findNearestTrustEntry()，因此信任一个父文件夹就会覆盖它下面的所有文件夹，见 CA/src/core/trust-manager.ts:45。",
+    "kind": "diagram",
+    "width": 2042,
+    "height": 270,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "1 · --approve / --no-approve\n-a / -na\n仅本次运行\noverride",
+        "detail": "最高优先级，显式覆盖。",
+        "tone": "gray"
+      },
+      {
+        "id": "n2",
+        "x": 312,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "2 · 无需保护的资源\n没有任何需信任资源\n直接 trusted",
+        "detail": "hasTrustRequiringProjectResources 未找到资源。",
+        "tone": "green"
+      },
+      {
+        "id": "n3",
+        "x": 604,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "3 · project_trust handler\n首个 yes / no 胜出\nremember: true 可保存\n扩展决定",
+        "detail": "返回 undecided 则继续沿优先级链判断；处理器顺序等于加载顺序。",
+        "tone": "purple"
+      },
+      {
+        "id": "n4",
+        "x": 896,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "4 · trust.json\ncwd 或祖先目录的\n最近存储记录",
+        "detail": "findNearestTrustEntry：父目录的决定覆盖其子目录。",
+        "tone": "teal"
+      },
+      {
+        "id": "n5",
+        "x": 1188,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "5 · defaultProjectTrust\nalways → yes\nnever → no\nask → 继续判断\n全局设置",
+        "detail": "项目设置不能决定自己的信任状态。",
+        "tone": "green"
+      },
+      {
+        "id": "n6",
+        "x": 1480,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "6 · no UI\nprint、JSON、RPC 启动\n判为 untrusted",
+        "detail": "没有可交互界面时不能显示信任提示。",
+        "tone": "rose"
+      },
+      {
+        "id": "n7",
+        "x": 1772,
+        "y": 20,
+        "w": 250,
+        "h": 230,
+        "label": "7 · prompt\n信任 / 信任父文件夹\n仅此会话信任 / 不信任\n交给用户",
+        "detail": "仅此会话的选项不写入 trust.json。",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      },
+      {
+        "to": "n5",
+        "from": "n4"
+      },
+      {
+        "to": "n6",
+        "from": "n5"
+      },
+      {
+        "to": "n7",
+        "from": "n6"
+      }
+    ],
+    "notes": [
+      "原图是“首个匹配项胜出”的判定阶梯。只有未决定时才沿箭头继续；不是七个必须执行的操作。"
+    ]
+  },
+  {
+    "id": "5.7",
+    "title": "扩展加载顺序",
+    "label": "FIG. 5.7",
+    "source": "resource-loader.ts:573 · research/out/resources-precedence.txt (§extensions)",
+    "page": 114,
+    "image": "/figures/ch05/image 7.webp",
+    "caption": "命令行指定的扩展最先加载。事件处理器、工具渲染器以及首次注册查找都遵循这个顺序。research/out/resources-precedence.txt（§extensions）验证了这一点，其中通过 -e 指定的扩展先于两个自动发现的扩展加载。",
+    "kind": "diagram",
+    "width": 840,
+    "height": 1022,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 800,
+        "h": 86,
+        "label": "1 · -e <source>\nCLI · 临时作用域 · 也支持 builtin:",
+        "detail": "先加载命令行指定的扩展。",
+        "tone": "blue"
+      },
+      {
+        "id": "n2",
+        "x": 20,
+        "y": 148,
+        "w": 800,
+        "h": 86,
+        "label": "2 · 项目设置\n.pi/settings.json 的 extensions 条目 · rank 0",
+        "detail": "资源优先级 0。",
+        "tone": "purple"
+      },
+      {
+        "id": "n3",
+        "x": 20,
+        "y": 276,
+        "w": 800,
+        "h": 86,
+        "label": "3 · .pi/extensions/\n仅受信任项目 · rank 1",
+        "detail": "资源优先级 1。",
+        "tone": "purple"
+      },
+      {
+        "id": "n4",
+        "x": 20,
+        "y": 404,
+        "w": 800,
+        "h": 86,
+        "label": "4 · 用户设置\n~/.pi/agent/settings.json 的 extensions 条目 · rank 2",
+        "detail": "资源优先级 2。",
+        "tone": "purple"
+      },
+      {
+        "id": "n5",
+        "x": 20,
+        "y": 532,
+        "w": 800,
+        "h": 86,
+        "label": "5 · ~/.pi/agent/extensions/\n始终加载 · rank 3",
+        "detail": "资源优先级 3。",
+        "tone": "purple"
+      },
+      {
+        "id": "n6",
+        "x": 20,
+        "y": 660,
+        "w": 800,
+        "h": 86,
+        "label": "6 · packages\n先项目包，后用户包 · rank 4",
+        "detail": "资源优先级 4。",
+        "tone": "purple"
+      },
+      {
+        "id": "n7",
+        "x": 20,
+        "y": 788,
+        "w": 800,
+        "h": 86,
+        "label": "7 · built-ins\nbuiltin:llama.cpp · codemode · tool-search · mcp · rank 5",
+        "detail": "保留原图中的 builtin:llama.cpp 拼写；供稿正文写作 builtin:lama.cpp，差异已记录。",
+        "tone": "gray"
+      },
+      {
+        "id": "n8",
+        "x": 20,
+        "y": 916,
+        "w": 800,
+        "h": 86,
+        "label": "8 · 内联工厂函数\nSDK extensionFactories · 最后",
+        "detail": "内联工厂函数保持原图最后一项。",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      },
+      {
+        "to": "n5",
+        "from": "n4"
+      },
+      {
+        "to": "n6",
+        "from": "n5"
+      },
+      {
+        "to": "n7",
+        "from": "n6"
+      },
+      {
+        "to": "n8",
+        "from": "n7"
+      }
+    ],
+    "notes": [
+      "竖向顺序与原图一致。原图首项的 < 被裁失；按正文明确的 -e <source> 恢复完整占位符。"
+    ]
+  },
+  {
+    "id": "5.8",
+    "title": "/reload 热重载",
+    "label": "FIG. 5.8",
+    "source": "agent-session.ts:3646–3684",
+    "page": 116,
+    "image": "/figures/ch05/image 9.webp",
+    "caption": "重新加载后，除了会话转交的内容外，其他内容都不会保留。活动工具名称和标志值会传入新运行时；扩展闭包中保存的一切都会丢失。来源：agent-session.ts:3646–3684。最后两个事件只有在绑定了 UI 或命令上下文时才会触发。",
+    "kind": "diagram",
+    "width": 1240,
+    "height": 910,
+    "nodes": [
+      {
+        "id": "user",
+        "x": 40,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "USER",
+        "detail": "用户",
+        "tone": "gray",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 280,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "SESSION\nAgentSession",
+        "detail": "现有会话",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "old",
+        "x": 520,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "OLD\n旧运行器",
+        "detail": "原扩展运行时",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "loader",
+        "x": 760,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "LOADER\nresource loader",
+        "detail": "资源加载器",
+        "tone": "green",
+        "align": "center"
+      },
+      {
+        "id": "new",
+        "x": 1000,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "NEW\n新运行器",
+        "detail": "替换后的扩展运行时",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "event-1",
+        "x": 35.0,
+        "y": 115,
+        "w": 450,
+        "h": 36,
+        "label": "/reload",
+        "detail": "/reload",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-2",
+        "x": 275.0,
+        "y": 205,
+        "w": 450,
+        "h": 36,
+        "label": "session_shutdown { reason: \"reload\" }",
+        "detail": "session_shutdown { reason: \"reload\" }",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-3",
+        "x": 275.0,
+        "y": 295,
+        "w": 450,
+        "h": 36,
+        "label": "invalidate()",
+        "detail": "invalidate()\n所有旧 pi 和 ctx 从此抛出异常",
+        "tone": "rose",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-3",
+        "x": 275.0,
+        "y": 345,
+        "w": 450,
+        "h": 32,
+        "label": "所有旧 pi 和 ctx 从此抛出异常",
+        "detail": "所有旧 pi 和 ctx 从此抛出异常",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-4",
+        "x": 438,
+        "y": 427,
+        "w": 520,
+        "h": 36,
+        "label": "settings reload · resetApiProviders()",
+        "detail": "settings reload · resetApiProviders()",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "event-5",
+        "x": 325.0,
+        "y": 505,
+        "w": 590,
+        "h": 36,
+        "label": "reload()",
+        "detail": "reload()\n缓存代次 +1；重新导入",
+        "tone": "green",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-5",
+        "x": 325.0,
+        "y": 555,
+        "w": 590,
+        "h": 32,
+        "label": "缓存代次 +1；重新导入",
+        "detail": "缓存代次 +1；重新导入",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-6",
+        "x": 325.0,
+        "y": 605,
+        "w": 830,
+        "h": 36,
+        "label": "_buildRuntime()",
+        "detail": "_buildRuntime()\n携带活动工具名称和标志值",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-6",
+        "x": 325.0,
+        "y": 655,
+        "w": 830,
+        "h": 32,
+        "label": "携带活动工具名称和标志值",
+        "detail": "携带活动工具名称和标志值",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-7",
+        "x": 325.0,
+        "y": 705,
+        "w": 830,
+        "h": 36,
+        "label": "session_start { reason: \"reload\" }",
+        "detail": "session_start { reason: \"reload\" }",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-8",
+        "x": 325.0,
+        "y": 795,
+        "w": 830,
+        "h": 36,
+        "label": "resources_discover { reason: \"reload\" }",
+        "detail": "resources_discover { reason: \"reload\" }",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-1",
+        "x": 4,
+        "y": 135,
+        "w": 28,
+        "h": 40,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-2",
+        "x": 4,
+        "y": 428,
+        "w": 28,
+        "h": 40,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-3",
+        "x": 4,
+        "y": 625,
+        "w": 28,
+        "h": 40,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "user",
+        "from": "user",
+        "points": [
+          [
+            140,
+            88
+          ],
+          [
+            140,
+            885
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "session",
+        "from": "session",
+        "points": [
+          [
+            380,
+            88
+          ],
+          [
+            380,
+            885
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "old",
+        "from": "old",
+        "points": [
+          [
+            620,
+            88
+          ],
+          [
+            620,
+            885
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "loader",
+        "from": "loader",
+        "points": [
+          [
+            860,
+            88
+          ],
+          [
+            860,
+            885
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "new",
+        "from": "new",
+        "points": [
+          [
+            1100,
+            88
+          ],
+          [
+            1100,
+            885
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "session",
+        "from": "user",
+        "points": [
+          [
+            140,
+            155
+          ],
+          [
+            380,
+            155
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "old",
+        "from": "session",
+        "points": [
+          [
+            380,
+            245
+          ],
+          [
+            620,
+            245
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "old",
+        "from": "session",
+        "points": [
+          [
+            380,
+            335
+          ],
+          [
+            620,
+            335
+          ]
+        ],
+        "color": "#a23d5b"
+      },
+      {
+        "to": "session",
+        "from": "session",
+        "points": [
+          [
+            380,
+            435
+          ],
+          [
+            428,
+            435
+          ],
+          [
+            428,
+            461
+          ],
+          [
+            380,
+            461
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "loader",
+        "from": "session",
+        "points": [
+          [
+            380,
+            545
+          ],
+          [
+            860,
+            545
+          ]
+        ],
+        "color": "#6c8e70"
+      },
+      {
+        "to": "new",
+        "from": "session",
+        "points": [
+          [
+            380,
+            645
+          ],
+          [
+            1100,
+            645
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "new",
+        "from": "session",
+        "points": [
+          [
+            380,
+            745
+          ],
+          [
+            1100,
+            745
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "new",
+        "from": "session",
+        "points": [
+          [
+            380,
+            835
+          ],
+          [
+            1100,
+            835
+          ]
+        ],
+        "color": "#76609b"
+      }
+    ],
+    "notes": [
+      "最后两个事件仅在绑定 UI 或命令上下文时触发。原图的五条参与者生命线和八条调用路线均保留。"
+    ]
+  },
+  {
+    "id": "5.9",
+    "title": "被阻止的工具调用",
+    "label": "FIG. 5.9",
+    "source": "extensions/runner.ts:1242 · agent-session.ts:646–669 · agent/agent-loop.ts:724–775",
+    "page": 123,
+    "image": "/figures/ch05/image.webp",
+    "caption": "阻止操作会成为一个普通的失败工具结果；模型会读到其中的原因。如果没有提供原因，文本就是 Tool execution was blocked（工具执行被阻止）。如果 B 改为抛出异常，错误就会未经报告而传出运行器，_beforeToolCall 会再次抛出它，循环中的 catch 则会生成一个携带该异常消息的错误结果，见 agent/agent-loop.ts:769。此图为示意图；依据 runner.ts:1242、agent-session.ts:646–669 和 agent-loop.ts:724–775。",
+    "kind": "diagram",
+    "width": 1240,
+    "height": 1090,
+    "nodes": [
+      {
+        "id": "loop",
+        "x": 40,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "LOOP\nagent loop",
+        "detail": "智能体循环",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 280,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "SESSION\nAgentSession",
+        "detail": "会话",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "runner",
+        "x": 520,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "RUNNER\nExtensionRunner",
+        "detail": "扩展运行器",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "a",
+        "x": 760,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "A\next A",
+        "detail": "扩展 A",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "b",
+        "x": 1000,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "B\next B",
+        "detail": "扩展 B",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "event-1",
+        "x": 198,
+        "y": 137,
+        "w": 520,
+        "h": 36,
+        "label": "validateToolArguments()",
+        "detail": "validateToolArguments()\n先进行 schema 检查",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "note-1",
+        "x": 198,
+        "y": 175,
+        "w": 520,
+        "h": 32,
+        "label": "先进行 schema 检查",
+        "detail": "先进行 schema 检查",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "event-2",
+        "x": 35.0,
+        "y": 215,
+        "w": 450,
+        "h": 36,
+        "label": "beforeToolCall({ toolCall, args })",
+        "detail": "beforeToolCall({ toolCall, args })",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-3",
+        "x": 275.0,
+        "y": 305,
+        "w": 450,
+        "h": 36,
+        "label": "emitToolCall(event)",
+        "detail": "emitToolCall(event)",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-4",
+        "x": 515.0,
+        "y": 395,
+        "w": 450,
+        "h": 36,
+        "label": "handler(event, ctx)",
+        "detail": "handler(event, ctx)",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-5",
+        "x": 515.0,
+        "y": 485,
+        "w": 450,
+        "h": 36,
+        "label": "undefined",
+        "detail": "undefined\n可能已经修改 event.input",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-5",
+        "x": 515.0,
+        "y": 535,
+        "w": 450,
+        "h": 32,
+        "label": "可能已经修改 event.input",
+        "detail": "可能已经修改 event.input",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-6",
+        "x": 565.0,
+        "y": 585,
+        "w": 590,
+        "h": 36,
+        "label": "handler(event, ctx)",
+        "detail": "handler(event, ctx)",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-7",
+        "x": 565.0,
+        "y": 675,
+        "w": 590,
+        "h": 36,
+        "label": "{ block: true, reason: \"bash was not approved\" }",
+        "detail": "{ block: true, reason: \"bash was not approved\" }",
+        "tone": "rose",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-8",
+        "x": 275.0,
+        "y": 765,
+        "w": 450,
+        "h": 36,
+        "label": "result",
+        "detail": "result\n后续处理器不会运行",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-8",
+        "x": 275.0,
+        "y": 815,
+        "w": 450,
+        "h": 32,
+        "label": "后续处理器不会运行",
+        "detail": "后续处理器不会运行",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-9",
+        "x": 35.0,
+        "y": 855,
+        "w": 450,
+        "h": 36,
+        "label": "{ block: true, reason }",
+        "detail": "{ block: true, reason }",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-10",
+        "x": 198,
+        "y": 977,
+        "w": 520,
+        "h": 36,
+        "label": "createErrorToolResult(reason)",
+        "detail": "createErrorToolResult(reason)\nisError: true；跳过 execute()",
+        "tone": "rose",
+        "shape": "label"
+      },
+      {
+        "id": "note-10",
+        "x": 198,
+        "y": 1015,
+        "w": 520,
+        "h": 32,
+        "label": "isError: true；跳过 execute()",
+        "detail": "isError: true；跳过 execute()",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "stage-1",
+        "x": 4,
+        "y": 138,
+        "w": 28,
+        "h": 40,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-2",
+        "x": 4,
+        "y": 415,
+        "w": 28,
+        "h": 40,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-3",
+        "x": 4,
+        "y": 605,
+        "w": 28,
+        "h": 40,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-4",
+        "x": 4,
+        "y": 875,
+        "w": 28,
+        "h": 40,
+        "label": "4",
+        "detail": "原图阶段 4",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "loop",
+        "from": "loop",
+        "points": [
+          [
+            140,
+            88
+          ],
+          [
+            140,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "session",
+        "from": "session",
+        "points": [
+          [
+            380,
+            88
+          ],
+          [
+            380,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "runner",
+        "from": "runner",
+        "points": [
+          [
+            620,
+            88
+          ],
+          [
+            620,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "a",
+        "from": "a",
+        "points": [
+          [
+            860,
+            88
+          ],
+          [
+            860,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "b",
+        "from": "b",
+        "points": [
+          [
+            1100,
+            88
+          ],
+          [
+            1100,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "loop",
+        "from": "loop",
+        "points": [
+          [
+            140,
+            145
+          ],
+          [
+            188,
+            145
+          ],
+          [
+            188,
+            171
+          ],
+          [
+            140,
+            171
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "session",
+        "from": "loop",
+        "points": [
+          [
+            140,
+            255
+          ],
+          [
+            380,
+            255
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "runner",
+        "from": "session",
+        "points": [
+          [
+            380,
+            345
+          ],
+          [
+            620,
+            345
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "a",
+        "from": "runner",
+        "points": [
+          [
+            620,
+            435
+          ],
+          [
+            860,
+            435
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "runner",
+        "from": "a",
+        "points": [
+          [
+            860,
+            525
+          ],
+          [
+            620,
+            525
+          ]
+        ],
+        "dashed": true,
+        "color": "#76609b"
+      },
+      {
+        "to": "b",
+        "from": "runner",
+        "points": [
+          [
+            620,
+            625
+          ],
+          [
+            1100,
+            625
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "runner",
+        "from": "b",
+        "points": [
+          [
+            1100,
+            715
+          ],
+          [
+            620,
+            715
+          ]
+        ],
+        "dashed": true,
+        "color": "#a23d5b"
+      },
+      {
+        "to": "session",
+        "from": "runner",
+        "points": [
+          [
+            620,
+            805
+          ],
+          [
+            380,
+            805
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471"
+      },
+      {
+        "to": "loop",
+        "from": "session",
+        "points": [
+          [
+            380,
+            895
+          ],
+          [
+            140,
+            895
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471"
+      },
+      {
+        "to": "loop",
+        "from": "loop",
+        "points": [
+          [
+            140,
+            985
+          ],
+          [
+            188,
+            985
+          ],
+          [
+            188,
+            1011
+          ],
+          [
+            140,
+            1011
+          ]
+        ],
+        "color": "#a23d5b"
+      }
+    ],
+    "notes": [
+      "虚线表示返回值；B 的阻止结果短路后续处理器。异常分支的行为保留在原始图注中，未虚构额外调用。"
+    ]
+  },
+  {
+    "id": "5.10",
+    "title": "从 argv 到运行模式",
+    "label": "FIG. 5.10",
+    "source": "CA/src/main.ts:582–986",
+    "page": 127,
+    "image": "/figures/ch05/image 4.webp",
+    "caption": "模式在第 3 步确定，但直到第 8 步才被使用。其间所有工作，包括迁移、会话选择、项目信任、扩展加载和模型解析，对四种模式都完全相同。行号均指向 CA/src/main.ts。此图为示意图。",
+    "kind": "diagram",
+    "width": 2334,
+    "height": 260,
+    "nodes": [
+      {
+        "id": "n1",
+        "x": 20,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "1 · subcommand?\nauth · install/remove/update/list\nconfig · mcp\nmain.ts:582–618",
+        "detail": "子命令在标志解析前分发，可能提前退出。",
+        "tone": "gray"
+      },
+      {
+        "id": "n2",
+        "x": 312,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "2 · parseArgs\n错误 → exit 1\n--version · --export\nmain.ts:620–649",
+        "detail": "解析参数并处理启动诊断、版本和导出。",
+        "tone": "green"
+      },
+      {
+        "id": "n3",
+        "x": 604,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "3 · resolveAppMode\nrpc · json · print · interactive\nmain.ts:651",
+        "detail": "第 3 步确定模式，第 8 步才真正交接。",
+        "tone": "blue"
+      },
+      {
+        "id": "n4",
+        "x": 896,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "4 · session manager\n--no-session · --fork · --session\n-r · -c · --session-id\nmain.ts:693",
+        "detail": "会话管理器选择使用的会话。",
+        "tone": "teal"
+      },
+      {
+        "id": "n5",
+        "x": 1188,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "5 · runtime\nservices → resource loader\n→ AgentSession\nmain.ts:863",
+        "detail": "四种模式共享运行时构建过程。",
+        "tone": "amber"
+      },
+      {
+        "id": "n6",
+        "x": 1480,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "6 · --help · --list-models\n打印并退出\nmain.ts:875–889",
+        "detail": "在扩展加载后生成帮助，以列出扩展标志。",
+        "tone": "green"
+      },
+      {
+        "id": "n7",
+        "x": 1772,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "7 · stdin · @files · theme\n管道 stdin 将 interactive\n降为 print\nmain.ts:891–906",
+        "detail": "输入处理与模式降级。",
+        "tone": "gray"
+      },
+      {
+        "id": "n8",
+        "x": 2064,
+        "y": 20,
+        "w": 250,
+        "h": 220,
+        "label": "8 · hand off\nrunRpcMode / InteractiveMode\n/ runPrintMode\nmain.ts:948–986",
+        "detail": "把同一运行时交给所选模式。",
+        "tone": "blue"
+      }
+    ],
+    "edges": [
+      {
+        "to": "n2",
+        "from": "n1"
+      },
+      {
+        "to": "n3",
+        "from": "n2"
+      },
+      {
+        "to": "n4",
+        "from": "n3"
+      },
+      {
+        "to": "n5",
+        "from": "n4"
+      },
+      {
+        "to": "n6",
+        "from": "n5"
+      },
+      {
+        "to": "n7",
+        "from": "n6"
+      },
+      {
+        "to": "n8",
+        "from": "n7"
+      }
+    ]
+  },
+  {
+    "id": "5.11",
+    "title": "四种模式，三个标准流",
+    "label": "FIG. 5.11",
+    "source": "CA/src/main.ts:651–655 · core/output-guard.ts · modes/print-mode.ts · modes/rpc/rpc-mode.ts",
+    "page": 129,
+    "image": "/figures/ch05/image 11.webp",
+    "caption": "只有交互模式和 RPC 模式能够提问。print 和 JSON 模式不绑定 UI 上下文，因此每个扩展对话框都会解析为其默认值。三个非交互模式会将意外的 process.stdout.write 调用重定向到 stderr，使 stdout 只承载它们自己的输出。此图为示意图，依据 CA/src/main.ts:651–655、CA/src/core/output-guard.ts、CA/src/modes/print-mode.ts 和 CA/src/modes/rpc/rpc-mode.ts。",
+    "kind": "diagram",
+    "width": 1280,
+    "height": 715,
+    "nodes": [
+      {
+        "id": "row-0",
+        "x": 20,
+        "y": 15,
+        "w": 1240,
+        "h": 36,
+        "label": "INTERACTIVE · InteractiveMode",
+        "detail": "INTERACTIVE · InteractiveMode",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "cell-0-0",
+        "x": 20,
+        "y": 62,
+        "w": 295,
+        "h": 115,
+        "label": "stdin\n原始按键进入编辑器",
+        "detail": "INTERACTIVE · InteractiveMode：stdin。原始按键进入编辑器",
+        "tone": "gray"
+      },
+      {
+        "id": "cell-0-1",
+        "x": 335,
+        "y": 62,
+        "w": 295,
+        "h": 115,
+        "label": "stdout\nTUI 帧",
+        "detail": "INTERACTIVE · InteractiveMode：stdout。TUI 帧",
+        "tone": "blue"
+      },
+      {
+        "id": "cell-0-2",
+        "x": 650,
+        "y": 62,
+        "w": 295,
+        "h": 115,
+        "label": "stderr\n仅启动错误；警告显示在 TUI",
+        "detail": "INTERACTIVE · InteractiveMode：stderr。仅启动错误；警告显示在 TUI",
+        "tone": "rose"
+      },
+      {
+        "id": "cell-0-3",
+        "x": 965,
+        "y": 62,
+        "w": 295,
+        "h": 115,
+        "label": "ctx.ui\nTUI 对话框\nhasUI true",
+        "detail": "INTERACTIVE · InteractiveMode：ctx.ui。TUI 对话框\nhasUI true",
+        "tone": "purple"
+      },
+      {
+        "id": "row-1",
+        "x": 20,
+        "y": 190,
+        "w": 1240,
+        "h": 36,
+        "label": "PRINT · runPrintMode({ mode: \"text\" })",
+        "detail": "PRINT · runPrintMode({ mode: \"text\" })",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "cell-1-0",
+        "x": 20,
+        "y": 237,
+        "w": 295,
+        "h": 115,
+        "label": "stdin\n管道文本，前置到首条提示词",
+        "detail": "PRINT · runPrintMode({ mode: \"text\" })：stdin。管道文本，前置到首条提示词",
+        "tone": "gray"
+      },
+      {
+        "id": "cell-1-1",
+        "x": 335,
+        "y": 237,
+        "w": 295,
+        "h": 115,
+        "label": "stdout\n最后一条助手消息的文本块",
+        "detail": "PRINT · runPrintMode({ mode: \"text\" })：stdout。最后一条助手消息的文本块",
+        "tone": "blue"
+      },
+      {
+        "id": "cell-1-2",
+        "x": 650,
+        "y": 237,
+        "w": 295,
+        "h": 115,
+        "label": "stderr\n诊断；错误或中止 → exit 1",
+        "detail": "PRINT · runPrintMode({ mode: \"text\" })：stderr。诊断；错误或中止 → exit 1",
+        "tone": "rose"
+      },
+      {
+        "id": "cell-1-3",
+        "x": 965,
+        "y": 237,
+        "w": 295,
+        "h": 115,
+        "label": "ctx.ui\nno-op\nhasUI false",
+        "detail": "PRINT · runPrintMode({ mode: \"text\" })：ctx.ui。no-op\nhasUI false",
+        "tone": "purple"
+      },
+      {
+        "id": "row-2",
+        "x": 20,
+        "y": 365,
+        "w": 1240,
+        "h": 36,
+        "label": "JSON · runPrintMode({ mode: \"json\" })",
+        "detail": "JSON · runPrintMode({ mode: \"json\" })",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "cell-2-0",
+        "x": 20,
+        "y": 412,
+        "w": 295,
+        "h": 115,
+        "label": "stdin\n管道文本，前置到首条提示词",
+        "detail": "JSON · runPrintMode({ mode: \"json\" })：stdin。管道文本，前置到首条提示词",
+        "tone": "gray"
+      },
+      {
+        "id": "cell-2-1",
+        "x": 335,
+        "y": 412,
+        "w": 295,
+        "h": 115,
+        "label": "stdout\n会话头，随后每个事件一行",
+        "detail": "JSON · runPrintMode({ mode: \"json\" })：stdout。会话头，随后每个事件一行",
+        "tone": "blue"
+      },
+      {
+        "id": "cell-2-2",
+        "x": 650,
+        "y": 412,
+        "w": 295,
+        "h": 115,
+        "label": "stderr\n诊断信息",
+        "detail": "JSON · runPrintMode({ mode: \"json\" })：stderr。诊断信息",
+        "tone": "rose"
+      },
+      {
+        "id": "cell-2-3",
+        "x": 965,
+        "y": 412,
+        "w": 295,
+        "h": 115,
+        "label": "ctx.ui\nno-op\nhasUI false",
+        "detail": "JSON · runPrintMode({ mode: \"json\" })：ctx.ui。no-op\nhasUI false",
+        "tone": "purple"
+      },
+      {
+        "id": "row-3",
+        "x": 20,
+        "y": 540,
+        "w": 1240,
+        "h": 36,
+        "label": "RPC · runRpcMode",
+        "detail": "RPC · runRpcMode",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "cell-3-0",
+        "x": 20,
+        "y": 587,
+        "w": 295,
+        "h": 115,
+        "label": "stdin\nJSONL 命令与 UI 响应",
+        "detail": "RPC · runRpcMode：stdin。JSONL 命令与 UI 响应",
+        "tone": "gray"
+      },
+      {
+        "id": "cell-3-1",
+        "x": 335,
+        "y": 587,
+        "w": 295,
+        "h": 115,
+        "label": "stdout\n响应、事件、UI 请求",
+        "detail": "RPC · runRpcMode：stdout。响应、事件、UI 请求",
+        "tone": "blue"
+      },
+      {
+        "id": "cell-3-2",
+        "x": 650,
+        "y": 587,
+        "w": 295,
+        "h": 115,
+        "label": "stderr\n诊断信息",
+        "detail": "RPC · runRpcMode：stderr。诊断信息",
+        "tone": "rose"
+      },
+      {
+        "id": "cell-3-3",
+        "x": 965,
+        "y": 587,
+        "w": 295,
+        "h": 115,
+        "label": "ctx.ui\n转交客户端\nhasUI true",
+        "detail": "RPC · runRpcMode：ctx.ui。转交客户端\nhasUI true",
+        "tone": "purple"
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "四行对应四种模式，四列对应 stdin、stdout、stderr、ctx.ui。保留原图全部 16 个比较单元格，无流程箭头。print 和 JSON 的无 UI 行为以 no-op / hasUI false 明示。"
+    ]
+  },
+  {
+    "id": "5.12",
+    "title": "一次 RPC 对话",
+    "label": "FIG. 5.12",
+    "source": "research/out/rpc-exchange.txt · research/capture/rpc-and-sdk-exchange.mjs",
+    "page": 134,
+    "image": "/figures/ch05/image 3.webp",
+    "caption": "prompt 响应先于运行到达；agent_settled 标记运行结束。共 43 条记录：客户端发出 6 条，Pi 发出 36 条，再加上退出记录。步骤 2–3 是扩展 UI 子协议。来源：research/out/rpc-exchange.txt；事件数量会随着流式文本增量的数量变化。",
+    "kind": "diagram",
+    "width": 1000,
+    "height": 1450,
+    "nodes": [
+      {
+        "id": "client",
+        "x": 40,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "CLIENT\ntest harness",
+        "detail": "捕获工具包扮演客户端",
+        "tone": "gray",
+        "align": "center"
+      },
+      {
+        "id": "rpc",
+        "x": 280,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "RPC\nrunRpcMode",
+        "detail": "RPC 模式",
+        "tone": "blue",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 520,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "SESSION\nAgentSession",
+        "detail": "会话",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "ext",
+        "x": 760,
+        "y": 20,
+        "w": 200,
+        "h": 68,
+        "label": "EXT\ninline extension",
+        "detail": "内联扩展",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "event-1",
+        "x": 35.0,
+        "y": 115,
+        "w": 450,
+        "h": 36,
+        "label": "prompt · id 1",
+        "detail": "prompt · id 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-2",
+        "x": 275.0,
+        "y": 195,
+        "w": 450,
+        "h": 36,
+        "label": "session.prompt(preflightResult)",
+        "detail": "session.prompt(preflightResult)",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-3",
+        "x": 35.0,
+        "y": 275,
+        "w": 450,
+        "h": 36,
+        "label": "response · disposition started",
+        "detail": "response · disposition started\n在 agent_start 之前",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-3",
+        "x": 35.0,
+        "y": 325,
+        "w": 450,
+        "h": 32,
+        "label": "在 agent_start 之前",
+        "detail": "在 agent_start 之前",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-4",
+        "x": 35.0,
+        "y": 365,
+        "w": 450,
+        "h": 36,
+        "label": "16 events: agent_start → tool_execution_start",
+        "detail": "16 events: agent_start → tool_execution_start",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-5",
+        "x": 515.0,
+        "y": 455,
+        "w": 450,
+        "h": 36,
+        "label": "tool_call read",
+        "detail": "tool_call read",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-6",
+        "x": 325.0,
+        "y": 535,
+        "w": 590,
+        "h": 36,
+        "label": "ctx.ui.confirm()",
+        "detail": "ctx.ui.confirm()",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-7",
+        "x": 35.0,
+        "y": 615,
+        "w": 450,
+        "h": 36,
+        "label": "extension_ui_request · confirm",
+        "detail": "extension_ui_request · confirm\nid 是 UUID",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "note-7",
+        "x": 35.0,
+        "y": 665,
+        "w": 450,
+        "h": 32,
+        "label": "id 是 UUID",
+        "detail": "id 是 UUID",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-8",
+        "x": 35.0,
+        "y": 705,
+        "w": 450,
+        "h": 36,
+        "label": "extension_ui_response · confirmed true",
+        "detail": "extension_ui_response · confirmed true",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-9",
+        "x": 325.0,
+        "y": 785,
+        "w": 590,
+        "h": 36,
+        "label": "resolve(true)",
+        "detail": "resolve(true)",
+        "tone": "purple",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-10",
+        "x": 35.0,
+        "y": 865,
+        "w": 450,
+        "h": 36,
+        "label": "15 events: tool_execution_end → agent_settled",
+        "detail": "15 events: tool_execution_end → agent_settled",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-11",
+        "x": 35.0,
+        "y": 945,
+        "w": 450,
+        "h": 36,
+        "label": "get_last_assistant_text · id 2",
+        "detail": "get_last_assistant_text · id 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-12",
+        "x": 35.0,
+        "y": 1025,
+        "w": 450,
+        "h": 36,
+        "label": "response · data.text",
+        "detail": "response · data.text",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-13",
+        "x": 35.0,
+        "y": 1105,
+        "w": 450,
+        "h": 36,
+        "label": "{not json",
+        "detail": "{not json",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-14",
+        "x": 35.0,
+        "y": 1185,
+        "w": 450,
+        "h": 36,
+        "label": "response · command parse · success false",
+        "detail": "response · command parse · success false",
+        "tone": "rose",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-15",
+        "x": 35.0,
+        "y": 1265,
+        "w": 450,
+        "h": 36,
+        "label": "stdin closed",
+        "detail": "stdin closed",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "event-16",
+        "x": 275.0,
+        "y": 1345,
+        "w": 450,
+        "h": 36,
+        "label": "runtime.dispose() · exit 0",
+        "detail": "runtime.dispose() · exit 0",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-1",
+        "x": 4,
+        "y": 135,
+        "w": 28,
+        "h": 40,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-2",
+        "x": 4,
+        "y": 475,
+        "w": 28,
+        "h": 40,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-3",
+        "x": 4,
+        "y": 725,
+        "w": 28,
+        "h": 40,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-4",
+        "x": 4,
+        "y": 965,
+        "w": 28,
+        "h": 40,
+        "label": "4",
+        "detail": "原图阶段 4",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-5",
+        "x": 4,
+        "y": 1125,
+        "w": 28,
+        "h": 40,
+        "label": "5",
+        "detail": "原图阶段 5",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "stage-6",
+        "x": 4,
+        "y": 1285,
+        "w": 28,
+        "h": 40,
+        "label": "6",
+        "detail": "原图阶段 6",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "client",
+        "from": "client",
+        "points": [
+          [
+            140,
+            88
+          ],
+          [
+            140,
+            1425
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "rpc",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            88
+          ],
+          [
+            380,
+            1425
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "session",
+        "from": "session",
+        "points": [
+          [
+            620,
+            88
+          ],
+          [
+            620,
+            1425
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "ext",
+        "from": "ext",
+        "points": [
+          [
+            860,
+            88
+          ],
+          [
+            860,
+            1425
+          ]
+        ],
+        "dashed": true,
+        "arrow": false
+      },
+      {
+        "to": "rpc",
+        "from": "client",
+        "points": [
+          [
+            140,
+            155
+          ],
+          [
+            380,
+            155
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "session",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            235
+          ],
+          [
+            620,
+            235
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            315
+          ],
+          [
+            140,
+            315
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            405
+          ],
+          [
+            140,
+            405
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471",
+        "dash": "dotted"
+      },
+      {
+        "to": "ext",
+        "from": "session",
+        "points": [
+          [
+            620,
+            495
+          ],
+          [
+            860,
+            495
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "rpc",
+        "from": "ext",
+        "points": [
+          [
+            860,
+            575
+          ],
+          [
+            380,
+            575
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            655
+          ],
+          [
+            140,
+            655
+          ]
+        ],
+        "dashed": true,
+        "color": "#76609b"
+      },
+      {
+        "to": "rpc",
+        "from": "client",
+        "points": [
+          [
+            140,
+            745
+          ],
+          [
+            380,
+            745
+          ]
+        ],
+        "color": "#76609b"
+      },
+      {
+        "to": "ext",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            825
+          ],
+          [
+            860,
+            825
+          ]
+        ],
+        "dashed": true,
+        "color": "#76609b"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            905
+          ],
+          [
+            140,
+            905
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471",
+        "dash": "dotted"
+      },
+      {
+        "to": "rpc",
+        "from": "client",
+        "points": [
+          [
+            140,
+            985
+          ],
+          [
+            380,
+            985
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            1065
+          ],
+          [
+            140,
+            1065
+          ]
+        ],
+        "dashed": true,
+        "color": "#596471"
+      },
+      {
+        "to": "rpc",
+        "from": "client",
+        "points": [
+          [
+            140,
+            1145
+          ],
+          [
+            380,
+            1145
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "client",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            1225
+          ],
+          [
+            140,
+            1225
+          ]
+        ],
+        "dashed": true,
+        "color": "#a23d5b"
+      },
+      {
+        "to": "rpc",
+        "from": "client",
+        "points": [
+          [
+            140,
+            1305
+          ],
+          [
+            380,
+            1305
+          ]
+        ],
+        "color": "#596471"
+      },
+      {
+        "to": "session",
+        "from": "rpc",
+        "points": [
+          [
+            380,
+            1385
+          ],
+          [
+            620,
+            1385
+          ]
+        ],
+        "color": "#596471"
+      }
+    ],
+    "notes": [
+      "保留原图四条生命线、六个阶段、16 条消息路线及其方向；消息数是这次捕获记录的事实，不代表每次运行固定的事件数。"
+    ]
+  }
+]

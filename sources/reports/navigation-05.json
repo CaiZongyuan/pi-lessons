@@ -1,0 +1,44 @@
+[
+  {
+    "title": "配置、模型与身份验证",
+    "link": "/pi-104/ch05/configuration-models-auth",
+    "page": 99,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "上下文文件、技能、模板、主题与包",
+    "link": "/pi-104/ch05/resources",
+    "page": 106,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "扩展：加载与 API",
+    "link": "/pi-104/ch05/extensions-loading-api",
+    "page": 113,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "扩展事件与上下文",
+    "link": "/pi-104/ch05/extension-events-contexts",
+    "page": 120,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "运行模式：交互式、print 与 JSON",
+    "link": "/pi-104/ch05/run-modes",
+    "page": 127,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "RPC 模式与 SDK",
+    "link": "/pi-104/ch05/rpc-sdk",
+    "page": 133,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  }
+]

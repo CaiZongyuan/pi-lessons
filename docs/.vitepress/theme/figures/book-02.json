@@ -1,0 +1,1541 @@
+[
+  {
+    "id": "2.1",
+    "title": "PI-AI IN ONE PAGE",
+    "label": "FIG. 2.1",
+    "source": "Pi Technical Manual · 图片和附件/image 2.png",
+    "page": 24,
+    "image": "/figures/ch02/image 2.webp",
+    "caption": "一页看懂 pi-ai。一个集合、多个提供商，每种 API 对应一个传输实现文件。集合解析身份验证并执行路由；提供商负责自己的目录和身份验证；API 模块使用一种厂商协议，并且仅在首次使用时导入。示意图，依据 ai/models.ts（createModels、createProvider）、ai/api/lazy.ts 和 ai/api/*.lazy.ts。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 730,
+    "nodes": [
+      {
+        "id": "2.1-caller",
+        "x": 25,
+        "y": 20,
+        "w": 1150,
+        "h": 70,
+        "label": "caller\nContext {systemPrompt, messages, tools}",
+        "detail": "agent loop, SDK, extensions — passes a Context {systemPrompt, messages, tools}",
+        "tone": "gray"
+      },
+      {
+        "id": "2.1-models",
+        "x": 25,
+        "y": 160,
+        "w": 1150,
+        "h": 85,
+        "label": "Models · createModels()\nnormalizeContext → lazyStream → requireChatProvider → applyAuth → header merge",
+        "detail": "normalizeContext() → lazyStream() → requireChatProvider → applyAuth (credential store, then ambient env) → header merge",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-provider",
+        "x": 25,
+        "y": 315,
+        "w": 1150,
+        "h": 75,
+        "label": "Provider · createProvider({ id, auth, models, api })\none runtime unit per vendor or gateway; dispatches on model.api",
+        "detail": "Provider · createProvider({ id, auth, models, api }) · one runtime unit per vendor or gateway; dispatches on model.api",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-vendor",
+        "x": 25,
+        "y": 645,
+        "w": 1150,
+        "h": 60,
+        "label": "vendor endpoint",
+        "detail": "HTTP · SSE · WebSocket",
+        "tone": "gray"
+      },
+      {
+        "id": "2.1-api-0",
+        "x": 25,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "anthropic-\nmessages",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; anthropic-messages",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-api-1",
+        "x": 220,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "openai-\ncompletions",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; openai-completions",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-api-2",
+        "x": 415,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "openai-\nresponses",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; openai-responses",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-api-3",
+        "x": 610,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "google-*",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; google-*",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-api-4",
+        "x": 805,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "bedrock-\nconverse-stream",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; bedrock-converse-stream",
+        "tone": "plum"
+      },
+      {
+        "id": "2.1-api-5",
+        "x": 1000,
+        "y": 475,
+        "w": 175,
+        "h": 85,
+        "label": "… 10 chat\nAPIs",
+        "detail": "lazyApi: import api/<api-id>.ts on first use; … 10 chatAPIs",
+        "tone": "plum"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.1-models",
+        "from": "2.1-caller",
+        "label": "models.stream(model, context, options)"
+      },
+      {
+        "to": "2.1-provider",
+        "from": "2.1-models",
+        "label": "provider.stream(requestModel, transcript, requestOptions)"
+      },
+      {
+        "to": "2.1-api-0",
+        "from": "2.1-provider",
+        "points": [
+          [
+            112.5,
+            390
+          ],
+          [
+            112.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-0",
+        "points": [
+          [
+            112.5,
+            560
+          ],
+          [
+            112.5,
+            645
+          ]
+        ]
+      },
+      {
+        "to": "2.1-api-1",
+        "from": "2.1-provider",
+        "points": [
+          [
+            307.5,
+            390
+          ],
+          [
+            307.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-1",
+        "points": [
+          [
+            307.5,
+            560
+          ],
+          [
+            307.5,
+            645
+          ]
+        ]
+      },
+      {
+        "to": "2.1-api-2",
+        "from": "2.1-provider",
+        "points": [
+          [
+            502.5,
+            390
+          ],
+          [
+            502.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-2",
+        "points": [
+          [
+            502.5,
+            560
+          ],
+          [
+            502.5,
+            645
+          ]
+        ]
+      },
+      {
+        "to": "2.1-api-3",
+        "from": "2.1-provider",
+        "points": [
+          [
+            697.5,
+            390
+          ],
+          [
+            697.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-3",
+        "points": [
+          [
+            697.5,
+            560
+          ],
+          [
+            697.5,
+            645
+          ]
+        ]
+      },
+      {
+        "to": "2.1-api-4",
+        "from": "2.1-provider",
+        "points": [
+          [
+            892.5,
+            390
+          ],
+          [
+            892.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-4",
+        "points": [
+          [
+            892.5,
+            560
+          ],
+          [
+            892.5,
+            645
+          ]
+        ]
+      },
+      {
+        "to": "2.1-api-5",
+        "from": "2.1-provider",
+        "points": [
+          [
+            1087.5,
+            390
+          ],
+          [
+            1087.5,
+            475
+          ]
+        ]
+      },
+      {
+        "to": "2.1-vendor",
+        "from": "2.1-api-5",
+        "points": [
+          [
+            1087.5,
+            560
+          ],
+          [
+            1087.5,
+            645
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "Provider → APIs：lazyApi 在首次使用时导入 api/<api-id>.ts。",
+      "APIs → vendor endpoint：HTTP · SSE · WebSocket。"
+    ]
+  },
+  {
+    "id": "2.2",
+    "title": "ONE TRANSCRIPT, TWO RENDERINGS",
+    "label": "FIG. 2.2",
+    "source": "Pi Technical Manual · 图片和附件/image 6.png",
+    "page": 29,
+    "image": "/figures/ch02/image 6.webp",
+    "caption": "追加会保留缓存前缀；折叠则会重写它。只有模型的 compat 声明接受对话中途的系统消息时，resolveTranscript 才会把后续系统消息保留在原处；否则，重放得到的状态会放到最前面，并删除后续所有系统消息。示意图，依据 ai/utils/transcript.ts:108–120 和 ai/utils/text.ts（renderSystemMessageUpdate）。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 495,
+    "nodes": [
+      {
+        "id": "2.2-heading-0",
+        "x": 20,
+        "y": 20,
+        "w": 1160,
+        "h": 40,
+        "label": "TRANSCRIPT AFTER A TOOL IS ADDED MID-SESSION",
+        "detail": "TRANSCRIPT AFTER A TOOL IS ADDED MID-SESSION",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "2.2-r0-0",
+        "x": 20.0,
+        "y": 75,
+        "w": 219.2,
+        "h": 88,
+        "label": "system · leading\nprompt + sections\n+ tools [read, bash]",
+        "detail": "system · leading\nprompt + sections\n+ tools [read, bash]",
+        "tone": "plum"
+      },
+      {
+        "id": "2.2-r0-1",
+        "x": 255.2,
+        "y": 75,
+        "w": 219.2,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r0-2",
+        "x": 490.4,
+        "y": 75,
+        "w": 219.2,
+        "h": 88,
+        "label": "assistant",
+        "detail": "assistant",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r0-3",
+        "x": 725.5999999999999,
+        "y": 75,
+        "w": 219.2,
+        "h": 88,
+        "label": "system · later\ntoolsAdded [grep]",
+        "detail": "system · later\ntoolsAdded [grep]",
+        "tone": "plum"
+      },
+      {
+        "id": "2.2-r0-4",
+        "x": 960.8,
+        "y": 75,
+        "w": 219.2,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-heading-1",
+        "x": 20,
+        "y": 180,
+        "w": 1160,
+        "h": 40,
+        "label": "supportsMidConvoSystemMessages: true — sent as stored",
+        "detail": "supportsMidConvoSystemMessages: true — sent as stored",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "2.2-r1-0",
+        "x": 20.0,
+        "y": 235,
+        "w": 219.2,
+        "h": 88,
+        "label": "system\nunchanged head:\ncache hit",
+        "detail": "system\nunchanged head:\ncache hit",
+        "tone": "plum"
+      },
+      {
+        "id": "2.2-r1-1",
+        "x": 255.2,
+        "y": 235,
+        "w": 219.2,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r1-2",
+        "x": 490.4,
+        "y": 235,
+        "w": 219.2,
+        "h": 88,
+        "label": "assistant",
+        "detail": "assistant",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r1-3",
+        "x": 725.5999999999999,
+        "y": 235,
+        "w": 219.2,
+        "h": 88,
+        "label": "system\nUpdated system prompt\nsection … / tool addition",
+        "detail": "system\nUpdated system prompt\nsection … / tool addition",
+        "tone": "plum"
+      },
+      {
+        "id": "2.2-r1-4",
+        "x": 960.8,
+        "y": 235,
+        "w": 219.2,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-heading-2",
+        "x": 20,
+        "y": 340,
+        "w": 1160,
+        "h": 40,
+        "label": "false (Google, most models) — collapseSystemMessages()",
+        "detail": "false (Google, most models) — collapseSystemMessages()",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "2.2-r2-0",
+        "x": 20.0,
+        "y": 395,
+        "w": 278.0,
+        "h": 88,
+        "label": "system\nreplayed: prompt +\nsections + [read, bash, grep]",
+        "detail": "system\nreplayed: prompt +\nsections + [read, bash, grep]",
+        "tone": "rose"
+      },
+      {
+        "id": "2.2-r2-1",
+        "x": 314.0,
+        "y": 395,
+        "w": 278.0,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r2-2",
+        "x": 608.0,
+        "y": 395,
+        "w": 278.0,
+        "h": 88,
+        "label": "assistant",
+        "detail": "assistant",
+        "tone": "blue"
+      },
+      {
+        "id": "2.2-r2-3",
+        "x": 902.0,
+        "y": 395,
+        "w": 278.0,
+        "h": 88,
+        "label": "user",
+        "detail": "user",
+        "tone": "blue"
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "三行是同一对话记录的比较，不是三段连续对话。",
+      "第一、二行各五条消息；折叠后四条，后续 system 已并入首条。"
+    ]
+  },
+  {
+    "id": "2.3",
+    "title": "THE EVENT GRAMMAR",
+    "label": "FIG. 2.3",
+    "source": "Pi Technical Manual · 图片和附件/image 3.png",
+    "page": 31,
+    "image": "/figures/ch02/image 3.webp",
+    "caption": "一个起始事件、任意数量的内容块、恰好一个终止事件。第二行是“核心规则”允许的路径：没有 start，直接发出 error。示意图，依据 ai/types.ts:753–785；每一种转换都在 research/out/streaming-protocol-events.txt 中观察到。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 545,
+    "nodes": [
+      {
+        "id": "2.3-setup",
+        "x": 20,
+        "y": 35,
+        "w": 180,
+        "h": 320,
+        "label": "setup\nauth · lazy import\nprovider lookup",
+        "detail": "lazyStream: auth, lazy import, provider lookup",
+        "tone": "gray"
+      },
+      {
+        "id": "2.3-start",
+        "x": 240,
+        "y": 35,
+        "w": 180,
+        "h": 320,
+        "label": "start\nonce\nstopReason pending",
+        "detail": "start · once · stopReason pending",
+        "tone": "plum"
+      },
+      {
+        "id": "2.3-text",
+        "x": 465,
+        "y": 35,
+        "w": 385,
+        "h": 80,
+        "label": "text_start → text_delta* → text_end",
+        "detail": "text_start → text_delta* → text_end",
+        "tone": "plum"
+      },
+      {
+        "id": "2.3-thinking",
+        "x": 465,
+        "y": 135,
+        "w": 385,
+        "h": 95,
+        "label": "thinking_start → thinking_delta*\n→ thinking_end",
+        "detail": "thinking_start → thinking_delta* · → thinking_end",
+        "tone": "plum"
+      },
+      {
+        "id": "2.3-tool",
+        "x": 465,
+        "y": 250,
+        "w": 385,
+        "h": 105,
+        "label": "toolcall_start → toolcall_delta*\n→ toolcall_end",
+        "detail": "toolcall_start → toolcall_delta* · → toolcall_end",
+        "tone": "plum"
+      },
+      {
+        "id": "2.3-done",
+        "x": 900,
+        "y": 35,
+        "w": 280,
+        "h": 145,
+        "label": "done\nstop · length · toolUse\n· deferred",
+        "detail": "done · stop · length · toolUse · · deferred",
+        "tone": "plum"
+      },
+      {
+        "id": "2.3-error",
+        "x": 900,
+        "y": 210,
+        "w": 280,
+        "h": 145,
+        "label": "error\nerror · aborted",
+        "detail": "error · error · aborted",
+        "tone": "rose"
+      },
+      {
+        "id": "2.3-failed",
+        "x": 20,
+        "y": 425,
+        "w": 400,
+        "h": 90,
+        "label": "setup fails",
+        "detail": "setup fails",
+        "tone": "gray"
+      },
+      {
+        "id": "2.3-no-start",
+        "x": 465,
+        "y": 425,
+        "w": 715,
+        "h": 90,
+        "label": "error, with no start\nmissing auth · unknown provider · module load failure · empty faux queue",
+        "detail": "error, with no start · missing auth · unknown provider · module load failure · empty faux queue",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.3-start",
+        "from": "2.3-setup"
+      },
+      {
+        "to": "2.3-no-start",
+        "from": "2.3-failed"
+      },
+      {
+        "to": "2.3-text",
+        "from": "2.3-start",
+        "points": [
+          [
+            420,
+            195
+          ],
+          [
+            443,
+            195
+          ],
+          [
+            443,
+            75
+          ],
+          [
+            465,
+            75
+          ]
+        ]
+      },
+      {
+        "to": "2.3-thinking",
+        "from": "2.3-start",
+        "points": [
+          [
+            420,
+            195
+          ],
+          [
+            443,
+            195
+          ],
+          [
+            443,
+            182.5
+          ],
+          [
+            465,
+            182.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-tool",
+        "from": "2.3-start",
+        "points": [
+          [
+            420,
+            195
+          ],
+          [
+            443,
+            195
+          ],
+          [
+            443,
+            302.5
+          ],
+          [
+            465,
+            302.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-done",
+        "from": "2.3-text",
+        "points": [
+          [
+            850,
+            75
+          ],
+          [
+            875,
+            75
+          ],
+          [
+            875,
+            107.5
+          ],
+          [
+            900,
+            107.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-error",
+        "from": "2.3-text",
+        "points": [
+          [
+            850,
+            75
+          ],
+          [
+            875,
+            75
+          ],
+          [
+            875,
+            282.5
+          ],
+          [
+            900,
+            282.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-done",
+        "from": "2.3-thinking",
+        "points": [
+          [
+            850,
+            182.5
+          ],
+          [
+            875,
+            182.5
+          ],
+          [
+            875,
+            107.5
+          ],
+          [
+            900,
+            107.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-error",
+        "from": "2.3-thinking",
+        "points": [
+          [
+            850,
+            182.5
+          ],
+          [
+            875,
+            182.5
+          ],
+          [
+            875,
+            282.5
+          ],
+          [
+            900,
+            282.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-done",
+        "from": "2.3-tool",
+        "points": [
+          [
+            850,
+            302.5
+          ],
+          [
+            875,
+            302.5
+          ],
+          [
+            875,
+            107.5
+          ],
+          [
+            900,
+            107.5
+          ]
+        ]
+      },
+      {
+        "to": "2.3-error",
+        "from": "2.3-tool",
+        "points": [
+          [
+            850,
+            302.5
+          ],
+          [
+            875,
+            302.5
+          ],
+          [
+            875,
+            282.5
+          ],
+          [
+            900,
+            282.5
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "zero or more blocks, in content order; contentIndex = position in content[]",
+      "start 之后也允许没有内容块，直接 done / error；各内容块可以按内容顺序重复。"
+    ]
+  },
+  {
+    "id": "2.4",
+    "title": "ONE CALL TO MODELS.STREAM()",
+    "label": "FIG. 2.4",
+    "source": "Pi Technical Manual · 图片和附件/image 5.png",
+    "page": 34,
+    "image": "/figures/ch02/image 5.webp",
+    "caption": "调用方在身份验证解析前就已拿到流。步骤 1–2 在 Models 内部发生；步骤 2 中抛出的任何异常，例如“Provider is not configured”，都会成为单个 error 事件。依据 ai/models.ts:876–890（stream）、:842–874（applyAuth）和 ai/api/lazy.ts（lazyStream、forwardStream）。",
+    "kind": "diagram",
+    "width": 1280,
+    "height": 1045,
+    "nodes": [
+      {
+        "id": "2.4-lane-0",
+        "x": 44.23333333333335,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "CALLER\nagent loop",
+        "detail": "caller。本泳道中的调用与事件（自上而下）：stream(model, context, options) → AssistantMessageEventStream · returned before any await → events · result() → error, no start · if setup throws",
+        "tone": "amber"
+      },
+      {
+        "id": "2.4-lane-1",
+        "x": 247.56666666666666,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "MODELS\ncreateModels()",
+        "detail": "Models。本泳道中的调用与事件（自上而下）：stream(model, context, options) → normalizeContext(context) · Context → TranscriptContext → lazyStream(model, setup) → setup(): requireChatProvider · applyAuth · getAuth, header merge → provider.stream(requestModel, transcript, requestOptions)",
+        "tone": "plum"
+      },
+      {
+        "id": "2.4-lane-2",
+        "x": 450.90000000000003,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "LAZY\nlazyStream",
+        "detail": "lazyStream。本泳道中的调用与事件（自上而下）：lazyStream(model, setup) → AssistantMessageEventStream · returned before any await → setup(): requireChatProvider · applyAuth · getAuth, header merge → start · *_start/_delta/_end · done · forwarded event by event → events · result() → error, no start · if setup throws",
+        "tone": "plum"
+      },
+      {
+        "id": "2.4-lane-3",
+        "x": 654.2333333333333,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "PROVIDER\ncreateProvider",
+        "detail": "createProvider。本泳道中的调用与事件（自上而下）：provider.stream(requestModel, transcript, requestOptions) → streams for model.api · lazyApi: import on first use",
+        "tone": "plum"
+      },
+      {
+        "id": "2.4-lane-4",
+        "x": 857.5666666666666,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "ADAPTER\napi/<id>.ts",
+        "detail": "adapter。本泳道中的调用与事件（自上而下）：streams for model.api · lazyApi: import on first use → request (retryProviderRequest) → headers, then events → start · *_start/_delta/_end · done · forwarded event by event",
+        "tone": "plum"
+      },
+      {
+        "id": "2.4-lane-5",
+        "x": 1060.9,
+        "y": 20,
+        "w": 174.86666666666667,
+        "h": 75,
+        "label": "VENDOR\nHTTP · SSE",
+        "detail": "vendor。本泳道中的调用与事件（自上而下）：request (retryProviderRequest) → headers, then events",
+        "tone": "gray"
+      },
+      {
+        "id": "2.4-phase-1",
+        "x": 0,
+        "y": 128,
+        "w": 40,
+        "h": 38,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "2.4-phase-2",
+        "x": 0,
+        "y": 428,
+        "w": 40,
+        "h": 38,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "2.4-phase-3",
+        "x": 0,
+        "y": 653,
+        "w": 40,
+        "h": 38,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "2.4-phase-4",
+        "x": 0,
+        "y": 878,
+        "w": 40,
+        "h": 38,
+        "label": "4",
+        "detail": "原图阶段 4",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.4-lane-0",
+        "from": "2.4-lane-0",
+        "points": [
+          [
+            131.66666666666669,
+            95
+          ],
+          [
+            131.66666666666669,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-1",
+        "from": "2.4-lane-1",
+        "points": [
+          [
+            335.0,
+            95
+          ],
+          [
+            335.0,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-2",
+        "from": "2.4-lane-2",
+        "points": [
+          [
+            538.3333333333334,
+            95
+          ],
+          [
+            538.3333333333334,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-3",
+        "from": "2.4-lane-3",
+        "points": [
+          [
+            741.6666666666667,
+            95
+          ],
+          [
+            741.6666666666667,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-4",
+        "from": "2.4-lane-4",
+        "points": [
+          [
+            945.0,
+            95
+          ],
+          [
+            945.0,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-5",
+        "from": "2.4-lane-5",
+        "points": [
+          [
+            1148.3333333333335,
+            95
+          ],
+          [
+            1148.3333333333335,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "2.4-lane-1",
+        "from": "2.4-lane-0",
+        "label": "stream(model, context, options)",
+        "points": [
+          [
+            131.66666666666669,
+            145
+          ],
+          [
+            335.0,
+            145
+          ]
+        ],
+        "labelX": 233.33333333333334,
+        "labelY": 133
+      },
+      {
+        "to": "2.4-lane-1",
+        "from": "2.4-lane-1",
+        "label": "normalizeContext(context)\nContext → TranscriptContext",
+        "points": [
+          [
+            335.0,
+            220
+          ],
+          [
+            367.0,
+            220
+          ],
+          [
+            367.0,
+            242
+          ],
+          [
+            335.0,
+            242
+          ]
+        ],
+        "labelX": 485.0,
+        "labelY": 191
+      },
+      {
+        "to": "2.4-lane-2",
+        "from": "2.4-lane-1",
+        "label": "lazyStream(model, setup)",
+        "points": [
+          [
+            335.0,
+            295
+          ],
+          [
+            538.3333333333334,
+            295
+          ]
+        ],
+        "labelX": 436.6666666666667,
+        "labelY": 283
+      },
+      {
+        "to": "2.4-lane-0",
+        "from": "2.4-lane-2",
+        "label": "AssistantMessageEventStream\nreturned before any await",
+        "points": [
+          [
+            538.3333333333334,
+            370
+          ],
+          [
+            131.66666666666669,
+            370
+          ]
+        ],
+        "dashed": true,
+        "labelX": 335.0,
+        "labelY": 341
+      },
+      {
+        "to": "2.4-lane-1",
+        "from": "2.4-lane-2",
+        "label": "setup(): requireChatProvider · applyAuth\ngetAuth, header merge",
+        "points": [
+          [
+            538.3333333333334,
+            445
+          ],
+          [
+            335.0,
+            445
+          ]
+        ],
+        "labelX": 436.6666666666667,
+        "labelY": 416
+      },
+      {
+        "to": "2.4-lane-3",
+        "from": "2.4-lane-1",
+        "label": "provider.stream(requestModel, transcript, requestOptions)",
+        "points": [
+          [
+            335.0,
+            520
+          ],
+          [
+            741.6666666666667,
+            520
+          ]
+        ],
+        "labelX": 538.3333333333334,
+        "labelY": 508
+      },
+      {
+        "to": "2.4-lane-4",
+        "from": "2.4-lane-3",
+        "label": "streams for model.api\nlazyApi: import on first use",
+        "points": [
+          [
+            741.6666666666667,
+            595
+          ],
+          [
+            945.0,
+            595
+          ]
+        ],
+        "labelX": 843.3333333333334,
+        "labelY": 566
+      },
+      {
+        "to": "2.4-lane-5",
+        "from": "2.4-lane-4",
+        "label": "request (retryProviderRequest)",
+        "points": [
+          [
+            945.0,
+            670
+          ],
+          [
+            1148.3333333333335,
+            670
+          ]
+        ],
+        "labelX": 1046.6666666666667,
+        "labelY": 658
+      },
+      {
+        "to": "2.4-lane-4",
+        "from": "2.4-lane-5",
+        "label": "headers, then events",
+        "points": [
+          [
+            1148.3333333333335,
+            745
+          ],
+          [
+            945.0,
+            745
+          ]
+        ],
+        "dashed": true,
+        "labelX": 1046.6666666666667,
+        "labelY": 733
+      },
+      {
+        "to": "2.4-lane-2",
+        "from": "2.4-lane-4",
+        "label": "start · *_start/_delta/_end · done\nforwarded event by event",
+        "points": [
+          [
+            945.0,
+            820
+          ],
+          [
+            538.3333333333334,
+            820
+          ]
+        ],
+        "dashed": true,
+        "labelX": 741.6666666666667,
+        "labelY": 791,
+        "dash": "dotted"
+      },
+      {
+        "to": "2.4-lane-0",
+        "from": "2.4-lane-2",
+        "label": "events · result()",
+        "points": [
+          [
+            538.3333333333334,
+            895
+          ],
+          [
+            131.66666666666669,
+            895
+          ]
+        ],
+        "labelX": 335.0,
+        "labelY": 883,
+        "color": "#835981",
+        "emphasis": true
+      },
+      {
+        "to": "2.4-lane-0",
+        "from": "2.4-lane-2",
+        "label": "error, no start\nif setup throws",
+        "points": [
+          [
+            538.3333333333334,
+            970
+          ],
+          [
+            131.66666666666669,
+            970
+          ]
+        ],
+        "dashed": true,
+        "labelX": 335.0,
+        "labelY": 941,
+        "color": "#a33d60"
+      }
+    ],
+    "notes": [
+      "从上到下阅读时序；虚线为原图中的事件或返回箭头，实线为调用。原始泳道关系和事件顺序保持不变。"
+    ]
+  },
+  {
+    "id": "2.5",
+    "title": "WHAT TRANSFORMMESSAGES DOES TO HISTORY",
+    "label": "FIG. 2.5",
+    "source": "Pi Technical Manual · 图片和附件/image.png",
+    "page": 38,
+    "image": "/figures/ch02/image.webp",
+    "caption": "历史记录始终为目标模型重写，而不是为源模型重写。“相同模型”意味着 provider、api、model 这三个字段都与目标一致。步骤 0–3 在第一遍处理中逐条消息运行；步骤 4–5 在第二遍处理中运行。如果第二遍发现在调用与其结果之间夹着一条系统消息，还会暂时保留它，直到输出结果之后再放出。依据 ai/api/transform-messages.ts:35–235。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 290,
+    "nodes": [
+      {
+        "id": "2.5-step-0",
+        "x": 20.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "0 · images\nuser · toolResult",
+        "detail": "model has no image input → one \"(image omitted: …)\" text per run of images",
+        "tone": "gray"
+      },
+      {
+        "id": "2.5-step-1",
+        "x": 218.66666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "1 · thinking\nassistant",
+        "detail": "same provider + api + model: keep, with signatures; else plain text, no tags; redacted and empty dropped",
+        "tone": "plum"
+      },
+      {
+        "id": "2.5-step-2",
+        "x": 417.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "2 · signatures\nassistant",
+        "detail": "other model: textSignature and thoughtSignature removed",
+        "tone": "plum"
+      },
+      {
+        "id": "2.5-step-3",
+        "x": 616.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "3 · tool-call ids\nassistant · toolResult",
+        "detail": "other model: adapter’s normaliser; results remapped to match",
+        "tone": "plum"
+      },
+      {
+        "id": "2.5-step-4",
+        "x": 814.6666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "4 · failed turns\nsecond pass",
+        "detail": "stopReason error or aborted: message skipped",
+        "tone": "rose"
+      },
+      {
+        "id": "2.5-step-5",
+        "x": 1013.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "5 · orphans\nsecond pass",
+        "detail": "call with no result → synthetic \"No result provided\", isError",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.5-step-1",
+        "from": "2.5-step-0"
+      },
+      {
+        "to": "2.5-step-2",
+        "from": "2.5-step-1"
+      },
+      {
+        "to": "2.5-step-3",
+        "from": "2.5-step-2"
+      },
+      {
+        "to": "2.5-step-4",
+        "from": "2.5-step-3"
+      },
+      {
+        "to": "2.5-step-5",
+        "from": "2.5-step-4"
+      }
+    ],
+    "notes": [
+      "原书图注：历史记录针对目标模型重写。“同一模型”要求 provider、api、model 三者全部匹配。",
+      "原书第38页：步骤0–3逐消息进行首遍处理；步骤4–5位于第二遍，也会暂存调用与其结果之间的 system 消息，直到结果输出。"
+    ]
+  },
+  {
+    "id": "2.6",
+    "title": "WHERE A REQUEST’S CREDENTIAL COMES FROM",
+    "label": "FIG. 2.6",
+    "source": "Pi Technical Manual · 图片和附件/image 4.png",
+    "page": 43,
+    "image": "/figures/ch02/image 4.webp",
+    "caption": "没有已存储凭据，是通向环境变量的唯一路径。已存储凭据的类型不正确时，结果是“未配置”，而不是改用环境变量中的密钥。从上到下，第一个匹配项生效。依据 ai/auth/resolve.ts:46–93。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 290,
+    "nodes": [
+      {
+        "id": "2.6-step-0",
+        "x": 20.0,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "1 · explicit apiKey\nfirst match wins",
+        "detail": "options.apiKey set and provider has apiKey auth → apiKey.resolve(override)",
+        "tone": "plum"
+      },
+      {
+        "id": "2.6-step-1",
+        "x": 258.4,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "2 · stored oauth",
+        "detail": "stored type \"oauth\" and provider has oauth → refresh if expiring, then oauth.toAuth()",
+        "tone": "plum"
+      },
+      {
+        "id": "2.6-step-2",
+        "x": 496.8,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "3 · stored api_key",
+        "detail": "stored type \"api_key\" and provider has apiKey → apiKey.resolve(stored)",
+        "tone": "plum"
+      },
+      {
+        "id": "2.6-step-3",
+        "x": 735.2,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "4 · type mismatch\nno env fallback",
+        "detail": "something is stored, no matching handler → undefined",
+        "tone": "rose"
+      },
+      {
+        "id": "2.6-step-4",
+        "x": 973.6,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "5 · ambient",
+        "detail": "nothing stored → apiKey.resolve() reads env vars, AWS, ADC",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.6-step-1",
+        "from": "2.6-step-0"
+      },
+      {
+        "to": "2.6-step-2",
+        "from": "2.6-step-1"
+      },
+      {
+        "to": "2.6-step-3",
+        "from": "2.6-step-2"
+      },
+      {
+        "to": "2.6-step-4",
+        "from": "2.6-step-3"
+      }
+    ]
+  },
+  {
+    "id": "2.7",
+    "title": "FROM REMOTE CATALOGS TO BUILTINMODELS()",
+    "label": "FIG. 2.7",
+    "source": "Pi Technical Manual · 图片和附件/image 1.png",
+    "page": 46,
+    "image": "/figures/ch02/image 1.webp",
+    "caption": "1,620 个目录条目：1,537 个聊天模型、60 个图像模型、23 个分类器模型。npm run build 会在 tsc 之前运行 generate-models；build:offline 复用已有数据。数量来自固定构建版本中 src/providers/data/.json 的统计；流水线依据 packages/ai/package.json（scripts）、scripts/generate-models.ts:1292–1771、src/providers/.models.ts 和 ai/providers/all.ts:136–191。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 290,
+    "nodes": [
+      {
+        "id": "2.7-step-0",
+        "x": 20.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "1 · fetch\nnetwork, at build",
+        "detail": "models.dev/api.json, OpenRouter /api/v1/models, Vercel AI Gateway, Radius, NVIDIA",
+        "tone": "gray"
+      },
+      {
+        "id": "2.7-step-1",
+        "x": 218.66666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "2 · generate\n3,726 lines",
+        "detail": "scripts/generate-models.ts adds hand-kept entries, compat, thinking maps and price fixes",
+        "tone": "plum"
+      },
+      {
+        "id": "2.7-step-2",
+        "x": 417.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "3 · data\nschemaVersion 6\ngitignored",
+        "detail": "src/providers/data/.json + .manifest.json",
+        "tone": "teal"
+      },
+      {
+        "id": "2.7-step-3",
+        "x": 616.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "4 · wrap\n42 files, generated",
+        "detail": ".models.ts: flattenChatModelCatalog() and image, classifier twins",
+        "tone": "plum"
+      },
+      {
+        "id": "2.7-step-4",
+        "x": 814.6666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "5 · index\ndo not edit",
+        "detail": "models.generated.ts: MODELS, IMAGE_MODELS, CLASSIFIER_MODELS",
+        "tone": "plum"
+      },
+      {
+        "id": "2.7-step-5",
+        "x": 1013.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "6 · register\n42 factories",
+        "detail": "providers/all.ts: builtinProviders(), builtinModels()",
+        "tone": "plum"
+      }
+    ],
+    "edges": [
+      {
+        "to": "2.7-step-1",
+        "from": "2.7-step-0"
+      },
+      {
+        "to": "2.7-step-2",
+        "from": "2.7-step-1"
+      },
+      {
+        "to": "2.7-step-3",
+        "from": "2.7-step-2"
+      },
+      {
+        "to": "2.7-step-4",
+        "from": "2.7-step-3"
+      },
+      {
+        "to": "2.7-step-5",
+        "from": "2.7-step-4"
+      }
+    ]
+  }
+]

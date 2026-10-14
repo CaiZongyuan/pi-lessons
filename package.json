@@ -1,0 +1,29 @@
+{
+  "name": "pi-technical-library",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs --host 127.0.0.1",
+    "build": "node scripts/build.mjs",
+    "preview": "vitepress preview docs --host 127.0.0.1 --port 4173",
+    "check:content": "python3 scripts/check_content.py",
+    "check:book": "python3 scripts/check_book.py",
+    "import:book": "python3 scripts/import_chapter.py && python3 scripts/import_01.py && python3 scripts/import_02_03.py && python3 scripts/import_05.py && python3 scripts/import_06_07.py && python3 scripts/import_front_reference.py && python3 scripts/integrate_book.py && python3 scripts/optimize_assets.py",
+    "check:durable": "python3 scripts/check_durable.py",
+    "check:assets": "node scripts/verify_assets.mjs",
+    "import:durable": "python3 scripts/import_durable.py"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.22",
+    "@fontsource/manrope": "5.2.6",
+    "@fontsource/source-sans-3": "5.2.5",
+    "@fontsource/source-serif-4": "5.2.8",
+    "@fontsource/jetbrains-mono": "5.2.8"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

@@ -1,0 +1,310 @@
+[
+  {
+    "title": "Pi 的用途",
+    "link": "/pi-104/ch01/what-pi-is-for",
+    "page": 7,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  },
+  {
+    "title": "一页看懂 monorepo",
+    "link": "/pi-104/ch01/monorepo",
+    "page": 11,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  },
+  {
+    "title": "一个提示的生命周期",
+    "link": "/pi-104/ch01/prompt-lifecycle",
+    "page": 15,
+    "chapter": "1",
+    "chapterTitle": "模型"
+  },
+  {
+    "chapter": "2",
+    "section": "2.1",
+    "title": "提供商与模型",
+    "route": "/pi-104/ch02/providers-models",
+    "pageRange": [
+      24,
+      29
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md",
+    "page": 24,
+    "link": "/pi-104/ch02/providers-models",
+    "chapterTitle": "提供商层"
+  },
+  {
+    "chapter": "2",
+    "section": "2.2",
+    "title": "流式事件协议",
+    "route": "/pi-104/ch02/streaming-events",
+    "pageRange": [
+      30,
+      35
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md",
+    "page": 30,
+    "link": "/pi-104/ch02/streaming-events",
+    "chapterTitle": "提供商层"
+  },
+  {
+    "chapter": "2",
+    "section": "2.3",
+    "title": "传输 API 与跨提供商交接",
+    "route": "/pi-104/ch02/wire-apis",
+    "pageRange": [
+      36,
+      40
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md",
+    "page": 36,
+    "link": "/pi-104/ch02/wire-apis",
+    "chapterTitle": "提供商层"
+  },
+  {
+    "chapter": "2",
+    "section": "2.4",
+    "title": "身份验证、费用、重试与模型目录",
+    "route": "/pi-104/ch02/auth-cost-retries",
+    "pageRange": [
+      41,
+      47
+    ],
+    "source": "sources/full/2.提供商层/2.提供商层.md",
+    "page": 41,
+    "link": "/pi-104/ch02/auth-cost-retries",
+    "chapterTitle": "提供商层"
+  },
+  {
+    "chapter": "3",
+    "section": "3.1",
+    "title": "智能体循环",
+    "route": "/pi-104/ch03/agent-loop",
+    "pageRange": [
+      49,
+      56
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md",
+    "page": 49,
+    "link": "/pi-104/ch03/agent-loop",
+    "chapterTitle": "智能体循环"
+  },
+  {
+    "chapter": "3",
+    "section": "3.2",
+    "title": "智能体事件与 Agent 类",
+    "route": "/pi-104/ch03/agent-events",
+    "pageRange": [
+      57,
+      60
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md",
+    "page": 57,
+    "link": "/pi-104/ch03/agent-events",
+    "chapterTitle": "智能体循环"
+  },
+  {
+    "chapter": "3",
+    "section": "3.3",
+    "title": "AgentSession：组装运行时",
+    "route": "/pi-104/ch03/agent-session",
+    "pageRange": [
+      61,
+      66
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md",
+    "page": 61,
+    "link": "/pi-104/ch03/agent-session",
+    "chapterTitle": "智能体循环"
+  },
+  {
+    "chapter": "3",
+    "section": "3.4",
+    "title": "从 prompt() 到 agent_settled",
+    "route": "/pi-104/ch03/prompt-lifecycle",
+    "pageRange": [
+      67,
+      73
+    ],
+    "source": "sources/full/3.智能体循环/3.智能体循环.md",
+    "page": 67,
+    "link": "/pi-104/ch03/prompt-lifecycle",
+    "chapterTitle": "智能体循环"
+  },
+  {
+    "title": "系统提示词构建",
+    "link": "/pi-104/system-prompt",
+    "page": 75,
+    "chapter": "4",
+    "chapterTitle": "编码智能体"
+  },
+  {
+    "title": "内置工具",
+    "link": "/pi-104/tools",
+    "page": 81,
+    "chapter": "4",
+    "chapterTitle": "编码智能体"
+  },
+  {
+    "title": "会话：JSONL 树",
+    "link": "/pi-104/sessions",
+    "page": 86,
+    "chapter": "4",
+    "chapterTitle": "编码智能体"
+  },
+  {
+    "title": "压缩与分支摘要",
+    "link": "/pi-104/compaction",
+    "page": 92,
+    "chapter": "4",
+    "chapterTitle": "编码智能体"
+  },
+  {
+    "title": "配置、模型与身份验证",
+    "link": "/pi-104/ch05/configuration-models-auth",
+    "page": 99,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "上下文文件、技能、模板、主题与包",
+    "link": "/pi-104/ch05/resources",
+    "page": 106,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "扩展：加载与 API",
+    "link": "/pi-104/ch05/extensions-loading-api",
+    "page": 113,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "扩展事件与上下文",
+    "link": "/pi-104/ch05/extension-events-contexts",
+    "page": 120,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "运行模式：交互式、print 与 JSON",
+    "link": "/pi-104/ch05/run-modes",
+    "page": 127,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "RPC 模式与 SDK",
+    "link": "/pi-104/ch05/rpc-sdk",
+    "page": 133,
+    "chapter": "5",
+    "chapterTitle": "配置与扩展"
+  },
+  {
+    "title": "MCP：从 mcp.json 到工具调用",
+    "link": "/pi-104/ch06/mcp",
+    "page": 144,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "Codemode：调用工具的脚本",
+    "link": "/pi-104/ch06/codemode",
+    "page": 151,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "pi-tui：终端 UI 框架",
+    "link": "/pi-104/ch06/tui",
+    "page": 158,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "实验性技术栈",
+    "link": "/pi-104/ch07/experimental-stack",
+    "page": 166,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  },
+  {
+    "title": "安全模型",
+    "link": "/pi-104/ch07/security",
+    "page": 174,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  },
+  {
+    "title": "遥测与评测",
+    "link": "/pi-104/ch07/telemetry-evals",
+    "page": 179,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  },
+  {
+    "title": "环境变量",
+    "link": "/pi-104/reference/environment",
+    "page": 185,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "CLI 参考",
+    "link": "/pi-104/reference/cli",
+    "page": 191,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "斜杠命令与快捷键",
+    "link": "/pi-104/reference/commands",
+    "page": 197,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "设置参考",
+    "link": "/pi-104/reference/settings",
+    "page": 202,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "源文件索引",
+    "link": "/pi-104/reference/source-index",
+    "page": 208,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "文档与代码的差异",
+    "link": "/pi-104/reference/doc-code",
+    "page": 213,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "术语表",
+    "link": "/pi-104/reference/glossary",
+    "page": 216,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "来源与版本",
+    "link": "/pi-104/reference/sources",
+    "page": 218,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "插图索引",
+    "link": "/pi-104/reference/figures",
+    "page": 220,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  }
+]

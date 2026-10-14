@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-13",
+  "browser": "dot cloud Chromium",
+  "desktopCssWidth": 1165,
+  "mobileFrameCssWidth": 390,
+  "mobileContentCssWidth": 375,
+  "realMobileHardware": false,
+  "routesPerViewport": 56,
+  "checks": 112,
+  "overflowFailures": 0,
+  "missingFigureFailures": 0,
+  "tableColumnShapeFailures": 0,
+  "siteConsoleErrors": 0,
+  "excludedBrowserExtensionMetadataErrors": true,
+  "interactions": {
+    "desktopSidebarToggle": true,
+    "mobileSidebarMenu": true,
+    "figureClick": true,
+    "figureArrowKeys": true,
+    "mobileFigureKeyboardEnter": true,
+    "selectableSourceText": true,
+    "tableKeyboardResize": {
+      "before": 158,
+      "after": 178
+    },
+    "tableWidthPersistsAfterReload": true,
+    "tableWidthReset": true,
+    "longTableExpandCollapse": true,
+    "wideTableExpandRestore": true
+  },
+  "artifacts": {
+    "desktopAndMobileRouteResults": "qa/durable/final-cloud-browser.json (local QA artifact; excluded from delivery)"
+  },
+  "note": "Responsive frame is an actual same-origin document at390 CSS px including15px scrollbar, not a physical phone. Browser extension metadata errors were unrelated to the site."
+}

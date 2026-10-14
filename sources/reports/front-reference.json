@@ -1,0 +1,71 @@
+{
+  "source": "sources/full/8.参考资料/8.参考资料.md",
+  "sourceSha256": "c391a20ae9e348a2d112a792c9a89cea046ce1599044a79f6c5f3b9fd4bd458f",
+  "sections": [
+    {
+      "slug": "environment",
+      "characters": 10789,
+      "tables": 6,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "cli",
+      "characters": 8075,
+      "tables": 8,
+      "codeBlocks": 1
+    },
+    {
+      "slug": "commands",
+      "characters": 7687,
+      "tables": 6,
+      "codeBlocks": 1
+    },
+    {
+      "slug": "settings",
+      "characters": 9541,
+      "tables": 4,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "source-index",
+      "characters": 7078,
+      "tables": 7,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "doc-code",
+      "characters": 5641,
+      "tables": 1,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "glossary",
+      "characters": 2421,
+      "tables": 0,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "sources",
+      "characters": 2015,
+      "tables": 1,
+      "codeBlocks": 0
+    },
+    {
+      "slug": "figures",
+      "characters": 2290,
+      "tables": 1,
+      "codeBlocks": 0
+    }
+  ],
+  "figures": 3,
+  "repairs": [
+    "Restore 文档 ≠ 代码 callout: `--help` 说",
+    "Restore 易踩的坑 callout: 布尔型扩展标志会吞掉下一个单词。",
+    "Restore 文档 ≠ 代码 callout: 差异 10 还有另一面。`main()` 严格解"
+  ],
+  "sourceDiscrepancies": [
+    "R.1 supplied default session path is incomplete; translator note retained, native figure uses complete path shown in original p186.",
+    "R.1 supplied GLOUD_PROJECT/lama.cpp spellings retain explicit translator warning; not silently corrected."
+  ],
+  "pdfEvidence": "Opening pp1–5; reference pp185–221; FigR.1 p186 and FigR.2 p202; DOC≠CODE p186/p215; FOOTGUN p194."
+}

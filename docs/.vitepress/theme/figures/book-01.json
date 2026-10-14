@@ -1,0 +1,2120 @@
+[
+  {
+    "id": "1.1",
+    "title": "Pi 核心、内置扩展和有意留给扩展实现的功能",
+    "label": "FIG. 1.1",
+    "source": "Pi Technical Manual p9 · CA/src/extensions/index.ts:7 · CA/examples/extensions/ · pi.dev",
+    "page": 9,
+    "image": "/figures/ch01/image.webp",
+    "caption": "五项未内置功能中的四项有仓库内的参考扩展；后台 bash 没有。三列保留核心、内置扩展、留给扩展实现的边界。",
+    "kind": "diagram",
+    "width": 1350,
+    "height": 525,
+    "nodes": [
+      {
+        "id": "core-heading",
+        "x": 18,
+        "y": 5,
+        "w": 456,
+        "h": 35,
+        "label": "CORE · ALWAYS LOADED",
+        "detail": "CORE · ALWAYS LOADED",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "builtin-heading",
+        "x": 492,
+        "y": 5,
+        "w": 364,
+        "h": 35,
+        "label": "BUILT-IN EXTENSIONS",
+        "detail": "BUILT-IN EXTENSIONS",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "omitted-heading",
+        "x": 874,
+        "y": 5,
+        "w": 457,
+        "h": 35,
+        "label": "LEFT TO EXTENSIONS",
+        "detail": "LEFT TO EXTENSIONS",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-ai",
+        "x": 18,
+        "y": 55,
+        "w": 456,
+        "h": 78,
+        "label": "pi-ai\n10 wire APIs · 42 providers",
+        "detail": "pi-ai · 10 wire APIs · 42 providers",
+        "tone": "plum"
+      },
+      {
+        "id": "loop",
+        "x": 18,
+        "y": 149,
+        "w": 456,
+        "h": 78,
+        "label": "agent loop · AgentSession\nturns, queues, retries",
+        "detail": "agent loop · AgentSession · turns, queues, retries",
+        "tone": "amber"
+      },
+      {
+        "id": "tools",
+        "x": 18,
+        "y": 243,
+        "w": 456,
+        "h": 78,
+        "label": "read · bash · edit · write\n+ powershell · grep · find · ls",
+        "detail": "read · bash · edit · write · + powershell · grep · find · ls",
+        "tone": "green"
+      },
+      {
+        "id": "jsonl",
+        "x": 18,
+        "y": 337,
+        "w": 456,
+        "h": 78,
+        "label": "JSONL session tree\nappend-only · compaction on by default",
+        "detail": "JSONL session tree · append-only · compaction on by default",
+        "tone": "teal"
+      },
+      {
+        "id": "modes",
+        "x": 18,
+        "y": 431,
+        "w": 456,
+        "h": 78,
+        "label": "TUI · print/JSON · RPC · SDK",
+        "detail": "TUI · print/JSON · RPC · SDK",
+        "tone": "indigo"
+      },
+      {
+        "id": "mcp",
+        "x": 492,
+        "y": 55,
+        "w": 364,
+        "h": 103,
+        "label": "mcp\nreplaceable",
+        "detail": "mcp · replaceable",
+        "tone": "purple"
+      },
+      {
+        "id": "codemode",
+        "x": 492,
+        "y": 173,
+        "w": 364,
+        "h": 103,
+        "label": "codemode\nQuickJS sandbox · replaceable",
+        "detail": "codemode · QuickJS sandbox · replaceable",
+        "tone": "purple"
+      },
+      {
+        "id": "tool-search",
+        "x": 492,
+        "y": 291,
+        "w": 364,
+        "h": 103,
+        "label": "tool-search\nregistered inactive · replaceable",
+        "detail": "tool-search · registered inactive · replaceable",
+        "tone": "purple"
+      },
+      {
+        "id": "llama",
+        "x": 492,
+        "y": 409,
+        "w": 364,
+        "h": 103,
+        "label": "llama.cpp\nlocal model provider",
+        "detail": "llama.cpp · local model provider",
+        "tone": "purple"
+      },
+      {
+        "id": "subagents",
+        "x": 874,
+        "y": 55,
+        "w": 457,
+        "h": 78,
+        "label": "sub-agents\nexamples/extensions/subagent/",
+        "detail": "sub-agents · examples/extensions/subagent/",
+        "tone": "purple",
+        "hatch": false
+      },
+      {
+        "id": "plan",
+        "x": 874,
+        "y": 149,
+        "w": 457,
+        "h": 78,
+        "label": "plan mode\nexamples/extensions/plan-mode/",
+        "detail": "plan mode · examples/extensions/plan-mode/",
+        "tone": "purple",
+        "hatch": false
+      },
+      {
+        "id": "permissions",
+        "x": 874,
+        "y": 243,
+        "w": 457,
+        "h": 78,
+        "label": "permission popups\nexamples/extensions/permission-gate.ts",
+        "detail": "permission popups · examples/extensions/permission-gate.ts",
+        "tone": "purple",
+        "hatch": false
+      },
+      {
+        "id": "todos",
+        "x": 874,
+        "y": 337,
+        "w": 457,
+        "h": 78,
+        "label": "to-dos\nexamples/extensions/todo.ts",
+        "detail": "to-dos · examples/extensions/todo.ts",
+        "tone": "purple",
+        "hatch": false
+      },
+      {
+        "id": "background",
+        "x": 874,
+        "y": 431,
+        "w": 457,
+        "h": 78,
+        "label": "background bash\nno example · “Use tmux”",
+        "detail": "background bash · no example · “Use tmux”",
+        "tone": "rose",
+        "hatch": true
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "原图无连接箭头；三列是分类边界，不是依赖关系。",
+      "原始 Markdown 正文写作 lama.cpp；原书及此图写作 llama.cpp。正文按供应文本保留，未静默订正。"
+    ]
+  },
+  {
+    "id": "1.2",
+    "title": "各包代码量：CLI 大于其全部依赖包的总和",
+    "label": "FIG. 1.2",
+    "source": "Pi Technical Manual p12 · research/out/stats.txt §package-lines",
+    "page": 12,
+    "image": "/figures/ch01/image-1.webp",
+    "caption": "CLI 的体量比它依赖的全部包加起来还大。蓝色：稳定版 pi 命令导入的包。灰色：仅供实验性技术栈或评测运行框架使用的包。",
+    "kind": "diagram",
+    "width": 1373,
+    "height": 580,
+    "nodes": [
+      {
+        "id": "exclusions",
+        "x": 33,
+        "y": 5,
+        "w": 1300,
+        "h": 32,
+        "label": "NON-BLANK LINES UNDER SRC/ · TESTS, .D.TS AND GENERATED CATALOGUES EXCLUDED",
+        "detail": "NON-BLANK LINES UNDER SRC/ · TESTS, .D.TS AND GENERATED CATALOGUES EXCLUDED",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-coding-agent-name",
+        "x": 55,
+        "y": 50,
+        "w": 292,
+        "h": 36,
+        "label": "pi-coding-agent",
+        "detail": "pi-coding-agent：77,340 lines · 48.6% of the repository。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-coding-agent-bar",
+        "x": 366,
+        "y": 54,
+        "w": 644,
+        "h": 28,
+        "label": "",
+        "detail": "pi-coding-agent：77,340 lines · 48.6% of the repository。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "rose",
+        "fill": "#ce7f94",
+        "stroke": "none",
+        "ariaLabel": "pi-coding-agent: 77,340 lines",
+        "dataValue": 77340,
+        "visualWidth": 644
+      },
+      {
+        "id": "pi-coding-agent-value",
+        "x": 1020,
+        "y": 50,
+        "w": 147,
+        "h": 36,
+        "label": "77,340 lines",
+        "detail": "pi-coding-agent：77,340 lines · 48.6% of the repository。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-coding-agent-note",
+        "x": 1171,
+        "y": 50,
+        "w": 196,
+        "h": 36,
+        "label": "48.6% of the repository",
+        "detail": "pi-coding-agent：77,340 lines · 48.6% of the repository。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-ai-name",
+        "x": 55,
+        "y": 86,
+        "w": 292,
+        "h": 36,
+        "label": "pi-ai",
+        "detail": "pi-ai：23,581 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-ai-bar",
+        "x": 366,
+        "y": 90,
+        "w": 298,
+        "h": 28,
+        "label": "",
+        "detail": "pi-ai：23,581 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-ai: 23,581 lines",
+        "dataValue": 23581,
+        "visualWidth": 298
+      },
+      {
+        "id": "pi-ai-value",
+        "x": 674,
+        "y": 86,
+        "w": 147,
+        "h": 36,
+        "label": "23,581 lines",
+        "detail": "pi-ai：23,581 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-durable-name",
+        "x": 55,
+        "y": 122,
+        "w": 292,
+        "h": 36,
+        "label": "pi-durable",
+        "detail": "pi-durable：18,338 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-durable-bar",
+        "x": 366,
+        "y": 126,
+        "w": 232,
+        "h": 28,
+        "label": "",
+        "detail": "pi-durable：18,338 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-durable: 18,338 lines",
+        "dataValue": 18338,
+        "visualWidth": 232
+      },
+      {
+        "id": "pi-durable-value",
+        "x": 608,
+        "y": 122,
+        "w": 147,
+        "h": 36,
+        "label": "18,338 lines",
+        "detail": "pi-durable：18,338 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-durable-note",
+        "x": 759,
+        "y": 122,
+        "w": 240,
+        "h": 36,
+        "label": "experimental",
+        "detail": "pi-durable：18,338 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-tui-name",
+        "x": 55,
+        "y": 159,
+        "w": 292,
+        "h": 36,
+        "label": "pi-tui",
+        "detail": "pi-tui：17,134 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-tui-bar",
+        "x": 366,
+        "y": 163,
+        "w": 218,
+        "h": 28,
+        "label": "",
+        "detail": "pi-tui：17,134 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-tui: 17,134 lines",
+        "dataValue": 17134,
+        "visualWidth": 218
+      },
+      {
+        "id": "pi-tui-value",
+        "x": 594,
+        "y": 159,
+        "w": 147,
+        "h": 36,
+        "label": "17,134 lines",
+        "detail": "pi-tui：17,134 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "chord-name",
+        "x": 55,
+        "y": 195,
+        "w": 292,
+        "h": 36,
+        "label": "chord",
+        "detail": "chord：8,136 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "chord-bar",
+        "x": 366,
+        "y": 199,
+        "w": 103,
+        "h": 28,
+        "label": "",
+        "detail": "chord：8,136 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "chord: 8,136 lines",
+        "dataValue": 8136,
+        "visualWidth": 103
+      },
+      {
+        "id": "chord-value",
+        "x": 479,
+        "y": 195,
+        "w": 147,
+        "h": 36,
+        "label": "8,136 lines",
+        "detail": "chord：8,136 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-mcp-name",
+        "x": 55,
+        "y": 231,
+        "w": 292,
+        "h": 36,
+        "label": "pi-mcp",
+        "detail": "pi-mcp：2,907 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-mcp-bar",
+        "x": 366,
+        "y": 235,
+        "w": 38,
+        "h": 28,
+        "label": "",
+        "detail": "pi-mcp：2,907 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-mcp: 2,907 lines",
+        "dataValue": 2907,
+        "visualWidth": 38
+      },
+      {
+        "id": "pi-mcp-value",
+        "x": 414,
+        "y": 231,
+        "w": 147,
+        "h": 36,
+        "label": "2,907 lines",
+        "detail": "pi-mcp：2,907 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-agent-core-name",
+        "x": 55,
+        "y": 267,
+        "w": 292,
+        "h": 36,
+        "label": "pi-agent-core",
+        "detail": "pi-agent-core：2,281 lines · the loop。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-agent-core-bar",
+        "x": 366,
+        "y": 271,
+        "w": 30,
+        "h": 28,
+        "label": "",
+        "detail": "pi-agent-core：2,281 lines · the loop。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-agent-core: 2,281 lines",
+        "dataValue": 2281,
+        "visualWidth": 30
+      },
+      {
+        "id": "pi-agent-core-value",
+        "x": 406,
+        "y": 267,
+        "w": 147,
+        "h": 36,
+        "label": "2,281 lines",
+        "detail": "pi-agent-core：2,281 lines · the loop。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-agent-core-note",
+        "x": 557,
+        "y": 267,
+        "w": 240,
+        "h": 36,
+        "label": "the loop",
+        "detail": "pi-agent-core：2,281 lines · the loop。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-env-name",
+        "x": 55,
+        "y": 304,
+        "w": 292,
+        "h": 36,
+        "label": "pi-env",
+        "detail": "pi-env：1,928 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-env-bar",
+        "x": 366,
+        "y": 308,
+        "w": 25,
+        "h": 28,
+        "label": "",
+        "detail": "pi-env：1,928 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-env: 1,928 lines",
+        "dataValue": 1928,
+        "visualWidth": 25
+      },
+      {
+        "id": "pi-env-value",
+        "x": 401,
+        "y": 304,
+        "w": 147,
+        "h": 36,
+        "label": "1,928 lines",
+        "detail": "pi-env：1,928 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-server-name",
+        "x": 55,
+        "y": 340,
+        "w": 292,
+        "h": 36,
+        "label": "pi-server",
+        "detail": "pi-server：1,800 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-server-bar",
+        "x": 366,
+        "y": 344,
+        "w": 23,
+        "h": 28,
+        "label": "",
+        "detail": "pi-server：1,800 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-server: 1,800 lines",
+        "dataValue": 1800,
+        "visualWidth": 23
+      },
+      {
+        "id": "pi-server-value",
+        "x": 399,
+        "y": 340,
+        "w": 147,
+        "h": 36,
+        "label": "1,800 lines",
+        "detail": "pi-server：1,800 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-server-note",
+        "x": 550,
+        "y": 340,
+        "w": 240,
+        "h": 36,
+        "label": "experimental",
+        "detail": "pi-server：1,800 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-codemode-name",
+        "x": 55,
+        "y": 377,
+        "w": 292,
+        "h": 36,
+        "label": "pi-codemode",
+        "detail": "pi-codemode：1,696 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-codemode-bar",
+        "x": 366,
+        "y": 381,
+        "w": 21,
+        "h": 28,
+        "label": "",
+        "detail": "pi-codemode：1,696 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-codemode: 1,696 lines",
+        "dataValue": 1696,
+        "visualWidth": 21
+      },
+      {
+        "id": "pi-codemode-value",
+        "x": 397,
+        "y": 377,
+        "w": 147,
+        "h": 36,
+        "label": "1,696 lines",
+        "detail": "pi-codemode：1,696 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-evals-name",
+        "x": 55,
+        "y": 413,
+        "w": 292,
+        "h": 36,
+        "label": "pi-evals",
+        "detail": "pi-evals：1,345 lines · private。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-evals-bar",
+        "x": 366,
+        "y": 417,
+        "w": 17,
+        "h": 28,
+        "label": "",
+        "detail": "pi-evals：1,345 lines · private。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-evals: 1,345 lines",
+        "dataValue": 1345,
+        "visualWidth": 17
+      },
+      {
+        "id": "pi-evals-value",
+        "x": 393,
+        "y": 413,
+        "w": 147,
+        "h": 36,
+        "label": "1,345 lines",
+        "detail": "pi-evals：1,345 lines · private。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-evals-note",
+        "x": 544,
+        "y": 413,
+        "w": 240,
+        "h": 36,
+        "label": "private",
+        "detail": "pi-evals：1,345 lines · private。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-client-name",
+        "x": 55,
+        "y": 449,
+        "w": 292,
+        "h": 36,
+        "label": "pi-client",
+        "detail": "pi-client：1,046 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-client-bar",
+        "x": 366,
+        "y": 453,
+        "w": 13,
+        "h": 28,
+        "label": "",
+        "detail": "pi-client：1,046 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-client: 1,046 lines",
+        "dataValue": 1046,
+        "visualWidth": 13
+      },
+      {
+        "id": "pi-client-value",
+        "x": 389,
+        "y": 449,
+        "w": 147,
+        "h": 36,
+        "label": "1,046 lines",
+        "detail": "pi-client：1,046 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-client-note",
+        "x": 540,
+        "y": 449,
+        "w": 240,
+        "h": 36,
+        "label": "experimental",
+        "detail": "pi-client：1,046 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-telemetry-name",
+        "x": 55,
+        "y": 486,
+        "w": 292,
+        "h": 36,
+        "label": "pi-telemetry",
+        "detail": "pi-telemetry：826 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-telemetry-bar",
+        "x": 366,
+        "y": 490,
+        "w": 11,
+        "h": 28,
+        "label": "",
+        "detail": "pi-telemetry：826 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "blue",
+        "fill": "#6f9cc5",
+        "stroke": "none",
+        "ariaLabel": "pi-telemetry: 826 lines",
+        "dataValue": 826,
+        "visualWidth": 11
+      },
+      {
+        "id": "pi-telemetry-value",
+        "x": 387,
+        "y": 486,
+        "w": 147,
+        "h": 36,
+        "label": "826 lines",
+        "detail": "pi-telemetry：826 lines。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-protocol-name",
+        "x": 55,
+        "y": 522,
+        "w": 292,
+        "h": 36,
+        "label": "pi-protocol",
+        "detail": "pi-protocol：790 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "right"
+      },
+      {
+        "id": "pi-protocol-bar",
+        "x": 366,
+        "y": 526,
+        "w": 11,
+        "h": 28,
+        "label": "",
+        "detail": "pi-protocol：790 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "fill": "#a8a59e",
+        "stroke": "none",
+        "ariaLabel": "pi-protocol: 790 lines",
+        "dataValue": 790,
+        "visualWidth": 11
+      },
+      {
+        "id": "pi-protocol-value",
+        "x": 387,
+        "y": 522,
+        "w": 147,
+        "h": 36,
+        "label": "790 lines",
+        "detail": "pi-protocol：790 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "pi-protocol-note",
+        "x": 538,
+        "y": 522,
+        "w": 240,
+        "h": 36,
+        "label": "experimental",
+        "detail": "pi-protocol：790 lines · experimental。条长仅按原图转录，不能据此推导统一线性比例；精确数据以标签为准。",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "图形转录说明：条形位置和长度忠实转录原图，未按标签数值重新计算。原书未给出统一比例尺；例如 77,340 与 23,581 的条长之比不等于数值之比。因此这不是重新标定的定量比例图，请以精确数值标签及前表为准。",
+      "可选择包名、条形或数值查看该包的精确行数；原始图片保留在下方供对照。"
+    ]
+  },
+  {
+    "id": "1.3",
+    "title": "monorepo 的五层依赖图",
+    "label": "FIG. 1.3",
+    "source": "Pi Technical Manual p13 · fourteen package.json dependencies / devDependencies at 28dcce2",
+    "page": 13,
+    "image": "/figures/ch01/image-3.webp",
+    "caption": "稳定版 CLI 依赖一条由三个包组成的主链：pi-coding-agent → pi-agent-core → pi-ai。逐层保留运行时依赖、仅开发依赖以及未声明导入的区别。",
+    "kind": "diagram",
+    "width": 1370,
+    "height": 680,
+    "nodes": [
+      {
+        "id": "top-label",
+        "x": 15,
+        "y": 35,
+        "w": 95,
+        "h": 45,
+        "label": "TOP",
+        "detail": "TOP",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "l3-label",
+        "x": 15,
+        "y": 127,
+        "w": 95,
+        "h": 45,
+        "label": "L3",
+        "detail": "L3",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "l2-label",
+        "x": 15,
+        "y": 219,
+        "w": 95,
+        "h": 45,
+        "label": "L2",
+        "detail": "L2",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "l1-label",
+        "x": 15,
+        "y": 311,
+        "w": 95,
+        "h": 45,
+        "label": "L1",
+        "detail": "L1",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "leaf-label",
+        "x": 15,
+        "y": 423,
+        "w": 95,
+        "h": 45,
+        "label": "LEAF",
+        "detail": "LEAF",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "aside-label",
+        "x": 15,
+        "y": 570,
+        "w": 95,
+        "h": 45,
+        "label": "ASIDE",
+        "detail": "ASIDE",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "coding-agent",
+        "x": 155,
+        "y": 15,
+        "w": 864,
+        "h": 78,
+        "label": "pi-coding-agent\n→ chord · pi-agent-core · pi-ai · pi-codemode · pi-mcp · pi-tui",
+        "detail": "pi-coding-agent · → chord · pi-agent-core · pi-ai · pi-codemode · pi-mcp · pi-tui",
+        "tone": "blue"
+      },
+      {
+        "id": "dev-only",
+        "x": 1038,
+        "y": 15,
+        "w": 315,
+        "h": 78,
+        "label": "dev only\n→ pi-client · pi-protocol · pi-server",
+        "detail": "dev only · → pi-client · pi-protocol · pi-server",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "env",
+        "x": 155,
+        "y": 107,
+        "w": 1198,
+        "h": 79,
+        "label": "pi-env\n→ chord · pi-durable · no consumer in the repo",
+        "detail": "pi-env · → chord · pi-durable · no consumer in the repo",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "agent-core",
+        "x": 155,
+        "y": 199,
+        "w": 287,
+        "h": 79,
+        "label": "pi-agent-core\n→ pi-ai",
+        "detail": "pi-agent-core · → pi-ai",
+        "tone": "blue"
+      },
+      {
+        "id": "durable",
+        "x": 460,
+        "y": 199,
+        "w": 286,
+        "h": 79,
+        "label": "pi-durable\n→ chord · pi-ai",
+        "detail": "pi-durable · → chord · pi-ai",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "server",
+        "x": 764,
+        "y": 199,
+        "w": 284,
+        "h": 79,
+        "label": "pi-server\n→ chord · pi-protocol",
+        "detail": "pi-server · → chord · pi-protocol",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "client",
+        "x": 1067,
+        "y": 199,
+        "w": 286,
+        "h": 79,
+        "label": "pi-client\n→ chord · pi-protocol",
+        "detail": "pi-client · → chord · pi-protocol",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "ai",
+        "x": 155,
+        "y": 291,
+        "w": 589,
+        "h": 79,
+        "label": "pi-ai\n→ pi-telemetry",
+        "detail": "pi-ai · → pi-telemetry",
+        "tone": "blue"
+      },
+      {
+        "id": "protocol",
+        "x": 763,
+        "y": 291,
+        "w": 590,
+        "h": 79,
+        "label": "pi-protocol\n→ chord",
+        "detail": "pi-protocol · → chord",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "telemetry",
+        "x": 155,
+        "y": 383,
+        "w": 227,
+        "h": 125,
+        "label": "pi-telemetry",
+        "detail": "pi-telemetry",
+        "tone": "blue"
+      },
+      {
+        "id": "tui",
+        "x": 400,
+        "y": 383,
+        "w": 223,
+        "h": 125,
+        "label": "pi-tui",
+        "detail": "pi-tui",
+        "tone": "blue"
+      },
+      {
+        "id": "mcp",
+        "x": 641,
+        "y": 383,
+        "w": 226,
+        "h": 125,
+        "label": "pi-mcp",
+        "detail": "pi-mcp",
+        "tone": "blue"
+      },
+      {
+        "id": "codemode",
+        "x": 885,
+        "y": 383,
+        "w": 224,
+        "h": 125,
+        "label": "pi-codemode",
+        "detail": "pi-codemode",
+        "tone": "blue"
+      },
+      {
+        "id": "chord",
+        "x": 1127,
+        "y": 383,
+        "w": 226,
+        "h": 125,
+        "label": "chord\ndeclared by the CLI ·\nimported only under\nsrc/experimental/",
+        "detail": "chord · declared by the CLI · · imported only under · src/experimental/",
+        "tone": "gray"
+      },
+      {
+        "id": "evals",
+        "x": 155,
+        "y": 523,
+        "w": 589,
+        "h": 134,
+        "label": "pi-evals (private)\ndevDependencies → pi-ai · pi-coding-agent",
+        "detail": "pi-evals (private) · devDependencies → pi-ai · pi-coding-agent",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "experimental",
+        "x": 763,
+        "y": 523,
+        "w": 590,
+        "h": 134,
+        "label": "CA/src/experimental/\nimports pi-durable without declaring it · resolved through npm\nworkspaces",
+        "detail": "CA/src/experimental/ · imports pi-durable without declaring it · resolved through npm · workspaces",
+        "tone": "gray",
+        "hatch": true
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "原图以每个矩形内的 → 依赖列表表达边，不绘制跨层连接线；此处沿用这种布局，避免添加未声明的关系。",
+      "灰色标明实验性、开发依赖或私有评测路径；chord 虽被 CLI 声明为运行时依赖，实际仅由 src/experimental/ 导入。"
+    ]
+  },
+  {
+    "id": "1.4",
+    "title": "一个提示进入智能体循环的步骤 1–12",
+    "label": "FIG. 1.4",
+    "source": "Pi Technical Manual p16 · CA/src/core/agent-session.ts · agent/agent-loop.ts · CA/src/core/model-runtime.ts at 28dcce2",
+    "page": 16,
+    "image": "/figures/ch01/image-2.webp",
+    "caption": "模型看到提示之前，提示已经写入磁盘。实线箭头表示调用，虚线箭头表示提供商流，点线箭头表示递交给 AgentSession 的智能体事件。",
+    "kind": "diagram",
+    "width": 1379,
+    "height": 1280,
+    "nodes": [
+      {
+        "id": "tui",
+        "x": 155,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "TUI\neditor",
+        "detail": "TUI · editor",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 322,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "SESSION\nAgentSession",
+        "detail": "SESSION · AgentSession",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "ext",
+        "x": 488,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "EXT\nextensions",
+        "detail": "EXT · extensions",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "loop",
+        "x": 655,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "LOOP\nAgent · runLoop",
+        "detail": "LOOP · Agent · runLoop",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "models",
+        "x": 822,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "MODELS\nModelRuntime",
+        "detail": "MODELS · ModelRuntime",
+        "tone": "plum",
+        "align": "center"
+      },
+      {
+        "id": "api",
+        "x": 989,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "API\nprovider",
+        "detail": "API · provider",
+        "tone": "plum",
+        "align": "center"
+      },
+      {
+        "id": "jsonl",
+        "x": 1156,
+        "y": 20,
+        "w": 144,
+        "h": 70,
+        "label": "JSONL\nSessionManager",
+        "detail": "JSONL · SessionManager",
+        "tone": "teal",
+        "align": "center"
+      },
+      {
+        "id": "step-1",
+        "x": 35,
+        "y": 141,
+        "w": 55,
+        "h": 38,
+        "label": "1",
+        "detail": "TUI → SESSION · prompt(text) · onSubmit → getUserInput()",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-2",
+        "x": 35,
+        "y": 235,
+        "w": 55,
+        "h": 38,
+        "label": "2",
+        "detail": "SESSION → EXT · input · before_agent_start · may handle, rewrite or add",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-3",
+        "x": 35,
+        "y": 329,
+        "w": 55,
+        "h": 38,
+        "label": "3",
+        "detail": "SESSION → LOOP · agent.prompt([system, user])",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-4",
+        "x": 35,
+        "y": 423,
+        "w": 55,
+        "h": 38,
+        "label": "4",
+        "detail": "LOOP → SESSION · agent_start · turn_start · message_end ×2",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-5",
+        "x": 35,
+        "y": 517,
+        "w": 55,
+        "h": 38,
+        "label": "5",
+        "detail": "SESSION → JSONL · appendMessage ×2 · file created: lines 1–5",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-6",
+        "x": 35,
+        "y": 611,
+        "w": 55,
+        "h": 38,
+        "label": "6",
+        "detail": "LOOP → SESSION · prepareRequest · context = session projection",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-7",
+        "x": 35,
+        "y": 705,
+        "w": 55,
+        "h": 38,
+        "label": "7",
+        "detail": "LOOP → EXT · context · transformContext",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-8",
+        "x": 35,
+        "y": 799,
+        "w": 55,
+        "h": 38,
+        "label": "8",
+        "detail": "LOOP → MODELS · streamSimple(model, context)",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-9",
+        "x": 35,
+        "y": 893,
+        "w": 55,
+        "h": 38,
+        "label": "9",
+        "detail": "MODELS → API · provider.streamSimple · auth resolved first",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-10",
+        "x": 35,
+        "y": 987,
+        "w": 55,
+        "h": 38,
+        "label": "10",
+        "detail": "API → LOOP · AssistantMessageEvent stream",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-11",
+        "x": 35,
+        "y": 1081,
+        "w": 55,
+        "h": 38,
+        "label": "11",
+        "detail": "LOOP → SESSION · message_start · update · end",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-12",
+        "x": 35,
+        "y": 1175,
+        "w": 55,
+        "h": 38,
+        "label": "12",
+        "detail": "SESSION → JSONL · appendMessage(assistant) · line 6",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [
+      {
+        "from": "tui",
+        "to": "tui",
+        "points": [
+          [
+            227,
+            92
+          ],
+          [
+            227,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "session",
+        "to": "session",
+        "points": [
+          [
+            394,
+            92
+          ],
+          [
+            394,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "ext",
+        "to": "ext",
+        "points": [
+          [
+            560,
+            92
+          ],
+          [
+            560,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "loop",
+        "to": "loop",
+        "points": [
+          [
+            727,
+            92
+          ],
+          [
+            727,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "models",
+        "to": "models",
+        "points": [
+          [
+            894,
+            92
+          ],
+          [
+            894,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "api",
+        "to": "api",
+        "points": [
+          [
+            1061,
+            92
+          ],
+          [
+            1061,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "jsonl",
+        "to": "jsonl",
+        "points": [
+          [
+            1228,
+            92
+          ],
+          [
+            1228,
+            1260
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "tui",
+        "to": "session",
+        "points": [
+          [
+            227,
+            160
+          ],
+          [
+            394,
+            160
+          ]
+        ],
+        "label": "prompt(text)\nonSubmit → getUserInput()",
+        "color": "#232a34"
+      },
+      {
+        "from": "session",
+        "to": "ext",
+        "points": [
+          [
+            394,
+            254
+          ],
+          [
+            560,
+            254
+          ]
+        ],
+        "label": "input · before_agent_start\nmay handle, rewrite or add",
+        "color": "#72548e"
+      },
+      {
+        "from": "session",
+        "to": "loop",
+        "points": [
+          [
+            394,
+            348
+          ],
+          [
+            727,
+            348
+          ]
+        ],
+        "label": "agent.prompt([system, user])",
+        "color": "#8c6428"
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            727,
+            442
+          ],
+          [
+            394,
+            442
+          ]
+        ],
+        "label": "agent_start · turn_start · message_end ×2",
+        "dashed": true,
+        "dash": "dotted",
+        "color": "#232a34"
+      },
+      {
+        "from": "session",
+        "to": "jsonl",
+        "points": [
+          [
+            394,
+            536
+          ],
+          [
+            1228,
+            536
+          ]
+        ],
+        "label": "appendMessage ×2\nfile created: lines 1–5",
+        "color": "#245f67",
+        "width": 3,
+        "emphasis": true
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            727,
+            630
+          ],
+          [
+            394,
+            630
+          ]
+        ],
+        "label": "prepareRequest\ncontext = session projection",
+        "color": "#232a34"
+      },
+      {
+        "from": "loop",
+        "to": "ext",
+        "points": [
+          [
+            727,
+            724
+          ],
+          [
+            560,
+            724
+          ]
+        ],
+        "label": "context\ntransformContext",
+        "color": "#72548e"
+      },
+      {
+        "from": "loop",
+        "to": "models",
+        "points": [
+          [
+            727,
+            818
+          ],
+          [
+            894,
+            818
+          ]
+        ],
+        "label": "streamSimple(model, context)",
+        "color": "#835981"
+      },
+      {
+        "from": "models",
+        "to": "api",
+        "points": [
+          [
+            894,
+            912
+          ],
+          [
+            1061,
+            912
+          ]
+        ],
+        "label": "provider.streamSimple\nauth resolved first",
+        "color": "#835981"
+      },
+      {
+        "from": "api",
+        "to": "loop",
+        "points": [
+          [
+            1061,
+            1006
+          ],
+          [
+            727,
+            1006
+          ]
+        ],
+        "label": "AssistantMessageEvent stream",
+        "dashed": true,
+        "dash": "dashed",
+        "color": "#835981"
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            727,
+            1100
+          ],
+          [
+            394,
+            1100
+          ]
+        ],
+        "label": "message_start · update · end",
+        "dashed": true,
+        "dash": "dotted",
+        "color": "#232a34"
+      },
+      {
+        "from": "session",
+        "to": "jsonl",
+        "points": [
+          [
+            394,
+            1194
+          ],
+          [
+            1228,
+            1194
+          ]
+        ],
+        "label": "appendMessage(assistant)\nline 6",
+        "color": "#245f67"
+      }
+    ]
+  },
+  {
+    "id": "1.5",
+    "title": "一个提示的工具执行与收束步骤 13–22",
+    "label": "FIG. 1.5",
+    "source": "Pi Technical Manual p18 · agent/agent-loop.ts · CA/src/core/agent-session.ts:640 at 28dcce2",
+    "page": 18,
+    "image": "/figures/ch01/image-4.webp",
+    "caption": "一次运行在 agent_settled 时结束，而不是 agent_end。tool_call 与 tool_result 从调用 beforeToolCall / afterToolCall 的 LOOP 泳道指向 EXT；步骤 19 和 21 保留自调用回环。",
+    "kind": "diagram",
+    "width": 1382,
+    "height": 1100,
+    "nodes": [
+      {
+        "id": "tui",
+        "x": 158,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "TUI\neditor",
+        "detail": "TUI · editor",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 353,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "SESSION\nAgentSession",
+        "detail": "SESSION · AgentSession",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "ext",
+        "x": 548,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "EXT\nextensions",
+        "detail": "EXT · extensions",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "loop",
+        "x": 742,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "LOOP\nAgent · runLoop",
+        "detail": "LOOP · Agent · runLoop",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "tools",
+        "x": 937,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "TOOLS\nread · bash · …",
+        "detail": "TOOLS · read · bash · …",
+        "tone": "green",
+        "align": "center"
+      },
+      {
+        "id": "jsonl",
+        "x": 1132,
+        "y": 20,
+        "w": 172,
+        "h": 71,
+        "label": "JSONL\nSessionManager",
+        "detail": "JSONL · SessionManager",
+        "tone": "teal",
+        "align": "center"
+      },
+      {
+        "id": "step-13",
+        "x": 35,
+        "y": 143,
+        "w": 55,
+        "h": 38,
+        "label": "13",
+        "detail": "LOOP → SESSION · tool_execution_start",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-14",
+        "x": 35,
+        "y": 237,
+        "w": 55,
+        "h": 38,
+        "label": "14",
+        "detail": "LOOP → EXT · tool_call · beforeToolCall · may block",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-15",
+        "x": 35,
+        "y": 331,
+        "w": 55,
+        "h": 38,
+        "label": "15",
+        "detail": "LOOP → TOOLS · execute(args) · parallel by default",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-16",
+        "x": 35,
+        "y": 425,
+        "w": 55,
+        "h": 38,
+        "label": "16",
+        "detail": "LOOP → EXT · tool_result · afterToolCall · may rewrite",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-17",
+        "x": 35,
+        "y": 519,
+        "w": 55,
+        "h": 38,
+        "label": "17",
+        "detail": "LOOP → SESSION · tool_execution_end · message_end",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-18",
+        "x": 35,
+        "y": 613,
+        "w": 55,
+        "h": 38,
+        "label": "18",
+        "detail": "SESSION → JSONL · appendMessage(toolResult) · line 7",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-19",
+        "x": 35,
+        "y": 707,
+        "w": 55,
+        "h": 38,
+        "label": "19",
+        "detail": "LOOP → LOOP · turn_end · next turn · steps 6–12 again: line 8",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "note-19",
+        "x": 891,
+        "y": 691,
+        "w": 325,
+        "h": 70,
+        "label": "turn_end · next turn\nsteps 6–12 again: line 8",
+        "detail": "turn_end · next turn · steps 6–12 again: line 8",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-20",
+        "x": 35,
+        "y": 801,
+        "w": 55,
+        "h": 38,
+        "label": "20",
+        "detail": "LOOP → SESSION · agent_end · a turn with no tool calls",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-21",
+        "x": 35,
+        "y": 895,
+        "w": 55,
+        "h": 38,
+        "label": "21",
+        "detail": "SESSION → SESSION · retry? compact? queued? · then agent_before_settle",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "note-21",
+        "x": 502,
+        "y": 879,
+        "w": 325,
+        "h": 70,
+        "label": "retry? compact? queued?\nthen agent_before_settle",
+        "detail": "retry? compact? queued? · then agent_before_settle",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "step-22",
+        "x": 35,
+        "y": 989,
+        "w": 55,
+        "h": 38,
+        "label": "22",
+        "detail": "SESSION → TUI · agent_settled · prompt() resolves",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [
+      {
+        "from": "tui",
+        "to": "tui",
+        "points": [
+          [
+            244,
+            93
+          ],
+          [
+            244,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "session",
+        "to": "session",
+        "points": [
+          [
+            439,
+            93
+          ],
+          [
+            439,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "ext",
+        "to": "ext",
+        "points": [
+          [
+            634,
+            93
+          ],
+          [
+            634,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "loop",
+        "to": "loop",
+        "points": [
+          [
+            828,
+            93
+          ],
+          [
+            828,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "tools",
+        "to": "tools",
+        "points": [
+          [
+            1023,
+            93
+          ],
+          [
+            1023,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "jsonl",
+        "to": "jsonl",
+        "points": [
+          [
+            1218,
+            93
+          ],
+          [
+            1218,
+            1080
+          ]
+        ],
+        "arrow": false,
+        "dashed": true
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            828,
+            162
+          ],
+          [
+            439,
+            162
+          ]
+        ],
+        "label": "tool_execution_start",
+        "dashed": true,
+        "dash": "dotted",
+        "color": "#232a34"
+      },
+      {
+        "from": "loop",
+        "to": "ext",
+        "points": [
+          [
+            828,
+            256
+          ],
+          [
+            634,
+            256
+          ]
+        ],
+        "label": "tool_call\nbeforeToolCall · may block",
+        "color": "#72548e"
+      },
+      {
+        "from": "loop",
+        "to": "tools",
+        "points": [
+          [
+            828,
+            350
+          ],
+          [
+            1023,
+            350
+          ]
+        ],
+        "label": "execute(args)\nparallel by default",
+        "color": "#456932"
+      },
+      {
+        "from": "loop",
+        "to": "ext",
+        "points": [
+          [
+            828,
+            444
+          ],
+          [
+            634,
+            444
+          ]
+        ],
+        "label": "tool_result\nafterToolCall · may rewrite",
+        "color": "#72548e"
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            828,
+            538
+          ],
+          [
+            439,
+            538
+          ]
+        ],
+        "label": "tool_execution_end · message_end",
+        "dashed": true,
+        "dash": "dotted",
+        "color": "#232a34"
+      },
+      {
+        "from": "session",
+        "to": "jsonl",
+        "points": [
+          [
+            439,
+            632
+          ],
+          [
+            1218,
+            632
+          ]
+        ],
+        "label": "appendMessage(toolResult)\nline 7",
+        "color": "#245f67"
+      },
+      {
+        "from": "loop",
+        "to": "loop",
+        "points": [
+          [
+            828,
+            710
+          ],
+          [
+            876,
+            710
+          ],
+          [
+            876,
+            740
+          ],
+          [
+            828,
+            740
+          ]
+        ],
+        "color": "#8c6428"
+      },
+      {
+        "from": "loop",
+        "to": "session",
+        "points": [
+          [
+            828,
+            820
+          ],
+          [
+            439,
+            820
+          ]
+        ],
+        "label": "agent_end\na turn with no tool calls",
+        "dashed": true,
+        "dash": "dotted",
+        "color": "#232a34"
+      },
+      {
+        "from": "session",
+        "to": "session",
+        "points": [
+          [
+            439,
+            898
+          ],
+          [
+            487,
+            898
+          ],
+          [
+            487,
+            928
+          ],
+          [
+            439,
+            928
+          ]
+        ],
+        "color": "#8c6428"
+      },
+      {
+        "from": "session",
+        "to": "tui",
+        "points": [
+          [
+            439,
+            1008
+          ],
+          [
+            244,
+            1008
+          ]
+        ],
+        "label": "agent_settled\nprompt() resolves",
+        "color": "#485d96",
+        "width": 3,
+        "emphasis": true
+      }
+    ]
+  }
+]

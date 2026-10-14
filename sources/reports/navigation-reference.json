@@ -1,0 +1,65 @@
+[
+  {
+    "title": "环境变量",
+    "link": "/pi-104/reference/environment",
+    "page": 185,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "CLI 参考",
+    "link": "/pi-104/reference/cli",
+    "page": 191,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "斜杠命令与快捷键",
+    "link": "/pi-104/reference/commands",
+    "page": 197,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "设置参考",
+    "link": "/pi-104/reference/settings",
+    "page": 202,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "源文件索引",
+    "link": "/pi-104/reference/source-index",
+    "page": 208,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "文档与代码的差异",
+    "link": "/pi-104/reference/doc-code",
+    "page": 213,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "术语表",
+    "link": "/pi-104/reference/glossary",
+    "page": 216,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "来源与版本",
+    "link": "/pi-104/reference/sources",
+    "page": 218,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  },
+  {
+    "title": "插图索引",
+    "link": "/pi-104/reference/figures",
+    "page": 220,
+    "chapter": "R",
+    "chapterTitle": "参考资料"
+  }
+]

@@ -1,0 +1,2166 @@
+[
+  {
+    "id": "3.1",
+    "title": "RUNLOOP",
+    "label": "FIG. 3.1",
+    "source": "Pi Technical Manual · 图片和附件/image 4.png",
+    "page": 51,
+    "image": "/figures/ch03/image 4.webp",
+    "caption": "只要还有内容需要响应，循环就会继续；它只在三个位置停止。这是 agent/agent-loop.ts 中一次 runLoop 调用的示意图；数字为 28dcce2 版本的行号。粗琥珀色箭头表示两条返回路径：内层循环（工具结果或Steering）和外层循环（follow-up，或要求继续的 finishTurn）。玫瑰色出口是唯一跳过队列的出口。",
+    "kind": "diagram",
+    "width": 1260,
+    "height": 1090,
+    "nodes": [
+      {
+        "id": "3.1-step-0",
+        "x": 310,
+        "y": 25,
+        "w": 525,
+        "h": 74,
+        "label": "runAgentLoop · :102\nagent_start · turn_start · prompt messages",
+        "detail": "runAgentLoop · :102\nagent_start · turn_start · prompt messages",
+        "tone": "gray"
+      },
+      {
+        "id": "3.1-step-1",
+        "x": 310,
+        "y": 130,
+        "w": 525,
+        "h": 74,
+        "label": "poll steering · :176\nuser may have typed while waiting",
+        "detail": "poll steering · :176\nuser may have typed while waiting",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-2",
+        "x": 310,
+        "y": 235,
+        "w": 525,
+        "h": 74,
+        "label": "prepareNextTurn · :186\nre-poll steering if empty (:204) · turn_start",
+        "detail": "prepareNextTurn · :186\nre-poll steering if empty (:204) · turn_start",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-3",
+        "x": 310,
+        "y": 340,
+        "w": 525,
+        "h": 74,
+        "label": "inject pending · :211\ndeclareToolChanges · message_start/end each",
+        "detail": "inject pending · :211\ndeclareToolChanges · message_start/end each",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-4",
+        "x": 310,
+        "y": 445,
+        "w": 525,
+        "h": 74,
+        "label": "prepareRequest · :219\nmay replace context, model, thinking level",
+        "detail": "prepareRequest · :219\nmay replace context, model, thinking level",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-5",
+        "x": 310,
+        "y": 550,
+        "w": 525,
+        "h": 74,
+        "label": "streamAssistantResponse · :242\ntransformContext → convertToLlm → streamFn",
+        "detail": "streamAssistantResponse · :242\ntransformContext → convertToLlm → streamFn",
+        "tone": "plum"
+      },
+      {
+        "id": "3.1-step-6",
+        "x": 310,
+        "y": 655,
+        "w": 525,
+        "h": 74,
+        "label": "tool calls · :263\nexecute; on stopReason length, fail them all",
+        "detail": "tool calls · :263\nexecute; on stopReason length, fail them all",
+        "tone": "green"
+      },
+      {
+        "id": "3.1-step-7",
+        "x": 310,
+        "y": 760,
+        "w": 525,
+        "h": 74,
+        "label": "finishTurn · :286 → turn_end\ncontinue, end, or nothing",
+        "detail": "finishTurn · :286 → turn_end\ncontinue, end, or nothing",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-8",
+        "x": 310,
+        "y": 865,
+        "w": 525,
+        "h": 74,
+        "label": "poll steering · :295\nafter every turn_end",
+        "detail": "poll steering · :295\nafter every turn_end",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-step-9",
+        "x": 310,
+        "y": 970,
+        "w": 525,
+        "h": 74,
+        "label": "poll follow-ups · :302\nonly when the inner loop would exit",
+        "detail": "poll follow-ups · :302\nonly when the inner loop would exit",
+        "tone": "amber"
+      },
+      {
+        "id": "3.1-end",
+        "x": 965,
+        "y": 970,
+        "w": 270,
+        "h": 85,
+        "label": "agent_end\nreturn newMessages",
+        "detail": "agent_end · return newMessages",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.1-step-1",
+        "from": "3.1-step-0"
+      },
+      {
+        "to": "3.1-step-2",
+        "from": "3.1-step-1"
+      },
+      {
+        "to": "3.1-step-3",
+        "from": "3.1-step-2"
+      },
+      {
+        "to": "3.1-step-4",
+        "from": "3.1-step-3"
+      },
+      {
+        "to": "3.1-step-5",
+        "from": "3.1-step-4"
+      },
+      {
+        "to": "3.1-step-6",
+        "from": "3.1-step-5"
+      },
+      {
+        "to": "3.1-step-7",
+        "from": "3.1-step-6"
+      },
+      {
+        "to": "3.1-step-8",
+        "from": "3.1-step-7"
+      },
+      {
+        "to": "3.1-step-9",
+        "from": "3.1-step-8",
+        "label": "neither",
+        "labelX": 650,
+        "labelY": 960
+      },
+      {
+        "to": "3.1-step-3",
+        "from": "3.1-step-1",
+        "label": "first turn\nskips it",
+        "points": [
+          [
+            835,
+            167
+          ],
+          [
+            915,
+            167
+          ],
+          [
+            915,
+            377
+          ],
+          [
+            835,
+            377
+          ]
+        ],
+        "labelX": 975,
+        "labelY": 245
+      },
+      {
+        "to": "3.1-end",
+        "from": "3.1-step-5",
+        "label": "stopReason error | aborted",
+        "points": [
+          [
+            835,
+            587
+          ],
+          [
+            1170,
+            587
+          ],
+          [
+            1170,
+            970
+          ]
+        ],
+        "labelX": 1025,
+        "labelY": 572,
+        "color": "#a33d60"
+      },
+      {
+        "to": "3.1-end",
+        "from": "3.1-step-7",
+        "label": "{action: \"end\"}",
+        "points": [
+          [
+            835,
+            797
+          ],
+          [
+            1045,
+            797
+          ],
+          [
+            1045,
+            970
+          ]
+        ],
+        "labelX": 935,
+        "labelY": 782
+      },
+      {
+        "to": "3.1-step-2",
+        "from": "3.1-step-8",
+        "label": "tool results\nnot terminated\n· steering",
+        "points": [
+          [
+            310,
+            902
+          ],
+          [
+            195,
+            902
+          ],
+          [
+            195,
+            272
+          ],
+          [
+            310,
+            272
+          ]
+        ],
+        "labelX": 170,
+        "labelY": 560,
+        "color": "#94671f",
+        "emphasis": true
+      },
+      {
+        "to": "3.1-step-2",
+        "from": "3.1-step-9",
+        "label": "follow-ups\n· finishTurn continue",
+        "points": [
+          [
+            310,
+            1007
+          ],
+          [
+            95,
+            1007
+          ],
+          [
+            95,
+            272
+          ],
+          [
+            310,
+            272
+          ]
+        ],
+        "labelX": 145,
+        "labelY": 1048,
+        "color": "#94671f",
+        "emphasis": true
+      },
+      {
+        "to": "3.1-end",
+        "from": "3.1-step-9",
+        "label": "nothing",
+        "points": [
+          [
+            835,
+            1007
+          ],
+          [
+            965,
+            1007
+          ]
+        ],
+        "labelX": 885,
+        "labelY": 995
+      }
+    ],
+    "notes": [
+      "poll steering :295 → poll follow-ups :302：neither。",
+      "首次进入跳过 prepareNextTurn；返回路径都回到 prepareNextTurn。",
+      "玫瑰色 stopReason 错误出口跳过队列；finishTurn 仍会运行，但其决定被忽略。"
+    ]
+  },
+  {
+    "id": "3.2",
+    "title": "A PARALLEL BATCH OF TWO CALLS",
+    "label": "FIG. 3.2",
+    "source": "Pi Technical Manual · 图片和附件/image 2.png",
+    "page": 55,
+    "image": "/figures/ch03/image 2.webp",
+    "caption": "预检按顺序进行，执行并发进行，结果按原始顺序返回。research/out/agent-loop-queues.txt 的事件7–15：faux 模型先请求 slow（id A），再请求 fast（id B）。tool_execution_end 遵循完成顺序（B 在 A 之前）；toolResult 消息遵循助手消息中调用的顺序（A 在 B 之前）。立即产生的结果会在预检期间发出其 tool_execution_end。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 895,
+    "nodes": [
+      {
+        "id": "3.2-lane-0",
+        "x": 49.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "LOOP\nexecuteToolCallsParallel",
+        "detail": "loop。本泳道中的调用与事件（自上而下）：tool_execution_start A (slow) → prepare A → tool_execution_start B (fast) → prepare B → Promise.all(execute A, execute B) → message_start/end toolResult A · assistant source order → message_start/end toolResult B → turn_end toolResults=[A, B]",
+        "tone": "amber"
+      },
+      {
+        "id": "3.2-lane-1",
+        "x": 334.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "PREP\nprepareToolCall",
+        "detail": "find · prepareArguments · validate · beforeToolCall。本泳道中的调用与事件（自上而下）：prepare A → prepare B",
+        "tone": "amber"
+      },
+      {
+        "id": "3.2-lane-2",
+        "x": 619.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "TOOLS\nslow 40 ms · fast 5 ms",
+        "detail": "tools。本泳道中的调用与事件（自上而下）：Promise.all(execute A, execute B) → tool_execution_end B · completion order: fast first → tool_execution_end A",
+        "tone": "green"
+      },
+      {
+        "id": "3.2-lane-3",
+        "x": 904.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "LISTENERS\nsubscribers",
+        "detail": "listeners。本泳道中的调用与事件（自上而下）：tool_execution_start A (slow) → tool_execution_start B (fast) → tool_execution_end B · completion order: fast first → tool_execution_end A → message_start/end toolResult A · assistant source order → message_start/end toolResult B → turn_end toolResults=[A, B]",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.2-phase-1",
+        "x": 0,
+        "y": 128,
+        "w": 40,
+        "h": 38,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "3.2-phase-2",
+        "x": 0,
+        "y": 428,
+        "w": 40,
+        "h": 38,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "3.2-phase-3",
+        "x": 0,
+        "y": 653,
+        "w": 40,
+        "h": 38,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.2-lane-0",
+        "from": "3.2-lane-0",
+        "points": [
+          [
+            172.5,
+            95
+          ],
+          [
+            172.5,
+            875
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.2-lane-1",
+        "from": "3.2-lane-1",
+        "points": [
+          [
+            457.5,
+            95
+          ],
+          [
+            457.5,
+            875
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.2-lane-2",
+        "from": "3.2-lane-2",
+        "points": [
+          [
+            742.5,
+            95
+          ],
+          [
+            742.5,
+            875
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-3",
+        "points": [
+          [
+            1027.5,
+            95
+          ],
+          [
+            1027.5,
+            875
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-0",
+        "label": "tool_execution_start A (slow)",
+        "points": [
+          [
+            172.5,
+            145
+          ],
+          [
+            1027.5,
+            145
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 133
+      },
+      {
+        "to": "3.2-lane-1",
+        "from": "3.2-lane-0",
+        "label": "prepare A",
+        "points": [
+          [
+            172.5,
+            220
+          ],
+          [
+            457.5,
+            220
+          ]
+        ],
+        "labelX": 315.0,
+        "labelY": 208
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-0",
+        "label": "tool_execution_start B (fast)",
+        "points": [
+          [
+            172.5,
+            295
+          ],
+          [
+            1027.5,
+            295
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 283
+      },
+      {
+        "to": "3.2-lane-1",
+        "from": "3.2-lane-0",
+        "label": "prepare B",
+        "points": [
+          [
+            172.5,
+            370
+          ],
+          [
+            457.5,
+            370
+          ]
+        ],
+        "labelX": 315.0,
+        "labelY": 358
+      },
+      {
+        "to": "3.2-lane-2",
+        "from": "3.2-lane-0",
+        "label": "Promise.all(execute A, execute B)",
+        "points": [
+          [
+            172.5,
+            445
+          ],
+          [
+            742.5,
+            445
+          ]
+        ],
+        "labelX": 457.5,
+        "labelY": 433
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-2",
+        "label": "tool_execution_end B\ncompletion order: fast first",
+        "points": [
+          [
+            742.5,
+            520
+          ],
+          [
+            1027.5,
+            520
+          ]
+        ],
+        "dashed": true,
+        "labelX": 885.0,
+        "labelY": 491
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-2",
+        "label": "tool_execution_end A",
+        "points": [
+          [
+            742.5,
+            595
+          ],
+          [
+            1027.5,
+            595
+          ]
+        ],
+        "dashed": true,
+        "labelX": 885.0,
+        "labelY": 583
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-0",
+        "label": "message_start/end toolResult A\nassistant source order",
+        "points": [
+          [
+            172.5,
+            670
+          ],
+          [
+            1027.5,
+            670
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 641
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-0",
+        "label": "message_start/end toolResult B",
+        "points": [
+          [
+            172.5,
+            745
+          ],
+          [
+            1027.5,
+            745
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 733
+      },
+      {
+        "to": "3.2-lane-3",
+        "from": "3.2-lane-0",
+        "label": "turn_end toolResults=[A, B]",
+        "points": [
+          [
+            172.5,
+            820
+          ],
+          [
+            1027.5,
+            820
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 808
+      }
+    ],
+    "notes": [
+      "从上到下阅读时序；虚线为原图中的事件或返回箭头，实线为调用。原始泳道关系和事件顺序保持不变。"
+    ]
+  },
+  {
+    "id": "3.3",
+    "title": "ONE PROMPT, ONE TOOL CALL, 29 EVENTS",
+    "label": "FIG. 3.3",
+    "source": "Pi Technical Manual · 图片和附件/image 1.png",
+    "page": 58,
+    "image": "/figures/ch03/image 1.webp",
+    "caption": "A run is turns, a turn is messages, and tools sit between the assistant message and its results. 一次运行由多个轮次组成，一个轮次由多条消息组成，工具位于助手消息及其结果之间。这是 research/out/one-turn.txt 中的事件流，按生命周期缩进；包含 28 个 AgentEvent，加上会话的 agent_settled。text_delta 事件的数量因运行而异，顺序则不变。没有出现 tool_execution_update，因为 read 不报告部分结果。",
+    "kind": "diagram",
+    "width": 1020,
+    "height": 1210,
+    "nodes": [
+      {
+        "id": "3.3-event-0",
+        "x": 20,
+        "y": 20,
+        "w": 980,
+        "h": 50,
+        "label": "agent_start",
+        "detail": "once, opening the run",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-1",
+        "x": 84,
+        "y": 86,
+        "w": 916,
+        "h": 50,
+        "label": "turn_start · turn 1",
+        "detail": "first turn",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-2",
+        "x": 148,
+        "y": 152,
+        "w": 852,
+        "h": 50,
+        "label": "message_start · message_end · system",
+        "detail": "prompt sections + toolsAdded",
+        "tone": "blue"
+      },
+      {
+        "id": "3.3-event-3",
+        "x": 148,
+        "y": 218,
+        "w": 852,
+        "h": 50,
+        "label": "message_start · message_end · user",
+        "detail": "\"What does hello.txt say?\"",
+        "tone": "blue"
+      },
+      {
+        "id": "3.3-event-4",
+        "x": 148,
+        "y": 284,
+        "w": 852,
+        "h": 50,
+        "label": "message_start · assistant",
+        "detail": "first assistant message",
+        "tone": "plum"
+      },
+      {
+        "id": "3.3-event-5",
+        "x": 212,
+        "y": 350,
+        "w": 788,
+        "h": 50,
+        "label": "message_update ×6",
+        "detail": "text_start · text_delta · text_end · toolcall_start · toolcall_delta · toolcall_end",
+        "tone": "gray"
+      },
+      {
+        "id": "3.3-event-6",
+        "x": 148,
+        "y": 416,
+        "w": 852,
+        "h": 50,
+        "label": "message_end · assistant",
+        "detail": "stopReason toolUse",
+        "tone": "plum"
+      },
+      {
+        "id": "3.3-event-7",
+        "x": 148,
+        "y": 482,
+        "w": 852,
+        "h": 50,
+        "label": "tool_execution_start · read",
+        "detail": "read begins",
+        "tone": "green"
+      },
+      {
+        "id": "3.3-event-8",
+        "x": 148,
+        "y": 548,
+        "w": 852,
+        "h": 50,
+        "label": "tool_execution_end · read",
+        "detail": "read completes",
+        "tone": "green"
+      },
+      {
+        "id": "3.3-event-9",
+        "x": 148,
+        "y": 614,
+        "w": 852,
+        "h": 50,
+        "label": "message_start · message_end · toolResult",
+        "detail": "tool result message",
+        "tone": "blue"
+      },
+      {
+        "id": "3.3-event-10",
+        "x": 84,
+        "y": 680,
+        "w": 916,
+        "h": 50,
+        "label": "turn_end · assistant",
+        "detail": "toolResults: [call_1]",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-11",
+        "x": 84,
+        "y": 746,
+        "w": 916,
+        "h": 50,
+        "label": "turn_start · turn 2",
+        "detail": "second turn",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-12",
+        "x": 148,
+        "y": 812,
+        "w": 852,
+        "h": 50,
+        "label": "message_start · assistant",
+        "detail": "second assistant message",
+        "tone": "plum"
+      },
+      {
+        "id": "3.3-event-13",
+        "x": 212,
+        "y": 878,
+        "w": 788,
+        "h": 50,
+        "label": "message_update ×4",
+        "detail": "text_start · text_delta ×2 · text_end",
+        "tone": "gray"
+      },
+      {
+        "id": "3.3-event-14",
+        "x": 148,
+        "y": 944,
+        "w": 852,
+        "h": 50,
+        "label": "message_end · assistant",
+        "detail": "stopReason stop",
+        "tone": "plum"
+      },
+      {
+        "id": "3.3-event-15",
+        "x": 84,
+        "y": 1010,
+        "w": 916,
+        "h": 50,
+        "label": "turn_end · assistant",
+        "detail": "second turn ends",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-16",
+        "x": 20,
+        "y": 1076,
+        "w": 980,
+        "h": 50,
+        "label": "agent_end",
+        "detail": "28 AgentEvents complete",
+        "tone": "amber"
+      },
+      {
+        "id": "3.3-event-17",
+        "x": 20,
+        "y": 1142,
+        "w": 980,
+        "h": 50,
+        "label": "agent_settled",
+        "detail": "AgentSession only, after the run",
+        "tone": "indigo"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.3-event-1",
+        "from": "3.3-event-0",
+        "points": [
+          [
+            40,
+            70
+          ],
+          [
+            40,
+            111
+          ],
+          [
+            84,
+            111
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-10",
+        "from": "3.3-event-0",
+        "points": [
+          [
+            40,
+            70
+          ],
+          [
+            40,
+            705
+          ],
+          [
+            84,
+            705
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-11",
+        "from": "3.3-event-0",
+        "points": [
+          [
+            40,
+            70
+          ],
+          [
+            40,
+            771
+          ],
+          [
+            84,
+            771
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-15",
+        "from": "3.3-event-0",
+        "points": [
+          [
+            40,
+            70
+          ],
+          [
+            40,
+            1035
+          ],
+          [
+            84,
+            1035
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-2",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            177
+          ],
+          [
+            148,
+            177
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-3",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            243
+          ],
+          [
+            148,
+            243
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-4",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            309
+          ],
+          [
+            148,
+            309
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-6",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            441
+          ],
+          [
+            148,
+            441
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-7",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            507
+          ],
+          [
+            148,
+            507
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-8",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            573
+          ],
+          [
+            148,
+            573
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-9",
+        "from": "3.3-event-1",
+        "points": [
+          [
+            104,
+            136
+          ],
+          [
+            104,
+            639
+          ],
+          [
+            148,
+            639
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-5",
+        "from": "3.3-event-4",
+        "points": [
+          [
+            168,
+            334
+          ],
+          [
+            168,
+            375
+          ],
+          [
+            212,
+            375
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-12",
+        "from": "3.3-event-11",
+        "points": [
+          [
+            104,
+            796
+          ],
+          [
+            104,
+            837
+          ],
+          [
+            148,
+            837
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-14",
+        "from": "3.3-event-11",
+        "points": [
+          [
+            104,
+            796
+          ],
+          [
+            104,
+            969
+          ],
+          [
+            148,
+            969
+          ]
+        ],
+        "arrow": false
+      },
+      {
+        "to": "3.3-event-13",
+        "from": "3.3-event-12",
+        "points": [
+          [
+            168,
+            862
+          ],
+          [
+            168,
+            903
+          ],
+          [
+            212,
+            903
+          ]
+        ],
+        "arrow": false
+      }
+    ],
+    "notes": [
+      "按原图生命周期缩进：28 个 AgentEvent，加上 AgentSession 的 agent_settled。",
+      "点选节点可查看原图侧注与 message_update 内包含的完整块事件列表。",
+      "read 没有报告部分结果，所以本例没有 tool_execution_update。"
+    ]
+  },
+  {
+    "id": "3.4",
+    "title": "ONE RUN OF THE AGENT CLASS",
+    "label": "FIG. 3.4",
+    "source": "Pi Technical Manual · 图片和附件/image 5.png",
+    "page": 59,
+    "image": "/figures/ch03/image 5.webp",
+    "caption": "isStreaming 在最后一个监听器返回后才会清除，而不是在发出 agent_end 时清除。agent/agent.ts 的示意图；数字为行号。步骤3对每个事件运行一次。步骤4在 catch 中运行，并自行发出收尾事件；步骤5在 finally 中运行。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 290,
+    "nodes": [
+      {
+        "id": "3.4-step-0",
+        "x": 20.0,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "1 · runWithLifecycle\n:507",
+        "detail": "activeRun set · isStreaming = true",
+        "tone": "amber"
+      },
+      {
+        "id": "3.4-step-1",
+        "x": 258.4,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "2 · runAgentLoop\n:437",
+        "detail": "or runAgentLoopContinue",
+        "tone": "amber"
+      },
+      {
+        "id": "3.4-step-2",
+        "x": 496.8,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "3 · processEvents\n:565",
+        "detail": "reduce state, then await each listener",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.4-step-3",
+        "x": 735.2,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "4 · handleRunFailure\n:532",
+        "detail": "only if the run threw; catch emits closing events",
+        "tone": "rose"
+      },
+      {
+        "id": "3.4-step-4",
+        "x": 973.6,
+        "y": 35,
+        "w": 206.4,
+        "h": 220,
+        "label": "5 · finishRun\n:550",
+        "detail": "isStreaming = false · resolve waitForIdle; finally",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.4-step-1",
+        "from": "3.4-step-0"
+      },
+      {
+        "to": "3.4-step-2",
+        "from": "3.4-step-1"
+      },
+      {
+        "to": "3.4-step-3",
+        "from": "3.4-step-2"
+      },
+      {
+        "to": "3.4-step-4",
+        "from": "3.4-step-3"
+      }
+    ]
+  },
+  {
+    "id": "3.5",
+    "title": "WHAT AGENTSESSION PLUGS INTO THE AGENT",
+    "label": "FIG. 3.5",
+    "source": "Pi Technical Manual · 图片和附件/image 7.png",
+    "page": 64,
+    "image": "/figures/ch03/image 7.webp",
+    "caption": "The session owns the agent’s hooks; the agent owns nothing but the loop. 会话拥有智能体的钩子；智能体只拥有循环。CA/src/core/agent-session.ts，构造函数位于第474–514行；数字为每个安装器所在的行。每个安装器都会保留先前的钩子并调用它，因此，两个 transformContext 投影会在 sdk.ts 中设置的扩展 context 处理器之后运行。高亮的钩子使会话文件成为权威来源。",
+    "kind": "diagram",
+    "width": 1260,
+    "height": 825,
+    "nodes": [
+      {
+        "id": "3.5-left-0",
+        "x": 20,
+        "y": 20,
+        "w": 540,
+        "h": 95,
+        "label": "subscribe(_handleAgentEvent)\n:501",
+        "detail": "subscribe(_handleAgentEvent) · :501",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-0",
+        "x": 620,
+        "y": 20,
+        "w": 620,
+        "h": 95,
+        "label": "listener\npersistence · queue mirrors · extension dispatch",
+        "detail": "listener · persistence · queue mirrors · extension dispatch",
+        "tone": "teal"
+      },
+      {
+        "id": "3.5-left-1",
+        "x": 20,
+        "y": 135,
+        "w": 540,
+        "h": 95,
+        "label": "_installAgentToolHooks\n:640",
+        "detail": "_installAgentToolHooks · :640",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-1",
+        "x": 620,
+        "y": 135,
+        "w": 620,
+        "h": 95,
+        "label": "beforeToolCall · afterToolCall\nextension tool_call; tool_result, then image resize",
+        "detail": "beforeToolCall · afterToolCall · extension tool_call; tool_result, then image resize",
+        "tone": "purple"
+      },
+      {
+        "id": "3.5-left-2",
+        "x": 20,
+        "y": 250,
+        "w": 540,
+        "h": 95,
+        "label": "_installAgentNextTurnRefresh\n:886",
+        "detail": "_installAgentNextTurnRefresh · :886",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-2",
+        "x": 620,
+        "y": 250,
+        "w": 620,
+        "h": 95,
+        "label": "prepareNextTurn\ncompaction · prompt patch · tool loadout · model + thinking",
+        "detail": "prepareNextTurn · compaction · prompt patch · tool loadout · model + thinking",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-left-3",
+        "x": 20,
+        "y": 365,
+        "w": 540,
+        "h": 95,
+        "label": "_installAgentRequestProjection\n:775",
+        "detail": "_installAgentRequestProjection · :775",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-3",
+        "x": 620,
+        "y": 365,
+        "w": 620,
+        "h": 95,
+        "label": "prepareRequest\ncontext.messages := buildSessionProjection().messages\nvirtual-model routing",
+        "detail": "prepareRequest · context.messages := buildSessionProjection().messages · virtual-model routing",
+        "tone": "teal"
+      },
+      {
+        "id": "3.5-left-4",
+        "x": 20,
+        "y": 480,
+        "w": 540,
+        "h": 95,
+        "label": "_installAgentBoundaryHooks\n:874",
+        "detail": "_installAgentBoundaryHooks · :874",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-4",
+        "x": 620,
+        "y": 480,
+        "w": 620,
+        "h": 95,
+        "label": "finishTurn\nextension turn_end boundary; may ask for one more request",
+        "detail": "finishTurn · extension turn_end boundary; may ask for one more request",
+        "tone": "purple"
+      },
+      {
+        "id": "3.5-left-5",
+        "x": 20,
+        "y": 595,
+        "w": 540,
+        "h": 95,
+        "label": "_installHiddenDeclarationsProjection\n:1753",
+        "detail": "_installHiddenDeclarationsProjection · :1753",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-5",
+        "x": 620,
+        "y": 595,
+        "w": 620,
+        "h": 95,
+        "label": "transformContext, chained\nstrip tool declarations hidden by prepareLoadout hooks",
+        "detail": "transformContext, chained · strip tool declarations hidden by prepareLoadout hooks",
+        "tone": "purple"
+      },
+      {
+        "id": "3.5-left-6",
+        "x": 20,
+        "y": 710,
+        "w": 540,
+        "h": 95,
+        "label": "_installAgentForcedPromptProjection\n:1773",
+        "detail": "_installAgentForcedPromptProjection · :1773",
+        "tone": "amber"
+      },
+      {
+        "id": "3.5-right-6",
+        "x": 620,
+        "y": 710,
+        "w": 620,
+        "h": 95,
+        "label": "transformContext, chained\nbefore_agent_start systemPrompt replaces head, unrecorded",
+        "detail": "transformContext, chained · before_agent_start systemPrompt replaces head, unrecorded",
+        "tone": "purple"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.5-right-0",
+        "from": "3.5-left-0"
+      },
+      {
+        "to": "3.5-right-1",
+        "from": "3.5-left-1"
+      },
+      {
+        "to": "3.5-right-2",
+        "from": "3.5-left-2"
+      },
+      {
+        "to": "3.5-right-3",
+        "from": "3.5-left-3"
+      },
+      {
+        "to": "3.5-right-4",
+        "from": "3.5-left-4"
+      },
+      {
+        "to": "3.5-right-5",
+        "from": "3.5-left-5"
+      },
+      {
+        "to": "3.5-right-6",
+        "from": "3.5-left-6"
+      }
+    ],
+    "notes": [
+      "原图共有七行：一次 subscribe，加上六个钩子安装器。",
+      "prepareRequest 从会话文件投影替换消息，是图中高亮的不变量。"
+    ]
+  },
+  {
+    "id": "3.6",
+    "title": "ONE EVENT THROUGH _HANDLEAGENTEVENT",
+    "label": "FIG. 3.6",
+    "source": "Pi Technical Manual · 图片和附件/image.png",
+    "page": 65,
+    "image": "/figures/ch03/image.webp",
+    "caption": "Listeners see a message before it is on disk.  监听器在消息落盘之前就会看到它。CA/src/core/agent-session.ts:1090–1183。扩展先运行，并被等待；公共监听器以同步方式调用；会话文件最后写入。如果扩展的 message_end 处理器返回替代内容，就会原地修改消息，因此步骤5持久化的是替换后的内容。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 290,
+    "nodes": [
+      {
+        "id": "3.6-step-0",
+        "x": 20.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "1 · nested calls\n:1092",
+        "detail": "toolResult start: attach nestedCalls, add their usage",
+        "tone": "green"
+      },
+      {
+        "id": "3.6-step-1",
+        "x": 218.66666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "2 · queue mirrors\n:1106",
+        "detail": "user start: drop text from steering/follow-up lists, queue_update",
+        "tone": "amber"
+      },
+      {
+        "id": "3.6-step-2",
+        "x": 417.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "3 · extensions\n:1127",
+        "detail": "awaited; message_end may replace the message",
+        "tone": "purple"
+      },
+      {
+        "id": "3.6-step-3",
+        "x": 616.0,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "4 · listeners\n:1128",
+        "detail": "agent_end gains willRetry",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.6-step-4",
+        "x": 814.6666666666666,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "5 · persist\n:1131",
+        "detail": "message_end: appendMessage or appendCustomMessageEntry",
+        "tone": "teal"
+      },
+      {
+        "id": "3.6-step-5",
+        "x": 1013.3333333333333,
+        "y": 35,
+        "w": 166.66666666666666,
+        "h": 220,
+        "label": "6 · flush\n:1179",
+        "detail": "turn_end: deferred custom messages",
+        "tone": "teal"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.6-step-1",
+        "from": "3.6-step-0"
+      },
+      {
+        "to": "3.6-step-2",
+        "from": "3.6-step-1"
+      },
+      {
+        "to": "3.6-step-3",
+        "from": "3.6-step-2"
+      },
+      {
+        "to": "3.6-step-4",
+        "from": "3.6-step-3"
+      },
+      {
+        "to": "3.6-step-5",
+        "from": "3.6-step-4"
+      }
+    ]
+  },
+  {
+    "id": "3.7",
+    "title": "PROMPT() BEFORE THE LOOP STARTS",
+    "label": "FIG. 3.7",
+    "source": "Pi Technical Manual · 图片和附件/image 3.png",
+    "page": 68,
+    "image": "/figures/ch03/image 3.webp",
+    "caption": "即使智能体正在流式输出，扩展命令也会运行；其他输入则排队或等待。CA/src/core/agent-session.ts:1954–2097，首次匹配即生效；带引号的值是传入 preflightResult 的 PromptDisposition（CA/src/core/agent-session.ts:301）。步骤10中的第一条消息，是 _preparePromptAndToolLoadout 生成的系统提示词补丁，仅在分节发生变化时存在。",
+    "kind": "diagram",
+    "width": 1260,
+    "height": 1080,
+    "nodes": [
+      {
+        "id": "3.7-check-0",
+        "x": 20,
+        "y": 20,
+        "w": 760,
+        "h": 86,
+        "label": "1 · text starts with / and matches an extension command\nrun the command handler",
+        "detail": "1 · text starts with / and matches an extension command · run the command handler",
+        "tone": "amber"
+      },
+      {
+        "id": "3.7-outcome-0",
+        "x": 840,
+        "y": 20,
+        "w": 400,
+        "h": 86,
+        "label": "\"handled\"",
+        "detail": "\"handled\"",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.7-check-1",
+        "x": 20,
+        "y": 126,
+        "w": 760,
+        "h": 86,
+        "label": "2 · manual compaction in progress",
+        "detail": "2 · manual compaction in progress",
+        "tone": "amber"
+      },
+      {
+        "id": "3.7-outcome-1",
+        "x": 840,
+        "y": 126,
+        "w": 400,
+        "h": 86,
+        "label": "throw\nCannot submit a prompt while compaction is in progress…",
+        "detail": "throw · Cannot submit a prompt while compaction is in progress…",
+        "tone": "rose"
+      },
+      {
+        "id": "3.7-check-2",
+        "x": 20,
+        "y": 232,
+        "w": 760,
+        "h": 86,
+        "label": "3 · extension input event\ncontinue · transform text and images · handled",
+        "detail": "3 · extension input event · continue · transform text and images · handled",
+        "tone": "purple"
+      },
+      {
+        "id": "3.7-outcome-2",
+        "x": 840,
+        "y": 232,
+        "w": 400,
+        "h": 86,
+        "label": "\"handled\"",
+        "detail": "\"handled\"",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.7-check-3",
+        "x": 20,
+        "y": 338,
+        "w": 760,
+        "h": 86,
+        "label": "4 · expand /skill:name, then prompt templates",
+        "detail": "4 · expand /skill:name, then prompt templates",
+        "tone": "config"
+      },
+      {
+        "id": "3.7-outcome-3",
+        "x": 840,
+        "y": 338,
+        "w": 400,
+        "h": 86,
+        "label": "no exit",
+        "detail": "no exit",
+        "tone": "gray"
+      },
+      {
+        "id": "3.7-check-4",
+        "x": 20,
+        "y": 444,
+        "w": 760,
+        "h": 86,
+        "label": "5 · agent is streaming\nstreamingBehavior: steer → agent.steer; followUp → agent.followUp",
+        "detail": "5 · agent is streaming · streamingBehavior: steer → agent.steer; followUp → agent.followUp",
+        "tone": "amber"
+      },
+      {
+        "id": "3.7-outcome-4",
+        "x": 840,
+        "y": 444,
+        "w": 400,
+        "h": 86,
+        "label": "\"queued\"\nor throw if streamingBehavior is missing",
+        "detail": "\"queued\" · or throw if streamingBehavior is missing",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.7-check-5",
+        "x": 20,
+        "y": 550,
+        "w": 760,
+        "h": 86,
+        "label": "6 · flush deferred bash and custom messages",
+        "detail": "6 · flush deferred bash and custom messages",
+        "tone": "teal"
+      },
+      {
+        "id": "3.7-outcome-5",
+        "x": 840,
+        "y": 550,
+        "w": 400,
+        "h": 86,
+        "label": "no exit",
+        "detail": "no exit",
+        "tone": "gray"
+      },
+      {
+        "id": "3.7-check-6",
+        "x": 20,
+        "y": 656,
+        "w": 760,
+        "h": 86,
+        "label": "7 · model selected and auth configured",
+        "detail": "7 · model selected and auth configured",
+        "tone": "plum"
+      },
+      {
+        "id": "3.7-outcome-6",
+        "x": 840,
+        "y": 656,
+        "w": 400,
+        "h": 86,
+        "label": "throw\nno model · no API key · OAuth expired",
+        "detail": "throw · no model · no API key · OAuth expired",
+        "tone": "rose"
+      },
+      {
+        "id": "3.7-check-7",
+        "x": 20,
+        "y": 762,
+        "w": 760,
+        "h": 86,
+        "label": "8 · _checkCompaction(last assistant, false)\nmay compact before the prompt is sent",
+        "detail": "8 · _checkCompaction(last assistant, false) · may compact before the prompt is sent",
+        "tone": "teal"
+      },
+      {
+        "id": "3.7-outcome-7",
+        "x": 840,
+        "y": 762,
+        "w": 400,
+        "h": 86,
+        "label": "no exit",
+        "detail": "no exit",
+        "tone": "gray"
+      },
+      {
+        "id": "3.7-check-8",
+        "x": 20,
+        "y": 868,
+        "w": 760,
+        "h": 86,
+        "label": "9 · extension before_agent_start\nedit systemPromptOptions · inject messages · force a system prompt",
+        "detail": "9 · extension before_agent_start · edit systemPromptOptions · inject messages · force a system prompt",
+        "tone": "purple"
+      },
+      {
+        "id": "3.7-outcome-8",
+        "x": 840,
+        "y": 868,
+        "w": 400,
+        "h": 86,
+        "label": "no exit",
+        "detail": "no exit",
+        "tone": "gray"
+      },
+      {
+        "id": "3.7-check-9",
+        "x": 20,
+        "y": 974,
+        "w": 760,
+        "h": 86,
+        "label": "10 · normalise images · build messages\n[prompt patch?, user, nextTurn messages, extension messages]",
+        "detail": "10 · normalise images · build messages · [prompt patch?, user, nextTurn messages, extension messages]",
+        "tone": "blue"
+      },
+      {
+        "id": "3.7-outcome-9",
+        "x": 840,
+        "y": 974,
+        "w": 400,
+        "h": 86,
+        "label": "_runAgentPrompt\n\"started\"",
+        "detail": "_runAgentPrompt · \"started\"",
+        "tone": "amber"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.7-outcome-0",
+        "from": "3.7-check-0"
+      },
+      {
+        "to": "3.7-outcome-1",
+        "from": "3.7-check-1"
+      },
+      {
+        "to": "3.7-outcome-2",
+        "from": "3.7-check-2"
+      },
+      {
+        "to": "3.7-outcome-3",
+        "from": "3.7-check-3"
+      },
+      {
+        "to": "3.7-outcome-4",
+        "from": "3.7-check-4"
+      },
+      {
+        "to": "3.7-outcome-5",
+        "from": "3.7-check-5"
+      },
+      {
+        "to": "3.7-outcome-6",
+        "from": "3.7-check-6"
+      },
+      {
+        "to": "3.7-outcome-7",
+        "from": "3.7-check-7"
+      },
+      {
+        "to": "3.7-outcome-8",
+        "from": "3.7-check-8"
+      },
+      {
+        "to": "3.7-outcome-9",
+        "from": "3.7-check-9"
+      }
+    ],
+    "notes": [
+      "自上而下，first match wins；no exit 行继续检查。",
+      "保留原图第7行原文“model selected and auth configured”；右侧 throw 列出相应失败状态。"
+    ]
+  },
+  {
+    "id": "3.8",
+    "title": "AGENT_END IS NOT THE END",
+    "label": "FIG. 3.8",
+    "source": "Pi Technical Manual · 图片和附件/image 6.png",
+    "page": 70,
+    "image": "/figures/ch03/image 6.webp",
+    "caption": "一条提示、两次运行、两个 agent_end、一个 agent_settled。按代码发出顺序绘制的重试提示示意图，并非采集结果；省略了消息和轮次事件。auto_retry_end 来自第二次运行中助手消息的 message_end（CA/src/core/agent-session.ts:1163），因此早于该次运行的 agent_end。不需要重试的提示只有一次运行和一个 agent_end，如图3.3（原书第58页）所示。",
+    "kind": "diagram",
+    "width": 1200,
+    "height": 1045,
+    "nodes": [
+      {
+        "id": "3.8-lane-0",
+        "x": 49.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "SESSION\n_runAgentPrompt",
+        "detail": "session。本泳道中的调用与事件（自上而下）：agent.prompt(messages) → auto_retry_start attempt 1 · delayMs 2000 → context_edit hides attempt · sleep → agent.continue() → auto_retry_end success=true · on the assistant message_end → agent_settled",
+        "tone": "amber"
+      },
+      {
+        "id": "3.8-lane-1",
+        "x": 334.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "AGENT\nAgent · runLoop",
+        "detail": "agent。本泳道中的调用与事件（自上而下）：agent.prompt(messages) → request 1 → stopReason error, retryable → agent_end willRetry=true → agent.continue() → request 2 → stopReason stop → agent_end willRetry=false",
+        "tone": "amber"
+      },
+      {
+        "id": "3.8-lane-2",
+        "x": 619.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "MODEL\nprovider",
+        "detail": "model。本泳道中的调用与事件（自上而下）：request 1 → stopReason error, retryable → request 2 → stopReason stop",
+        "tone": "plum"
+      },
+      {
+        "id": "3.8-lane-3",
+        "x": 904.95,
+        "y": 20,
+        "w": 245.1,
+        "h": 75,
+        "label": "LISTENER\nsubscriber",
+        "detail": "listener。本泳道中的调用与事件（自上而下）：agent_end willRetry=true → auto_retry_start attempt 1 · delayMs 2000 → auto_retry_end success=true · on the assistant message_end → agent_end willRetry=false → agent_settled",
+        "tone": "indigo"
+      },
+      {
+        "id": "3.8-phase-1",
+        "x": 0,
+        "y": 128,
+        "w": 40,
+        "h": 38,
+        "label": "1",
+        "detail": "原图阶段 1",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "3.8-phase-2",
+        "x": 0,
+        "y": 428,
+        "w": 40,
+        "h": 38,
+        "label": "2",
+        "detail": "原图阶段 2",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "3.8-phase-3",
+        "x": 0,
+        "y": 578,
+        "w": 40,
+        "h": 38,
+        "label": "3",
+        "detail": "原图阶段 3",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "3.8-phase-4",
+        "x": 0,
+        "y": 953,
+        "w": 40,
+        "h": 38,
+        "label": "4",
+        "detail": "原图阶段 4",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "3.8-lane-0",
+        "from": "3.8-lane-0",
+        "points": [
+          [
+            172.5,
+            95
+          ],
+          [
+            172.5,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.8-lane-1",
+        "from": "3.8-lane-1",
+        "points": [
+          [
+            457.5,
+            95
+          ],
+          [
+            457.5,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.8-lane-2",
+        "from": "3.8-lane-2",
+        "points": [
+          [
+            742.5,
+            95
+          ],
+          [
+            742.5,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-3",
+        "points": [
+          [
+            1027.5,
+            95
+          ],
+          [
+            1027.5,
+            1025
+          ]
+        ],
+        "dashed": true,
+        "arrow": false,
+        "color": "#b7bdbe",
+        "width": 1
+      },
+      {
+        "to": "3.8-lane-1",
+        "from": "3.8-lane-0",
+        "label": "agent.prompt(messages)",
+        "points": [
+          [
+            172.5,
+            145
+          ],
+          [
+            457.5,
+            145
+          ]
+        ],
+        "labelX": 315.0,
+        "labelY": 133
+      },
+      {
+        "to": "3.8-lane-2",
+        "from": "3.8-lane-1",
+        "label": "request 1",
+        "points": [
+          [
+            457.5,
+            220
+          ],
+          [
+            742.5,
+            220
+          ]
+        ],
+        "labelX": 600.0,
+        "labelY": 208
+      },
+      {
+        "to": "3.8-lane-1",
+        "from": "3.8-lane-2",
+        "label": "stopReason error, retryable",
+        "points": [
+          [
+            742.5,
+            295
+          ],
+          [
+            457.5,
+            295
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 283
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-1",
+        "label": "agent_end willRetry=true",
+        "points": [
+          [
+            457.5,
+            370
+          ],
+          [
+            1027.5,
+            370
+          ]
+        ],
+        "dashed": true,
+        "labelX": 742.5,
+        "labelY": 358
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-0",
+        "label": "auto_retry_start attempt 1 · delayMs 2000",
+        "points": [
+          [
+            172.5,
+            445
+          ],
+          [
+            1027.5,
+            445
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 433
+      },
+      {
+        "to": "3.8-lane-0",
+        "from": "3.8-lane-0",
+        "label": "context_edit hides attempt · sleep",
+        "points": [
+          [
+            172.5,
+            520
+          ],
+          [
+            204.5,
+            520
+          ],
+          [
+            204.5,
+            542
+          ],
+          [
+            172.5,
+            542
+          ]
+        ],
+        "labelX": 322.5,
+        "labelY": 508
+      },
+      {
+        "to": "3.8-lane-1",
+        "from": "3.8-lane-0",
+        "label": "agent.continue()",
+        "points": [
+          [
+            172.5,
+            595
+          ],
+          [
+            457.5,
+            595
+          ]
+        ],
+        "labelX": 315.0,
+        "labelY": 583
+      },
+      {
+        "to": "3.8-lane-2",
+        "from": "3.8-lane-1",
+        "label": "request 2",
+        "points": [
+          [
+            457.5,
+            670
+          ],
+          [
+            742.5,
+            670
+          ]
+        ],
+        "labelX": 600.0,
+        "labelY": 658
+      },
+      {
+        "to": "3.8-lane-1",
+        "from": "3.8-lane-2",
+        "label": "stopReason stop",
+        "points": [
+          [
+            742.5,
+            745
+          ],
+          [
+            457.5,
+            745
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 733
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-0",
+        "label": "auto_retry_end success=true\non the assistant message_end",
+        "points": [
+          [
+            172.5,
+            820
+          ],
+          [
+            1027.5,
+            820
+          ]
+        ],
+        "dashed": true,
+        "labelX": 600.0,
+        "labelY": 791
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-1",
+        "label": "agent_end willRetry=false",
+        "points": [
+          [
+            457.5,
+            895
+          ],
+          [
+            1027.5,
+            895
+          ]
+        ],
+        "dashed": true,
+        "labelX": 742.5,
+        "labelY": 883
+      },
+      {
+        "to": "3.8-lane-3",
+        "from": "3.8-lane-0",
+        "label": "agent_settled",
+        "points": [
+          [
+            172.5,
+            970
+          ],
+          [
+            1027.5,
+            970
+          ]
+        ],
+        "labelX": 600.0,
+        "labelY": 958,
+        "color": "#5666a6",
+        "emphasis": true
+      }
+    ],
+    "notes": [
+      "从上到下阅读时序；虚线为原图中的事件或返回箭头，实线为调用。原始泳道关系和事件顺序保持不变。"
+    ]
+  }
+]

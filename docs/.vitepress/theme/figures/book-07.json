@@ -1,0 +1,1051 @@
+[
+  {
+    "id": "7.1",
+    "title": "pi server 与 pi client 的进程",
+    "label": "FIG. 7.1",
+    "source": "CA/src/experimental/{server,session-worker,process}.ts; client; server; durable; chord",
+    "page": 167,
+    "image": "/figures/ch07/image-6.webp",
+    "caption": "服务器负责路由；只有会话工作进程运行智能体。一个 `pi server` 进程通过私有 Unix 套接字接受客户端连接，并将会话调用交给工作进程，后者拥有持久化 `Harness` 及其 SQLite 文件。斜线填充的方框表示默认运行时关闭或未使用的部分。进程角色来自 `CA/src/experimental/process.ts:8`；此图为示意图。",
+    "kind": "diagram",
+    "width": 960,
+    "height": 540,
+    "nodes": [
+      {
+        "id": "client",
+        "x": 20,
+        "y": 35,
+        "w": 280,
+        "h": 105,
+        "label": "pi client",
+        "detail": "ExperimentalClientTui · pi-client Client · createClientServiceTransport",
+        "tone": "indigo"
+      },
+      {
+        "id": "socket",
+        "x": 345,
+        "y": 35,
+        "w": 270,
+        "h": 105,
+        "label": "Unix socket",
+        "detail": "<dir>/<serverId>.sock · mode 0600 · u32 length + one CBOR item · protocol 8",
+        "tone": "gray"
+      },
+      {
+        "id": "server",
+        "x": 660,
+        "y": 35,
+        "w": 280,
+        "h": 105,
+        "label": "pi server",
+        "detail": "pi-server · handshake 5 s · routes by serverId · sessionId · attachmentId",
+        "tone": "indigo"
+      },
+      {
+        "id": "coordinator",
+        "x": 20,
+        "y": 205,
+        "w": 205,
+        "h": 135,
+        "label": "coordinator",
+        "detail": "private JSON-line router between server and workers · protocol 3",
+        "tone": "gray"
+      },
+      {
+        "id": "worker",
+        "x": 265,
+        "y": 205,
+        "w": 205,
+        "h": 135,
+        "label": "session worker",
+        "detail": "one per session · durable Harness · holds the session lock",
+        "tone": "amber"
+      },
+      {
+        "id": "sqlite",
+        "x": 510,
+        "y": 205,
+        "w": 205,
+        "h": 135,
+        "label": "session.sqlite",
+        "detail": "pi-durable storage · WAL · synchronous NORMAL",
+        "tone": "teal"
+      },
+      {
+        "id": "local",
+        "x": 755,
+        "y": 205,
+        "w": 185,
+        "h": 135,
+        "label": "NodeExecutionEnv",
+        "detail": "id node:local · tools run here",
+        "tone": "green"
+      },
+      {
+        "id": "chord",
+        "x": 20,
+        "y": 410,
+        "w": 500,
+        "h": 110,
+        "label": "chord",
+        "detail": "facets · services · replicated state · delta ops · the payload inside every request",
+        "tone": "purple"
+      },
+      {
+        "id": "radius",
+        "x": 545,
+        "y": 410,
+        "w": 180,
+        "h": 110,
+        "label": "Radius relay",
+        "detail": "outbound WSS when Radius credentials exist；原图使用斜线填充。",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "env",
+        "x": 750,
+        "y": 410,
+        "w": 190,
+        "h": 110,
+        "label": "pi-env",
+        "detail": "remote ExecutionEnv over SSH · no consumer in the repo；原图使用斜线填充。",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "row1",
+        "x": 20,
+        "y": 0,
+        "w": 920,
+        "h": 25,
+        "label": "CLIENT",
+        "detail": "CLIENT",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row2",
+        "x": 20,
+        "y": 170,
+        "w": 920,
+        "h": 25,
+        "label": "SERVER HOST",
+        "detail": "SERVER HOST",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "row3",
+        "x": 20,
+        "y": 380,
+        "w": 920,
+        "h": 25,
+        "label": "EVERYWHERE",
+        "detail": "EVERYWHERE",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [
+      {
+        "to": "socket",
+        "from": "client"
+      },
+      {
+        "to": "server",
+        "from": "socket"
+      },
+      {
+        "to": "worker",
+        "from": "coordinator"
+      },
+      {
+        "to": "sqlite",
+        "from": "worker"
+      }
+    ],
+    "notes": [
+      "保留原图三排分组；没有为同排无箭头的 NodeExecutionEnv、chord、Radius relay 或 pi-env 添加连线。"
+    ]
+  },
+  {
+    "id": "7.2",
+    "title": "工具调用期间崩溃会留下什么",
+    "label": "FIG. 7.2",
+    "source": "durable/src/harness/tool.ts; durable/docs/spec.md §7.2",
+    "page": 169,
+    "image": "/figures/ch07/image-4.webp",
+    "caption": "只有两份记录都认定重复执行安全时，工具才会运行两次。崩溃前存储的意图和崩溃后注册的工具都必须声明 `replay: \"safe\"`；`replay` 默认为 `\"unsafe\"`，见 `durable/src/harness/types.ts:215`。第4行记录的是失败结果，因此该调用拥有的对话会被中止。来源：`ToolTask.execute`，`durable/src/harness/tool.ts:94`。",
+    "kind": "diagram",
+    "width": 960,
+    "height": 325,
+    "nodes": [
+      {
+        "id": "intent",
+        "x": 15,
+        "y": 30,
+        "w": 205,
+        "h": 250,
+        "label": "1 · crash after intent\ncommitted",
+        "detail": "checkpoint { phase: \"execute\", arguments, replay }",
+        "tone": "teal"
+      },
+      {
+        "id": "reopen",
+        "x": 260,
+        "y": 30,
+        "w": 205,
+        "h": 250,
+        "label": "2 · reopen",
+        "detail": "running tasks show as pending until they run again",
+        "tone": "amber"
+      },
+      {
+        "id": "safe",
+        "x": 505,
+        "y": 30,
+        "w": 205,
+        "h": 250,
+        "label": "3 · both say safe\nrerun",
+        "detail": "stored intent and current registration both have replay: \"safe\"; clear progress, run again",
+        "tone": "green"
+      },
+      {
+        "id": "otherwise",
+        "x": 750,
+        "y": 30,
+        "w": 195,
+        "h": 250,
+        "label": "4 · otherwise\nfailed",
+        "detail": "settle as interrupted: \"Tool X was interrupted and may have partially run\"",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "reopen",
+        "from": "intent"
+      },
+      {
+        "to": "safe",
+        "from": "reopen"
+      },
+      {
+        "to": "otherwise",
+        "from": "safe"
+      }
+    ],
+    "notes": [
+      "按原图保留从左至右的决策阅读顺序；otherwise 是安全重放条件不成立时的结果，不表示成功重跑后再次失败。"
+    ]
+  },
+  {
+    "id": "7.3",
+    "title": "一个 pi-env 帧",
+    "label": "FIG. 7.3",
+    "source": "env/docs/protocol.md; env/src/connection.ts",
+    "page": 170,
+    "image": "/figures/ch07/image-5.webp",
+    "caption": "JSON 说明要做什么；原始字节承载文件内容和输出。如果帧短于 9 字节或长于 16 MiB，连接会以“Corrupt frame from pi\\-env”（来自 pi\\-env 的损坏帧）错误结束，见 `env/src/connection.ts:345`。布局来自 `env/docs/protocol.md` 的“帧”一节；此图为示意图，不按比例绘制。",
+    "kind": "diagram",
+    "width": 1100,
+    "height": 330,
+    "nodes": [
+      {
+        "id": "length",
+        "x": 10,
+        "y": 30,
+        "w": 145,
+        "h": 205,
+        "label": "length\nu32",
+        "detail": "bytes after this field",
+        "tone": "gray"
+      },
+      {
+        "id": "type",
+        "x": 175,
+        "y": 30,
+        "w": 155,
+        "h": 205,
+        "label": "type\nu8",
+        "detail": "1 request · 2 result · 3 error · 4 event · 5 cancel · 6 ping",
+        "tone": "amber"
+      },
+      {
+        "id": "id",
+        "x": 350,
+        "y": 30,
+        "w": 145,
+        "h": 205,
+        "label": "id\nu32",
+        "detail": "0 = no request",
+        "tone": "amber"
+      },
+      {
+        "id": "jsonlength",
+        "x": 515,
+        "y": 30,
+        "w": 150,
+        "h": 205,
+        "label": "jsonLength\nu32",
+        "detail": "u32",
+        "tone": "gray"
+      },
+      {
+        "id": "json",
+        "x": 685,
+        "y": 30,
+        "w": 190,
+        "h": 205,
+        "label": "json",
+        "detail": "UTF-8 object · jsonLength bytes",
+        "tone": "blue"
+      },
+      {
+        "id": "bytes",
+        "x": 895,
+        "y": 30,
+        "w": 195,
+        "h": 205,
+        "label": "bytes",
+        "detail": "raw payload · length − 9 − jsonLength",
+        "tone": "green"
+      },
+      {
+        "id": "fixed",
+        "x": 10,
+        "y": 265,
+        "w": 1080,
+        "h": 45,
+        "label": "FIXED: 4 + 1 + 4 + 4 = 13 BYTES · THEN VARIABLE · BIG-ENDIAN · AT MOST 16 MiB",
+        "detail": "FIXED: 4 + 1 + 4 + 4 = 13 BYTES · THEN VARIABLE · BIG-ENDIAN · AT MOST 16 MiB",
+        "tone": "gray",
+        "shape": "label"
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "字节字段依原图顺序排列；这是布局示意，不将块宽度解释为字节比例。"
+    ]
+  },
+  {
+    "id": "7.4",
+    "title": "逐字节查看客户端 hello",
+    "label": "FIG. 7.4",
+    "source": "research/capture/experimental-stack-frames.mjs; protocol/src/framing.ts",
+    "page": 172,
+    "image": "/figures/ch07/image-7.webp",
+    "caption": "每条连接的第一帧都是 25 字节。它是一个包含两个文本键的 CBOR 映射，协议版本用一个单字节整数表示。服务器用相同的映射加上 `serverId` 回应；当 `serverId` 为 UUID 时，响应为 72 字节。字节数据来自固定版本的真实构建，由 `research/capture/experimental-stack-frames.mjs` 编码到 `research/out/experimental-stack-frames.txt`；原图按比例绘制。",
+    "kind": "diagram",
+    "width": 1680,
+    "height": 285,
+    "nodes": [
+      {
+        "id": "encoded-by",
+        "x": 40,
+        "y": 15,
+        "w": 1600,
+        "h": 55,
+        "label": "25 BYTES ENCODED BY encodeClientMessage({ type: \"hello\", version: 8 })",
+        "detail": "25 BYTES ENCODED BY encodeClientMessage({ type: \"hello\", version: 8 })",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "length",
+        "x": 40,
+        "y": 100,
+        "w": 256,
+        "h": 92,
+        "label": "length\n00 00 00 15 = 21",
+        "detail": "4 字节大端无符号长度前缀；后续 CBOR 数据为 21 字节。",
+        "tone": "gray",
+        "align": "center"
+      },
+      {
+        "id": "map",
+        "x": 296,
+        "y": 100,
+        "w": 64,
+        "h": 92,
+        "label": "a2\nmap",
+        "detail": "CBOR map，两个键值对；1 字节。",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "type",
+        "x": 360,
+        "y": 100,
+        "w": 320,
+        "h": 92,
+        "label": "\"type\"\n64 74 79 70 65",
+        "detail": "字段名 type：偏移 5–10，共 5 字节；原图十六进制为 64 74 79 70 65。",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "hello",
+        "x": 680,
+        "y": 100,
+        "w": 384,
+        "h": 92,
+        "label": "\"hello\"\n65 68 65 6c 6c 6f",
+        "detail": "字段值 hello：偏移 10–16，共 6 字节。",
+        "tone": "blue",
+        "align": "center"
+      },
+      {
+        "id": "version",
+        "x": 1064,
+        "y": 100,
+        "w": 512,
+        "h": 92,
+        "label": "\"version\"\n67 … 6e",
+        "detail": "字段名 version：偏移 16–24，共 8 字节；原图将中间十六进制字节以省略号表示。",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "eight",
+        "x": 1576,
+        "y": 100,
+        "w": 64,
+        "h": 92,
+        "label": "08\n8",
+        "detail": "版本号 8：偏移 24–25，以一个字节编码。",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "offset-0",
+        "x": 20,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "0",
+        "detail": "距帧起点 0 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-4",
+        "x": 276,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "4",
+        "detail": "距帧起点 4 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-5",
+        "x": 340,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "5",
+        "detail": "距帧起点 5 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-10",
+        "x": 660,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "10",
+        "detail": "距帧起点 10 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-16",
+        "x": 1044,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "16",
+        "detail": "距帧起点 16 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-24",
+        "x": 1556,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "24",
+        "detail": "距帧起点 24 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "offset-25",
+        "x": 1620,
+        "y": 238,
+        "w": 40,
+        "h": 30,
+        "label": "25",
+        "detail": "距帧起点 25 字节。",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "offset-0",
+        "arrow": false,
+        "from": "offset-0",
+        "points": [
+          [
+            40,
+            204
+          ],
+          [
+            40,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-4",
+        "arrow": false,
+        "from": "offset-4",
+        "points": [
+          [
+            296,
+            204
+          ],
+          [
+            296,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-5",
+        "arrow": false,
+        "from": "offset-5",
+        "points": [
+          [
+            360,
+            204
+          ],
+          [
+            360,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-10",
+        "arrow": false,
+        "from": "offset-10",
+        "points": [
+          [
+            680,
+            204
+          ],
+          [
+            680,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-16",
+        "arrow": false,
+        "from": "offset-16",
+        "points": [
+          [
+            1064,
+            204
+          ],
+          [
+            1064,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-24",
+        "arrow": false,
+        "from": "offset-24",
+        "points": [
+          [
+            1576,
+            204
+          ],
+          [
+            1576,
+            230
+          ]
+        ]
+      },
+      {
+        "to": "offset-25",
+        "arrow": false,
+        "from": "offset-25",
+        "points": [
+          [
+            1640,
+            204
+          ],
+          [
+            1640,
+            230
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "字段宽度严格按每字节 64 个绘图单位等比例重绘：4、1、5、6、8、1 字节，共 25 字节。刻度保留 0、4、5、10、16、24、25；字段边界相接，没有等宽化。"
+    ]
+  },
+  {
+    "id": "7.5",
+    "title": "Pi 如何决定项目信任",
+    "label": "FIG. 7.5",
+    "source": "CA/src/core/project-trust.ts, resolveProjectTrusted",
+    "page": 175,
+    "image": "/figures/ch07/image-3.webp",
+    "caption": "第一个给出答复的行决定结果；所有未得到答复的路径最终都被视为不可信。顺序来自 `resolveProjectTrusted()`，见 `CA/src/core/project-trust.ts:46`。命令行覆盖项在资源扫描之前检查，因此即使文件夹中没有需要保护的内容，`--no-approve` 也会生效。只有存在受保护资源时，才会执行第3至6行。",
+    "kind": "diagram",
+    "width": 1250,
+    "height": 340,
+    "nodes": [
+      {
+        "id": "cli",
+        "x": 10,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "1 · CLI override",
+        "detail": "--approve (-a) or --no-approve (-na) wins, even with no protected resources",
+        "tone": "config"
+      },
+      {
+        "id": "nothing",
+        "x": 220,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "2 · nothing to\nprotect",
+        "detail": "none of the eight .pi entries, no project .agents/skills → trusted",
+        "tone": "gray"
+      },
+      {
+        "id": "extension",
+        "x": 430,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "3 · extension",
+        "detail": "project_trust event, user-level and CLI extensions only; first yes or no wins. remember: true saves it",
+        "tone": "purple"
+      },
+      {
+        "id": "store",
+        "x": 640,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "4 · trust.json",
+        "detail": "closest saved decision in ~/.pi/agent/trust.json, this folder or a parent",
+        "tone": "teal"
+      },
+      {
+        "id": "default",
+        "x": 850,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "5 · default",
+        "detail": "defaultProjectTrust: \"always\" → trusted · \"never\" → untrusted · \"ask\" → next row. Global setting, default \"ask\"",
+        "tone": "config"
+      },
+      {
+        "id": "prompt",
+        "x": 1060,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "6 · prompt",
+        "detail": "only with a UI; without one, untrusted. Dismissing the prompt = untrusted",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "nothing",
+        "from": "cli"
+      },
+      {
+        "to": "extension",
+        "from": "nothing"
+      },
+      {
+        "to": "store",
+        "from": "extension"
+      },
+      {
+        "to": "default",
+        "from": "store"
+      },
+      {
+        "to": "prompt",
+        "from": "default"
+      }
+    ],
+    "notes": [
+      "第一个给出答复的规则即决定结果。箭头沿用原图阅读次序，不表示已有决定后仍继续执行下一项。"
+    ]
+  },
+  {
+    "id": "7.6",
+    "title": "每种方法把哪些部分放在隔离边界内",
+    "label": "FIG. 7.6",
+    "source": "CA/docs/containerization.md; CA/examples/extensions/{gondolin,sandbox,permission-gate.ts,protected-paths.ts}",
+    "page": 176,
+    "image": "/figures/ch07/image.webp",
+    "caption": "只有整个进程的隔离才能将扩展也约束在内。工具级方法把选定的工具移出宿主进程，却将 Pi、其他工具及其环境变量留在原处。各行来自 `CA/docs/containerization.md` 和 `CA/examples/extensions/{gondolin,sandbox,permission-gate.ts,protected-paths.ts}`；此图为示意图。",
+    "kind": "diagram",
+    "width": 1100,
+    "height": 560,
+    "nodes": [
+      {
+        "id": "docker-label",
+        "x": 10,
+        "y": 20,
+        "w": 205,
+        "h": 90,
+        "label": "DOCKER · SANDBOXES\n· OPENSHELL",
+        "detail": "DOCKER · SANDBOXES\n· OPENSHELL",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "docker",
+        "x": 230,
+        "y": 20,
+        "w": 855,
+        "h": 90,
+        "label": "inside: Pi 进程 · 内置工具 · ! 命令 · 所有扩展",
+        "detail": "only mounts, env vars and network you grant cross the boundary",
+        "tone": "green"
+      },
+      {
+        "id": "gondolin-label",
+        "x": 10,
+        "y": 145,
+        "w": 205,
+        "h": 125,
+        "label": "GONDOLIN EXTENSION",
+        "detail": "GONDOLIN EXTENSION",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "gondolin-host",
+        "x": 230,
+        "y": 145,
+        "w": 410,
+        "h": 125,
+        "label": "host: Pi · 其他扩展的工具\n· host env vars",
+        "detail": "host: Pi · other extensions’ tools · host env vars",
+        "tone": "gray"
+      },
+      {
+        "id": "gondolin-vm",
+        "x": 665,
+        "y": 145,
+        "w": 420,
+        "h": 125,
+        "label": "micro-VM: read · write · edit\nbash · grep · find · ls · ! 命令",
+        "detail": "cwd mounted read-write at /workspace",
+        "tone": "green"
+      },
+      {
+        "id": "sandbox-label",
+        "x": 10,
+        "y": 305,
+        "w": 205,
+        "h": 75,
+        "label": "SANDBOX EXTENSION",
+        "detail": "SANDBOX EXTENSION",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "sandbox-host",
+        "x": 230,
+        "y": 305,
+        "w": 565,
+        "h": 75,
+        "label": "host: Pi · 除 bash 外的全部工具",
+        "detail": "host: Pi · every tool except bash",
+        "tone": "gray"
+      },
+      {
+        "id": "sandbox-os",
+        "x": 820,
+        "y": 305,
+        "w": 265,
+        "h": 75,
+        "label": "OS sandbox: bash",
+        "detail": "OS sandbox: bash",
+        "tone": "green"
+      },
+      {
+        "id": "gate-label",
+        "x": 10,
+        "y": 415,
+        "w": 205,
+        "h": 115,
+        "label": "TOOL_CALL GATE",
+        "detail": "TOOL_CALL GATE",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "gate-host",
+        "x": 230,
+        "y": 415,
+        "w": 565,
+        "h": 115,
+        "label": "host: everything",
+        "detail": "所有内容仍在宿主进程。",
+        "tone": "gray"
+      },
+      {
+        "id": "gate-rule",
+        "x": 820,
+        "y": 415,
+        "w": 265,
+        "h": 115,
+        "label": "a rule decides per call\nnot a boundary",
+        "detail": "原图用斜线填充：每次调用应用规则，不构成隔离边界。",
+        "tone": "rose",
+        "hatch": true
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "比较图没有调用箭头；不同颜色区分宿主部分、隔离部分和规则门控。"
+    ]
+  },
+  {
+    "id": "7.7",
+    "title": "遥测 README 描述的内容，与实际存在的内容",
+    "label": "FIG. 7.7",
+    "source": "telemetry/README.md; packages/*/src at 28dcce2",
+    "page": 180,
+    "image": "/figures/ch07/image-2.webp",
+    "caption": "约定是完整的；缺少的是生产方。实色表示实际存在的代码；玫瑰色斜线填充表示 `telemetry/README.md` 的“Pi 软件包集成”一节让读者预期存在、却找不到的内容。来源是在 `28dcce2` 上对 `packages/*/src` 的 grep；此图为示意图。",
+    "kind": "diagram",
+    "width": 1100,
+    "height": 420,
+    "nodes": [
+      {
+        "id": "telemetry-label",
+        "x": 10,
+        "y": 20,
+        "w": 185,
+        "h": 90,
+        "label": "PI-TELEMETRY",
+        "detail": "PI-TELEMETRY",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "contract",
+        "x": 205,
+        "y": 20,
+        "w": 560,
+        "h": 90,
+        "label": "TelemetryContext · TelemetrySpan",
+        "detail": "NOOP · InMemory · schemas · conformance",
+        "tone": "indigo"
+      },
+      {
+        "id": "exporter",
+        "x": 790,
+        "y": 20,
+        "w": 295,
+        "h": 90,
+        "label": "exporter\nnone, by design",
+        "detail": "按设计不包含导出器；原图用斜线填充。",
+        "tone": "gray",
+        "hatch": true
+      },
+      {
+        "id": "ai-label",
+        "x": 10,
+        "y": 145,
+        "w": 185,
+        "h": 90,
+        "label": "PI-AI",
+        "detail": "PI-AI",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "context",
+        "x": 205,
+        "y": 145,
+        "w": 560,
+        "h": 90,
+        "label": "telemetryContext?: TelemetryContext",
+        "detail": "accepted on requests and passed along",
+        "tone": "plum"
+      },
+      {
+        "id": "startspan",
+        "x": 790,
+        "y": 145,
+        "w": 295,
+        "h": 90,
+        "label": "startSpan calls\nnone in the repository",
+        "detail": "仓库没有生产方调用；原图用玫瑰色斜线填充。",
+        "tone": "rose",
+        "hatch": true
+      },
+      {
+        "id": "agent-label",
+        "x": 10,
+        "y": 270,
+        "w": 185,
+        "h": 125,
+        "label": "PI-AGENT-CORE",
+        "detail": "PI-AGENT-CORE",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "missing",
+        "x": 205,
+        "y": 270,
+        "w": 880,
+        "h": 125,
+        "label": "AGENT_TELEMETRY_SCHEMAS · AI_TELEMETRY_SCHEMA\nHARNESS_TELEMETRY_SCHEMA · startAiSpan · startHarnessSpan",
+        "detail": "named in the README; not defined anywhere at 28dcce2；原图使用玫瑰色斜线填充。",
+        "tone": "rose",
+        "hatch": true
+      }
+    ],
+    "edges": [],
+    "notes": [
+      "比较图没有依赖或调用连线；玫瑰色节点表示 README 提及却在该提交中找不到的内容。"
+    ]
+  },
+  {
+    "id": "7.8",
+    "title": "一次文档对照实验",
+    "label": "FIG. 7.8",
+    "source": "evals/README.md, Running a documentation comparison and Results",
+    "page": 182,
+    "image": "/figures/ch07/image-1.webp",
+    "caption": "一次对照实验要么包含全部配对，要么不报告总体指标。只有两个实验组都恰好产生一个分数时，该配对才计入统计；实验组缺失、重复、跳过或出错都会阻止报告总体指标，而且进程会以非零状态退出。运行顺序按运行编号交替，以减少顺序偏差。来源：`evals/README.md` 的“运行文档对照实验”和“结果”两节。",
+    "kind": "diagram",
+    "width": 1250,
+    "height": 340,
+    "nodes": [
+      {
+        "id": "build",
+        "x": 10,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "1 · build\nidentical tarballs",
+        "detail": "pack the workspace, then two images: without_docs and with_docs",
+        "tone": "gray"
+      },
+      {
+        "id": "discover",
+        "x": 220,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "2 · discover\ncohorts must match",
+        "detail": "list cases in both images",
+        "tone": "gray"
+      },
+      {
+        "id": "plan",
+        "x": 430,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "3 · plan\nexpected-runs.json",
+        "detail": "every (case, variant, model, run) arm before anything runs",
+        "tone": "amber"
+      },
+      {
+        "id": "run",
+        "x": 640,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "4 · run\nvitest.json per arm",
+        "detail": "each arm in a fresh container; a failed arm is recorded, the cohort continues",
+        "tone": "green"
+      },
+      {
+        "id": "read",
+        "x": 850,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "5 · read\nobservations",
+        "detail": "native Vitest JSON through @vitest-evals/core/node",
+        "tone": "blue"
+      },
+      {
+        "id": "pair",
+        "x": 1060,
+        "y": 20,
+        "w": 175,
+        "h": 285,
+        "label": "6 · pair\nreport.json · report.txt",
+        "detail": "match arms, compute lift; any blocked pair withholds headline rates",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "discover",
+        "from": "build"
+      },
+      {
+        "to": "plan",
+        "from": "discover"
+      },
+      {
+        "to": "run",
+        "from": "plan"
+      },
+      {
+        "to": "read",
+        "from": "run"
+      },
+      {
+        "to": "pair",
+        "from": "read"
+      }
+    ],
+    "notes": []
+  }
+]

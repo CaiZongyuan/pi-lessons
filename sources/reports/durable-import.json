@@ -1,0 +1,2939 @@
+{
+  "sections": [
+    {
+      "chapter": "1",
+      "number": "1.1",
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "sourceStart": 9,
+      "sourceEnd": 3999,
+      "output": "docs/pi-durable/ch01/section-01.md",
+      "title": "Pi Durable 的用途",
+      "page": 10
+    },
+    {
+      "chapter": "1",
+      "number": "1.2",
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "sourceStart": 3999,
+      "sourceEnd": 8846,
+      "output": "docs/pi-durable/ch01/section-02.md",
+      "title": "一页看懂架构",
+      "page": 13
+    },
+    {
+      "chapter": "1",
+      "number": "1.3",
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "sourceStart": 8846,
+      "sourceEnd": 12703,
+      "output": "docs/pi-durable/ch01/section-03.md",
+      "title": "核心规则及其不变量",
+      "page": 16
+    },
+    {
+      "chapter": "1",
+      "number": "1.4",
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "sourceStart": 12703,
+      "sourceEnd": 18927,
+      "output": "docs/pi-durable/ch01/section-04.md",
+      "title": "一次输入得到回答的全过程",
+      "page": 19
+    },
+    {
+      "chapter": "2",
+      "number": "2.1",
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "sourceStart": 12,
+      "sourceEnd": 4764,
+      "output": "docs/pi-durable/ch02/section-01.md",
+      "title": "记录与 ID",
+      "page": 25
+    },
+    {
+      "chapter": "2",
+      "number": "2.2",
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "sourceStart": 4764,
+      "sourceEnd": 9646,
+      "output": "docs/pi-durable/ch02/section-02.md",
+      "title": "提交与变更串行队列",
+      "page": 29
+    },
+    {
+      "chapter": "2",
+      "number": "2.3",
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "sourceStart": 9646,
+      "sourceEnd": 14684,
+      "output": "docs/pi-durable/ch02/section-03.md",
+      "title": "提交失败时会怎样",
+      "page": 33
+    },
+    {
+      "chapter": "3",
+      "number": "3.1",
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "sourceStart": 13,
+      "sourceEnd": 3938,
+      "output": "docs/pi-durable/ch03/section-01.md",
+      "title": "条目与内置种类",
+      "page": 37
+    },
+    {
+      "chapter": "3",
+      "number": "3.2",
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "sourceStart": 3938,
+      "sourceEnd": 7151,
+      "output": "docs/pi-durable/ch03/section-02.md",
+      "title": "从对话记录到模型上下文",
+      "page": 40
+    },
+    {
+      "chapter": "3",
+      "number": "3.3",
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "sourceStart": 7151,
+      "sourceEnd": 10748,
+      "output": "docs/pi-durable/ch03/section-03.md",
+      "title": "分叉与有所有者的对话",
+      "page": 43
+    },
+    {
+      "chapter": "3",
+      "number": "3.4",
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "sourceStart": 10748,
+      "sourceEnd": 13640,
+      "output": "docs/pi-durable/ch03/section-04.md",
+      "title": "重置、交接与头指针",
+      "page": 46
+    },
+    {
+      "chapter": "4",
+      "number": "4.1",
+      "source": "sources/durable/4.文档/4.文档.md",
+      "sourceStart": 9,
+      "sourceEnd": 3917,
+      "output": "docs/pi-durable/ch04/section-01.md",
+      "title": "定义文档",
+      "page": 50
+    },
+    {
+      "chapter": "4",
+      "number": "4.2",
+      "source": "sources/durable/4.文档/4.文档.md",
+      "sourceStart": 3917,
+      "sourceEnd": 6223,
+      "output": "docs/pi-durable/ch04/section-02.md",
+      "title": "访问、创建与生命周期",
+      "page": 53
+    },
+    {
+      "chapter": "4",
+      "number": "4.3",
+      "source": "sources/durable/4.文档/4.文档.md",
+      "sourceStart": 6223,
+      "sourceEnd": 10548,
+      "output": "docs/pi-durable/ch04/section-03.md",
+      "title": "基值、增量与迁移",
+      "page": 56
+    },
+    {
+      "chapter": "4",
+      "number": "4.4",
+      "source": "sources/durable/4.文档/4.文档.md",
+      "sourceStart": 10548,
+      "sourceEnd": 14149,
+      "output": "docs/pi-durable/ch04/section-04.md",
+      "title": "内置文档",
+      "page": 60
+    },
+    {
+      "chapter": "5",
+      "number": "5.1",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 9,
+      "sourceEnd": 6007,
+      "output": "docs/pi-durable/ch05/section-01.md",
+      "title": "作为状态机的任务",
+      "page": 63
+    },
+    {
+      "chapter": "5",
+      "number": "5.2",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 6007,
+      "sourceEnd": 9815,
+      "output": "docs/pi-durable/ch05/section-02.md",
+      "title": "阶段、步骤与进展",
+      "page": 67
+    },
+    {
+      "chapter": "5",
+      "number": "5.3",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 9815,
+      "sourceEnd": 13398,
+      "output": "docs/pi-durable/ch05/section-03.md",
+      "title": "副作用三明治",
+      "page": 70
+    },
+    {
+      "chapter": "5",
+      "number": "5.4",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 13398,
+      "sourceEnd": 17536,
+      "output": "docs/pi-durable/ch05/section-04.md",
+      "title": "调度器",
+      "page": 73
+    },
+    {
+      "chapter": "5",
+      "number": "5.5",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 17536,
+      "sourceEnd": 22249,
+      "output": "docs/pi-durable/ch05/section-05.md",
+      "title": "所有权与结构化并发",
+      "page": 76
+    },
+    {
+      "chapter": "5",
+      "number": "5.6",
+      "source": "sources/durable/5.任务/5.任务.md",
+      "sourceStart": 22249,
+      "sourceEnd": 26365,
+      "output": "docs/pi-durable/ch05/section-06.md",
+      "title": "中止、故障与孤立",
+      "page": 80
+    },
+    {
+      "chapter": "6",
+      "number": "6.1",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 9,
+      "sourceEnd": 4100,
+      "output": "docs/pi-durable/ch06/section-01.md",
+      "title": "提交请求与收件箱",
+      "page": 84
+    },
+    {
+      "chapter": "6",
+      "number": "6.2",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 4100,
+      "sourceEnd": 7389,
+      "output": "docs/pi-durable/ch06/section-02.md",
+      "title": "运行控制与实时文档",
+      "page": 88
+    },
+    {
+      "chapter": "6",
+      "number": "6.3",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 7389,
+      "sourceEnd": 11245,
+      "output": "docs/pi-durable/ch06/section-03.md",
+      "title": "生成",
+      "page": 91
+    },
+    {
+      "chapter": "6",
+      "number": "6.4",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 11245,
+      "sourceEnd": 15186,
+      "output": "docs/pi-durable/ch06/section-04.md",
+      "title": "工具调用与重放",
+      "page": 94
+    },
+    {
+      "chapter": "6",
+      "number": "6.5",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 15186,
+      "sourceEnd": 18678,
+      "output": "docs/pi-durable/ch06/section-05.md",
+      "title": "压缩",
+      "page": 97
+    },
+    {
+      "chapter": "6",
+      "number": "6.6",
+      "source": "sources/durable/6.运行/6.运行.md",
+      "sourceStart": 18678,
+      "sourceEnd": 21118,
+      "output": "docs/pi-durable/ch06/section-06.md",
+      "title": "用量与费用",
+      "page": 100
+    },
+    {
+      "chapter": "7",
+      "number": "7.1",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 13,
+      "sourceEnd": 3480,
+      "output": "docs/pi-durable/ch07/section-01.md",
+      "title": "扩展与注册表",
+      "page": 103
+    },
+    {
+      "chapter": "7",
+      "number": "7.2",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 3480,
+      "sourceEnd": 7653,
+      "output": "docs/pi-durable/ch07/section-02.md",
+      "title": "每个对话的智能体",
+      "page": 106
+    },
+    {
+      "chapter": "7",
+      "number": "7.3",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 7653,
+      "sourceEnd": 10972,
+      "output": "docs/pi-durable/ch07/section-03.md",
+      "title": "钩子",
+      "page": 109
+    },
+    {
+      "chapter": "7",
+      "number": "7.4",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 10972,
+      "sourceEnd": 14470,
+      "output": "docs/pi-durable/ch07/section-04.md",
+      "title": "定义工具",
+      "page": 112
+    },
+    {
+      "chapter": "7",
+      "number": "7.5",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 14470,
+      "sourceEnd": 17972,
+      "output": "docs/pi-durable/ch07/section-05.md",
+      "title": "系统提示词",
+      "page": 115
+    },
+    {
+      "chapter": "7",
+      "number": "7.6",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 17972,
+      "sourceEnd": 20729,
+      "output": "docs/pi-durable/ch07/section-06.md",
+      "title": "运行期间重新加载",
+      "page": 118
+    },
+    {
+      "chapter": "7",
+      "number": "7.7",
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sourceStart": 20729,
+      "sourceEnd": 24108,
+      "output": "docs/pi-durable/ch07/section-07.md",
+      "title": "子智能体",
+      "page": 121
+    },
+    {
+      "chapter": "8",
+      "number": "8.1",
+      "source": "sources/durable/8.观察/8.观察.md",
+      "sourceStart": 9,
+      "sourceEnd": 4307,
+      "output": "docs/pi-durable/ch08/section-01.md",
+      "title": "Chord 与文档状态",
+      "page": 125
+    },
+    {
+      "chapter": "8",
+      "number": "8.2",
+      "source": "sources/durable/8.观察/8.观察.md",
+      "sourceStart": 4307,
+      "sourceEnd": 8649,
+      "output": "docs/pi-durable/ch08/section-02.md",
+      "title": "对话视图与 watch()",
+      "page": 129
+    },
+    {
+      "chapter": "8",
+      "number": "8.3",
+      "source": "sources/durable/8.观察/8.观察.md",
+      "sourceStart": 8649,
+      "sourceEnd": 12925,
+      "output": "docs/pi-durable/ch08/section-03.md",
+      "title": "智能体事件",
+      "page": 133
+    },
+    {
+      "chapter": "8",
+      "number": "8.4",
+      "source": "sources/durable/8.观察/8.观察.md",
+      "sourceStart": 12925,
+      "sourceEnd": 16353,
+      "output": "docs/pi-durable/ch08/section-04.md",
+      "title": "任务图与 inspect()",
+      "page": 137
+    },
+    {
+      "chapter": "9",
+      "number": "9.1",
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sourceStart": 12,
+      "sourceEnd": 3407,
+      "output": "docs/pi-durable/ch09/section-01.md",
+      "title": "存储契约",
+      "page": 141
+    },
+    {
+      "chapter": "9",
+      "number": "9.2",
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sourceStart": 3407,
+      "sourceEnd": 8857,
+      "output": "docs/pi-durable/ch09/section-02.md",
+      "title": "SQLite",
+      "page": 144
+    },
+    {
+      "chapter": "9",
+      "number": "9.3",
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sourceStart": 8857,
+      "sourceEnd": 12255,
+      "output": "docs/pi-durable/ch09/section-03.md",
+      "title": "JSONL",
+      "page": 148
+    },
+    {
+      "chapter": "9",
+      "number": "9.4",
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sourceStart": 12255,
+      "sourceEnd": 15766,
+      "output": "docs/pi-durable/ch09/section-04.md",
+      "title": "内存、一致性与可移植性",
+      "page": 152
+    },
+    {
+      "chapter": "9",
+      "number": "9.5",
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sourceStart": 15766,
+      "sourceEnd": 20008,
+      "output": "docs/pi-durable/ch09/section-05.md",
+      "title": "执行环境",
+      "page": 155
+    },
+    {
+      "chapter": "10",
+      "number": "10.1",
+      "source": "sources/durable/10.实践/10.实践.md",
+      "sourceStart": 10,
+      "sourceEnd": 5050,
+      "output": "docs/pi-durable/ch10/section-01.md",
+      "title": "构建编码智能体",
+      "page": 159
+    },
+    {
+      "chapter": "10",
+      "number": "10.2",
+      "source": "sources/durable/10.实践/10.实践.md",
+      "sourceStart": 5050,
+      "sourceEnd": 11395,
+      "output": "docs/pi-durable/ch10/section-02.md",
+      "title": "容易踩坑的契约",
+      "page": 163
+    },
+    {
+      "chapter": "10",
+      "number": "10.3",
+      "source": "sources/durable/10.实践/10.实践.md",
+      "sourceStart": 11395,
+      "sourceEnd": 15504,
+      "output": "docs/pi-durable/ch10/section-03.md",
+      "title": "限制与非目标",
+      "page": 168
+    },
+    {
+      "chapter": "R",
+      "number": "R.1",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 6,
+      "sourceEnd": 10603,
+      "output": "docs/pi-durable/reference/section-01.md",
+      "title": "Harness 与 Conversation API",
+      "page": 172
+    },
+    {
+      "chapter": "R",
+      "number": "R.2",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 10603,
+      "sourceEnd": 12362,
+      "output": "docs/pi-durable/reference/section-02.md",
+      "title": "内置种类",
+      "page": 179
+    },
+    {
+      "chapter": "R",
+      "number": "R.3",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 12362,
+      "sourceEnd": 15761,
+      "output": "docs/pi-durable/reference/section-03.md",
+      "title": "设置与默认值",
+      "page": 180
+    },
+    {
+      "chapter": "R",
+      "number": "R.4",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 15761,
+      "sourceEnd": 18870,
+      "output": "docs/pi-durable/reference/section-04.md",
+      "title": "错误与原因",
+      "page": 183
+    },
+    {
+      "chapter": "R",
+      "number": "R.5",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 18870,
+      "sourceEnd": 21391,
+      "output": "docs/pi-durable/reference/section-05.md",
+      "title": "术语表",
+      "page": 185
+    },
+    {
+      "chapter": "R",
+      "number": "R.6",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 21391,
+      "sourceEnd": 23808,
+      "output": "docs/pi-durable/reference/section-06.md",
+      "title": "来源",
+      "page": 187
+    },
+    {
+      "chapter": "R",
+      "number": "R.7",
+      "source": "sources/durable/参考.md",
+      "sourceStart": 23808,
+      "sourceEnd": 26622,
+      "output": "docs/pi-durable/reference/section-07.md",
+      "title": "图表索引",
+      "page": 189
+    }
+  ],
+  "front": "docs/pi-durable/preface.md",
+  "sourceFiles": [
+    {
+      "path": "sources/durable/参考.md",
+      "sha256": "6c3e8989e4bf0020ac320682036b542757e043ae06cad23547dd7d783f7f50b6"
+    },
+    {
+      "path": "sources/durable/5.任务/5.任务.md",
+      "sha256": "87457aebe786107eb1cd8182945b7e9a12521c540e741fa36e13e875116ba06d"
+    },
+    {
+      "path": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "sha256": "70137de77507f4b2b0e260a787de8df8396e82aa3a81efe1a9ec42960d96e647"
+    },
+    {
+      "path": "sources/durable/4.文档/4.文档.md",
+      "sha256": "75c8846684ab3525939c8f39b45cbc5d4d3c97fde0957af0d965ae1cedac62ef"
+    },
+    {
+      "path": "sources/durable/8.观察/8.观察.md",
+      "sha256": "a614fb4641014e142dade562aa77f540b234150a715733f622600377fb3a1391"
+    },
+    {
+      "path": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "sha256": "ecdbaffb51de75b0896b6f3c8cf470a7d75712c7c3f47404dcb403dd0fa74f5a"
+    },
+    {
+      "path": "sources/durable/10.实践/10.实践.md",
+      "sha256": "df7b3f9fc78691f920a1c13cee5352d1abd41a9d50ca6060334df6f86b27e5bf"
+    },
+    {
+      "path": "sources/durable/1.模型-durable/1.模型.md",
+      "sha256": "3020d122485a5e2493318ce5017880b7a8951f99ee1b12fec138d19647261ec9"
+    },
+    {
+      "path": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "sha256": "eb322fbbffd87bed2f56e5c7ce03f770039c830375d9dea123b7c5a6f0e53179"
+    },
+    {
+      "path": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "sha256": "b1b0217db7f4e5aae5cb23dcfe323b8a246705071b5d418010dd37a1134fcc4f"
+    },
+    {
+      "path": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "sha256": "3bf020c68ec7f00a3b60acf2e6cc0afb31c96c49a215b83d4d0c3623e490d596"
+    },
+    {
+      "path": "sources/durable/6.运行/6.运行.md",
+      "sha256": "bb978a23dd0b81f2ef86fe4fa0e475a843d6e4a2a712b4c41abb2696ec7ed0a3"
+    }
+  ],
+  "images": [
+    {
+      "id": "D.1.1",
+      "source": "sources/durable/1.模型-durable/图片和附件/image 2.png",
+      "image": "/durable/ch01/image-2.webp",
+      "sha256": "a7c98066940e387b5b30a93da2adc7ff12922ca37f347ce6db0e358d24fe6300",
+      "output": "docs/public/durable/ch01/image-2.webp",
+      "webp_sha256": "4930bc3e7cb33e6e677092afe4c9de2a2557ccfcb96d31d05e2bfad09b9111c3",
+      "source_bytes": 568690,
+      "webp_bytes": 232468,
+      "width": 2171,
+      "height": 958,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.1.2",
+      "source": "sources/durable/1.模型-durable/图片和附件/image 4.png",
+      "image": "/durable/ch01/image-4.webp",
+      "sha256": "25283211e63e906752af85ba1aa1c1ae34c81fc1dd730709a0a66fcb2b4b8e3c",
+      "output": "docs/public/durable/ch01/image-4.webp",
+      "webp_sha256": "8a6aa8d460287c92a5fc1a24a9684bfc89d1d1ae78e55d9aca875f6760349cf9",
+      "source_bytes": 606426,
+      "webp_bytes": 227930,
+      "width": 2180,
+      "height": 1177,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.1.3",
+      "source": "sources/durable/1.模型-durable/图片和附件/image 1.png",
+      "image": "/durable/ch01/image-1.webp",
+      "sha256": "7dd1f154cfa31372adf18c7359e2a318820b34b137510faa2f1d5447d9dd4657",
+      "output": "docs/public/durable/ch01/image-1.webp",
+      "webp_sha256": "bd6dfc0dd690d88eefc1989ba28bb0fbf18e0f0cebaad37abb7793cafd1e5c70",
+      "source_bytes": 468214,
+      "webp_bytes": 167142,
+      "width": 2200,
+      "height": 1146,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.1.4",
+      "source": "sources/durable/1.模型-durable/图片和附件/image.png",
+      "image": "/durable/ch01/image.webp",
+      "sha256": "4b40ad82ae9ca0e452f4763e9ec3d197c9a1d00272e269abe024c233a445be14",
+      "output": "docs/public/durable/ch01/image.webp",
+      "webp_sha256": "bd45c78368b32474acc8b9c6fc0b4c5a9f7ec73577b96b5cc10ea434218d37f5",
+      "source_bytes": 312000,
+      "webp_bytes": 118888,
+      "width": 1286,
+      "height": 1206,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.1.5",
+      "source": "sources/durable/1.模型-durable/图片和附件/image 3.png",
+      "image": "/durable/ch01/image-3.webp",
+      "sha256": "732c506644740884883ff71df71157f4406ab732fb779e5f0bc0f4e2e22bd9d5",
+      "output": "docs/public/durable/ch01/image-3.webp",
+      "webp_sha256": "eb1aee896df4d1220aa774d55324ff98abf090ded79afab44c23ab69c79578d7",
+      "source_bytes": 283714,
+      "webp_bytes": 114938,
+      "width": 1055,
+      "height": 1201,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.2.1",
+      "source": "sources/durable/2.会话与提交/图片和附件/image 3.png",
+      "image": "/durable/ch02/image-3.webp",
+      "sha256": "7b33fd544782fba61588865ba575d2f470aee1fc6cd568a2635c65d2f3d318e1",
+      "output": "docs/public/durable/ch02/image-3.webp",
+      "webp_sha256": "aa211cf86964a5de9fc43b3ae7e5185eb304a035457b7e249b6b8f7100b936cd",
+      "source_bytes": 459887,
+      "webp_bytes": 201216,
+      "width": 1276,
+      "height": 930,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.2.2",
+      "source": "sources/durable/2.会话与提交/图片和附件/image 2.png",
+      "image": "/durable/ch02/image-2.webp",
+      "sha256": "9446a5423f68aba3fa8a4a0e5b4d54350184e8875808ee612aa6e4412e2376f5",
+      "output": "docs/public/durable/ch02/image-2.webp",
+      "webp_sha256": "bc692a0c928e96c92a0fbf1f26992a5b89cbb0d8b24c706caecc5faef72b55ab",
+      "source_bytes": 324485,
+      "webp_bytes": 125176,
+      "width": 1913,
+      "height": 647,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.2.3",
+      "source": "sources/durable/2.会话与提交/图片和附件/image.png",
+      "image": "/durable/ch02/image.webp",
+      "sha256": "eb78b20f8f073d5577e9c67026bd877534e777319ebd94c5cbe47fa5f271b3c1",
+      "output": "docs/public/durable/ch02/image.webp",
+      "webp_sha256": "8d0eda8144309e98c4856635946a5405e423fb1b6f579cfd0ce1c2dc15fc53a0",
+      "source_bytes": 293788,
+      "webp_bytes": 108280,
+      "width": 1292,
+      "height": 1065,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.2.4",
+      "source": "sources/durable/2.会话与提交/图片和附件/image 1.png",
+      "image": "/durable/ch02/image-1.webp",
+      "sha256": "2a74ca4993d69be4d232f151e9ffde108b580df633670cf509abb46424f05a62",
+      "output": "docs/public/durable/ch02/image-1.webp",
+      "webp_sha256": "77b6a56a6d122760466c9edff41d60a178905dea69619778086f73946c90c931",
+      "source_bytes": 310362,
+      "webp_bytes": 120418,
+      "width": 1568,
+      "height": 713,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.3.1",
+      "source": "sources/durable/3.对话与上下文/图片和附件/image.png",
+      "image": "/durable/ch03/image.webp",
+      "sha256": "adb08872e8946dbb7769fbb0ae2a9f313c9ce5ebd550779e1c8e62b6e43e6d19",
+      "output": "docs/public/durable/ch03/image.webp",
+      "webp_sha256": "42d4e88b9591e0689f12ec56d065e267f8348b77002bd6910185083da3bae44d",
+      "source_bytes": 339024,
+      "webp_bytes": 136282,
+      "width": 1571,
+      "height": 961,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.3.2",
+      "source": "sources/durable/3.对话与上下文/图片和附件/image 3.png",
+      "image": "/durable/ch03/image-3.webp",
+      "sha256": "e8de4071bb39b0ab4ed68019ef7b76682a5b4ae7fccd9480d9aa3c8be23e2c57",
+      "output": "docs/public/durable/ch03/image-3.webp",
+      "webp_sha256": "67830bce923fc3203dc105555297176bb4f62aa878cf37772c286e083cbc60b2",
+      "source_bytes": 531360,
+      "webp_bytes": 208500,
+      "width": 1567,
+      "height": 1180,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.3.3",
+      "source": "sources/durable/3.对话与上下文/图片和附件/image 1.png",
+      "image": "/durable/ch03/image-1.webp",
+      "sha256": "a07665bdebd2a49bf7f83ef53525623efa5b5c0fee568557f4ab13c66f8d7887",
+      "output": "docs/public/durable/ch03/image-1.webp",
+      "webp_sha256": "7186f868eeda61960230dda5d8616904ba16a80a4fd27f1aedad5d4239cf3e1e",
+      "source_bytes": 283262,
+      "webp_bytes": 112172,
+      "width": 1569,
+      "height": 832,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.3.4",
+      "source": "sources/durable/3.对话与上下文/图片和附件/image 2.png",
+      "image": "/durable/ch03/image-2.webp",
+      "sha256": "a194e7d09c4d2df59abfc639423df30eb35fd04caae9e3fd22260645e5db13bd",
+      "output": "docs/public/durable/ch03/image-2.webp",
+      "webp_sha256": "edf16bbbe75ffe68e8b937262e4f647ef87da7570fb6e64aa6bbddb66efbad28",
+      "source_bytes": 556412,
+      "webp_bytes": 227258,
+      "width": 1573,
+      "height": 1065,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.1",
+      "source": "sources/durable/4.文档/图片和附件/image 2.png",
+      "image": "/durable/ch04/image-2.webp",
+      "sha256": "2dabeb33e5be4e012a075eece56795b8b91a28466c477910bb15a960ca032b6b",
+      "output": "docs/public/durable/ch04/image-2.webp",
+      "webp_sha256": "44b7daf4ba20ddd57af08f07e860b394b31d5a088da5c9dd69ea4dab3c69e238",
+      "source_bytes": 319637,
+      "webp_bytes": 121344,
+      "width": 1567,
+      "height": 857,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.2",
+      "source": "sources/durable/4.文档/图片和附件/image 1.png",
+      "image": "/durable/ch04/image-1.webp",
+      "sha256": "d05229ea98af8bdf831c47f7e7a00e9841161b1ae244aa60c8061fe6638a5be7",
+      "output": "docs/public/durable/ch04/image-1.webp",
+      "webp_sha256": "c5097031a40b875976ed6da0053f318f09bf43104e7d4290bdc14bf6831a916c",
+      "source_bytes": 267315,
+      "webp_bytes": 102732,
+      "width": 1568,
+      "height": 953,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.3",
+      "source": "sources/durable/4.文档/图片和附件/image.png",
+      "image": "/durable/ch04/image.webp",
+      "sha256": "3e6e2f3cb70b6fe49d2525ad3f5c8ea9afe7d6c86b3e6fb5c4009e46e97a1602",
+      "output": "docs/public/durable/ch04/image.webp",
+      "webp_sha256": "0cf326bcd7b7ee4f50231d33e783aabdbd6017e973b0dfedb2d0fbd04015d3ca",
+      "source_bytes": 170166,
+      "webp_bytes": 66936,
+      "width": 1569,
+      "height": 571,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.4",
+      "source": "sources/durable/4.文档/图片和附件/image 3.png",
+      "image": "/durable/ch04/image-3.webp",
+      "sha256": "86d24b77bca1ddc7b51aba0297eca3f632ac4c2f4da3721537727de01067132b",
+      "output": "docs/public/durable/ch04/image-3.webp",
+      "webp_sha256": "c3c366333587241a0d89845471ddef19b8cc325a17d2bde6c3bbbc2563968783",
+      "source_bytes": 138824,
+      "webp_bytes": 60326,
+      "width": 1156,
+      "height": 341,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.5",
+      "source": "sources/durable/4.文档/图片和附件/image 4.png",
+      "image": "/durable/ch04/image-4.webp",
+      "sha256": "aec6cc5dcb3e9d9cd4055e49ac9ba0b7c59ab7f0491e89590b566a39492a9479",
+      "output": "docs/public/durable/ch04/image-4.webp",
+      "webp_sha256": "8fd20923cb7abb444ef6082e86ba2b8cc83b27d0e3c3a2421b17b4e00a803ac1",
+      "source_bytes": 406653,
+      "webp_bytes": 159120,
+      "width": 1916,
+      "height": 846,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.4.6",
+      "source": "sources/durable/4.文档/图片和附件/image 5.png",
+      "image": "/durable/ch04/image-5.webp",
+      "sha256": "db9f4a0733a1e997a92b426abb9b000c1008f217bdf257df9c053c9a5d6815f7",
+      "output": "docs/public/durable/ch04/image-5.webp",
+      "webp_sha256": "977f69f10a2c913b7c4f03dbf149b321d473b32505a9956456fccf53e4948543",
+      "source_bytes": 357990,
+      "webp_bytes": 131010,
+      "width": 1915,
+      "height": 860,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.1",
+      "source": "sources/durable/5.任务/图片和附件/image 2.png",
+      "image": "/durable/ch05/image-2.webp",
+      "sha256": "41cb7b3aa26e12bd7a0ec1dab472879a2025b847e1f9a62a99d1974c37a07f42",
+      "output": "docs/public/durable/ch05/image-2.webp",
+      "webp_sha256": "fff86779d85c9b31fddb57e81f1d1ec387f8a5132b84ff219a7bb014da010dcf",
+      "source_bytes": 338128,
+      "webp_bytes": 134140,
+      "width": 1574,
+      "height": 1034,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.2",
+      "source": "sources/durable/5.任务/图片和附件/image 3.png",
+      "image": "/durable/ch05/image-3.webp",
+      "sha256": "d487256bcd2d7b8bed0517e18cdbe1e7458775c810a028457f9edd26bf54d21a",
+      "output": "docs/public/durable/ch05/image-3.webp",
+      "webp_sha256": "daab6cee692c22096662b6ea053b88108488d9754aac0e2c678669e8506eb875",
+      "source_bytes": 481257,
+      "webp_bytes": 196026,
+      "width": 1915,
+      "height": 1079,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.3",
+      "source": "sources/durable/5.任务/图片和附件/image 4.png",
+      "image": "/durable/ch05/image-4.webp",
+      "sha256": "a60740aee0cbc1938363767b4169a296923d7466600f431f7430999dca7406eb",
+      "output": "docs/public/durable/ch05/image-4.webp",
+      "webp_sha256": "c0d6311b028bc96b800408b33da73dba00a4cdda884503734150c00785978f94",
+      "source_bytes": 427136,
+      "webp_bytes": 162520,
+      "width": 1911,
+      "height": 1202,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.4",
+      "source": "sources/durable/5.任务/图片和附件/image.png",
+      "image": "/durable/ch05/image.webp",
+      "sha256": "6517a0c43de59ba0782d60f97510003ad3c1d39ea6526880a6b2d726da08439b",
+      "output": "docs/public/durable/ch05/image.webp",
+      "webp_sha256": "eeade63bb678f9a156ef08932582d3bfea84d3c552cc91519200bcae8aca11dd",
+      "source_bytes": 416299,
+      "webp_bytes": 164528,
+      "width": 1913,
+      "height": 953,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.5",
+      "source": "sources/durable/5.任务/图片和附件/image 5.png",
+      "image": "/durable/ch05/image-5.webp",
+      "sha256": "f4b5bd8cae2c082a625afd9059196715e82bb525ad22f6336a886b96694e6c0e",
+      "output": "docs/public/durable/ch05/image-5.webp",
+      "webp_sha256": "170f90cdcf979a5d3606b50ad8104621968f4174765a03fb8c0b1bc142c04e76",
+      "source_bytes": 406663,
+      "webp_bytes": 145760,
+      "width": 1915,
+      "height": 1213,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.6",
+      "source": "sources/durable/5.任务/图片和附件/image 1.png",
+      "image": "/durable/ch05/image-1.webp",
+      "sha256": "96f32586c2eb1b39ae5f464570dfceb7186811ad27b5b72a41b46bdf102bcac2",
+      "output": "docs/public/durable/ch05/image-1.webp",
+      "webp_sha256": "df9254cbd1d755f6df4365dad63576f51d24db88e63bb01877a1592536cd68f7",
+      "source_bytes": 638087,
+      "webp_bytes": 228796,
+      "width": 2238,
+      "height": 1110,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.5.7",
+      "source": "sources/durable/5.任务/图片和附件/image 6.png",
+      "image": "/durable/ch05/image-6.webp",
+      "sha256": "0c68a9825e99e2a3dfa05b6e9ba1e97803a25a7cf995b80b7a08a5ab043d13a9",
+      "output": "docs/public/durable/ch05/image-6.webp",
+      "webp_sha256": "798bc48fef8e3f76e6449b950e2639a30e5579232d84ffe1e37de57967e073c5",
+      "source_bytes": 162458,
+      "webp_bytes": 53016,
+      "width": 1311,
+      "height": 925,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.1",
+      "source": "sources/durable/6.运行/图片和附件/image 3.png",
+      "image": "/durable/ch06/image-3.webp",
+      "sha256": "5fc84a7aafb483b72ef04edd9bdd14c5b76264dcf2af5b30256d61cae1b8abd4",
+      "output": "docs/public/durable/ch06/image-3.webp",
+      "webp_sha256": "ef1c70609fd5645761d5116be45fafe52b1ad752e5a466c22efd43597472c592",
+      "source_bytes": 320943,
+      "webp_bytes": 119592,
+      "width": 1913,
+      "height": 967,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.2",
+      "source": "sources/durable/6.运行/图片和附件/image 1.png",
+      "image": "/durable/ch06/image-1.webp",
+      "sha256": "59e76b131bba68c9d8a7ffef6d9950a2e78a1c17942b83fb0cee487a436d3efc",
+      "output": "docs/public/durable/ch06/image-1.webp",
+      "webp_sha256": "9945cc5c45a268192c5bfafbe87b2df23ae315e1355e698ac24fb2595fd939ed",
+      "source_bytes": 368272,
+      "webp_bytes": 140590,
+      "width": 1917,
+      "height": 982,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.3",
+      "source": "sources/durable/6.运行/图片和附件/image.png",
+      "image": "/durable/ch06/image.webp",
+      "sha256": "d7fbbff0ec4bde84c83807c381aefe2a6525cd30bf68a698d89456dde615b3ee",
+      "output": "docs/public/durable/ch06/image.webp",
+      "webp_sha256": "2d474a0cd76585915a2371b7e8d0a2d5140a5a3ade349a37fd79bc7e0275d03e",
+      "source_bytes": 319166,
+      "webp_bytes": 115556,
+      "width": 1909,
+      "height": 895,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.4",
+      "source": "sources/durable/6.运行/图片和附件/image 4.png",
+      "image": "/durable/ch06/image-4.webp",
+      "sha256": "aa1f98a744daf89a6c13b77c8148f5409b07af695790063f2c526dee94e1c2aa",
+      "output": "docs/public/durable/ch06/image-4.webp",
+      "webp_sha256": "8831a22c9e0c20bbbb651140671755329e0a66b9afa6757899e20b019e4be94c",
+      "source_bytes": 293666,
+      "webp_bytes": 106626,
+      "width": 1921,
+      "height": 897,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.5",
+      "source": "sources/durable/6.运行/图片和附件/image 7.png",
+      "image": "/durable/ch06/image-7.webp",
+      "sha256": "1f87cecd5daf817e3cd412c25bf3543b09cddafba7ac61212ff87c44b319b4a4",
+      "output": "docs/public/durable/ch06/image-7.webp",
+      "webp_sha256": "8f40af8085e610ab1d1c8c267f78a31af751026b11885453b200e14efd5a10f9",
+      "source_bytes": 305287,
+      "webp_bytes": 118742,
+      "width": 1576,
+      "height": 1054,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.6",
+      "source": "sources/durable/6.运行/图片和附件/image 6.png",
+      "image": "/durable/ch06/image-6.webp",
+      "sha256": "aeb1a3385b85afc94ccede88424934fcf2563ca0f38854749f9c2237c519566c",
+      "output": "docs/public/durable/ch06/image-6.webp",
+      "webp_sha256": "d660aa1222a468a55424c470334e918e6fbf079ff29a7ccdd23a58b8374ef100",
+      "source_bytes": 334051,
+      "webp_bytes": 127606,
+      "width": 1573,
+      "height": 739,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.7",
+      "source": "sources/durable/6.运行/图片和附件/image 5.png",
+      "image": "/durable/ch06/image-5.webp",
+      "sha256": "80fc528fe7f828e8fe5dd7d27cc5287c011fbbeea98ccf467a92751c4826b2bc",
+      "output": "docs/public/durable/ch06/image-5.webp",
+      "webp_sha256": "73498df85fd901ad4b7ed263f9d08990a5bafcb728bc12527c6e52bd574791ed",
+      "source_bytes": 384916,
+      "webp_bytes": 129904,
+      "width": 1918,
+      "height": 946,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.6.8",
+      "source": "sources/durable/6.运行/图片和附件/image 2.png",
+      "image": "/durable/ch06/image-2.webp",
+      "sha256": "d77c8a70e2770e2576a246aa0852f95583e9fa887da6d356b17667edb3953f7c",
+      "output": "docs/public/durable/ch06/image-2.webp",
+      "webp_sha256": "ceb137fcff5061e13e21f3260bacaf0a9c5e36edc052cb94b0fff22c3419d56c",
+      "source_bytes": 316309,
+      "webp_bytes": 114114,
+      "width": 1920,
+      "height": 937,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.1",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 4.png",
+      "image": "/durable/ch07/image-4.webp",
+      "sha256": "1b1871feea665ed57ad0b8b6b8c28aad0c4baeaad4612566b1fa2ac5cbad2a40",
+      "output": "docs/public/durable/ch07/image-4.webp",
+      "webp_sha256": "d496b40f9705e475b52efc646317785fb1d48580b55981ab23441d837193bf72",
+      "source_bytes": 397758,
+      "webp_bytes": 149288,
+      "width": 1918,
+      "height": 961,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.2",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 6.png",
+      "image": "/durable/ch07/image-6.webp",
+      "sha256": "83cd475ba0e9ab41d065d1781558ad523c5fc48dfca3e1ad83367f869785e976",
+      "output": "docs/public/durable/ch07/image-6.webp",
+      "webp_sha256": "825958fa92a41f46032306f69303a47db5136c53b5465a8c72ff10ef86dfdc65",
+      "source_bytes": 293618,
+      "webp_bytes": 104970,
+      "width": 1916,
+      "height": 971,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.3",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 9.png",
+      "image": "/durable/ch07/image-9.webp",
+      "sha256": "750b639cae756b126177a58166c9735a5464b439fbfce32f2f469ac18f6a3211",
+      "output": "docs/public/durable/ch07/image-9.webp",
+      "webp_sha256": "1ac41e41c9718285a6102d0754bd30584d2528925c995f64940f2bb91e22007c",
+      "source_bytes": 326347,
+      "webp_bytes": 119166,
+      "width": 1920,
+      "height": 900,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.4",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 8.png",
+      "image": "/durable/ch07/image-8.webp",
+      "sha256": "2ee10eb448509162d8005f59cafe2b709ce9fe65897eab8f2a07f723a9ddf04a",
+      "output": "docs/public/durable/ch07/image-8.webp",
+      "webp_sha256": "07718c6b4e30d9a79ea012f0aa17b1195aed92bbb94c45d710190c5218dacaf6",
+      "source_bytes": 323670,
+      "webp_bytes": 120154,
+      "width": 1576,
+      "height": 1216,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.5",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image.png",
+      "image": "/durable/ch07/image.webp",
+      "sha256": "a1e64c69906bf2152019d5761796e8d610b77cafbf2bf2a876ad89030899b457",
+      "output": "docs/public/durable/ch07/image.webp",
+      "webp_sha256": "4df9a6e44d64d728401a9a80da5a605b5e41a67f9d123ca1136789b5737b4cbb",
+      "source_bytes": 267971,
+      "webp_bytes": 103348,
+      "width": 1570,
+      "height": 816,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.6",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 2.png",
+      "image": "/durable/ch07/image-2.webp",
+      "sha256": "4e423ec758b8f32af03cf677f7b4e6130465fb357b0ef3cf645db2e45fc87684",
+      "output": "docs/public/durable/ch07/image-2.webp",
+      "webp_sha256": "11e318dce51c4725bd1852166e4e278c08e5e1eca160b0e1ee85041c75290691",
+      "source_bytes": 279919,
+      "webp_bytes": 107100,
+      "width": 1570,
+      "height": 742,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.7",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 5.png",
+      "image": "/durable/ch07/image-5.webp",
+      "sha256": "1db0eba0f3647cb6603d0fa31912ebfc34252fa2d6adae7ff7b1270f6f65d9ff",
+      "output": "docs/public/durable/ch07/image-5.webp",
+      "webp_sha256": "7c76a008bfcd8331e5c1126362102bb6da0026d235bf9b462f3603953bf5d9ae",
+      "source_bytes": 220849,
+      "webp_bytes": 80362,
+      "width": 1567,
+      "height": 719,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.8",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 3.png",
+      "image": "/durable/ch07/image-3.webp",
+      "sha256": "8e9e312c938c51005ef0bfd48fc17fdf800098184410a0c55fa72480afa65d84",
+      "output": "docs/public/durable/ch07/image-3.webp",
+      "webp_sha256": "355968350c8bcf56ed094bd57a4214c68e8891d3988714d0da4a9c80d172f18d",
+      "source_bytes": 246287,
+      "webp_bytes": 93202,
+      "width": 1570,
+      "height": 848,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.9",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 7.png",
+      "image": "/durable/ch07/image-7.webp",
+      "sha256": "3c63b8e8be1a213ba6db4ed4de8ea43c91603880656a653d97206af5906bee12",
+      "output": "docs/public/durable/ch07/image-7.webp",
+      "webp_sha256": "5c98cf6ac7a12b1257b264060d66d0583743bde1a9f15a038ab2e45dcb2e2ccb",
+      "source_bytes": 297629,
+      "webp_bytes": 115188,
+      "width": 1568,
+      "height": 1106,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.7.10",
+      "source": "sources/durable/7.扩展与智能体/图片和附件/image 1.png",
+      "image": "/durable/ch07/image-1.webp",
+      "sha256": "fc10ee09943855af6e762582336278fe0df154905ca00c92a765903f2f8ab779",
+      "output": "docs/public/durable/ch07/image-1.webp",
+      "webp_sha256": "dc987b61b36c2b9b3dfa03d0b5bb4ad941f79a4825bf2e4ffbfb8b8f7c13a7da",
+      "source_bytes": 265735,
+      "webp_bytes": 107868,
+      "width": 1569,
+      "height": 774,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.1",
+      "source": "sources/durable/8.观察/图片和附件/image 2.png",
+      "image": "/durable/ch08/image-2.webp",
+      "sha256": "95e6f7c9f1ded9863536460a8b1ea93cbb4a9f36fa40adccafa36040ad8a1e0a",
+      "output": "docs/public/durable/ch08/image-2.webp",
+      "webp_sha256": "5734d9db547f138067f75813e3c9fdef5132854cea17ba3c357abe60ad965337",
+      "source_bytes": 295889,
+      "webp_bytes": 121154,
+      "width": 1287,
+      "height": 1094,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.2",
+      "source": "sources/durable/8.观察/图片和附件/image 6.png",
+      "image": "/durable/ch08/image-6.webp",
+      "sha256": "74eac55002f24d25cbc70e7c4c5e93a7b3a3652c186efdccf52a26cfc27b88a5",
+      "output": "docs/public/durable/ch08/image-6.webp",
+      "webp_sha256": "cf9375661b4aae969854898879c18a7726c2460b787365c43088450de97db0a1",
+      "source_bytes": 357850,
+      "webp_bytes": 146124,
+      "width": 1573,
+      "height": 863,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.3",
+      "source": "sources/durable/8.观察/图片和附件/image 5.png",
+      "image": "/durable/ch08/image-5.webp",
+      "sha256": "52ca0cff358cbb9d7f1b2a4fa7df1937b4e385191dcd34ee634dda611bfa5ea1",
+      "output": "docs/public/durable/ch08/image-5.webp",
+      "webp_sha256": "7cfee891ed569efb386e27108a35c2c825d009018bfbe68832bf91fb3b9fa909",
+      "source_bytes": 346474,
+      "webp_bytes": 141748,
+      "width": 1568,
+      "height": 945,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.4",
+      "source": "sources/durable/8.观察/图片和附件/image 3.png",
+      "image": "/durable/ch08/image-3.webp",
+      "sha256": "58e1112d39e323405ad32eef24dca0041e604e6a7bdf5a1ac034c01272f53a74",
+      "output": "docs/public/durable/ch08/image-3.webp",
+      "webp_sha256": "0fadbfc63f1932f1011cdf4eb1e323b16d75df09ef1ca929614ced3c132feae1",
+      "source_bytes": 197552,
+      "webp_bytes": 73962,
+      "width": 1576,
+      "height": 645,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.5",
+      "source": "sources/durable/8.观察/图片和附件/image 1.png",
+      "image": "/durable/ch08/image-1.webp",
+      "sha256": "8b121bf8aa6cc693d41a486ad50c952056b1c6d36fd7d4dbbceb145a6b6b4c94",
+      "output": "docs/public/durable/ch08/image-1.webp",
+      "webp_sha256": "fd7b1c2b6114349f70c3e3530cbe2cf1ba0b83c7a3fd37515331d141c81a3601",
+      "source_bytes": 237696,
+      "webp_bytes": 74898,
+      "width": 1635,
+      "height": 1040,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.6",
+      "source": "sources/durable/8.观察/图片和附件/image 4.png",
+      "image": "/durable/ch08/image-4.webp",
+      "sha256": "b41673be04db63f9f841edee410de3bd5a776df0a66c688b6d66cfd846c11042",
+      "output": "docs/public/durable/ch08/image-4.webp",
+      "webp_sha256": "47c337d9a4d12200b23c4c2b3b8846aeb1ee2b04a88d2dff3e489d6bb2e16ce1",
+      "source_bytes": 139381,
+      "webp_bytes": 47008,
+      "width": 1634,
+      "height": 633,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.8.7",
+      "source": "sources/durable/8.观察/图片和附件/image.png",
+      "image": "/durable/ch08/image.webp",
+      "sha256": "90828abf4f8e6bf57577304a78363f1dd6e84c51e38dc53a68ff880f0a66ab9b",
+      "output": "docs/public/durable/ch08/image.webp",
+      "webp_sha256": "e47ec989f43aed05cb7820494e27058346b45ec38d295c97f2e6b72078f23805",
+      "source_bytes": 184244,
+      "webp_bytes": 62884,
+      "width": 1631,
+      "height": 756,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.1",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 5.png",
+      "image": "/durable/ch09/image-5.webp",
+      "sha256": "7429e27d8a1bbc5f023707cba805ce20df74b6c3922e881c913fc8fbddd2ae13",
+      "output": "docs/public/durable/ch09/image-5.webp",
+      "webp_sha256": "459f5f88ff669416b44bdcecb4c010bdaca5b5b95c505efeb8621fef1b7f94a9",
+      "source_bytes": 259086,
+      "webp_bytes": 86364,
+      "width": 1641,
+      "height": 1017,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.2",
+      "source": "sources/durable/9.存储与环境/图片和附件/image.png",
+      "image": "/durable/ch09/image.webp",
+      "sha256": "3ba9b5f28523309d8edd209c1e9c4f67e990ec4b419595ddd38cf3b90421da8f",
+      "output": "docs/public/durable/ch09/image.webp",
+      "webp_sha256": "aa22a69909a1fe6dbbd25b2ab38e52c05ec8a36c10462b13bb9eab85a0b7f410",
+      "source_bytes": 272653,
+      "webp_bytes": 94216,
+      "width": 1406,
+      "height": 1057,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.3",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 7.png",
+      "image": "/durable/ch09/image-7.webp",
+      "sha256": "5f2ad1084f4f129971912962c3e31ebf7c77e21e52f99ca6fa3c7218a5639a16",
+      "output": "docs/public/durable/ch09/image-7.webp",
+      "webp_sha256": "7fc91bbd6e66aad6cb11ea9f5a4a4d8012145e93cfb793828908f60a88cc468c",
+      "source_bytes": 265736,
+      "webp_bytes": 83088,
+      "width": 1410,
+      "height": 701,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.4",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 2.png",
+      "image": "/durable/ch09/image-2.webp",
+      "sha256": "66e968ca19462bf6b3bf17842c2eb930b92183342e630a79445c8048399b9946",
+      "output": "docs/public/durable/ch09/image-2.webp",
+      "webp_sha256": "25ad6474d6f09b6cd1ddfe66f1fe69a35aa458430fd96be2e906dea25585ab04",
+      "source_bytes": 230468,
+      "webp_bytes": 81566,
+      "width": 1400,
+      "height": 820,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.5",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 9.png",
+      "image": "/durable/ch09/image-9.webp",
+      "sha256": "060b183e16a1ff7c368185544dc9fb61f805c50f9068fa1b6ccbb1851796c079",
+      "output": "docs/public/durable/ch09/image-9.webp",
+      "webp_sha256": "a9d029dc2dc2f43fed7ff804548333165051c9c6c101cd80810d9d1144569c4f",
+      "source_bytes": 161592,
+      "webp_bytes": 47476,
+      "width": 1410,
+      "height": 1029,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.6",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 3.png",
+      "image": "/durable/ch09/image-3.webp",
+      "sha256": "b51c2e77d4c6210d931864e4291b04fb8f6ea7694cee99a784953998d64a033e",
+      "output": "docs/public/durable/ch09/image-3.webp",
+      "webp_sha256": "b287fccc2a803da95e14fc5e4b9ad3e57d2985c0eff0638bb918df129bf5c71e",
+      "source_bytes": 262709,
+      "webp_bytes": 85720,
+      "width": 1753,
+      "height": 1104,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.7",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 6.png",
+      "image": "/durable/ch09/image-6.webp",
+      "sha256": "7319ec4fb0b228b3f6ba67a8390d08e16e0009c71da0c12cd84f0f5226c93c22",
+      "output": "docs/public/durable/ch09/image-6.webp",
+      "webp_sha256": "3f59392ef6e754c736e58f473f250aa01fb1f95732f82368cf90113e0ceb8c59",
+      "source_bytes": 200545,
+      "webp_bytes": 67908,
+      "width": 1647,
+      "height": 811,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.8",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 1.png",
+      "image": "/durable/ch09/image-1.webp",
+      "sha256": "8b1701b383feffcd939d085d40b830118dc4b493056d391608d3f7fb08985f32",
+      "output": "docs/public/durable/ch09/image-1.webp",
+      "webp_sha256": "d654e1733d6126849525f8b692e6dbdc4827fd831bc7aff1b631f49827f535c6",
+      "source_bytes": 121488,
+      "webp_bytes": 35564,
+      "width": 1643,
+      "height": 805,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.9",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 8.png",
+      "image": "/durable/ch09/image-8.webp",
+      "sha256": "eb020f255174de01198e48cad64eca47d885ac005b07810f0a5a023cdbb36d65",
+      "output": "docs/public/durable/ch09/image-8.webp",
+      "webp_sha256": "40d73f162bafbf1c891b31bd3760b2088b573bb585885339fe49709559951d11",
+      "source_bytes": 133804,
+      "webp_bytes": 46158,
+      "width": 1646,
+      "height": 673,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.9.10",
+      "source": "sources/durable/9.存储与环境/图片和附件/image 4.png",
+      "image": "/durable/ch09/image-4.webp",
+      "sha256": "2f82d88c94e0215d7d1c258517460f6c5f114e5ce5bc9005148da90e9db860bf",
+      "output": "docs/public/durable/ch09/image-4.webp",
+      "webp_sha256": "8d282984dc03153f407bd79f8955ca3d1afb70a6385fdd61b1a68e2c439e0191",
+      "source_bytes": 156910,
+      "webp_bytes": 50126,
+      "width": 1644,
+      "height": 625,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.10.1",
+      "source": "sources/durable/10.实践/图片和附件/image 1.png",
+      "image": "/durable/ch10/image-1.webp",
+      "sha256": "09704411da3599dbda2c381ea860d33fad282b18ce346944fc37f7becfd7c928",
+      "output": "docs/public/durable/ch10/image-1.webp",
+      "webp_sha256": "78d35c062de76fdd355ce3ba65e522215ada4768954ccea10e0991ff51287afe",
+      "source_bytes": 203265,
+      "webp_bytes": 71176,
+      "width": 1643,
+      "height": 757,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.10.2",
+      "source": "sources/durable/10.实践/图片和附件/image 2.png",
+      "image": "/durable/ch10/image-2.webp",
+      "sha256": "c0b5d59c817cb60375a4e392e532031ef6c482163ac4d99d24d36f95b4e0c9e1",
+      "output": "docs/public/durable/ch10/image-2.webp",
+      "webp_sha256": "a882d594bb70321a6ddf48882b00926d51a58e3661d517db0183180a25c7e874",
+      "source_bytes": 185002,
+      "webp_bytes": 62772,
+      "width": 1649,
+      "height": 793,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.10.3",
+      "source": "sources/durable/10.实践/图片和附件/image.png",
+      "image": "/durable/ch10/image.webp",
+      "sha256": "b10903cd79403408487f7ba4913b08558017631ca9a890d77cc7e25e783040e1",
+      "output": "docs/public/durable/ch10/image.webp",
+      "webp_sha256": "e74f779af7b72974395cbf379b0b34092584be9690f6d81aadca0b4ef162fb36",
+      "source_bytes": 192242,
+      "webp_bytes": 59046,
+      "width": 1647,
+      "height": 1084,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.10.4",
+      "source": "sources/durable/10.实践/图片和附件/image 3.png",
+      "image": "/durable/ch10/image-3.webp",
+      "sha256": "cedb14e2577e0bf7310abf145d44743cbee861cc272219f55a30bf1419a77995",
+      "output": "docs/public/durable/ch10/image-3.webp",
+      "webp_sha256": "9a045dffcbcefa77efc9116af93d79dbd1eb41855e95903b608a1045dd462f73",
+      "source_bytes": 238120,
+      "webp_bytes": 79406,
+      "width": 1644,
+      "height": 845,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.front.1",
+      "source": "sources/durable/Pi Durable 技术手册/图片和附件/image.png",
+      "image": "/durable/front/image.webp",
+      "sha256": "d539853fa908b696437c4aa19d5c6b398080275b827013e8174a160b457119cf",
+      "output": "docs/public/durable/front/image.webp",
+      "webp_sha256": "e08fe59bb08b0868205ce5a69548fd0ead47805b93f59338a6596dbf9f805810",
+      "source_bytes": 660702,
+      "webp_bytes": 292850,
+      "width": 1071,
+      "height": 1098,
+      "rgba_equal": true
+    },
+    {
+      "id": "D.front.2",
+      "source": "sources/durable/Pi Durable 技术手册/图片和附件/image 1.png",
+      "image": "/durable/front/image-1.webp",
+      "sha256": "a2296b8ff6f7338b256d47a79931af118c487f784bc9ecf323b6056f7f346c9e",
+      "output": "docs/public/durable/front/image-1.webp",
+      "webp_sha256": "4233c1d360425a7e17c6b09b3537ccd0c995a205ae32b84e3849190612670417",
+      "source_bytes": 358976,
+      "webp_bytes": 131574,
+      "width": 1781,
+      "height": 1222,
+      "rgba_equal": true
+    }
+  ],
+  "corrections": [
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 11
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 15
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 6
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 13
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/1.模型-durable/1.模型.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 5
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 6
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "restore-pdf-callout-label",
+      "label": "读取也会写入",
+      "originalLabel": "READS THAT WRITE",
+      "page": 54
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "restore-pdf-callout-label",
+      "label": "没有检查点，就没有上限",
+      "originalLabel": "NO CHECKPOINT, NO LIMIT",
+      "page": 57
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 5
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 8
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 8
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 5
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/4.文档/4.文档.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "restore-pdf-callout-label",
+      "label": "不会因代码缺失而结束",
+      "originalLabel": "NEVER ENDED FOR MISSING CODE",
+      "page": 74
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 9
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 5
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 6
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/5.任务/5.任务.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 5
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "adjacent-bold-export-delimiter",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/6.运行/6.运行.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/8.观察/8.观察.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "restore-pdf-callout-label",
+      "label": "单一进程",
+      "originalLabel": "ONE PROCESS",
+      "page": 147
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 4
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 2
+    },
+    {
+      "source": "sources/durable/10.实践/10.实践.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`conversation`|`(id, ctx)`|`Conversation | undefined`|3\\.3（原书第43页）|",
+      "after": "|`conversation`|`(id, ctx)`|`Conversation \\| undefined`|3\\.3（原书第43页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`getTask`|`(id, ctx)`|`TaskRecord | undefined`|5\\.1（原书第63页）|",
+      "after": "|`getTask`|`(id, ctx)`|`TaskRecord \\| undefined`|5\\.1（原书第63页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`submission`|`(id, ctx)`|`Submission | undefined`；重新打开后仍可使用|6\\.1（原书第84页）|",
+      "after": "|`submission`|`(id, ctx)`|`Submission \\| undefined`；重新打开后仍可使用|6\\.1（原书第84页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`abortSubmission`|`(id, ctx, conversationId?)`|`\"aborted\" | \"already_placed\" | \"settled\" | \"not_found\"`|6\\.1（原书第84页）|",
+      "after": "|`abortSubmission`|`(id, ctx, conversationId?)`|`\"aborted\" \\| \"already_placed\" \\| \"settled\" \\| \"not_found\"`|6\\.1（原书第84页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`abortTask`|`(id, ctx)`|`\"marked\" | \"terminal\"`|5\\.6（原书第80页）|",
+      "after": "|`abortTask`|`(id, ctx)`|`\"marked\" \\| \"terminal\"`|5\\.6（原书第80页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`watchDoc`|`(token, owner?, key?, ctx)`|`DocumentWatch | undefined`：每次变更调用一次回调|8\\.1（原书第125页）|",
+      "after": "|`watchDoc`|`(token, owner?, key?, ctx)`|`DocumentWatch \\| undefined`：每次变更调用一次回调|8\\.1（原书第125页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`Submission.abort`|`(ctx)`|`\"aborted\" | \"already_placed\" | \"settled\"`|6\\.1（原书第84页）|",
+      "after": "|`Submission.abort`|`(ctx)`|`\"aborted\" \\| \"already_placed\" \\| \"settled\"`|6\\.1（原书第84页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`conversation`|`(id, ctx)`|`ConversationHandle | undefined`|7\\.7（原书第121页）|",
+      "after": "|`conversation`|`(id, ctx)`|`ConversationHandle \\| undefined`|7\\.7（原书第121页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`conversation`|`(id, ctx)`|`ConversationHandle | undefined`|7\\.7（原书第121页）|",
+      "after": "|`conversation`|`(id, ctx)`|`ConversationHandle \\| undefined`|7\\.7（原书第121页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`env`|`(target, ctx) => ExecutionEnv | undefined`|无：没有环境|9\\.5（原书第155页）|",
+      "after": "|`env`|`(target, ctx) => ExecutionEnv \\| undefined`|无：没有环境|9\\.5（原书第155页）|"
+    },
+    {
+      "source": "sources/durable/参考.md",
+      "kind": "table-pipe-escape",
+      "before": "|`deferred`|布尔值，或 `{ window: \"15m\" | \"1h\" | \"24h\" }`|",
+      "after": "|`deferred`|布尔值，或 `{ window: \"15m\" \\| \"1h\" \\| \"24h\" }`|"
+    },
+    {
+      "source": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 3
+    },
+    {
+      "source": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    },
+    {
+      "source": "sources/durable/Pi Durable 技术手册/Pi Durable 技术手册.md",
+      "kind": "unambiguous-prose-bold-markup",
+      "count": 1
+    }
+  ]
+}

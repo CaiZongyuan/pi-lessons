@@ -1,0 +1,812 @@
+[
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 1,
+    "heading": "任务是一系列阶段",
+    "tableLines": [
+      64,
+      73
+    ],
+    "paragraphLine": 74,
+    "quote": true,
+    "text": "来源为 src/types.ts 中的 TaskDefinition。它的类型参数分别为输入 I、检查点 S、结果 R 和钩子 H。",
+    "raw": "来源为 `src/types.ts` 中的 `TaskDefinition`。它的类型参数分别为输入 `I`、检查点 `S`、结果 `R` 和钩子 `H`。",
+    "output": "docs/pi-durable/ch05/section-01.md",
+    "section": "5.1",
+    "sectionStartPdfPage": 63,
+    "prefix": "来源为 src/types.ts 中的 TaskDefinition。它的类型参数分别为输入 I、检查点 S、结果 R 和钩子 H",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 2,
+    "heading": "结果",
+    "tableLines": [
+      157,
+      164
+    ],
+    "paragraphLine": 165,
+    "quote": true,
+    "text": "来源为 src/types.ts 中的 TaskOutcome<R>。每个错误都是普通 JSON：{ message, detail? }，绝不是运行时 Error。",
+    "raw": "来源为 `src/types.ts` 中的 `TaskOutcome<R>`。每个错误都是普通 JSON：`{ message, detail? }`，绝不是运行时 `Error`。",
+    "output": "docs/pi-durable/ch05/section-01.md",
+    "section": "5.1",
+    "sectionStartPdfPage": 63,
+    "prefix": "来源为 src/types.ts 中的 TaskOutcome<R>。每个错误都是普通 JSON：{ message, detai",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 3,
+    "heading": "阶段可以调用什么",
+    "tableLines": [
+      175,
+      182
+    ],
+    "paragraphLine": 183,
+    "quote": true,
+    "text": "来源为 src/types.ts 中的 TaskRuntime。",
+    "raw": "来源为 `src/types.ts` 中的 `TaskRuntime`。",
+    "output": "docs/pi-durable/ch05/section-01.md",
+    "section": "5.1",
+    "sectionStartPdfPage": 63,
+    "prefix": "来源为 src/types.ts 中的 TaskRuntime。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 4,
+    "heading": "每个崩溃点，以及重新打开后会发现什么",
+    "tableLines": [
+      429,
+      435
+    ],
+    "paragraphLine": 436,
+    "quote": true,
+    "text": "对新进程来说，中间两行看起来完全相同。用规范的话说：“在意图阶段重新打开，意味着副作用可能已经发生。”",
+    "raw": "对新进程来说，中间两行看起来完全相同。用规范的话说：“在意图阶段重新打开，意味着副作用可能已经发生。”",
+    "output": "docs/pi-durable/ch05/section-03.md",
+    "section": "5.3",
+    "sectionStartPdfPage": 70,
+    "prefix": "对新进程来说，中间两行看起来完全相同。用规范的话说：“在意图阶段重新打开，意味着副作用可能已经发生。”",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 5,
+    "heading": "被阻塞的任务",
+    "tableLines": [
+      516,
+      521
+    ],
+    "paragraphLine": 522,
+    "quote": true,
+    "text": "来源：spec §5.4 和 src/harness/scheduler.ts。",
+    "raw": "来源：spec §5\\.4 和 `src/harness/scheduler.ts`。",
+    "output": "docs/pi-durable/ch05/section-04.md",
+    "section": "5.4",
+    "sectionStartPdfPage": 73,
+    "prefix": "来源：spec §5.4 和 src/harness/scheduler.ts。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 6,
+    "heading": "崩溃之后：重新打开",
+    "tableLines": [
+      546,
+      553
+    ],
+    "paragraphLine": 554,
+    "quote": true,
+    "text": "来源：src/harness/scheduler.ts 和 spec §5.1、§5.5。",
+    "raw": "来源：`src/harness/scheduler.ts` 和 spec §5\\.1、§5\\.5。",
+    "output": "docs/pi-durable/ch05/section-04.md",
+    "section": "5.4",
+    "sectionStartPdfPage": 73,
+    "prefix": "来源：src/harness/scheduler.ts 和 spec §5.1、§5.5。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 7,
+    "heading": "`completing`：所有者等待其工作",
+    "tableLines": [
+      721,
+      728
+    ],
+    "paragraphLine": 729,
+    "quote": true,
+    "text": "场景 A，research/capture/task-transitions.txt。",
+    "raw": "场景 A，`research/capture/task-transitions.txt`。",
+    "output": "docs/pi-durable/ch05/section-05.md",
+    "section": "5.5",
+    "sectionStartPdfPage": 76,
+    "prefix": "场景 A，research/capture/task-transitions.txt。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 8,
+    "heading": "`orphaned`、`faulted`、`aborted`",
+    "tableLines": [
+      849,
+      854
+    ],
+    "paragraphLine": 855,
+    "quote": true,
+    "text": "来源：spec §5.4。这里没有列出 failed，因为它与 completed 一样，是任务自己选择的结果。",
+    "raw": "来源：spec §5\\.4。这里没有列出 `failed`，因为它与 `completed` 一样，是任务自己选择的结果。",
+    "output": "docs/pi-durable/ch05/section-06.md",
+    "section": "5.6",
+    "sectionStartPdfPage": 80,
+    "prefix": "来源：spec §5.4。这里没有列出 failed，因为它与 completed 一样，是任务自己选择的结果。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/5.任务/5.任务.md",
+    "tableNumber": 9,
+    "heading": "中止期间的崩溃",
+    "tableLines": [
+      871,
+      878
+    ],
+    "paragraphLine": 879,
+    "quote": true,
+    "text": "来源为任务崩溃恢复测试套件。中止处理函数可能运行不止一次，因此与任何副作用阶段一样，它必须可以安全重复（副作用三明治，原书第70页）。",
+    "raw": "来源为任务崩溃恢复测试套件。中止处理函数可能运行不止一次，因此与任何副作用阶段一样，它必须可以安全重复（副作用三明治，原书第70页）。",
+    "output": "docs/pi-durable/ch05/section-06.md",
+    "section": "5.6",
+    "sectionStartPdfPage": 80,
+    "prefix": "来源为任务崩溃恢复测试套件。中止处理函数可能运行不止一次，因此与任何副作用阶段一样，它必须可以安全重复（副作用三明治，原书第70页",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+    "tableNumber": 2,
+    "heading": "存储的选择与解析后的智能体",
+    "tableLines": [
+      143,
+      151
+    ],
+    "paragraphLine": 152,
+    "quote": true,
+    "text": "AgentState 及其默认值，见 src/harness/types.ts 和 src/harness/agent.ts 中的 resolveAgent()。",
+    "raw": "`AgentState` 及其默认值，见 `src/harness/types.ts` 和 `src/harness/agent.ts` 中的 `resolveAgent()`。",
+    "output": "docs/pi-durable/ch07/section-02.md",
+    "section": "7.2",
+    "sectionStartPdfPage": 106,
+    "prefix": "AgentState 及其默认值，见 src/harness/types.ts 和 src/harness/agent.ts 中的",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+    "tableNumber": 3,
+    "heading": "更改何时生效",
+    "tableLines": [
+      220,
+      228
+    ],
+    "paragraphLine": 229,
+    "quote": true,
+    "text": "精简自规范 §7.1 的“谁解析什么，以及何时解析”。",
+    "raw": "精简自规范 §7\\.1 的“谁解析什么，以及何时解析”。",
+    "output": "docs/pi-durable/ch07/section-02.md",
+    "section": "7.2",
+    "sectionStartPdfPage": 106,
+    "prefix": "精简自规范 §7.1 的“谁解析什么，以及何时解析”。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/7.扩展与智能体/7.扩展与智能体.md",
+    "tableNumber": 5,
+    "heading": "十一行定义一个工具",
+    "tableLines": [
+      448,
+      454
+    ],
+    "paragraphLine": 455,
+    "quote": true,
+    "text": "ToolRegistration，见 src/harness/types.ts；限制值来自 src/truncate.ts。执行模式的默认值来自 settings 的 toolExecution。",
+    "raw": "`ToolRegistration`，见 `src/harness/types.ts`；限制值来自 `src/truncate.ts`。执行模式的默认值来自 settings 的 toolExecution。",
+    "output": "docs/pi-durable/ch07/section-04.md",
+    "section": "7.4",
+    "sectionStartPdfPage": 112,
+    "prefix": "ToolRegistration，见 src/harness/types.ts；限制值来自 src/truncate.ts。执行模",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/4.文档/4.文档.md",
+    "tableNumber": 1,
+    "heading": "定义就是 token",
+    "tableLines": [
+      48,
+      58
+    ],
+    "paragraphLine": 59,
+    "quote": true,
+    "text": "定义字段，来源：src/types.ts（CommonDocDefinition、DocumentSemantics）。",
+    "raw": "定义字段，来源：`src/types.ts`（`CommonDocDefinition`、`DocumentSemantics`）。",
+    "output": "docs/pi-durable/ch04/section-01.md",
+    "section": "4.1",
+    "sectionStartPdfPage": 50,
+    "prefix": "定义字段，来源：src/types.ts（CommonDocDefinition、DocumentSemantics）。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/4.文档/4.文档.md",
+    "tableNumber": 2,
+    "heading": "`tx.doc()` 是获取或创建",
+    "tableLines": [
+      145,
+      150
+    ],
+    "paragraphLine": 151,
+    "quote": true,
+    "text": "来源为 src/types.ts 中 Tx.doc 的重载。读取操作接收同样的所有者和键，但不接收种子，另外还接收一个 Context。",
+    "raw": "来源为 `src/types.ts` 中 `Tx.doc` 的重载。读取操作接收同样的所有者和键，但不接收种子，另外还接收一个 `Context`。",
+    "output": "docs/pi-durable/ch04/section-02.md",
+    "section": "4.2",
+    "sectionStartPdfPage": 53,
+    "prefix": "来源为 src/types.ts 中 Tx.doc 的重载。读取操作接收同样的所有者和键，但不接收种子，另外还接收一个 Conte",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/4.文档/4.文档.md",
+    "tableNumber": 4,
+    "heading": "版本与迁移",
+    "tableLines": [
+      284,
+      290
+    ],
+    "paragraphLine": 291,
+    "quote": true,
+    "text": "来源：src/documents.ts 和 spec §3.6。",
+    "raw": "来源：`src/documents.ts` 和 spec §3\\.6。",
+    "output": "docs/pi-durable/ch04/section-03.md",
+    "section": "4.3",
+    "sectionStartPdfPage": 56,
+    "prefix": "来源：src/documents.ts 和 spec §3.6。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/4.文档/4.文档.md",
+    "tableNumber": 5,
+    "heading": "内置文档",
+    "tableLines": [
+      373,
+      380
+    ],
+    "paragraphLine": 381,
+    "quote": true,
+    "text": "来源：src/harness/agent.ts、provider.ts、live.ts、inbox.ts 和 usage.ts 中的定义。五者都是版本 1。",
+    "raw": "来源：`src/harness/agent.ts`、`provider.ts`、`live.ts`、`inbox.ts` 和 `usage.ts` 中的定义。五者都是版本 1。",
+    "output": "docs/pi-durable/ch04/section-04.md",
+    "section": "4.4",
+    "sectionStartPdfPage": 60,
+    "prefix": "来源：src/harness/agent.ts、provider.ts、live.ts、inbox.ts 和 usage.ts 中",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/4.文档/4.文档.md",
+    "tableNumber": 6,
+    "heading": "创建时与分叉时",
+    "tableLines": [
+      413,
+      420
+    ],
+    "paragraphLine": 421,
+    "quote": true,
+    "text": "复制只进行一次：“之后所有者的变更不会传递过来”（spec §12）。",
+    "raw": "复制只进行一次：“之后所有者的变更不会传递过来”（spec §12）。",
+    "output": "docs/pi-durable/ch04/section-04.md",
+    "section": "4.4",
+    "sectionStartPdfPage": 60,
+    "prefix": "复制只进行一次：“之后所有者的变更不会传递过来”（spec §12）。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 1,
+    "heading": "观察者收到什么",
+    "tableLines": [
+      27,
+      36
+    ],
+    "paragraphLine": 37,
+    "quote": true,
+    "text": "来源：research/pi/packages/chord/src/delta/README.md。同一个变更可以用不同的元组表示；较大的编辑可能以一个 s 或 r 操作到达。只有最终结果值受到保证。",
+    "raw": "来源：research/pi/packages/chord/src/delta/README\\.md。同一个变更可以用不同的元组表示；较大的编辑可能以一个 s 或 r 操作到达。只有最终结果值受到保证。",
+    "output": "docs/pi-durable/ch08/section-01.md",
+    "section": "8.1",
+    "sectionStartPdfPage": 125,
+    "prefix": "来源：research/pi/packages/chord/src/delta/README.md。同一个变更可以用不同的元组表示",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 2,
+    "heading": "监听契约",
+    "tableLines": [
+      269,
+      276
+    ],
+    "paragraphLine": 277,
+    "quote": true,
+    "text": "来源：src/types.ts（WatchEnd）。先出现的原因生效。在任务或工具内部打开的监听也会在那次调用结束时停止（src/harness/scheduler.ts）。",
+    "raw": "来源：src/types\\.ts（WatchEnd）。先出现的原因生效。在任务或工具内部打开的监听也会在那次调用结束时停止（src/harness/scheduler\\.ts）。",
+    "output": "docs/pi-durable/ch08/section-02.md",
+    "section": "8.2",
+    "sectionStartPdfPage": 129,
+    "prefix": "来源：src/types.ts（WatchEnd）。先出现的原因生效。在任务或工具内部打开的监听也会在那次调用结束时停止（src/",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 3,
+    "heading": "一次提交，一批事件",
+    "tableLines": [
+      365,
+      380
+    ],
+    "paragraphLine": 381,
+    "quote": true,
+    "text": "来源：research/capture/watch-ops.txt（20帧）和 agent-events.txt（18批事件），它们来自 test/capture/view-ops.ts 的同一次运行。",
+    "raw": "来源：research/capture/watch\\-ops\\.txt（20帧）和 agent\\-events\\.txt（18批事件），它们来自 test/capture/view\\-ops\\.ts 的同一次运行。",
+    "output": "docs/pi-durable/ch08/section-03.md",
+    "section": "8.3",
+    "sectionStartPdfPage": 133,
+    "prefix": "来源：research/capture/watch-ops.txt（20帧）和 agent-events.txt（18批事件），它",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 4,
+    "heading": "每个事件的含义",
+    "tableLines": [
+      405,
+      418
+    ],
+    "paragraphLine": 419,
+    "quote": true,
+    "text": "来源：spec §9.4；src/harness/events.ts。",
+    "raw": "来源：spec §9\\.4；src/harness/events\\.ts。",
+    "output": "docs/pi-durable/ch08/section-03.md",
+    "section": "8.3",
+    "sectionStartPdfPage": 133,
+    "prefix": "来源：spec §9.4；src/harness/events.ts。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 5,
+    "heading": "一个节点",
+    "tableLines": [
+      521,
+      527
+    ],
+    "paragraphLine": 528,
+    "quote": true,
+    "text": "来源：src/harness/task-graph.ts；spec §9.5。各状态的定义见“任务即状态机”（原书第63页）。",
+    "raw": "来源：src/harness/task\\-graph\\.ts；spec §9\\.5。各状态的定义见“任务即状态机”（原书第63页）。",
+    "output": "docs/pi-durable/ch08/section-04.md",
+    "section": "8.4",
+    "sectionStartPdfPage": 137,
+    "prefix": "来源：src/harness/task-graph.ts；spec §9.5。各状态的定义见“任务即状态机”（原书第63页）。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/8.观察/8.观察.md",
+    "tableNumber": 6,
+    "heading": "inspect\\(\\)：调度器会做什么",
+    "tableLines": [
+      570,
+      577
+    ],
+    "paragraphLine": 578,
+    "quote": true,
+    "text": "来源：src/harness/scheduler.ts。migration_failed 只在调度器尝试过迁移之后出现；检查本身绝不会执行迁移。",
+    "raw": "来源：src/harness/scheduler\\.ts。migration\\_failed 只在调度器尝试过迁移之后出现；检查本身绝不会执行迁移。",
+    "output": "docs/pi-durable/ch08/section-04.md",
+    "section": "8.4",
+    "sectionStartPdfPage": 137,
+    "prefix": "来源：src/harness/scheduler.ts。migration_failed 只在调度器尝试过迁移之后出现；检查本身绝",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+    "tableNumber": 1,
+    "heading": "唯一的写入操作：commit",
+    "tableLines": [
+      39,
+      49
+    ],
+    "paragraphLine": 50,
+    "quote": true,
+    "text": "来源：src/types.ts 中的 StorageWrite 联合类型。基值是文档的完整值；增量是在上一修订版之上应用的一批 Chord 操作。",
+    "raw": "来源：src/types\\.ts 中的 StorageWrite 联合类型。基值是文档的完整值；增量是在上一修订版之上应用的一批 Chord 操作。",
+    "output": "docs/pi-durable/ch09/section-01.md",
+    "section": "9.1",
+    "sectionStartPdfPage": 141,
+    "prefix": "来源：src/types.ts 中的 StorageWrite 联合类型。基值是文档的完整值；增量是在上一修订版之上应用的一批 C",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+    "tableNumber": 2,
+    "heading": "读取：按键查找与分页扫描",
+    "tableLines": [
+      68,
+      84
+    ],
+    "paragraphLine": 85,
+    "quote": true,
+    "text": "每个方法还都接受最后一个参数 context。来源：src/types.ts 和 spec §10。",
+    "raw": "每个方法还都接受最后一个参数 context。来源：src/types\\.ts 和 spec §10。",
+    "output": "docs/pi-durable/ch09/section-01.md",
+    "section": "9.1",
+    "sectionStartPdfPage": 141,
+    "prefix": "每个方法还都接受最后一个参数 context。来源：src/types.ts 和 spec §10。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+    "tableNumber": 3,
+    "heading": "打开文件",
+    "tableLines": [
+      125,
+      129
+    ],
+    "paragraphLine": 130,
+    "quote": true,
+    "text": "来源：NodeSqliteStorageOptions，src/storage/sqlite/node.ts。",
+    "raw": "来源：NodeSqliteStorageOptions，src/storage/sqlite/node\\.ts。",
+    "output": "docs/pi-durable/ch09/section-02.md",
+    "section": "9.2",
+    "sectionStartPdfPage": 144,
+    "prefix": "来源：NodeSqliteStorageOptions，src/storage/sqlite/node.ts。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+    "tableNumber": 4,
+    "heading": "发布",
+    "tableLines": [
+      368,
+      372
+    ],
+    "paragraphLine": 373,
+    "quote": true,
+    "text": "每次提交的文件操作，来源：test/jsonl-storage.test.ts。",
+    "raw": "每次提交的文件操作，来源：test/jsonl\\-storage\\.test\\.ts。",
+    "output": "docs/pi-durable/ch09/section-03.md",
+    "section": "9.3",
+    "sectionStartPdfPage": 148,
+    "prefix": "每次提交的文件操作，来源：test/jsonl-storage.test.ts。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/9.存储与环境/9.存储与环境.md",
+    "tableNumber": 6,
+    "heading": "接口",
+    "tableLines": [
+      604,
+      613
+    ],
+    "paragraphLine": 614,
+    "quote": true,
+    "text": "来源：src/env/index.ts。truncateFile 和 flushFile 是为 JSONL 存储提供的。",
+    "raw": "来源：src/env/index\\.ts。truncateFile 和 flushFile 是为 JSONL 存储提供的。",
+    "output": "docs/pi-durable/ch09/section-05.md",
+    "section": "9.5",
+    "sectionStartPdfPage": 155,
+    "prefix": "来源：src/env/index.ts。truncateFile 和 flushFile 是为 JSONL 存储提供的。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/10.实践/10.实践.md",
+    "tableNumber": 9,
+    "heading": "原版 Pi 会话与 Pi Durable",
+    "tableLines": [
+      442,
+      455
+    ],
+    "paragraphLine": 456,
+    "quote": true,
+    "text": "左侧：编码智能体文档和 src/core/session-manager.ts。右侧：src/types.ts、src/entries.ts 和 spec §2–§8。",
+    "raw": "左侧：编码智能体文档和 `src/core/session-manager.ts`。右侧：`src/types.ts`、`src/entries.ts` 和 spec §2–§8。",
+    "output": "docs/pi-durable/ch10/section-03.md",
+    "section": "10.3",
+    "sectionStartPdfPage": 168,
+    "prefix": "左侧：编码智能体文档和 src/core/session-manager.ts。右侧：src/types.ts、src/entri",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/1.模型-durable/1.模型.md",
+    "tableNumber": 3,
+    "heading": "入口",
+    "tableLines": [
+      241,
+      250
+    ],
+    "paragraphLine": 251,
+    "quote": true,
+    "text": "依据 package.json 的 exports 映射。软件包要求 Node 22.19.0 或更高版本。",
+    "raw": "依据 `package.json` 的 exports 映射。软件包要求 Node 22\\.19\\.0 或更高版本。",
+    "output": "docs/pi-durable/ch01/section-02.md",
+    "section": "1.2",
+    "sectionStartPdfPage": 13,
+    "prefix": "依据 package.json 的 exports 映射。软件包要求 Node 22.19.0 或更高版本。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/1.模型-durable/1.模型.md",
+    "tableNumber": 6,
+    "heading": "完整日志",
+    "tableLines": [
+      548,
+      566
+    ],
+    "paragraphLine": 567,
+    "quote": true,
+    "text": "这是 research/capture/sqlite-commits.txt 中的每一次commit；JSONL 运行也有相同的十七次commit。",
+    "raw": "这是 `research/capture/sqlite-commits.txt` 中的每一次commit；JSONL 运行也有相同的十七次commit。",
+    "output": "docs/pi-durable/ch01/section-04.md",
+    "section": "1.4",
+    "sectionStartPdfPage": 19,
+    "prefix": "这是 research/capture/sqlite-commits.txt 中的每一次commit；JSONL 运行也有相同的十",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+    "tableNumber": 1,
+    "heading": "两种关联：parent 与 owner",
+    "tableLines": [
+      115,
+      122
+    ],
+    "paragraphLine": 123,
+    "quote": true,
+    "text": "依据 spec §2 和 src/types.ts 中的字段注释。",
+    "raw": "依据 `spec §2` 和 `src/types.ts` 中的字段注释。",
+    "output": "docs/pi-durable/ch02/section-01.md",
+    "section": "2.1",
+    "sectionStartPdfPage": 25,
+    "prefix": "依据 spec §2 和 src/types.ts 中的字段注释。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+    "tableNumber": 2,
+    "heading": "步骤 1–5：你的回调内部",
+    "tableLines": [
+      202,
+      207
+    ],
+    "paragraphLine": 208,
+    "quote": true,
+    "text": "接口来自 src/types.ts 中的 Tx；规则来自 spec §4。",
+    "raw": "接口来自 `src/types.ts` 中的 `Tx`；规则来自 `spec §4`。",
+    "output": "docs/pi-durable/ch02/section-02.md",
+    "section": "2.2",
+    "sectionStartPdfPage": 29,
+    "prefix": "接口来自 src/types.ts 中的 Tx；规则来自 spec §4。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/2.会话与提交/2.会话与提交.md",
+    "tableNumber": 3,
+    "heading": "存储内部：拒绝或不确定",
+    "tableLines": [
+      385,
+      394
+    ],
+    "paragraphLine": 395,
+    "quote": true,
+    "text": "消息来自 src/errors.ts、src/session/session.ts 和 src/session/transaction.ts。第三个导出的错误类 ConversationBusy 是一种接纳结果，不是提交失败。见提交请求（原书第84页）。",
+    "raw": "消息来自 `src/errors.ts`、`src/session/session.ts` 和 `src/session/transaction.ts`。第三个导出的错误类 `ConversationBusy` 是一种接纳结果，不是提交失败。见提交请求（原书第84页）。",
+    "output": "docs/pi-durable/ch02/section-03.md",
+    "section": "2.3",
+    "sectionStartPdfPage": 33,
+    "prefix": "消息来自 src/errors.ts、src/session/session.ts 和 src/session/transacti",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+    "tableNumber": 1,
+    "heading": "一条记录，三种读者",
+    "tableLines": [
+      51,
+      61
+    ],
+    "paragraphLine": 62,
+    "quote": true,
+    "text": "EntryRecord 的字段，改述自 src/types.ts 中的字段注释。",
+    "raw": "`EntryRecord` 的字段，改述自 `src/types.ts` 中的字段注释。",
+    "output": "docs/pi-durable/ch03/section-01.md",
+    "section": "3.1",
+    "sectionStartPdfPage": 37,
+    "prefix": "EntryRecord 的字段，改述自 src/types.ts 中的字段注释。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+    "tableNumber": 2,
+    "heading": "内置种类",
+    "tableLines": [
+      76,
+      84
+    ],
+    "paragraphLine": 85,
+    "quote": true,
+    "text": "来源：spec §8.1 和 src/entries.ts。这些令牌分别为 UserEntry、AssistantEntry、SystemEntry、ToolResultEntry、ResetEntry 和 CompactionEntry。",
+    "raw": "来源：spec §8\\.1 和 `src/entries.ts`。这些令牌分别为 `UserEntry`、`AssistantEntry`、`SystemEntry`、`ToolResultEntry`、`ResetEntry` 和 `CompactionEntry`。",
+    "output": "docs/pi-durable/ch03/section-01.md",
+    "section": "3.1",
+    "sectionStartPdfPage": 37,
+    "prefix": "来源：spec §8.1 和 src/entries.ts。这些令牌分别为 UserEntry、AssistantEntry、Sy",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+    "tableNumber": 3,
+    "heading": "九条规则",
+    "tableLines": [
+      202,
+      213
+    ],
+    "paragraphLine": 214,
+    "quote": true,
+    "text": "改述自 spec §2.1。",
+    "raw": "改述自 spec §2\\.1。",
+    "output": "docs/pi-durable/ch03/section-02.md",
+    "section": "3.2",
+    "sectionStartPdfPage": 40,
+    "prefix": "改述自 spec §2.1。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/3.对话与上下文/3.对话与上下文.md",
+    "tableNumber": 4,
+    "heading": "获得对话的四种方式",
+    "tableLines": [
+      311,
+      317
+    ],
+    "paragraphLine": 318,
+    "quote": true,
+    "text": "来源：spec §2.2 和 src/harness/harness.ts。选项为 ownership、agent 和 init。",
+    "raw": "来源：spec §2\\.2 和 `src/harness/harness.ts`。选项为 `ownership`、`agent` 和 `init`。",
+    "output": "docs/pi-durable/ch03/section-03.md",
+    "section": "3.3",
+    "sectionStartPdfPage": 43,
+    "prefix": "来源：spec §2.2 和 src/harness/harness.ts。选项为 ownership、agent 和 init。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 1,
+    "heading": "提交请求的去向",
+    "tableLines": [
+      57,
+      63
+    ],
+    "paragraphLine": 64,
+    "quote": true,
+    "text": "来源：src/harness/submissions.ts 和规范 §6 的接纳规则表。唯一的例外是会撤销重置效果的 write；参见下文“细节”。",
+    "raw": "来源：`src/harness/submissions.ts` 和规范 §6 的接纳规则表。唯一的例外是会撤销重置效果的 write；参见下文“细节”。",
+    "output": "docs/pi-durable/ch06/section-01.md",
+    "section": "6.1",
+    "sectionStartPdfPage": 84,
+    "prefix": "来源：src/harness/submissions.ts 和规范 §6 的接纳规则表。唯一的例外是会撤销重置效果的 write；",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 2,
+    "heading": "边界：排队条目何时进入对话记录",
+    "tableLines": [
+      90,
+      94
+    ],
+    "paragraphLine": 95,
+    "quote": true,
+    "text": "规范 §6；src/harness/inbox.ts。将 steeringMode 或 followUpMode 设为 \"all\"，便会接收该模式下的所有条目，而不仅是第一条（两者均默认为 \"one-at-a-time\"）。排队的重置会将 postTools 边界变为 final 边界（参见下文“细节”）。向仍有条目等待的空闲对话提交内容时，新提交会排在它们后面，并立即执行一次 final 边界（src/harness/submissions.ts）。",
+    "raw": "规范 §6；`src/harness/inbox.ts`。将 `steeringMode` 或 `followUpMode` 设为 `\"all\"`，便会接收该模式下的所有条目，而不仅是第一条（两者均默认为 `\"one-at-a-time\"`）。排队的重置会将 `postTools` 边界变为 `final` 边界（参见下文“细节”）。向仍有条目等待的空闲对话提交内容时，新提交会排在它们后面，并立即执行一次 `final` 边界（`src/harness/submissions.ts`）。",
+    "output": "docs/pi-durable/ch06/section-01.md",
+    "section": "6.1",
+    "sectionStartPdfPage": 84,
+    "prefix": "规范 §6；src/harness/inbox.ts。将 steeringMode 或 followUpMode 设为 \"all\"",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 5,
+    "heading": "响应决定什么",
+    "tableLines": [
+      341,
+      349
+    ],
+    "paragraphLine": 350,
+    "quote": true,
+    "text": "src/harness/generation.ts。没有任何调用的 toolUse 响应视为回答。上下文过长的补救需要启用压缩，而且存在可截断的位置；缺少任一条件，或第二次溢出时，运行都会以 model_error 失败。",
+    "raw": "`src/harness/generation.ts`。没有任何调用的 `toolUse` 响应视为回答。上下文过长的补救需要启用压缩，而且存在可截断的位置；缺少任一条件，或第二次溢出时，运行都会以 `model_error` 失败。",
+    "output": "docs/pi-durable/ch06/section-03.md",
+    "section": "6.3",
+    "sectionStartPdfPage": 91,
+    "prefix": "src/harness/generation.ts。没有任何调用的 toolUse 响应视为回答。上下文过长的补救需要启用压缩，而",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 6,
+    "heading": "各阶段崩溃的代价",
+    "tableLines": [
+      390,
+      397
+    ],
+    "paragraphLine": 398,
+    "quote": true,
+    "text": "test/harness-generation-recovery.test.ts 和 test/harness-tools-recovery.test.ts。如果重启后固定的模型已经不存在，运行以 no_model 失败。",
+    "raw": "`test/harness-generation-recovery.test.ts` 和 `test/harness-tools-recovery.test.ts`。如果重启后固定的模型已经不存在，运行以 `no_model` 失败。",
+    "output": "docs/pi-durable/ch06/section-03.md",
+    "section": "6.3",
+    "sectionStartPdfPage": 91,
+    "prefix": "test/harness-generation-recovery.test.ts 和 test/harness-tools-rec",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 7,
+    "heading": "细节：Harness 写入的错误结果",
+    "tableLines": [
+      545,
+      553
+    ],
+    "paragraphLine": 554,
+    "quote": true,
+    "text": "src/harness/tool.ts 和 generation.ts。每个结果都带有 isError: true；最后三种会保留此前已经报告的输出。以 failed 或 aborted 结束的任务，也会中止该调用拥有的所有对话（所有权，原书第76页）。",
+    "raw": "`src/harness/tool.ts` 和 `generation.ts`。每个结果都带有 `isError: true`；最后三种会保留此前已经报告的输出。以 failed 或 aborted 结束的任务，也会中止该调用拥有的所有对话（所有权，原书第76页）。",
+    "output": "docs/pi-durable/ch06/section-04.md",
+    "section": "6.4",
+    "sectionStartPdfPage": 94,
+    "prefix": "src/harness/tool.ts 和 generation.ts。每个结果都带有 isError: true；最后三种会保留",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 8,
+    "heading": "三种启动方式",
+    "tableLines": [
+      619,
+      625
+    ],
+    "paragraphLine": 626,
+    "quote": true,
+    "text": "规范 §8.7；src/harness/compaction.ts。",
+    "raw": "规范 §8\\.7；`src/harness/compaction.ts`。",
+    "output": "docs/pi-durable/ch06/section-05.md",
+    "section": "6.5",
+    "sectionStartPdfPage": 97,
+    "prefix": "规范 §8.7；src/harness/compaction.ts。",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  },
+  {
+    "source": "sources/durable/6.运行/6.运行.md",
+    "tableNumber": 9,
+    "heading": "哪些内容会计入",
+    "tableLines": [
+      760,
+      766
+    ],
+    "paragraphLine": 767,
+    "quote": true,
+    "text": "规范 §8.6；src/harness/usage.ts，由 generation.ts、tool.ts 和 compaction.ts 调用。",
+    "raw": "规范 §8\\.6；`src/harness/usage.ts`，由 `generation.ts`、`tool.ts` 和 `compaction.ts` 调用。",
+    "output": "docs/pi-durable/ch06/section-06.md",
+    "section": "6.6",
+    "sectionStartPdfPage": 100,
+    "prefix": "规范 §8.6；src/harness/usage.ts，由 generation.ts、tool.ts 和 compaction",
+    "association": "Immediately following source blockquote; one paragraph; describes/provides source for preceding table."
+  }
+]

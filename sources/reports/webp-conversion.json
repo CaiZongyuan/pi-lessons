@@ -1,0 +1,1016 @@
+{
+  "schema_version": 1,
+  "scope": "docs/public/figures/**/*.png; immutable sources retained as PNG",
+  "encoder": {
+    "library": "Pillow",
+    "version": "12.3.0",
+    "libwebp_version": "1.6.0",
+    "format": "WEBP",
+    "lossless": true,
+    "quality": 100,
+    "method": 6,
+    "exact": true
+  },
+  "verification": "Exact width, height, and every decoded RGBA byte compared with original PNG",
+  "source_png_count": 62,
+  "source_png_files_unchanged": true,
+  "public_image_count": 62,
+  "before_png_bytes": 20626921,
+  "after_webp_bytes": 9080278,
+  "saved_bytes": 11546643,
+  "reduction_percent": 55.9785,
+  "files": [
+    {
+      "sources": [
+        "sources/full/1.模型/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch01/image-1.png",
+      "public_webp": "docs/public/figures/ch01/image-1.webp",
+      "width": 1373,
+      "height": 646,
+      "png_bytes": 304452,
+      "webp_bytes": 150550,
+      "source_png_sha256": "37cb35f250d06e10186b75442a078c4a6ee2888a2103d4eed919b42f7ed6c2e4",
+      "decoded_rgba_sha256": "24b3e5db7da9eb6d23902ddbf2ae9f20fc666cf98eed586ca91fbf69d48a25c9",
+      "webp_sha256": "5dcf226a8c5a9ba9c7f83176326bcd6692d687337542f3e6ade167daa585c17b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/1.模型/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch01/image-2.png",
+      "public_webp": "docs/public/figures/ch01/image-2.webp",
+      "width": 1379,
+      "height": 1371,
+      "png_bytes": 623170,
+      "webp_bytes": 318954,
+      "source_png_sha256": "2c688f67174e6593e3beefae5ed64f6ccab575aae25f92abd9a038830bb1d72e",
+      "decoded_rgba_sha256": "ea40ece41050c6422010b152948ad80eb55df432e60ef0509e49db56fe161dd6",
+      "webp_sha256": "3d80627792553ae05bfafd6921c47b3c9a20111f9b1f52aa6b53ccf25a4da02b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/1.模型/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch01/image-3.png",
+      "public_webp": "docs/public/figures/ch01/image-3.webp",
+      "width": 1365,
+      "height": 731,
+      "png_bytes": 635467,
+      "webp_bytes": 309776,
+      "source_png_sha256": "73180a99abf5ef86803f758a6045df6c7f6bf8cf674d84192f069982faad572f",
+      "decoded_rgba_sha256": "0f500d98e396ffee99ae57d933e2a55d791048d5c7f947f2d4632b1bac155c35",
+      "webp_sha256": "7b7c3d1c71aa345d2ea85ce5ec1f3cbc5901bbd7bed500541d69d93d4fe9c5d8",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/1.模型/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch01/image-4.png",
+      "public_webp": "docs/public/figures/ch01/image-4.webp",
+      "width": 1382,
+      "height": 1190,
+      "png_bytes": 476300,
+      "webp_bytes": 234170,
+      "source_png_sha256": "ef9dd352ee91c57d6d578e63a6ac03162eca25a4ef79f229bbbf03f9ab9c3065",
+      "decoded_rgba_sha256": "797a32e1821932d4e7910573c1bf8363744a69065243f68451f55f11a1d84645",
+      "webp_sha256": "4a8b84b3c3732b5b95c1db98e667ac21a3fd41bbbb06f131677ff25795a514c4",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/1.模型/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch01/image.png",
+      "public_webp": "docs/public/figures/ch01/image.webp",
+      "width": 1337,
+      "height": 601,
+      "png_bytes": 420916,
+      "webp_bytes": 227504,
+      "source_png_sha256": "dff0597db1dc27ac61f186037c5c817a949777840e230915a7d6c1b5d785f3a4",
+      "decoded_rgba_sha256": "ca25424e7736d48bb0f65afe39d2896e7099fe5a3dd5dc745f716939c0cb91d9",
+      "webp_sha256": "903d49147d755204a5ca7bdd9b885244aa57bc4fdedeaea5cd99be1af89d4670",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 1.png",
+      "public_webp": "docs/public/figures/ch02/image 1.webp",
+      "width": 1343,
+      "height": 356,
+      "png_bytes": 313674,
+      "webp_bytes": 166208,
+      "source_png_sha256": "5df13510d5956b97bd0b5238bccee1161559e69dd8dfd2822f3862e779ae853c",
+      "decoded_rgba_sha256": "9226fe73d1951ce8113c866b790875eae87c8d2cd82516f586b2e4b2d14d9d92",
+      "webp_sha256": "ad520b9ae0d32f865a57da857c632755667e3c5b28ea94d432d52202d51cfcca",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 2.png",
+      "public_webp": "docs/public/figures/ch02/image 2.webp",
+      "width": 1823,
+      "height": 1073,
+      "png_bytes": 212175,
+      "webp_bytes": 65548,
+      "source_png_sha256": "1cc180033b84574cfaf802bd092b3d20b7e5cf016cfde825bbc9a71823938c05",
+      "decoded_rgba_sha256": "f266948ee45be3479f179e0b5108c4eb25bbe7e10954071ee2e9bcae659e07bb",
+      "webp_sha256": "616fb5573313dbdeb17241704ee1ee97026211ad9f1a13bd748eb1ac7948eda0",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 3.png",
+      "public_webp": "docs/public/figures/ch02/image 3.webp",
+      "width": 1354,
+      "height": 615,
+      "png_bytes": 281392,
+      "webp_bytes": 153794,
+      "source_png_sha256": "91cdf6408e166048c97a5838372efe729b2d7053623aa27f18be99643feb645a",
+      "decoded_rgba_sha256": "38649cafe906a9b15d9798c859b4d9b1d84fa44b09aa79df3e1de2254827638e",
+      "webp_sha256": "814642f2c703436c37266ac0a3f7d4c568f039cca507cda5ee1cf5e82404bb17",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 4.png",
+      "public_webp": "docs/public/figures/ch02/image 4.webp",
+      "width": 1379,
+      "height": 370,
+      "png_bytes": 255656,
+      "webp_bytes": 134248,
+      "source_png_sha256": "35b0bf43ef23b44aa8c7e52e0d4818f25d79bae795fd2a8e7fad5bef0274ce6a",
+      "decoded_rgba_sha256": "27ec00223042dfeb7d7c56c8702200b162ec3eb016ba53dddce228ba61b20c85",
+      "webp_sha256": "445974e66b6cf8bd7a0975429aadfe23f861955ac2189b4f6831edc7065f2351",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 5.png",
+      "public_webp": "docs/public/figures/ch02/image 5.webp",
+      "width": 1370,
+      "height": 1365,
+      "png_bytes": 560584,
+      "webp_bytes": 259382,
+      "source_png_sha256": "69b091af423416c14b939cde2ea940d35e500c5c71b7e2f5017bfd0904e79d63",
+      "decoded_rgba_sha256": "855ac929447c92b30406f038cc06c0cc074c53d111e76b3367b02329946b8695",
+      "webp_sha256": "d5a082b064c9983d40789bd9c6b3127254f345046a1535e8cf0230c39b6294a1",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image 6.png",
+      "public_webp": "docs/public/figures/ch02/image 6.webp",
+      "width": 1379,
+      "height": 570,
+      "png_bytes": 331813,
+      "webp_bytes": 181168,
+      "source_png_sha256": "95567e6eed8afcf8b5fabecac131eaa2a6f2ff40fd4e13ab2f9f8c93fed17f53",
+      "decoded_rgba_sha256": "be593e4adf5124fe50026635ed8d6d35259ba669ba3c1124023e87fbc9d664e6",
+      "webp_sha256": "694ce3cd47aa4de2c4d8e089882539a4c7cf39dd44397cf7895c4b6d46c20250",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/2.提供商层/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch02/image.png",
+      "public_webp": "docs/public/figures/ch02/image.webp",
+      "width": 1348,
+      "height": 381,
+      "png_bytes": 335405,
+      "webp_bytes": 180782,
+      "source_png_sha256": "c8ffb931cd3d5f789d97bbeda7938b663c9db9a046d79d6b07d27f2a7eeb8451",
+      "decoded_rgba_sha256": "7028feca61a28d35b249cee93d06e785a2565e2450b2e1d32ebe9528b3ed89f9",
+      "webp_sha256": "4e16ce0d34706fef9d5f6ec523572e0c4748ce4c202ad899fef21fcdd62c7230",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 1.png",
+      "public_webp": "docs/public/figures/ch03/image 1.webp",
+      "width": 1828,
+      "height": 955,
+      "png_bytes": 354916,
+      "webp_bytes": 144738,
+      "source_png_sha256": "b7876d456a519a79f12917d07f72bd3f0622f8c24b8b23c6207babfd3f553ebf",
+      "decoded_rgba_sha256": "30d865bd7c4c3fdfb01a5ea4f44d75df114160c31ef1528f1b36d03bc7d08d1c",
+      "webp_sha256": "57f1ae0bd7c10739659e3bba642baef8af4a730c6ad6123bbcc630749748ca2b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 2.png",
+      "public_webp": "docs/public/figures/ch03/image 2.webp",
+      "width": 1379,
+      "height": 1195,
+      "png_bytes": 451228,
+      "webp_bytes": 207386,
+      "source_png_sha256": "5c564d4c307affeef6db098eeebac71b98c411213525536279e6d47850eb3605",
+      "decoded_rgba_sha256": "d9cdb217aa07854ded4767671a95a7c892fca63dabe27368d635ba80822c7af0",
+      "webp_sha256": "4f40aedbef69f068881913a1acb73defb461fc0ddfc430ed191de00624b63d2e",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 3.png",
+      "public_webp": "docs/public/figures/ch03/image 3.webp",
+      "width": 1337,
+      "height": 976,
+      "png_bytes": 691595,
+      "webp_bytes": 372108,
+      "source_png_sha256": "9f128995fcf02350794b3a8f6d7831c1bd0ad008fa750ab416685b55a94a3cae",
+      "decoded_rgba_sha256": "9e773b6def1f48defc8a2239bd90da8a620306675039303b691ac7a482b03651",
+      "webp_sha256": "3824ba91924d15669a1967f1bcff98f80f79afaee9c34f8e9b6d644c5c05f023",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 4.png",
+      "public_webp": "docs/public/figures/ch03/image 4.webp",
+      "width": 1367,
+      "height": 1270,
+      "png_bytes": 438061,
+      "webp_bytes": 229266,
+      "source_png_sha256": "5cdc9fe82006b06232991be327af921709cb649129342aabbd4d79fbfd39803a",
+      "decoded_rgba_sha256": "74d3066759fddeca4f8e2b23cfb331505a8c26e4fc1e8a2ec5f38b859a715bde",
+      "webp_sha256": "13ace1d35a3b0bb4b7769a082043aeb47f77cc35138aae9f6ccebaa02dc7e8cb",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 5.png",
+      "public_webp": "docs/public/figures/ch03/image 5.webp",
+      "width": 1376,
+      "height": 293,
+      "png_bytes": 215980,
+      "webp_bytes": 121414,
+      "source_png_sha256": "1e5f9608a7a952c9377a45b283ba05c6558ab22fa3fa3b7eaeef90e8d93fdc63",
+      "decoded_rgba_sha256": "9956a292b11a8a3a14f7cd810c4c38105d6bfca282b667fae3bbc4398739fa92",
+      "webp_sha256": "81ed66f4087fdbf6ae19a52c330cc5f5a39157486a9d3e44c969d815980b309a",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 6.png",
+      "public_webp": "docs/public/figures/ch03/image 6.webp",
+      "width": 1368,
+      "height": 1365,
+      "png_bytes": 461515,
+      "webp_bytes": 227808,
+      "source_png_sha256": "be694231a795d34f2c2874b0cd3aa84e9d329b12dce1324265b52b014b7ba171",
+      "decoded_rgba_sha256": "02a8f97c5d0755cddacb74464832b5af02544533947d065c83580a9de6a04743",
+      "webp_sha256": "e1ad4f831e00ff727503d0215ca8c13c28c1173ab03f5cc6c13d37ca2d6080da",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image 7.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image 7.png",
+      "public_webp": "docs/public/figures/ch03/image 7.webp",
+      "width": 1343,
+      "height": 751,
+      "png_bytes": 517017,
+      "webp_bytes": 294542,
+      "source_png_sha256": "fd5d379685e68917774ffe282f4d75679b78002264fef124448957cfe79dd556",
+      "decoded_rgba_sha256": "57938575bbb16d026718341d95fd6b06bce35a9762efad2daabb6f5e2f5ee4e4",
+      "webp_sha256": "adf5100ecbeaa3fcd2596e2fda5121591c2a8f32e06e73a9a2e8146399bf4843",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/3.智能体循环/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch03/image.png",
+      "public_webp": "docs/public/figures/ch03/image.webp",
+      "width": 1340,
+      "height": 354,
+      "png_bytes": 245526,
+      "webp_bytes": 129838,
+      "source_png_sha256": "eb5bc2d98de83cb028acb7bfd12ce4e1000070340c2148fd701a48b3a392f807",
+      "decoded_rgba_sha256": "cebf58a032b537fd02c4914f51ce6aa5f0644aa3362c774ef9301fc3207a1efc",
+      "webp_sha256": "b1c745e35a35884834c41d84f97254c573ab7b2f08294ca8b4dae7c20efc23b1",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 1.png",
+      "public_webp": "docs/public/figures/ch05/image 1.webp",
+      "width": 2171,
+      "height": 811,
+      "png_bytes": 464364,
+      "webp_bytes": 170372,
+      "source_png_sha256": "deb361fc89fce9dfbc24e993799e48cbb5fc242fe9a966663504922a8e6019a9",
+      "decoded_rgba_sha256": "009ff35de429955c32b1c30738ad22a5452f35bc6a53686af8a3e31220b5a78a",
+      "webp_sha256": "616dbbf90d711d3c2812905709569ffde9abc43638a0a5f75d3837c3af8c8d9b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 10.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 10.png",
+      "public_webp": "docs/public/figures/ch05/image 10.webp",
+      "width": 2177,
+      "height": 604,
+      "png_bytes": 302685,
+      "webp_bytes": 117536,
+      "source_png_sha256": "467e4acb8a30a81e9fe0d14a9901ecc9fd81e91b83d68c6928815fe4dbe991ef",
+      "decoded_rgba_sha256": "9606fdb662c4c2db0dd53c65c92ebb0fd61b6502901c4658a400d9eec319dd7c",
+      "webp_sha256": "4f6179dd6c7942e01af76e7669c3fa13077d1492762ec54a3944c8b04d53a7d4",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 11.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 11.png",
+      "public_webp": "docs/public/figures/ch05/image 11.webp",
+      "width": 2204,
+      "height": 1139,
+      "png_bytes": 530962,
+      "webp_bytes": 180212,
+      "source_png_sha256": "85ec948a109d2cd4f95301f35663e92e22d8f4b4c6517b291fb10169f8586df7",
+      "decoded_rgba_sha256": "dd26d8cd73349e662f520ab9fd6340f6bdece03665468ebdc579a5c33fd88a26",
+      "webp_sha256": "bce4e3e0d0fbc5b0afe3e35ccb4b0f69ddd11f8f9406447b714e019d557f537a",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 2.png",
+      "public_webp": "docs/public/figures/ch05/image 2.webp",
+      "width": 2028,
+      "height": 632,
+      "png_bytes": 230642,
+      "webp_bytes": 85494,
+      "source_png_sha256": "100e905ba27fdde4e379d770fac6af63d6bd1544a1e5c7dbcd7ab20c347a36eb",
+      "decoded_rgba_sha256": "387f08c55d581469d21fc8f69eb9ae0265875ff8c5a148447cdfc39a2f82de77",
+      "webp_sha256": "d335af0a91c6edb13610cdd77cdb8dacd5a7a49efc12552d7ef08b2d7ab37187",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 3.png",
+      "public_webp": "docs/public/figures/ch05/image 3.webp",
+      "width": 870,
+      "height": 1104,
+      "png_bytes": 169235,
+      "webp_bytes": 60292,
+      "source_png_sha256": "ab55154bc514bc51a8d2329dc93d1b74ff0eef998f145d5f3eb8454b1d11142b",
+      "decoded_rgba_sha256": "d91be4850f4213b21636b64a00eaecedbcd79870864153cfafd948caf0295f9c",
+      "webp_sha256": "6dde4143b0a5269520761b19d6fcdc2a1dd69c9d236f2f3e4d1e482760ec8c2f",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 4.png",
+      "public_webp": "docs/public/figures/ch05/image 4.webp",
+      "width": 2198,
+      "height": 782,
+      "png_bytes": 397923,
+      "webp_bytes": 140612,
+      "source_png_sha256": "bc951a189f0672c03286e0dbe58c143f3c531970dc425ca9346de23148ed4a5f",
+      "decoded_rgba_sha256": "12971634d38226f2330b7fec5274df53660cae94f78935de4e2b710804d46f7a",
+      "webp_sha256": "240cb533f25ba8075cc37b9b0420bd583f462dd9c787d6e581410cf788df915c",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 5.png",
+      "public_webp": "docs/public/figures/ch05/image 5.webp",
+      "width": 1165,
+      "height": 1204,
+      "png_bytes": 534416,
+      "webp_bytes": 222862,
+      "source_png_sha256": "6d86a383ab31e0647d5b2b6119c5bd08afcef94d3a390c919124d879a2dbb1b2",
+      "decoded_rgba_sha256": "d20915d4138d31be7739eaba1b930e3409acb86a45ae0ce3d12b81937202a377",
+      "webp_sha256": "0d7f5882661e8cc593d494182b3ff4d22022c38214b4e89bbb91ceee41cf8850",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 6.png",
+      "public_webp": "docs/public/figures/ch05/image 6.webp",
+      "width": 2178,
+      "height": 649,
+      "png_bytes": 351207,
+      "webp_bytes": 135668,
+      "source_png_sha256": "5ed724dbfbe1f7fbd8150e409191e2fc7b72c0127cbae0e2af91c721b829cd82",
+      "decoded_rgba_sha256": "cd7f29455a2176966019b0dc1c0c664426ec7936b6b1beb132e40a4ceca52898",
+      "webp_sha256": "ffe3dec7585a3b25cd67cbb4e203beb094d3a4767b029253e74938723f54ca5b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 7.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 7.png",
+      "public_webp": "docs/public/figures/ch05/image 7.webp",
+      "width": 863,
+      "height": 1083,
+      "png_bytes": 167508,
+      "webp_bytes": 55032,
+      "source_png_sha256": "e3506f87b06d2a17a4b19e5037e61c20cf66d305e0b6cd7b88a4a96c4c18a467",
+      "decoded_rgba_sha256": "755f91981a66067b5a66791b33d8dd3162b045f7deed24d6314c55e51937e2ec",
+      "webp_sha256": "31b7db502f25287660afe25f2ded5cd4a673b3da8344d74a8338269ba391adb8",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 8.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 8.png",
+      "public_webp": "docs/public/figures/ch05/image 8.webp",
+      "width": 2174,
+      "height": 486,
+      "png_bytes": 204107,
+      "webp_bytes": 75584,
+      "source_png_sha256": "88d6f7949405ee73a29affde1af3003afe9fb8bbeed8f13289245d209719bbd4",
+      "decoded_rgba_sha256": "c72ffa93dd7c618e7630bb3e3d9db9018fe14abdd995d0f022f2e0508d313b7d",
+      "webp_sha256": "bddd2cced9bc1b37cb45e827cf4b9b89569a2bf739d3d539cfa35c3903bf9dfb",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image 9.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image 9.png",
+      "public_webp": "docs/public/figures/ch05/image 9.webp",
+      "width": 1578,
+      "height": 1151,
+      "png_bytes": 228747,
+      "webp_bytes": 76098,
+      "source_png_sha256": "84f19d3c94c49a8dbe84422be30dcec4fcd62e1f9d4c1ef9b04279ea8921a91d",
+      "decoded_rgba_sha256": "df6168d7a4f48864a644076a13c828eaedb52bb85ded2d1294ec4a68f00309a3",
+      "webp_sha256": "96afbbe42c1f905869b0ff041fbba13574714ce4918cc0b2f83ff088d385c3aa",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/5 配置与扩展/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch05/image.png",
+      "public_webp": "docs/public/figures/ch05/image.webp",
+      "width": 1294,
+      "height": 1123,
+      "png_bytes": 208133,
+      "webp_bytes": 71756,
+      "source_png_sha256": "cd3cb3c31872b9bdd53bfcecf07ef6eff1fe4485561bb4d19f94c9ddf9a686c7",
+      "decoded_rgba_sha256": "dd7bc95e55c7af977df7937a36bbcb10a98640fa6257f5b5528e91f4c1854f29",
+      "webp_sha256": "635e47f6156d567a4d5aeb9cdd2ec5fa8f8de9ac14a8003682ceb514e7589c08",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-1.png",
+      "public_webp": "docs/public/figures/ch06/image-1.webp",
+      "width": 2205,
+      "height": 983,
+      "png_bytes": 502066,
+      "webp_bytes": 194168,
+      "source_png_sha256": "480daa3b120b0ca52844fe4d47b7b3bd729702073d7bad64e570c310c92235bd",
+      "decoded_rgba_sha256": "9ec33a04b813d6e08b0c7b239b79f7172308281633829cddf9133685f4cd0417",
+      "webp_sha256": "7c7c23e30eba376482882a620261276ab7c91f4641271c8164c95d381597976b",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-2.png",
+      "public_webp": "docs/public/figures/ch06/image-2.webp",
+      "width": 1567,
+      "height": 1170,
+      "png_bytes": 343781,
+      "webp_bytes": 124584,
+      "source_png_sha256": "402ada1f028367c0900f5650ab35f6fcb95c8bc77346353c503441a21171ca63",
+      "decoded_rgba_sha256": "c400424d2ce203dbb0f4e5467d9538e3e301622fef362454b5483a1306b99bbf",
+      "webp_sha256": "3d13e1204c776427c71c839287b5d2b6953d9de7ee6046329c145c37304182e1",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-3.png",
+      "public_webp": "docs/public/figures/ch06/image-3.webp",
+      "width": 1055,
+      "height": 1127,
+      "png_bytes": 208585,
+      "webp_bytes": 75142,
+      "source_png_sha256": "55f999c16cecbd358390643c4b271c0e939a36168058eca3879f93be839840c3",
+      "decoded_rgba_sha256": "fafb8d84bf8ff006a4ea755d8677745841bd071dac9b95926ee99482466ec64a",
+      "webp_sha256": "8979f5b86480244dce833587ff9867fea7ed18b584dbe98043f60da489bfd359",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-4.png",
+      "public_webp": "docs/public/figures/ch06/image-4.webp",
+      "width": 1293,
+      "height": 1119,
+      "png_bytes": 219926,
+      "webp_bytes": 79270,
+      "source_png_sha256": "6f0d5f3f99330fdbf9ac9b003f664f366ebf27767c392531646d4d985f11b0e6",
+      "decoded_rgba_sha256": "de6e306f201da6b2773479cd1f453911ab6b6772d0e0a50e9af502f6043cd66a",
+      "webp_sha256": "038a2f5fa35a42f108b013f407ebd122d83bced589ab15704d29d2255ea95c30",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-5.png",
+      "public_webp": "docs/public/figures/ch06/image-5.webp",
+      "width": 1914,
+      "height": 743,
+      "png_bytes": 296809,
+      "webp_bytes": 118910,
+      "source_png_sha256": "f53600fcd9b00acd5c75e19d0c657c4637f9ccf36bff60288f796c7396cd9b4d",
+      "decoded_rgba_sha256": "5b9f94383a38eedec70a9f092e77c66e212076f8ab29e1311169beed4eb97751",
+      "webp_sha256": "977af42e77abe6dc3c856d21a855d7e52b8550dc223c974814b89234bb7429cf",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image-6.png",
+      "public_webp": "docs/public/figures/ch06/image-6.webp",
+      "width": 1574,
+      "height": 1131,
+      "png_bytes": 341335,
+      "webp_bytes": 115038,
+      "source_png_sha256": "529229e3ce0afe18308606d690736bbab57390dfc1d3a3b54d1bee6d02e782ef",
+      "decoded_rgba_sha256": "557fd01881b2c7726995939bbdb89a8aa2437d212c370065d3cb77c797a7c9a1",
+      "webp_sha256": "586595158329663d9d8dcd8532ccf737c7219c0fba31d3f306b5aced33902295",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/6.集成与界面/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch06/image.png",
+      "public_webp": "docs/public/figures/ch06/image.webp",
+      "width": 1575,
+      "height": 951,
+      "png_bytes": 258910,
+      "webp_bytes": 96622,
+      "source_png_sha256": "79e157b790eb4268a256faa1858be31f5b43612b746c993c69b458655104724c",
+      "decoded_rgba_sha256": "acc0aeef71f9449702543c3c73dd7673ffc08d72453a0722f4964b0dd3b6b084",
+      "webp_sha256": "fe1307e0749868fa62da0430ceadfd6484272d212351320a67a78d3627637362",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-1.png",
+      "public_webp": "docs/public/figures/ch07/image-1.webp",
+      "width": 2193,
+      "height": 645,
+      "png_bytes": 347660,
+      "webp_bytes": 132252,
+      "source_png_sha256": "8f8bedbea3f72c46e4b64282bd8d835e92c7fa3d1123eb95bba4778af30f563c",
+      "decoded_rgba_sha256": "7accb8b87c15897a45807f78d1a3386d784a90dfba4e7d9d605dfc3b6cbaedad",
+      "webp_sha256": "0ce6456ae0acc48e43a550722c4c1c627c71cd53406642e5787bb7b2743bd076",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-2.png",
+      "public_webp": "docs/public/figures/ch07/image-2.webp",
+      "width": 2199,
+      "height": 678,
+      "png_bytes": 470030,
+      "webp_bytes": 186254,
+      "source_png_sha256": "e986d1fd2271fa51ccc00c708bdb55f9db18cc1cc6ae69bfbabbd644b832894c",
+      "decoded_rgba_sha256": "783e586a1333522e199988bf8a14e19f88d2f11eff855534feb3f05963684c92",
+      "webp_sha256": "c16659060667a3bd594f68bae62671cdbd7a6e12d2195862edfb541829c7cb61",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-3.png",
+      "public_webp": "docs/public/figures/ch07/image-3.webp",
+      "width": 2194,
+      "height": 719,
+      "png_bytes": 387122,
+      "webp_bytes": 149404,
+      "source_png_sha256": "510dbab8c339a7c501afa3b203a20bf0652c43b737941bda70499d543b60da09",
+      "decoded_rgba_sha256": "f6cffcf17408ea78e5211a394f0cd4eee0ba1b28adba7f1a0a59dbfeaddb10d4",
+      "webp_sha256": "8d3f717520f87aebe0e1afe55f02ac3310646755cbabc651e28a5c1e6505354e",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-4.png",
+      "public_webp": "docs/public/figures/ch07/image-4.webp",
+      "width": 2198,
+      "height": 530,
+      "png_bytes": 248236,
+      "webp_bytes": 100018,
+      "source_png_sha256": "5cfd6cf1b26d19d3f609caf15d1191417dee0a0d71d390bd5bf5239c6bbc4522",
+      "decoded_rgba_sha256": "0681c020ac8dc7cd13dc83debee488452b5efcdec187e72785fa90ceb0363d09",
+      "webp_sha256": "d63b99dfabdd10a6bbbdcb8fd5910f124cebc22a9afae4f084e352f172993707",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-5.png",
+      "public_webp": "docs/public/figures/ch07/image-5.webp",
+      "width": 2200,
+      "height": 547,
+      "png_bytes": 198033,
+      "webp_bytes": 71610,
+      "source_png_sha256": "b8584fd6f9e69cf91ce218092934ff686be7465db4a06cbfce57926fa9c7a26e",
+      "decoded_rgba_sha256": "4517dbb5685c5a84ddf679d2196aac4705bbfdda0cb247329461cee480d6014a",
+      "webp_sha256": "c049f5fe9809a782f2617b53df1ab3a9739995880ccff057142c0e3eb6ea6b5f",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-6.png",
+      "public_webp": "docs/public/figures/ch07/image-6.webp",
+      "width": 2200,
+      "height": 815,
+      "png_bytes": 485150,
+      "webp_bytes": 197686,
+      "source_png_sha256": "8a4a1cd6f7bbb95f3d9e8993095b575c842e9c3eed7e8e88ba9b26f444b88913",
+      "decoded_rgba_sha256": "8fecaba4ced3f11d5995aa76b1f749a7da9f10fe961b5446317b7aa5568f37b1",
+      "webp_sha256": "c4ec5a3b72b4b6c39def56800a76c1ab66a939432af0490930b143c2bb63bb26",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image 7.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image-7.png",
+      "public_webp": "docs/public/figures/ch07/image-7.webp",
+      "width": 2202,
+      "height": 453,
+      "png_bytes": 150447,
+      "webp_bytes": 52614,
+      "source_png_sha256": "ac62efba4a0ee9627d1807812074b96bb0904a1b58bedabda6ddb0c8cb363bd9",
+      "decoded_rgba_sha256": "3ae1632403e192bea753e878fae0bc0fc76667e9f570c8f5650f33ff4bb4edd5",
+      "webp_sha256": "d094d4afe477da6ae5dbcf271bb6432411bafd782d84efd6026917898ea19add",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/7.实验性功能与运维/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/ch07/image.png",
+      "public_webp": "docs/public/figures/ch07/image.webp",
+      "width": 2194,
+      "height": 831,
+      "png_bytes": 377087,
+      "webp_bytes": 141434,
+      "source_png_sha256": "ecc8ca8e22e4eaa58d13d19d49b0fb02023420927875db53198dbdc473bc424a",
+      "decoded_rgba_sha256": "067795a983a9ab0ee7c28e034786022d15f776fa50512f6ec60cb9f4d411084b",
+      "webp_sha256": "f992b24f62d7a56bed384098b58d2724d23cd15a24114cc7294e0a05d37cdc3d",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/Pi 技术手册/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/front/image.png",
+      "public_webp": "docs/public/figures/front/image.webp",
+      "width": 1381,
+      "height": 826,
+      "png_bytes": 551158,
+      "webp_bytes": 298658,
+      "source_png_sha256": "14396c93c701fec8e771fb22f255da0278a931efaf9dbd48281535983f25b1cb",
+      "decoded_rgba_sha256": "ba9c024973c3b947525a63c3cd288e4eafef16597676ea09a81db8f5f1b8909d",
+      "webp_sha256": "60fa7ec12118695bdaffd14e050c02def3f45e7778c40507dd01efe19730a9af",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/image 1.png",
+      "public_webp": "docs/public/figures/image 1.webp",
+      "width": 1382,
+      "height": 909,
+      "png_bytes": 396368,
+      "webp_bytes": 199616,
+      "source_png_sha256": "efec687e02b7df3bd82fe37d16d9cd3ec4ea1bf4ddd38ed68336e286552c9bb1",
+      "decoded_rgba_sha256": "a40dcdf7e8a7cfb29dc001f0e635f8c52b3750c657f7fbe0576349b4606a9d54",
+      "webp_sha256": "f31689088467001ec75c8b5147feb1cca89b40256e4a56e8a0f6eaf96579bbfe",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 10.png"
+      ],
+      "public_png_before": "docs/public/figures/image 10.png",
+      "public_webp": "docs/public/figures/image 10.webp",
+      "width": 1031,
+      "height": 769,
+      "png_bytes": 146151,
+      "webp_bytes": 48880,
+      "source_png_sha256": "26af02d7e0150f4fa58002c6350639592db1a5221a6bf7080e4dca7318dd3628",
+      "decoded_rgba_sha256": "2673f0c69bf6cb68d2a0d70f1e67db5a29659cce0a7e73308753058df5333c97",
+      "webp_sha256": "fa518fb0b4191085321c7b5512b713028e0e15f51e3ad8eeae400739f3988729",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 11.png"
+      ],
+      "public_png_before": "docs/public/figures/image 11.png",
+      "public_webp": "docs/public/figures/image 11.webp",
+      "width": 1279,
+      "height": 505,
+      "png_bytes": 235145,
+      "webp_bytes": 107516,
+      "source_png_sha256": "910c85354162598bbbc53433cea0e75ba174a823d4a8aa974c4c588636ef0bb4",
+      "decoded_rgba_sha256": "37b0f593cfb7528c2a7963332f9ef09362cabd4fb1399f10060f0923206964b1",
+      "webp_sha256": "0c1833dc49ee7c80146a916d7173f20fa9e0da2f4b6918fb08f33b12bb3e91a6",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 2.png"
+      ],
+      "public_png_before": "docs/public/figures/image 2.png",
+      "public_webp": "docs/public/figures/image 2.webp",
+      "width": 845,
+      "height": 1315,
+      "png_bytes": 221938,
+      "webp_bytes": 49804,
+      "source_png_sha256": "8198f1c3f2e5ceea126100e3b26386b62e26f8ac1ec1c3c0bcfe74883f257002",
+      "decoded_rgba_sha256": "37feb4d90fa9e506f92575bb5a55d04fffa384381bd6bf58c77afa4df5bd1ffb",
+      "webp_sha256": "f33f980432651fe81530f92581ab40c4c7419360486952ae3cbb70386e7ba5cf",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 3.png"
+      ],
+      "public_png_before": "docs/public/figures/image 3.png",
+      "public_webp": "docs/public/figures/image 3.webp",
+      "width": 1371,
+      "height": 315,
+      "png_bytes": 184881,
+      "webp_bytes": 93284,
+      "source_png_sha256": "b6a3530bca1c5551c559649375455ee8a782ca707b34ea47d80a8f1138d577c2",
+      "decoded_rgba_sha256": "b086d21f0d909f0e5c6af815febe91877d62331d23262a491b3a7a86bf1b89e9",
+      "webp_sha256": "9b709f9e45d109b413319a9155e6ae10838026aeceee45b98f6e644f15e28814",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 4.png"
+      ],
+      "public_png_before": "docs/public/figures/image 4.png",
+      "public_webp": "docs/public/figures/image 4.webp",
+      "width": 1943,
+      "height": 419,
+      "png_bytes": 222275,
+      "webp_bytes": 86494,
+      "source_png_sha256": "735022a13b8cb814f48df41951cbcb89bfb1bf075f57b4bd3470a4c456ff397d",
+      "decoded_rgba_sha256": "a4d046b1c6bbeea8e09d800cabad994cb7440993433535f448872f1bbb87d441",
+      "webp_sha256": "e5112392b02bedb72c6a62495b25efae80e7b9b2ea1d52ce96565797ba9b99ef",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 5.png"
+      ],
+      "public_png_before": "docs/public/figures/image 5.png",
+      "public_webp": "docs/public/figures/image 5.webp",
+      "width": 1172,
+      "height": 553,
+      "png_bytes": 160722,
+      "webp_bytes": 69688,
+      "source_png_sha256": "95455b7cb9a3939306dbecc30d297c3cd1101fbdc0af8aed82523645a1655c48",
+      "decoded_rgba_sha256": "9e2e205d39e3526efa103c595f9314c92ec7a5ae15df02cc2044403ece386ccf",
+      "webp_sha256": "35030a9285524582ee7f199e0d9e60d8108dddbea94a47d24687b1d73f5a9ee7",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 6.png"
+      ],
+      "public_png_before": "docs/public/figures/image 6.png",
+      "public_webp": "docs/public/figures/image 6.webp",
+      "width": 1044,
+      "height": 586,
+      "png_bytes": 202454,
+      "webp_bytes": 41164,
+      "source_png_sha256": "88a880811bea10d277e13ddd38e9a1b24e8ac6398c387f63dc48d370360029d9",
+      "decoded_rgba_sha256": "2dc68aba40b76a28343cd82ac0291c83483d34348945ad7eb3aaba53fa05e1fe",
+      "webp_sha256": "0de2d167b46b019e096a9fb5934e56f501651d631a3217a35fdeab1c7f07bd36",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 7.png"
+      ],
+      "public_png_before": "docs/public/figures/image 7.png",
+      "public_webp": "docs/public/figures/image 7.webp",
+      "width": 1379,
+      "height": 298,
+      "png_bytes": 178317,
+      "webp_bytes": 96116,
+      "source_png_sha256": "ab454680e167142669c0e40915e745a27637ed848a398ddcf28d82d6f3590d88",
+      "decoded_rgba_sha256": "9516e774271eff7a7bc2961ad0c2b2d9d9460f4ab272e631996b28432ab6c3b1",
+      "webp_sha256": "b19df5750560a1817493f63a020c7b474a8521e4e61d484b1e1c266c0494f611",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 8.png"
+      ],
+      "public_png_before": "docs/public/figures/image 8.png",
+      "public_webp": "docs/public/figures/image 8.webp",
+      "width": 1376,
+      "height": 879,
+      "png_bytes": 457883,
+      "webp_bytes": 235802,
+      "source_png_sha256": "bad6dc3acfc1c418c142dc48d044bfe9117117281f3f43a1d98d7d2fd7b2b8ff",
+      "decoded_rgba_sha256": "bd02e9255579644acf77ef250c87171536ae0006b438c05c6c7bab70c3b03d0f",
+      "webp_sha256": "78673499fd9cacdaaa1fd8ff7f84b3c18cb763bc7c54862ef292efc88b9d8e14",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image 9.png"
+      ],
+      "public_png_before": "docs/public/figures/image 9.png",
+      "public_webp": "docs/public/figures/image 9.webp",
+      "width": 1343,
+      "height": 362,
+      "png_bytes": 285990,
+      "webp_bytes": 152160,
+      "source_png_sha256": "9e68378bfd0e996e5b34577932f952ac8e374360e636ebd4d362382e446c9f28",
+      "decoded_rgba_sha256": "aaf77e18bdcc5813afe18ea2b2e41fb8f0106de227827520fe21cdda49d0aa8a",
+      "webp_sha256": "1e8bc9cb5abbb7a1dae085b708cbd41cd051c6769f191871e80ab7c6a3f99c6c",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/chapter/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/image.png",
+      "public_webp": "docs/public/figures/image.webp",
+      "width": 1382,
+      "height": 334,
+      "png_bytes": 232533,
+      "webp_bytes": 122038,
+      "source_png_sha256": "150ac8415719e02eedbe13ef48c1f122fb8088372ad0441ab45b9385aad21288",
+      "decoded_rgba_sha256": "78debd1183b87d2a58344b953fd9f281d0ae195572599b52a4c3ab7ac5c5aaff",
+      "webp_sha256": "08e8b54216c0bb6b25a54837c3c47ec0909af4f6eba607a2a9ac5e9fef1f4fd2",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/8.参考资料/图片和附件/image 1.png"
+      ],
+      "public_png_before": "docs/public/figures/reference/image 1.png",
+      "public_webp": "docs/public/figures/reference/image 1.webp",
+      "width": 2199,
+      "height": 530,
+      "png_bytes": 218150,
+      "webp_bytes": 77418,
+      "source_png_sha256": "c09017fd045f421647ea3404f1eae077cdc6b2d1a68cfca86ad934af23e5ebe7",
+      "decoded_rgba_sha256": "92a2bcf5d69f55558cf79abbdc7c127fc6a9f0e7a19c6c21a54a16afa779b55d",
+      "webp_sha256": "c9138aff6c8d810ff737b5dac07af6a8c75490e3ab1ba410950ea0e98bab0f63",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    },
+    {
+      "sources": [
+        "sources/full/8.参考资料/图片和附件/image.png"
+      ],
+      "public_png_before": "docs/public/figures/reference/image.png",
+      "public_webp": "docs/public/figures/reference/image.webp",
+      "width": 2200,
+      "height": 456,
+      "png_bytes": 181008,
+      "webp_bytes": 65932,
+      "source_png_sha256": "5bb11719e0a2753cc87046dd9f0d1784fc7f400a7f7f35fd0a7436e4bfcdb875",
+      "decoded_rgba_sha256": "8152451d301f7a87183bb1cc6fc3c24d48100883b0cc4ab26d86858a0d298c16",
+      "webp_sha256": "99ebacd036f54472ae191214d460c108db5b473ae287770be1120864de9de207",
+      "dimensions_equal": true,
+      "decoded_rgba_pixels_equal": true
+    }
+  ]
+}

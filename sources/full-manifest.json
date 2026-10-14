@@ -1,0 +1,286 @@
+{
+  "sources/full/1.模型/1.模型.md": {
+    "bytes": 33609,
+    "sha256": "a7d65aa52c6c5fa35de610f42b6315b03e5810eeab5dd99d4d9a5b90450622e5"
+  },
+  "sources/full/8.参考资料/8.参考资料.md": {
+    "bytes": 96028,
+    "sha256": "c391a20ae9e348a2d112a792c9a89cea046ce1599044a79f6c5f3b9fd4bd458f"
+  },
+  "sources/full/3.智能体循环/3.智能体循环.md": {
+    "bytes": 51362,
+    "sha256": "390a172d5e9d4d1011951fab21691c348ae6286d542fb74942e473849aceec81"
+  },
+  "sources/full/2.提供商层/2.提供商层.md": {
+    "bytes": 66422,
+    "sha256": "b2d7ff3e7f9e70210d6571b0586b6c6329758c8b27613d2c80e8d41b0ebfb29f"
+  },
+  "sources/full/Pi 技术手册/Pi 技术手册.md": {
+    "bytes": 8460,
+    "sha256": "dbd8dbc162c6d691c2c05b3ef2ae5d3d56e3115543e5b751e38f58685f271f59"
+  },
+  "sources/full/6.集成与界面/6.集成与界面.md": {
+    "bytes": 50111,
+    "sha256": "d426e2dd1a8803b863235df823ae6d9d97746c901cfca8387edd9463a5442c44"
+  },
+  "sources/full/5 配置与扩展/5 配置与扩展.md": {
+    "bytes": 108894,
+    "sha256": "8faa64203c31a308c675121338fb352ca4b37bb6a792b2ad6981e8a3058dffec"
+  },
+  "sources/full/7.实验性功能与运维/7.实验性功能与运维.md": {
+    "bytes": 52173,
+    "sha256": "505310500f55d01a9b2ffa1041084007966a1d8edb9d135ca4d40c8405c5e171"
+  },
+  "sources/full/1.模型/图片和附件/image 4.png": {
+    "bytes": 476300,
+    "sha256": "ef9dd352ee91c57d6d578e63a6ac03162eca25a4ef79f229bbbf03f9ab9c3065"
+  },
+  "sources/full/1.模型/图片和附件/image 2.png": {
+    "bytes": 623170,
+    "sha256": "2c688f67174e6593e3beefae5ed64f6ccab575aae25f92abd9a038830bb1d72e"
+  },
+  "sources/full/1.模型/图片和附件/image.png": {
+    "bytes": 420916,
+    "sha256": "dff0597db1dc27ac61f186037c5c817a949777840e230915a7d6c1b5d785f3a4"
+  },
+  "sources/full/1.模型/图片和附件/image 1.png": {
+    "bytes": 304452,
+    "sha256": "37cb35f250d06e10186b75442a078c4a6ee2888a2103d4eed919b42f7ed6c2e4"
+  },
+  "sources/full/1.模型/图片和附件/image 3.png": {
+    "bytes": 635467,
+    "sha256": "73180a99abf5ef86803f758a6045df6c7f6bf8cf674d84192f069982faad572f"
+  },
+  "sources/full/8.参考资料/图片和附件/image.png": {
+    "bytes": 181008,
+    "sha256": "5bb11719e0a2753cc87046dd9f0d1784fc7f400a7f7f35fd0a7436e4bfcdb875"
+  },
+  "sources/full/8.参考资料/图片和附件/image 1.png": {
+    "bytes": 218150,
+    "sha256": "c09017fd045f421647ea3404f1eae077cdc6b2d1a68cfca86ad934af23e5ebe7"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 5.png": {
+    "bytes": 215980,
+    "sha256": "1e5f9608a7a952c9377a45b283ba05c6558ab22fa3fa3b7eaeef90e8d93fdc63"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 6.png": {
+    "bytes": 461515,
+    "sha256": "be694231a795d34f2c2874b0cd3aa84e9d329b12dce1324265b52b014b7ba171"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 4.png": {
+    "bytes": 438061,
+    "sha256": "5cdc9fe82006b06232991be327af921709cb649129342aabbd4d79fbfd39803a"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 2.png": {
+    "bytes": 451228,
+    "sha256": "5c564d4c307affeef6db098eeebac71b98c411213525536279e6d47850eb3605"
+  },
+  "sources/full/3.智能体循环/图片和附件/image.png": {
+    "bytes": 245526,
+    "sha256": "eb5bc2d98de83cb028acb7bfd12ce4e1000070340c2148fd701a48b3a392f807"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 1.png": {
+    "bytes": 354916,
+    "sha256": "b7876d456a519a79f12917d07f72bd3f0622f8c24b8b23c6207babfd3f553ebf"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 7.png": {
+    "bytes": 517017,
+    "sha256": "fd5d379685e68917774ffe282f4d75679b78002264fef124448957cfe79dd556"
+  },
+  "sources/full/3.智能体循环/图片和附件/image 3.png": {
+    "bytes": 691595,
+    "sha256": "9f128995fcf02350794b3a8f6d7831c1bd0ad008fa750ab416685b55a94a3cae"
+  },
+  "sources/full/2.提供商层/图片和附件/image 5.png": {
+    "bytes": 560584,
+    "sha256": "69b091af423416c14b939cde2ea940d35e500c5c71b7e2f5017bfd0904e79d63"
+  },
+  "sources/full/2.提供商层/图片和附件/image 6.png": {
+    "bytes": 331813,
+    "sha256": "95567e6eed8afcf8b5fabecac131eaa2a6f2ff40fd4e13ab2f9f8c93fed17f53"
+  },
+  "sources/full/2.提供商层/图片和附件/image 4.png": {
+    "bytes": 255656,
+    "sha256": "35b0bf43ef23b44aa8c7e52e0d4818f25d79bae795fd2a8e7fad5bef0274ce6a"
+  },
+  "sources/full/2.提供商层/图片和附件/image 2.png": {
+    "bytes": 212175,
+    "sha256": "1cc180033b84574cfaf802bd092b3d20b7e5cf016cfde825bbc9a71823938c05"
+  },
+  "sources/full/2.提供商层/图片和附件/image.png": {
+    "bytes": 335405,
+    "sha256": "c8ffb931cd3d5f789d97bbeda7938b663c9db9a046d79d6b07d27f2a7eeb8451"
+  },
+  "sources/full/2.提供商层/图片和附件/image 1.png": {
+    "bytes": 313674,
+    "sha256": "5df13510d5956b97bd0b5238bccee1161559e69dd8dfd2822f3862e779ae853c"
+  },
+  "sources/full/2.提供商层/图片和附件/image 3.png": {
+    "bytes": 281392,
+    "sha256": "91cdf6408e166048c97a5838372efe729b2d7053623aa27f18be99643feb645a"
+  },
+  "sources/full/Pi 技术手册/图片和附件/image.png": {
+    "bytes": 551158,
+    "sha256": "14396c93c701fec8e771fb22f255da0278a931efaf9dbd48281535983f25b1cb"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 5.png": {
+    "bytes": 296809,
+    "sha256": "f53600fcd9b00acd5c75e19d0c657c4637f9ccf36bff60288f796c7396cd9b4d"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 6.png": {
+    "bytes": 341335,
+    "sha256": "529229e3ce0afe18308606d690736bbab57390dfc1d3a3b54d1bee6d02e782ef"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 4.png": {
+    "bytes": 219926,
+    "sha256": "6f0d5f3f99330fdbf9ac9b003f664f366ebf27767c392531646d4d985f11b0e6"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 2.png": {
+    "bytes": 343781,
+    "sha256": "402ada1f028367c0900f5650ab35f6fcb95c8bc77346353c503441a21171ca63"
+  },
+  "sources/full/6.集成与界面/图片和附件/image.png": {
+    "bytes": 258910,
+    "sha256": "79e157b790eb4268a256faa1858be31f5b43612b746c993c69b458655104724c"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 1.png": {
+    "bytes": 502066,
+    "sha256": "480daa3b120b0ca52844fe4d47b7b3bd729702073d7bad64e570c310c92235bd"
+  },
+  "sources/full/6.集成与界面/图片和附件/image 3.png": {
+    "bytes": 208585,
+    "sha256": "55f999c16cecbd358390643c4b271c0e939a36168058eca3879f93be839840c3"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 5.png": {
+    "bytes": 534416,
+    "sha256": "6d86a383ab31e0647d5b2b6119c5bd08afcef94d3a390c919124d879a2dbb1b2"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 6.png": {
+    "bytes": 351207,
+    "sha256": "5ed724dbfbe1f7fbd8150e409191e2fc7b72c0127cbae0e2af91c721b829cd82"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 11.png": {
+    "bytes": 530962,
+    "sha256": "85ec948a109d2cd4f95301f35663e92e22d8f4b4c6517b291fb10169f8586df7"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 4.png": {
+    "bytes": 397923,
+    "sha256": "bc951a189f0672c03286e0dbe58c143f3c531970dc425ca9346de23148ed4a5f"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 2.png": {
+    "bytes": 230642,
+    "sha256": "100e905ba27fdde4e379d770fac6af63d6bd1544a1e5c7dbcd7ab20c347a36eb"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image.png": {
+    "bytes": 208133,
+    "sha256": "cd3cb3c31872b9bdd53bfcecf07ef6eff1fe4485561bb4d19f94c9ddf9a686c7"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 8.png": {
+    "bytes": 204107,
+    "sha256": "88d6f7949405ee73a29affde1af3003afe9fb8bbeed8f13289245d209719bbd4"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 10.png": {
+    "bytes": 302685,
+    "sha256": "467e4acb8a30a81e9fe0d14a9901ecc9fd81e91b83d68c6928815fe4dbe991ef"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 1.png": {
+    "bytes": 464364,
+    "sha256": "deb361fc89fce9dfbc24e993799e48cbb5fc242fe9a966663504922a8e6019a9"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 9.png": {
+    "bytes": 228747,
+    "sha256": "84f19d3c94c49a8dbe84422be30dcec4fcd62e1f9d4c1ef9b04279ea8921a91d"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 7.png": {
+    "bytes": 167508,
+    "sha256": "e3506f87b06d2a17a4b19e5037e61c20cf66d305e0b6cd7b88a4a96c4c18a467"
+  },
+  "sources/full/5 配置与扩展/图片和附件/image 3.png": {
+    "bytes": 169235,
+    "sha256": "ab55154bc514bc51a8d2329dc93d1b74ff0eef998f145d5f3eb8454b1d11142b"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 5.png": {
+    "bytes": 198033,
+    "sha256": "b8584fd6f9e69cf91ce218092934ff686be7465db4a06cbfce57926fa9c7a26e"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 6.png": {
+    "bytes": 485150,
+    "sha256": "8a4a1cd6f7bbb95f3d9e8993095b575c842e9c3eed7e8e88ba9b26f444b88913"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 4.png": {
+    "bytes": 248236,
+    "sha256": "5cfd6cf1b26d19d3f609caf15d1191417dee0a0d71d390bd5bf5239c6bbc4522"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 2.png": {
+    "bytes": 470030,
+    "sha256": "e986d1fd2271fa51ccc00c708bdb55f9db18cc1cc6ae69bfbabbd644b832894c"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image.png": {
+    "bytes": 377087,
+    "sha256": "ecc8ca8e22e4eaa58d13d19d49b0fb02023420927875db53198dbdc473bc424a"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 1.png": {
+    "bytes": 347660,
+    "sha256": "8f8bedbea3f72c46e4b64282bd8d835e92c7fa3d1123eb95bba4778af30f563c"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 7.png": {
+    "bytes": 150447,
+    "sha256": "ac62efba4a0ee9627d1807812074b96bb0904a1b58bedabda6ddb0c8cb363bd9"
+  },
+  "sources/full/7.实验性功能与运维/图片和附件/image 3.png": {
+    "bytes": 387122,
+    "sha256": "510dbab8c339a7c501afa3b203a20bf0652c43b737941bda70499d543b60da09"
+  },
+  "sources/chapter/4.编码智能体.md": {
+    "bytes": 56284,
+    "sha256": "5b03666672216996cc680138540d45b2f3a5cb77332ac2478f11bcadf0086553"
+  },
+  "sources/chapter/图片和附件/image 5.png": {
+    "bytes": 160722,
+    "sha256": "95455b7cb9a3939306dbecc30d297c3cd1101fbdc0af8aed82523645a1655c48"
+  },
+  "sources/chapter/图片和附件/image 6.png": {
+    "bytes": 202454,
+    "sha256": "88a880811bea10d277e13ddd38e9a1b24e8ac6398c387f63dc48d370360029d9"
+  },
+  "sources/chapter/图片和附件/image 11.png": {
+    "bytes": 235145,
+    "sha256": "910c85354162598bbbc53433cea0e75ba174a823d4a8aa974c4c588636ef0bb4"
+  },
+  "sources/chapter/图片和附件/image 4.png": {
+    "bytes": 222275,
+    "sha256": "735022a13b8cb814f48df41951cbcb89bfb1bf075f57b4bd3470a4c456ff397d"
+  },
+  "sources/chapter/图片和附件/image 2.png": {
+    "bytes": 221938,
+    "sha256": "8198f1c3f2e5ceea126100e3b26386b62e26f8ac1ec1c3c0bcfe74883f257002"
+  },
+  "sources/chapter/图片和附件/image.png": {
+    "bytes": 232533,
+    "sha256": "150ac8415719e02eedbe13ef48c1f122fb8088372ad0441ab45b9385aad21288"
+  },
+  "sources/chapter/图片和附件/image 8.png": {
+    "bytes": 457883,
+    "sha256": "bad6dc3acfc1c418c142dc48d044bfe9117117281f3f43a1d98d7d2fd7b2b8ff"
+  },
+  "sources/chapter/图片和附件/image 10.png": {
+    "bytes": 146151,
+    "sha256": "26af02d7e0150f4fa58002c6350639592db1a5221a6bf7080e4dca7318dd3628"
+  },
+  "sources/chapter/图片和附件/image 1.png": {
+    "bytes": 396368,
+    "sha256": "efec687e02b7df3bd82fe37d16d9cd3ec4ea1bf4ddd38ed68336e286552c9bb1"
+  },
+  "sources/chapter/图片和附件/image 9.png": {
+    "bytes": 285990,
+    "sha256": "9e68378bfd0e996e5b34577932f952ac8e374360e636ebd4d362382e446c9f28"
+  },
+  "sources/chapter/图片和附件/image 7.png": {
+    "bytes": 178317,
+    "sha256": "ab454680e167142669c0e40915e745a27637ed848a398ddcf28d82d6f3590d88"
+  },
+  "sources/chapter/图片和附件/image 3.png": {
+    "bytes": 184881,
+    "sha256": "b6a3530bca1c5551c559649375455ee8a782ca707b34ea47d80a8f1138d577c2"
+  }
+}

@@ -1,0 +1,1831 @@
+[
+  {
+    "id": "6.1",
+    "title": "连接，然后执行一次工具调用",
+    "label": "FIG. 6.1",
+    "source": "mcp/src/client.ts",
+    "page": 145,
+    "image": "/figures/ch06/image-4.webp",
+    "caption": "服务器只有通过版本检查并完成 `notifications/initialized` 后才可用。如果服务器选择了未列出的版本，就会报错“MCP 服务器选择了不受支持的协议版本……”并关闭客户端。步骤 1–3 为 `connect()`，步骤 4 为 `listAll`，步骤 5 为带进度通知的 `requestInternal`。来源：`mcp/src/client.ts`。",
+    "kind": "diagram",
+    "width": 1580,
+    "height": 1300,
+    "nodes": [
+      {
+        "id": "pi",
+        "x": 90,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "PI\nMcpServerConnection",
+        "detail": "Pi 中每台 MCP 服务器对应的连接。",
+        "tone": "purple",
+        "align": "center"
+      },
+      {
+        "id": "client",
+        "x": 490,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "CLIENT\nMcpClient",
+        "detail": "connect() 完成版本检查及 notifications/initialized 后才能使用服务器。",
+        "tone": "indigo",
+        "align": "center"
+      },
+      {
+        "id": "transport",
+        "x": 890,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "TRANSPORT\nstdio · HTTP",
+        "detail": "start()：stdio 启动进程；HTTP 此处无需启动进程。",
+        "tone": "teal",
+        "align": "center"
+      },
+      {
+        "id": "server",
+        "x": 1290,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "SERVER\nMCP server",
+        "detail": "接收 initialize、notifications/initialized 和工具请求，返回结果及进度通知。",
+        "tone": "gray",
+        "align": "center"
+      },
+      {
+        "id": "step-1",
+        "x": 10,
+        "y": 162,
+        "w": 36,
+        "h": 36,
+        "label": "1",
+        "detail": "connect(transport) 调用 McpClient，客户端启动 transport。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-2",
+        "x": 10,
+        "y": 382,
+        "w": 36,
+        "h": 36,
+        "label": "2",
+        "detail": "initialize 携带 protocolVersion、capabilities 和 clientInfo；收到 InitializeResult 后检查版本。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-3",
+        "x": 10,
+        "y": 702,
+        "w": 36,
+        "h": 36,
+        "label": "3",
+        "detail": "发送 notifications/initialized；此时状态为 connected。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-4",
+        "x": 10,
+        "y": 822,
+        "w": 36,
+        "h": 36,
+        "label": "4",
+        "detail": "listTools() 跟随 nextCursor，最多读取 1,000 页。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-5",
+        "x": 10,
+        "y": 942,
+        "w": 36,
+        "h": 36,
+        "label": "5",
+        "detail": "callTool(name, args, {timeoutMs, onProgress})；每次进度通知重置超时，最终返回 CallToolResult。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "transport-start-note",
+        "x": 650,
+        "y": 292,
+        "w": 300,
+        "h": 35,
+        "label": "spawn, or nothing for HTTP",
+        "detail": "spawn, or nothing for HTTP",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "version-note",
+        "x": 690,
+        "y": 570,
+        "w": 630,
+        "h": 65,
+        "label": "version in SUPPORTED_PROTOCOL_VERSIONS?\nelse close and throw",
+        "detail": "version in SUPPORTED_PROTOCOL_VERSIONS?\nelse close and throw",
+        "tone": "rose",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "connected-note",
+        "x": 760,
+        "y": 732,
+        "w": 470,
+        "h": 35,
+        "label": "state = connected",
+        "detail": "state = connected",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "pagination-note",
+        "x": 220,
+        "y": 852,
+        "w": 360,
+        "h": 35,
+        "label": "follows nextCursor, at most 1,000 pages",
+        "detail": "follows nextCursor, at most 1,000 pages",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "progress-note",
+        "x": 790,
+        "y": 1092,
+        "w": 410,
+        "h": 35,
+        "label": "re-arms the timeout",
+        "detail": "re-arms the timeout",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "pi",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "pi",
+        "points": [
+          [
+            200,
+            95
+          ],
+          [
+            200,
+            1270
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "client",
+        "points": [
+          [
+            600,
+            95
+          ],
+          [
+            600,
+            1270
+          ]
+        ]
+      },
+      {
+        "to": "transport",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "transport",
+        "points": [
+          [
+            1000,
+            95
+          ],
+          [
+            1000,
+            1270
+          ]
+        ]
+      },
+      {
+        "to": "server",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "server",
+        "points": [
+          [
+            1400,
+            95
+          ],
+          [
+            1400,
+            1270
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "from": "pi",
+        "label": "connect(transport)",
+        "points": [
+          [
+            200,
+            180
+          ],
+          [
+            600,
+            180
+          ]
+        ]
+      },
+      {
+        "to": "transport",
+        "from": "client",
+        "label": "start()",
+        "points": [
+          [
+            600,
+            280
+          ],
+          [
+            1000,
+            280
+          ]
+        ]
+      },
+      {
+        "to": "server",
+        "from": "client",
+        "label": "initialize {protocolVersion, capabilities, clientInfo}",
+        "points": [
+          [
+            600,
+            400
+          ],
+          [
+            1400,
+            400
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "dashed": true,
+        "from": "server",
+        "label": "InitializeResult",
+        "points": [
+          [
+            1400,
+            510
+          ],
+          [
+            600,
+            510
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "color": "#a23f60",
+        "from": "client",
+        "points": [
+          [
+            600,
+            585
+          ],
+          [
+            660,
+            585
+          ],
+          [
+            660,
+            620
+          ],
+          [
+            600,
+            620
+          ]
+        ]
+      },
+      {
+        "to": "server",
+        "from": "client",
+        "label": "notifications/initialized",
+        "points": [
+          [
+            600,
+            720
+          ],
+          [
+            1400,
+            720
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "from": "pi",
+        "label": "listTools()",
+        "points": [
+          [
+            200,
+            840
+          ],
+          [
+            600,
+            840
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "emphasis": true,
+        "color": "#4a5398",
+        "from": "pi",
+        "label": "callTool(name, args, {timeoutMs, onProgress})",
+        "points": [
+          [
+            200,
+            960
+          ],
+          [
+            600,
+            960
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "dash": "dotted",
+        "from": "server",
+        "label": "notifications/progress",
+        "points": [
+          [
+            1400,
+            1080
+          ],
+          [
+            600,
+            1080
+          ]
+        ]
+      },
+      {
+        "to": "client",
+        "dashed": true,
+        "from": "server",
+        "label": "CallToolResult",
+        "points": [
+          [
+            1400,
+            1210
+          ],
+          [
+            600,
+            1210
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "四条生命线、十条消息或自调用箭头依原图逐一重绘；虚线表示返回，点线表示进度通知。步骤 1–3 对应 connect()，步骤 4 对应 listAll，步骤 5 对应带进度通知的 requestInternal。"
+    ]
+  },
+  {
+    "id": "6.2",
+    "title": "通往同一次 MCP 调用的三条路径",
+    "label": "FIG. 6.2",
+    "source": "CA/src/extensions/mcp/index.ts; tools.ts",
+    "page": 148,
+    "image": "/figures/ch06/image.webp",
+    "caption": "每条路径最终都进入同一流水线并使用同一连接。不同的仅是第一跳：脚本调用、已加载的声明或已声明的工具。示意图来源：`CA/src/extensions/mcp/index.ts`（模块注释、`ensureDiscoveryActive`、`tool_call` 处理器）和 `tools.ts`（`createMcpToolDefinition`）。",
+    "kind": "diagram",
+    "width": 960,
+    "height": 670,
+    "nodes": [
+      {
+        "id": "model",
+        "x": 20,
+        "y": 10,
+        "w": 920,
+        "h": 70,
+        "label": "model · 系统提示词中的 mcp_servers",
+        "detail": "namespace · how reached · one-line summary",
+        "tone": "plum"
+      },
+      {
+        "id": "codemode",
+        "x": 20,
+        "y": 130,
+        "w": 290,
+        "h": 75,
+        "label": "CODEMODE（默认）\ncodemode({ code })",
+        "detail": "codemode({ code })",
+        "tone": "green"
+      },
+      {
+        "id": "search",
+        "x": 335,
+        "y": 130,
+        "w": 290,
+        "h": 75,
+        "label": "DEFERRED\ntool_search(query)",
+        "detail": "loads the declaration",
+        "tone": "green"
+      },
+      {
+        "id": "direct",
+        "x": 650,
+        "y": 130,
+        "w": 290,
+        "h": 220,
+        "label": "DIRECT\ndirect call\n从第一次请求起声明",
+        "detail": "declared from the first request",
+        "tone": "green"
+      },
+      {
+        "id": "script",
+        "x": 20,
+        "y": 275,
+        "w": 290,
+        "h": 75,
+        "label": "QuickJS script\n调用 mcp__github__get_issue",
+        "detail": "await tools.mcp__github__get_issue(args)",
+        "tone": "green"
+      },
+      {
+        "id": "loaded",
+        "x": 335,
+        "y": 275,
+        "w": 290,
+        "h": 75,
+        "label": "direct call\n下一次模型调用",
+        "detail": "on the next model call",
+        "tone": "green"
+      },
+      {
+        "id": "pipeline",
+        "x": 20,
+        "y": 405,
+        "w": 920,
+        "h": 65,
+        "label": "ctx.executeTool · validation\ntool_call / tool_result hooks · permission gates",
+        "detail": "三条路径进入同一工具调用流水线。",
+        "tone": "gray"
+      },
+      {
+        "id": "connection",
+        "x": 20,
+        "y": 510,
+        "w": 920,
+        "h": 60,
+        "label": "McpServerConnection.callTool",
+        "detail": "connects lazily · progress → onUpdate · 20 KiB cut for the model",
+        "tone": "purple"
+      },
+      {
+        "id": "server",
+        "x": 20,
+        "y": 610,
+        "w": 920,
+        "h": 45,
+        "label": "MCP server",
+        "detail": "MCP server",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "script",
+        "from": "codemode"
+      },
+      {
+        "to": "loaded",
+        "from": "search"
+      },
+      {
+        "to": "pipeline",
+        "from": "script",
+        "points": [
+          [
+            165,
+            350
+          ],
+          [
+            165,
+            405
+          ]
+        ]
+      },
+      {
+        "to": "pipeline",
+        "from": "loaded",
+        "points": [
+          [
+            480,
+            350
+          ],
+          [
+            480,
+            405
+          ]
+        ]
+      },
+      {
+        "to": "pipeline",
+        "from": "direct",
+        "points": [
+          [
+            795,
+            350
+          ],
+          [
+            795,
+            405
+          ]
+        ]
+      },
+      {
+        "to": "connection",
+        "from": "pipeline"
+      },
+      {
+        "to": "server",
+        "from": "connection",
+        "label": "tools/call"
+      }
+    ],
+    "notes": []
+  },
+  {
+    "id": "6.3",
+    "title": "一次执行：宿主、工作线程与 VM",
+    "label": "FIG. 6.3",
+    "source": "codemode/src/runtime/{protocol,worker,host}.ts",
+    "page": 152,
+    "image": "/figures/ch06/image-1.webp",
+    "caption": "VM 只能通过一个桥接函数访问主机，而主机有两种方式可以停止 VM。消息以 JSON 字符串形式传递；worker 自身从不构建结构化值。示意图来源：`codemode/src/runtime/protocol.ts`（`WorkerData`、`WorkerToHostMessage`、`HostToWorkerMessage`）、`worker.ts` 和 `host.ts`。",
+    "kind": "diagram",
+    "width": 1180,
+    "height": 660,
+    "nodes": [
+      {
+        "id": "host-label",
+        "x": 10,
+        "y": 0,
+        "w": 420,
+        "h": 30,
+        "label": "HOST THREAD · PI",
+        "detail": "HOST THREAD · PI",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "worker-label",
+        "x": 735,
+        "y": 0,
+        "w": 435,
+        "h": 30,
+        "label": "WORKER THREAD · 每次执行一个",
+        "detail": "WORKER THREAD · 每次执行一个",
+        "tone": "gray",
+        "shape": "label"
+      },
+      {
+        "id": "execute",
+        "x": 10,
+        "y": 55,
+        "w": 420,
+        "h": 100,
+        "label": "CodemodeSandbox.execute(code, {\nsignal, store })",
+        "detail": "执行脚本，并向工作线程传入 WorkerData。",
+        "tone": "green"
+      },
+      {
+        "id": "bridge",
+        "x": 10,
+        "y": 220,
+        "w": 420,
+        "h": 100,
+        "label": "tool bridge → ctx.executeTool()",
+        "detail": "runs the call, posts the JSON result back",
+        "tone": "green"
+      },
+      {
+        "id": "deadline",
+        "x": 10,
+        "y": 400,
+        "w": 420,
+        "h": 85,
+        "label": "deadline · abort signal",
+        "detail": "on either: set flag, then worker.terminate()",
+        "tone": "amber"
+      },
+      {
+        "id": "flag",
+        "x": 10,
+        "y": 555,
+        "w": 420,
+        "h": 75,
+        "label": "SharedArrayBuffer(4)",
+        "detail": "interrupt flag, one Int32",
+        "tone": "rose"
+      },
+      {
+        "id": "vm",
+        "x": 735,
+        "y": 55,
+        "w": 435,
+        "h": 100,
+        "label": "QuickJS VM\n独立的 wasm 线性内存",
+        "detail": "imports: WASI shim (clock, random, discarded stdout/stderr) + one host call",
+        "tone": "gray"
+      },
+      {
+        "id": "prelude",
+        "x": 735,
+        "y": 205,
+        "w": 435,
+        "h": 105,
+        "label": "prelude: frozen built-ins",
+        "detail": "tools · ALL_TOOLS · console · text · image · store/load · exit · globals such as searchTools",
+        "tone": "green"
+      },
+      {
+        "id": "code",
+        "x": 735,
+        "y": 360,
+        "w": 435,
+        "h": 125,
+        "label": "(async (tools, console) ⇒ {model code})",
+        "detail": "bridge(kind, a, b, c) held in a closure",
+        "tone": "green"
+      },
+      {
+        "id": "interrupt",
+        "x": 735,
+        "y": 555,
+        "w": 435,
+        "h": 75,
+        "label": "interruptHandler polls the flag",
+        "detail": "maxStackSize → catchable RangeError",
+        "tone": "gray"
+      }
+    ],
+    "edges": [
+      {
+        "to": "vm",
+        "labelX": 582,
+        "labelY": 39,
+        "from": "execute",
+        "label": "WorkerData {code, tools, globals,\nwasm, memoryLimitBytes,\nstore, interrupt}",
+        "points": [
+          [
+            430,
+            100
+          ],
+          [
+            735,
+            100
+          ]
+        ]
+      },
+      {
+        "to": "bridge",
+        "labelX": 580,
+        "labelY": 205,
+        "from": "code",
+        "label": "{type:\"call\", id,\ntarget, name, args}",
+        "points": [
+          [
+            735,
+            395
+          ],
+          [
+            660,
+            395
+          ],
+          [
+            660,
+            245
+          ],
+          [
+            430,
+            245
+          ]
+        ]
+      },
+      {
+        "to": "code",
+        "labelX": 580,
+        "labelY": 290,
+        "from": "bridge",
+        "label": "{type:\"result\", id, ok, payload}",
+        "points": [
+          [
+            430,
+            300
+          ],
+          [
+            690,
+            300
+          ],
+          [
+            690,
+            445
+          ],
+          [
+            735,
+            445
+          ]
+        ]
+      },
+      {
+        "to": "execute",
+        "labelX": 580,
+        "labelY": 505,
+        "from": "code",
+        "label": "output · done · crash",
+        "points": [
+          [
+            950,
+            485
+          ],
+          [
+            950,
+            515
+          ],
+          [
+            460,
+            515
+          ],
+          [
+            460,
+            175
+          ],
+          [
+            220,
+            175
+          ],
+          [
+            220,
+            155
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "消息以 JSON 字符串跨越宿主／工作线程边界；共享的中断标记不是工具消息。"
+    ]
+  },
+  {
+    "id": "6.4",
+    "title": "一次 Codemode 调用与一次嵌套调用",
+    "label": "FIG. 6.4",
+    "source": "CA/src/extensions/codemode/execute.ts; CA/src/core/nested-tool-calls.ts",
+    "page": 156,
+    "image": "/figures/ch06/image-3.webp",
+    "caption": "嵌套调用的结果止于 VM；只有步骤 5 到达模型。步骤 3 是此图要强调的箭头：嵌套调用是拥有自身 ID 和钩子的完整工具调用。示意图来源：`CA/src/extensions/codemode/execute.ts`（`executeCodemode`、`toScriptValue`）和 `CA/src/core/nested-tool-calls.ts`（`NestedToolCallRunner`）。",
+    "kind": "diagram",
+    "width": 1580,
+    "height": 1490,
+    "nodes": [
+      {
+        "id": "model",
+        "x": 50,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "MODEL",
+        "detail": "只收到最终脚本输出；嵌套调用结果止于 VM。",
+        "tone": "plum",
+        "align": "center"
+      },
+      {
+        "id": "session",
+        "x": 360,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "SESSION\nAgentSession",
+        "detail": "嵌套调用拥有独立调用 id，并执行验证、tool_call 与 tool_result hooks。",
+        "tone": "amber",
+        "align": "center"
+      },
+      {
+        "id": "codemode",
+        "x": 670,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "CODEMODE\nexecuteCodemode",
+        "detail": "解析源代码及分支存储，为本次调用创建 worker 与 VM。",
+        "tone": "green",
+        "align": "center"
+      },
+      {
+        "id": "vm",
+        "x": 980,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "VM\nworker · QuickJS",
+        "detail": "运行脚本；工具结果转换后返回这里，而不是直接进入模型上下文。",
+        "tone": "gray",
+        "align": "center"
+      },
+      {
+        "id": "tool",
+        "x": 1290,
+        "y": 20,
+        "w": 220,
+        "h": 75,
+        "label": "TOOL\nnested tool",
+        "detail": "一次真实的嵌套 read 工具调用，受普通工具流水线约束。",
+        "tone": "green",
+        "align": "center"
+      },
+      {
+        "id": "step-1",
+        "x": 10,
+        "y": 152,
+        "w": 36,
+        "h": 36,
+        "label": "1",
+        "detail": "模型调用 codemode，id 为 call_7；AgentSession 调用 execute(call_7, { code })。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-2",
+        "x": 10,
+        "y": 442,
+        "w": 36,
+        "h": 36,
+        "label": "2",
+        "detail": "executeCodemode 创建新 worker 和 QuickJS VM。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-3",
+        "x": 10,
+        "y": 662,
+        "w": 36,
+        "h": 36,
+        "label": "3",
+        "detail": "ctx.executeTool(\"read\", args)：嵌套 id 为 call_7/1，parentToolCallId 为 call_7。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-4",
+        "x": 10,
+        "y": 1192,
+        "w": 36,
+        "h": 36,
+        "label": "4",
+        "detail": "VM 返回 done { ok, value, writes }；只有 ok 时才 appendEntry(\"codemode-store\", writes)。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "step-5",
+        "x": 10,
+        "y": 1412,
+        "w": 36,
+        "h": 36,
+        "label": "5",
+        "detail": "最终 Script completed、Wall time 与 Output 返回模型。",
+        "tone": "gray",
+        "rx": 18,
+        "align": "center"
+      },
+      {
+        "id": "call-id",
+        "x": 210,
+        "y": 182,
+        "w": 200,
+        "h": 35,
+        "label": "id call_7",
+        "detail": "id call_7",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "parse-source",
+        "x": 855,
+        "y": 327,
+        "w": 660,
+        "h": 55,
+        "label": "parseCodemodeSource · readCodemodeStore(branch)",
+        "detail": "parseCodemodeSource · readCodemodeStore(branch)",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "nested-id",
+        "x": 470,
+        "y": 692,
+        "w": 420,
+        "h": 35,
+        "label": "id call_7/1, parentToolCallId call_7",
+        "detail": "id call_7/1, parentToolCallId call_7",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "result-hooks",
+        "x": 485,
+        "y": 1002,
+        "w": 290,
+        "h": 35,
+        "label": "tool_result hooks have run",
+        "detail": "tool_result hooks have run",
+        "tone": "gray",
+        "shape": "label",
+        "align": "center"
+      },
+      {
+        "id": "store-success",
+        "x": 490,
+        "y": 1332,
+        "w": 260,
+        "h": 35,
+        "label": "only when ok",
+        "detail": "only when ok",
+        "tone": "teal",
+        "shape": "label",
+        "align": "center"
+      }
+    ],
+    "edges": [
+      {
+        "to": "model",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "model",
+        "points": [
+          [
+            160,
+            95
+          ],
+          [
+            160,
+            1470
+          ]
+        ]
+      },
+      {
+        "to": "session",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "session",
+        "points": [
+          [
+            470,
+            95
+          ],
+          [
+            470,
+            1470
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "codemode",
+        "points": [
+          [
+            780,
+            95
+          ],
+          [
+            780,
+            1470
+          ]
+        ]
+      },
+      {
+        "to": "vm",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "vm",
+        "points": [
+          [
+            1090,
+            95
+          ],
+          [
+            1090,
+            1470
+          ]
+        ]
+      },
+      {
+        "to": "tool",
+        "dashed": true,
+        "arrow": false,
+        "width": 1,
+        "color": "#a1aab1",
+        "from": "tool",
+        "points": [
+          [
+            1400,
+            95
+          ],
+          [
+            1400,
+            1470
+          ]
+        ]
+      },
+      {
+        "to": "session",
+        "from": "model",
+        "label": "codemode({ code })",
+        "points": [
+          [
+            160,
+            170
+          ],
+          [
+            470,
+            170
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "from": "session",
+        "label": "execute(call_7, { code })",
+        "points": [
+          [
+            470,
+            270
+          ],
+          [
+            780,
+            270
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "from": "codemode",
+        "points": [
+          [
+            780,
+            335
+          ],
+          [
+            830,
+            335
+          ],
+          [
+            830,
+            375
+          ],
+          [
+            780,
+            375
+          ]
+        ]
+      },
+      {
+        "to": "vm",
+        "from": "codemode",
+        "label": "new worker + VM",
+        "points": [
+          [
+            780,
+            460
+          ],
+          [
+            1090,
+            460
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "from": "vm",
+        "label": "call · tools.read(args)",
+        "points": [
+          [
+            1090,
+            560
+          ],
+          [
+            780,
+            560
+          ]
+        ]
+      },
+      {
+        "to": "session",
+        "emphasis": true,
+        "color": "#4c743d",
+        "from": "codemode",
+        "label": "ctx.executeTool(\"read\", args)",
+        "points": [
+          [
+            780,
+            680
+          ],
+          [
+            470,
+            680
+          ]
+        ]
+      },
+      {
+        "to": "tool",
+        "from": "session",
+        "label": "validate · tool_call hooks · execute",
+        "points": [
+          [
+            470,
+            800
+          ],
+          [
+            1400,
+            800
+          ]
+        ]
+      },
+      {
+        "to": "session",
+        "dashed": true,
+        "from": "tool",
+        "label": "result",
+        "points": [
+          [
+            1400,
+            900
+          ],
+          [
+            470,
+            900
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "dashed": true,
+        "from": "session",
+        "label": "outcome",
+        "points": [
+          [
+            470,
+            990
+          ],
+          [
+            780,
+            990
+          ]
+        ]
+      },
+      {
+        "to": "vm",
+        "dashed": true,
+        "labelX": 1000,
+        "labelY": 1085,
+        "from": "codemode",
+        "label": "result → string, or structuredContent",
+        "points": [
+          [
+            780,
+            1100
+          ],
+          [
+            1090,
+            1100
+          ]
+        ]
+      },
+      {
+        "to": "codemode",
+        "dashed": true,
+        "from": "vm",
+        "label": "done { ok, value, writes }",
+        "points": [
+          [
+            1090,
+            1210
+          ],
+          [
+            780,
+            1210
+          ]
+        ]
+      },
+      {
+        "to": "session",
+        "color": "#276f78",
+        "emphasis": true,
+        "from": "codemode",
+        "label": "appendEntry(\"codemode-store\", writes)",
+        "points": [
+          [
+            780,
+            1320
+          ],
+          [
+            470,
+            1320
+          ]
+        ]
+      },
+      {
+        "to": "model",
+        "dashed": true,
+        "from": "codemode",
+        "label": "\"Script completed\" · Wall time · Output",
+        "points": [
+          [
+            780,
+            1430
+          ],
+          [
+            160,
+            1430
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "五条生命线、十三条消息或自调用箭头均依原图保留。嵌套结果仅返回 VM；模型只看到步骤 5 的最终输出。存储写入保留 only when ok 条件。"
+    ]
+  },
+  {
+    "id": "6.5",
+    "title": "一个基类，两种渲染器",
+    "label": "FIG. 6.5",
+    "source": "tui/tui.ts; tui/tui-main-screen.ts; tui/tui-alt-screen.ts",
+    "page": 159,
+    "image": "/figures/ch06/image-5.webp",
+    "caption": "Pi picks the alternate\\-screen renderer unless tuiMode is \"regular\"\\. Both share TuiBase; only doRender\\(\\) differs\\. Schematic, from tui/tui\\.ts \\(Component, Container, TUI, TuiBase\\), tui\\-main\\-screen\\.ts, tui\\-alt\\-screen\\.ts, and CA/src/modes/interactive/tui\\-renderer\\.ts \\(createInteractiveTui\\)\\.",
+    "kind": "diagram",
+    "width": 960,
+    "height": 510,
+    "nodes": [
+      {
+        "id": "component",
+        "x": 20,
+        "y": 20,
+        "w": 290,
+        "h": 100,
+        "label": "«interface» Component",
+        "detail": "render(width) · handleInput? · handleMouse? · invalidate()",
+        "tone": "indigo"
+      },
+      {
+        "id": "container",
+        "x": 335,
+        "y": 20,
+        "w": 290,
+        "h": 100,
+        "label": "Container",
+        "detail": "children: Component[] · vertical stack · mouse by row",
+        "tone": "indigo"
+      },
+      {
+        "id": "tui",
+        "x": 650,
+        "y": 20,
+        "w": 290,
+        "h": 100,
+        "label": "«interface» TUI",
+        "detail": "mode · setFocus · showOverlay · requestRender · start · stop",
+        "tone": "indigo"
+      },
+      {
+        "id": "base",
+        "x": 20,
+        "y": 215,
+        "w": 920,
+        "h": 80,
+        "label": "«abstract» TuiBase",
+        "detail": "focus · overlay stack · input routing · 16 ms render throttle · abstract doRender()",
+        "tone": "indigo"
+      },
+      {
+        "id": "main",
+        "x": 20,
+        "y": 380,
+        "w": 445,
+        "h": 100,
+        "label": "TuiMainScreen · mode \"regular\"",
+        "detail": "line diff against the previous frame · output stays in terminal scrollback · over-wide line throws",
+        "tone": "indigo"
+      },
+      {
+        "id": "alt",
+        "x": 495,
+        "y": 380,
+        "w": 445,
+        "h": 100,
+        "label": "TuiAltScreen · mode \"fullscreen\"",
+        "detail": "alternate screen · row diff · mouse, selection, search, scrollbar · over-wide line sliced · Pi’s default",
+        "tone": "indigo"
+      }
+    ],
+    "edges": [
+      {
+        "to": "base",
+        "from": "container",
+        "label": "extends Container",
+        "points": [
+          [
+            480,
+            120
+          ],
+          [
+            480,
+            215
+          ]
+        ]
+      },
+      {
+        "to": "base",
+        "from": "tui",
+        "label": "implements TUI",
+        "points": [
+          [
+            795,
+            120
+          ],
+          [
+            795,
+            215
+          ]
+        ]
+      }
+    ],
+    "notes": [
+      "原图下排并列展示两个渲染器，不额外添加继承箭头。Component 的方法保留在节点详情中。"
+    ]
+  },
+  {
+    "id": "6.6",
+    "title": "全量还是差异：主屏幕的决策",
+    "label": "FIG. 6.6",
+    "source": "tui/tui-main-screen.ts, TuiMainScreen.doRender",
+    "page": 160,
+    "image": "/figures/ch06/image-2.webp",
+    "caption": "首个匹配项生效；每个玫瑰色行都会清除回滚历史。每次写入都包裹在同步输出序列（`CSI ? 2026 h/l`）内，因此终端显示的是完整帧。写入经过 `BoundedTerminalWriter`，它以 1 MiB 块流式输出，因此全量渲染也不会构造出超过 V8 限制的字符串。来源：`tui/tui-main-screen.ts:247–567`。",
+    "kind": "diagram",
+    "width": 960,
+    "height": 790,
+    "nodes": [
+      {
+        "id": "condition-0",
+        "x": 15,
+        "y": 12,
+        "w": 345,
+        "h": 78,
+        "label": "1 · first frame",
+        "detail": "first frame",
+        "tone": "gray"
+      },
+      {
+        "id": "action-0",
+        "x": 420,
+        "y": 12,
+        "w": 525,
+        "h": 78,
+        "label": "write every line, no clear",
+        "detail": "ESC[?2026h … ESC[?2026l",
+        "tone": "indigo"
+      },
+      {
+        "id": "condition-1",
+        "x": 15,
+        "y": 108,
+        "w": 345,
+        "h": 78,
+        "label": "2 · width changed",
+        "detail": "width changed",
+        "tone": "gray"
+      },
+      {
+        "id": "action-1",
+        "x": 420,
+        "y": 108,
+        "w": 525,
+        "h": 78,
+        "label": "full redraw: clear screen and scrollback",
+        "detail": "ESC[2J ESC[H ESC[3J",
+        "tone": "rose"
+      },
+      {
+        "id": "condition-2",
+        "x": 15,
+        "y": 204,
+        "w": 345,
+        "h": 78,
+        "label": "3 · height changed, not Termux",
+        "detail": "height changed, not Termux",
+        "tone": "gray"
+      },
+      {
+        "id": "action-2",
+        "x": 420,
+        "y": 204,
+        "w": 525,
+        "h": 78,
+        "label": "full redraw",
+        "detail": "Termux changes height when its keyboard toggles",
+        "tone": "rose"
+      },
+      {
+        "id": "condition-3",
+        "x": 15,
+        "y": 300,
+        "w": 345,
+        "h": 78,
+        "label": "4 · clearOnShrink, fewer lines, no overlay",
+        "detail": "clearOnShrink, fewer lines, no overlay",
+        "tone": "gray"
+      },
+      {
+        "id": "action-3",
+        "x": 420,
+        "y": 300,
+        "w": 525,
+        "h": 78,
+        "label": "full redraw",
+        "detail": "clearOnShrink, fewer lines, no overlay",
+        "tone": "rose"
+      },
+      {
+        "id": "condition-4",
+        "x": 15,
+        "y": 396,
+        "w": 345,
+        "h": 78,
+        "label": "5 · diff finds no changed line",
+        "detail": "diff finds no changed line",
+        "tone": "gray"
+      },
+      {
+        "id": "action-4",
+        "x": 420,
+        "y": 396,
+        "w": 525,
+        "h": 78,
+        "label": "move the hardware cursor only",
+        "detail": "只移动硬件光标。",
+        "tone": "indigo"
+      },
+      {
+        "id": "condition-5",
+        "x": 15,
+        "y": 492,
+        "w": 345,
+        "h": 78,
+        "label": "6 · only deleted lines changed",
+        "detail": "only deleted lines changed",
+        "tone": "gray"
+      },
+      {
+        "id": "action-5",
+        "x": 420,
+        "y": 492,
+        "w": 525,
+        "h": 78,
+        "label": "move to the new end",
+        "detail": "\\r\\x1b[2K each surplus row",
+        "tone": "indigo"
+      },
+      {
+        "id": "condition-6",
+        "x": 15,
+        "y": 588,
+        "w": 345,
+        "h": 78,
+        "label": "7 · first change above the viewport",
+        "detail": "first change above the viewport",
+        "tone": "gray"
+      },
+      {
+        "id": "action-6",
+        "x": 420,
+        "y": 588,
+        "w": 525,
+        "h": 78,
+        "label": "full redraw",
+        "detail": "the cursor cannot reach rows in scrollback",
+        "tone": "rose"
+      },
+      {
+        "id": "condition-7",
+        "x": 15,
+        "y": 684,
+        "w": 345,
+        "h": 78,
+        "label": "8 · otherwise",
+        "detail": "otherwise",
+        "tone": "gray"
+      },
+      {
+        "id": "action-7",
+        "x": 420,
+        "y": 684,
+        "w": 525,
+        "h": 78,
+        "label": "move with CSI n A/B · rewrite changed rows",
+        "detail": "rewrite firstChanged…lastChanged, clear leftover rows; ESC[?2026h … ESC[?2026l",
+        "tone": "indigo"
+      }
+    ],
+    "edges": [
+      {
+        "to": "action-0",
+        "from": "condition-0"
+      },
+      {
+        "to": "action-1",
+        "from": "condition-1"
+      },
+      {
+        "to": "action-2",
+        "from": "condition-2"
+      },
+      {
+        "to": "action-3",
+        "from": "condition-3"
+      },
+      {
+        "to": "action-4",
+        "from": "condition-4"
+      },
+      {
+        "to": "action-5",
+        "from": "condition-5"
+      },
+      {
+        "to": "action-6",
+        "from": "condition-6"
+      },
+      {
+        "to": "action-7",
+        "from": "condition-7"
+      }
+    ],
+    "notes": []
+  },
+  {
+    "id": "6.7",
+    "title": "从环境判断终端能力",
+    "label": "FIG. 6.7",
+    "source": "tui/terminal-image.ts, detectCapabilitiesFromEnvironment",
+    "page": 163,
+    "image": "/figures/ch06/image-6.webp",
+    "caption": "首个匹配项生效，未知终端不会获得图像或超链接支持。`PI_IMAGE_PROTOCOL`（`kitty` 或 `iterm2`）、`PI_TRUE_COLOR` 和 `PI_HYPERLINKS`（`1` 或 `0`）会覆盖检测结果。来源：`tui/terminal-image.ts`（`detectCapabilitiesFromEnvironment`、`detectCapabilities`）。",
+    "kind": "diagram",
+    "width": 960,
+    "height": 790,
+    "nodes": [
+      {
+        "id": "condition-0",
+        "x": 15,
+        "y": 12,
+        "w": 345,
+        "h": 78,
+        "label": "1 · TMUX set, or TERM starts tmux",
+        "detail": "TMUX set, or TERM starts tmux",
+        "tone": "gray"
+      },
+      {
+        "id": "action-0",
+        "x": 420,
+        "y": 12,
+        "w": 525,
+        "h": 78,
+        "label": "images none",
+        "detail": "links only if tmux forwards OSC 8",
+        "tone": "gray"
+      },
+      {
+        "id": "condition-1",
+        "x": 15,
+        "y": 108,
+        "w": 345,
+        "h": 78,
+        "label": "2 · TERM starts screen",
+        "detail": "TERM starts screen",
+        "tone": "gray"
+      },
+      {
+        "id": "action-1",
+        "x": 420,
+        "y": 108,
+        "w": 525,
+        "h": 78,
+        "label": "images none · links off",
+        "detail": "images none · links off",
+        "tone": "gray"
+      },
+      {
+        "id": "condition-2",
+        "x": 15,
+        "y": 204,
+        "w": 345,
+        "h": 78,
+        "label": "3 · kitty · Ghostty · WezTerm · Warp",
+        "detail": "kitty · Ghostty · WezTerm · Warp",
+        "tone": "gray"
+      },
+      {
+        "id": "action-2",
+        "x": 420,
+        "y": 204,
+        "w": 525,
+        "h": 78,
+        "label": "images kitty · truecolor · links",
+        "detail": "KITTY_WINDOW_ID, GHOSTTY_RESOURCES_DIR, WEZTERM_PANE, WARP_SESSION_ID or TERM_PROGRAM",
+        "tone": "indigo"
+      },
+      {
+        "id": "condition-3",
+        "x": 15,
+        "y": 300,
+        "w": 345,
+        "h": 78,
+        "label": "4 · iTerm2",
+        "detail": "iTerm2",
+        "tone": "gray"
+      },
+      {
+        "id": "action-3",
+        "x": 420,
+        "y": 300,
+        "w": 525,
+        "h": 78,
+        "label": "images iterm2 · truecolor · links",
+        "detail": "ITERM_SESSION_ID or TERM_PROGRAM",
+        "tone": "indigo"
+      },
+      {
+        "id": "condition-4",
+        "x": 15,
+        "y": 396,
+        "w": 345,
+        "h": 78,
+        "label": "5 · Windows Terminal · Alacritty\n· VS Code · Zed",
+        "detail": "Windows Terminal · Alacritty\n· VS Code · Zed",
+        "tone": "gray"
+      },
+      {
+        "id": "action-4",
+        "x": 420,
+        "y": 396,
+        "w": 525,
+        "h": 78,
+        "label": "images none · truecolor · links",
+        "detail": "Windows Terminal (WT_SESSION) · Alacritty · VS Code · Zed",
+        "tone": "gray"
+      },
+      {
+        "id": "condition-5",
+        "x": 15,
+        "y": 492,
+        "w": 345,
+        "h": 78,
+        "label": "6 · JetBrains JediTerm",
+        "detail": "JetBrains JediTerm",
+        "tone": "gray"
+      },
+      {
+        "id": "action-5",
+        "x": 420,
+        "y": 492,
+        "w": 525,
+        "h": 78,
+        "label": "images none · truecolor · links off",
+        "detail": "images none · truecolor · links off",
+        "tone": "gray"
+      },
+      {
+        "id": "condition-6",
+        "x": 15,
+        "y": 588,
+        "w": 345,
+        "h": 78,
+        "label": "7 · any other Windows console",
+        "detail": "any other Windows console",
+        "tone": "gray"
+      },
+      {
+        "id": "action-6",
+        "x": 420,
+        "y": 588,
+        "w": 525,
+        "h": 78,
+        "label": "images none · truecolor · links off",
+        "detail": "images none · truecolor · links off",
+        "tone": "gray"
+      },
+      {
+        "id": "condition-7",
+        "x": 15,
+        "y": 684,
+        "w": 345,
+        "h": 78,
+        "label": "8 · unknown terminal",
+        "detail": "unknown terminal",
+        "tone": "gray"
+      },
+      {
+        "id": "action-7",
+        "x": 420,
+        "y": 684,
+        "w": 525,
+        "h": 78,
+        "label": "images none · links off",
+        "detail": "truecolor only from COLORTERM or a -direct TERM",
+        "tone": "rose"
+      }
+    ],
+    "edges": [
+      {
+        "to": "action-0",
+        "from": "condition-0"
+      },
+      {
+        "to": "action-1",
+        "from": "condition-1"
+      },
+      {
+        "to": "action-2",
+        "from": "condition-2"
+      },
+      {
+        "to": "action-3",
+        "from": "condition-3"
+      },
+      {
+        "to": "action-4",
+        "from": "condition-4"
+      },
+      {
+        "to": "action-5",
+        "from": "condition-5"
+      },
+      {
+        "to": "action-6",
+        "from": "condition-6"
+      },
+      {
+        "to": "action-7",
+        "from": "condition-7"
+      }
+    ],
+    "notes": []
+  }
+]

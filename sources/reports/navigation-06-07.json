@@ -1,0 +1,44 @@
+[
+  {
+    "title": "MCP：从 mcp.json 到工具调用",
+    "link": "/pi-104/ch06/mcp",
+    "page": 144,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "Codemode：调用工具的脚本",
+    "link": "/pi-104/ch06/codemode",
+    "page": 151,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "pi-tui：终端 UI 框架",
+    "link": "/pi-104/ch06/tui",
+    "page": 158,
+    "chapter": "6",
+    "chapterTitle": "集成与界面"
+  },
+  {
+    "title": "实验性技术栈",
+    "link": "/pi-104/ch07/experimental-stack",
+    "page": 166,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  },
+  {
+    "title": "安全模型",
+    "link": "/pi-104/ch07/security",
+    "page": 174,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  },
+  {
+    "title": "遥测与评测",
+    "link": "/pi-104/ch07/telemetry-evals",
+    "page": 179,
+    "chapter": "7",
+    "chapterTitle": "实验性功能与运维"
+  }
+]

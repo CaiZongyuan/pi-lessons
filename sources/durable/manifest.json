@@ -1,0 +1,452 @@
+[
+  {
+    "path": "3.对话与上下文.zip",
+    "size": 1684359,
+    "sha256": "b06d73f91de599e52ea6c4716bde22b260885a9920d620704e06e7883d52c2a6"
+  },
+  {
+    "path": "8.观察.zip",
+    "size": 1712785,
+    "sha256": "1c3ab24d0e17c1b683466d7107a3dcb75230c0747296f914ecc6035bd91e3977"
+  },
+  {
+    "path": "Pi Durable 技术手册.zip",
+    "size": 1020729,
+    "sha256": "1851c54ddce0afa51b589de88041eed5a4275fd828208e71826522957ba1e5ce"
+  },
+  {
+    "path": "6.运行.zip",
+    "size": 2571325,
+    "sha256": "6c3ff034527d70d735b9566707dc988778af0157e1ae2e010e28673543ff6288"
+  },
+  {
+    "path": "5.任务.zip",
+    "size": 2812832,
+    "sha256": "379ea9d558948eacd8f0765821dc01371cfe3164142576d784cc599d55c92932"
+  },
+  {
+    "path": "1.模型-durable.zip",
+    "size": 2204040,
+    "sha256": "e4078249e578ab354b5b4e8aa6d248da9e3187713e69d52d6a3c17b16645cc4d"
+  },
+  {
+    "path": "9.存储与环境.zip",
+    "size": 1995971,
+    "sha256": "3de2180fc47cdc24030d779e1c6b9f36dfdb21288d17df51f6211501d967db22"
+  },
+  {
+    "path": "2.会话与提交.zip",
+    "size": 1381112,
+    "sha256": "28003a7b98bea7cd1611cb8894708c4234fc7bc833a3a45e95e25193a6675fc2"
+  },
+  {
+    "path": "10.实践.zip",
+    "size": 799170,
+    "sha256": "ac624288b35fa840c6e024e0c42be42223d2b00bf1fbe9e7655de24b55acdade"
+  },
+  {
+    "path": "参考.md",
+    "size": 44422,
+    "sha256": "6c3e8989e4bf0020ac320682036b542757e043ae06cad23547dd7d783f7f50b6"
+  },
+  {
+    "path": "4.文档.zip",
+    "size": 1627636,
+    "sha256": "157fb86af004ce9517c45fd4c393726749e938eda7cd80c97def00f825f75e1e"
+  },
+  {
+    "path": "7.扩展与智能体.zip",
+    "size": 2853965,
+    "sha256": "f4409c395273d858b1df84add14b0c726a8b6087da967bfe6192b9bc392b56e9"
+  },
+  {
+    "path": "5.任务/5.任务.md",
+    "size": 47584,
+    "sha256": "87457aebe786107eb1cd8182945b7e9a12521c540e741fa36e13e875116ba06d"
+  },
+  {
+    "path": "7.扩展与智能体/7.扩展与智能体.md",
+    "size": 43733,
+    "sha256": "70137de77507f4b2b0e260a787de8df8396e82aa3a81efe1a9ec42960d96e647"
+  },
+  {
+    "path": "4.文档/4.文档.md",
+    "size": 23757,
+    "sha256": "75c8846684ab3525939c8f39b45cbc5d4d3c97fde0957af0d965ae1cedac62ef"
+  },
+  {
+    "path": "8.观察/8.观察.md",
+    "size": 30082,
+    "sha256": "a614fb4641014e142dade562aa77f540b234150a715733f622600377fb3a1391"
+  },
+  {
+    "path": "9.存储与环境/9.存储与环境.md",
+    "size": 35210,
+    "sha256": "ecdbaffb51de75b0896b6f3c8cf470a7d75712c7c3f47404dcb403dd0fa74f5a"
+  },
+  {
+    "path": "10.实践/10.实践.md",
+    "size": 31365,
+    "sha256": "df7b3f9fc78691f920a1c13cee5352d1abd41a9d50ca6060334df6f86b27e5bf"
+  },
+  {
+    "path": "1.模型-durable/1.模型.md",
+    "size": 33558,
+    "sha256": "3020d122485a5e2493318ce5017880b7a8951f99ee1b12fec138d19647261ec9"
+  },
+  {
+    "path": "2.会话与提交/2.会话与提交.md",
+    "size": 26475,
+    "sha256": "eb322fbbffd87bed2f56e5c7ce03f770039c830375d9dea123b7c5a6f0e53179"
+  },
+  {
+    "path": "Pi Durable 技术手册/Pi Durable 技术手册.md",
+    "size": 14304,
+    "sha256": "b1b0217db7f4e5aae5cb23dcfe323b8a246705071b5d418010dd37a1134fcc4f"
+  },
+  {
+    "path": "3.对话与上下文/3.对话与上下文.md",
+    "size": 24595,
+    "sha256": "3bf020c68ec7f00a3b60acf2e6cc0afb31c96c49a215b83d4d0c3623e490d596"
+  },
+  {
+    "path": "6.运行/6.运行.md",
+    "size": 39090,
+    "sha256": "bb978a23dd0b81f2ef86fe4fa0e475a843d6e4a2a712b4c41abb2696ec7ed0a3"
+  },
+  {
+    "path": "5.任务/图片和附件/image 6.png",
+    "size": 162458,
+    "sha256": "0c68a9825e99e2a3dfa05b6e9ba1e97803a25a7cf995b80b7a08a5ab043d13a9"
+  },
+  {
+    "path": "5.任务/图片和附件/image 3.png",
+    "size": 481257,
+    "sha256": "d487256bcd2d7b8bed0517e18cdbe1e7458775c810a028457f9edd26bf54d21a"
+  },
+  {
+    "path": "5.任务/图片和附件/image 4.png",
+    "size": 427136,
+    "sha256": "a60740aee0cbc1938363767b4169a296923d7466600f431f7430999dca7406eb"
+  },
+  {
+    "path": "5.任务/图片和附件/image.png",
+    "size": 416299,
+    "sha256": "6517a0c43de59ba0782d60f97510003ad3c1d39ea6526880a6b2d726da08439b"
+  },
+  {
+    "path": "5.任务/图片和附件/image 2.png",
+    "size": 338128,
+    "sha256": "41cb7b3aa26e12bd7a0ec1dab472879a2025b847e1f9a62a99d1974c37a07f42"
+  },
+  {
+    "path": "5.任务/图片和附件/image 5.png",
+    "size": 406663,
+    "sha256": "f4b5bd8cae2c082a625afd9059196715e82bb525ad22f6336a886b96694e6c0e"
+  },
+  {
+    "path": "5.任务/图片和附件/image 1.png",
+    "size": 638087,
+    "sha256": "96f32586c2eb1b39ae5f464570dfceb7186811ad27b5b72a41b46bdf102bcac2"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 6.png",
+    "size": 293618,
+    "sha256": "83cd475ba0e9ab41d065d1781558ad523c5fc48dfca3e1ad83367f869785e976"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 7.png",
+    "size": 297629,
+    "sha256": "3c63b8e8be1a213ba6db4ed4de8ea43c91603880656a653d97206af5906bee12"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 3.png",
+    "size": 246287,
+    "sha256": "8e9e312c938c51005ef0bfd48fc17fdf800098184410a0c55fa72480afa65d84"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 4.png",
+    "size": 397758,
+    "sha256": "1b1871feea665ed57ad0b8b6b8c28aad0c4baeaad4612566b1fa2ac5cbad2a40"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 8.png",
+    "size": 323670,
+    "sha256": "2ee10eb448509162d8005f59cafe2b709ce9fe65897eab8f2a07f723a9ddf04a"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image.png",
+    "size": 267971,
+    "sha256": "a1e64c69906bf2152019d5761796e8d610b77cafbf2bf2a876ad89030899b457"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 9.png",
+    "size": 326347,
+    "sha256": "750b639cae756b126177a58166c9735a5464b439fbfce32f2f469ac18f6a3211"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 2.png",
+    "size": 279919,
+    "sha256": "4e423ec758b8f32af03cf677f7b4e6130465fb357b0ef3cf645db2e45fc87684"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 5.png",
+    "size": 220849,
+    "sha256": "1db0eba0f3647cb6603d0fa31912ebfc34252fa2d6adae7ff7b1270f6f65d9ff"
+  },
+  {
+    "path": "7.扩展与智能体/图片和附件/image 1.png",
+    "size": 265735,
+    "sha256": "fc10ee09943855af6e762582336278fe0df154905ca00c92a765903f2f8ab779"
+  },
+  {
+    "path": "4.文档/图片和附件/image 3.png",
+    "size": 138824,
+    "sha256": "86d24b77bca1ddc7b51aba0297eca3f632ac4c2f4da3721537727de01067132b"
+  },
+  {
+    "path": "4.文档/图片和附件/image 4.png",
+    "size": 406653,
+    "sha256": "aec6cc5dcb3e9d9cd4055e49ac9ba0b7c59ab7f0491e89590b566a39492a9479"
+  },
+  {
+    "path": "4.文档/图片和附件/image.png",
+    "size": 170166,
+    "sha256": "3e6e2f3cb70b6fe49d2525ad3f5c8ea9afe7d6c86b3e6fb5c4009e46e97a1602"
+  },
+  {
+    "path": "4.文档/图片和附件/image 2.png",
+    "size": 319637,
+    "sha256": "2dabeb33e5be4e012a075eece56795b8b91a28466c477910bb15a960ca032b6b"
+  },
+  {
+    "path": "4.文档/图片和附件/image 5.png",
+    "size": 357990,
+    "sha256": "db9f4a0733a1e997a92b426abb9b000c1008f217bdf257df9c053c9a5d6815f7"
+  },
+  {
+    "path": "4.文档/图片和附件/image 1.png",
+    "size": 267315,
+    "sha256": "d05229ea98af8bdf831c47f7e7a00e9841161b1ae244aa60c8061fe6638a5be7"
+  },
+  {
+    "path": "8.观察/图片和附件/image 6.png",
+    "size": 357850,
+    "sha256": "74eac55002f24d25cbc70e7c4c5e93a7b3a3652c186efdccf52a26cfc27b88a5"
+  },
+  {
+    "path": "8.观察/图片和附件/image 3.png",
+    "size": 197552,
+    "sha256": "58e1112d39e323405ad32eef24dca0041e604e6a7bdf5a1ac034c01272f53a74"
+  },
+  {
+    "path": "8.观察/图片和附件/image 4.png",
+    "size": 139381,
+    "sha256": "b41673be04db63f9f841edee410de3bd5a776df0a66c688b6d66cfd846c11042"
+  },
+  {
+    "path": "8.观察/图片和附件/image.png",
+    "size": 184244,
+    "sha256": "90828abf4f8e6bf57577304a78363f1dd6e84c51e38dc53a68ff880f0a66ab9b"
+  },
+  {
+    "path": "8.观察/图片和附件/image 2.png",
+    "size": 295889,
+    "sha256": "95e6f7c9f1ded9863536460a8b1ea93cbb4a9f36fa40adccafa36040ad8a1e0a"
+  },
+  {
+    "path": "8.观察/图片和附件/image 5.png",
+    "size": 346474,
+    "sha256": "52ca0cff358cbb9d7f1b2a4fa7df1937b4e385191dcd34ee634dda611bfa5ea1"
+  },
+  {
+    "path": "8.观察/图片和附件/image 1.png",
+    "size": 237696,
+    "sha256": "8b121bf8aa6cc693d41a486ad50c952056b1c6d36fd7d4dbbceb145a6b6b4c94"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 6.png",
+    "size": 200545,
+    "sha256": "7319ec4fb0b228b3f6ba67a8390d08e16e0009c71da0c12cd84f0f5226c93c22"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 7.png",
+    "size": 265736,
+    "sha256": "5f2ad1084f4f129971912962c3e31ebf7c77e21e52f99ca6fa3c7218a5639a16"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 3.png",
+    "size": 262709,
+    "sha256": "b51c2e77d4c6210d931864e4291b04fb8f6ea7694cee99a784953998d64a033e"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 4.png",
+    "size": 156910,
+    "sha256": "2f82d88c94e0215d7d1c258517460f6c5f114e5ce5bc9005148da90e9db860bf"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 8.png",
+    "size": 133804,
+    "sha256": "eb020f255174de01198e48cad64eca47d885ac005b07810f0a5a023cdbb36d65"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image.png",
+    "size": 272653,
+    "sha256": "3ba9b5f28523309d8edd209c1e9c4f67e990ec4b419595ddd38cf3b90421da8f"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 9.png",
+    "size": 161592,
+    "sha256": "060b183e16a1ff7c368185544dc9fb61f805c50f9068fa1b6ccbb1851796c079"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 2.png",
+    "size": 230468,
+    "sha256": "66e968ca19462bf6b3bf17842c2eb930b92183342e630a79445c8048399b9946"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 5.png",
+    "size": 259086,
+    "sha256": "7429e27d8a1bbc5f023707cba805ce20df74b6c3922e881c913fc8fbddd2ae13"
+  },
+  {
+    "path": "9.存储与环境/图片和附件/image 1.png",
+    "size": 121488,
+    "sha256": "8b1701b383feffcd939d085d40b830118dc4b493056d391608d3f7fb08985f32"
+  },
+  {
+    "path": "10.实践/图片和附件/image 3.png",
+    "size": 238120,
+    "sha256": "cedb14e2577e0bf7310abf145d44743cbee861cc272219f55a30bf1419a77995"
+  },
+  {
+    "path": "10.实践/图片和附件/image.png",
+    "size": 192242,
+    "sha256": "b10903cd79403408487f7ba4913b08558017631ca9a890d77cc7e25e783040e1"
+  },
+  {
+    "path": "10.实践/图片和附件/image 2.png",
+    "size": 185002,
+    "sha256": "c0b5d59c817cb60375a4e392e532031ef6c482163ac4d99d24d36f95b4e0c9e1"
+  },
+  {
+    "path": "10.实践/图片和附件/image 1.png",
+    "size": 203265,
+    "sha256": "09704411da3599dbda2c381ea860d33fad282b18ce346944fc37f7becfd7c928"
+  },
+  {
+    "path": "1.模型-durable/图片和附件/image 3.png",
+    "size": 283714,
+    "sha256": "732c506644740884883ff71df71157f4406ab732fb779e5f0bc0f4e2e22bd9d5"
+  },
+  {
+    "path": "1.模型-durable/图片和附件/image 4.png",
+    "size": 606426,
+    "sha256": "25283211e63e906752af85ba1aa1c1ae34c81fc1dd730709a0a66fcb2b4b8e3c"
+  },
+  {
+    "path": "1.模型-durable/图片和附件/image.png",
+    "size": 312000,
+    "sha256": "4b40ad82ae9ca0e452f4763e9ec3d197c9a1d00272e269abe024c233a445be14"
+  },
+  {
+    "path": "1.模型-durable/图片和附件/image 2.png",
+    "size": 568690,
+    "sha256": "a7c98066940e387b5b30a93da2adc7ff12922ca37f347ce6db0e358d24fe6300"
+  },
+  {
+    "path": "1.模型-durable/图片和附件/image 1.png",
+    "size": 468214,
+    "sha256": "7dd1f154cfa31372adf18c7359e2a318820b34b137510faa2f1d5447d9dd4657"
+  },
+  {
+    "path": "2.会话与提交/图片和附件/image 3.png",
+    "size": 459887,
+    "sha256": "7b33fd544782fba61588865ba575d2f470aee1fc6cd568a2635c65d2f3d318e1"
+  },
+  {
+    "path": "2.会话与提交/图片和附件/image.png",
+    "size": 293788,
+    "sha256": "eb78b20f8f073d5577e9c67026bd877534e777319ebd94c5cbe47fa5f271b3c1"
+  },
+  {
+    "path": "2.会话与提交/图片和附件/image 2.png",
+    "size": 324485,
+    "sha256": "9446a5423f68aba3fa8a4a0e5b4d54350184e8875808ee612aa6e4412e2376f5"
+  },
+  {
+    "path": "2.会话与提交/图片和附件/image 1.png",
+    "size": 310362,
+    "sha256": "2a74ca4993d69be4d232f151e9ffde108b580df633670cf509abb46424f05a62"
+  },
+  {
+    "path": "Pi Durable 技术手册/图片和附件/image.png",
+    "size": 660702,
+    "sha256": "d539853fa908b696437c4aa19d5c6b398080275b827013e8174a160b457119cf"
+  },
+  {
+    "path": "Pi Durable 技术手册/图片和附件/image 1.png",
+    "size": 358976,
+    "sha256": "a2296b8ff6f7338b256d47a79931af118c487f784bc9ecf323b6056f7f346c9e"
+  },
+  {
+    "path": "3.对话与上下文/图片和附件/image 3.png",
+    "size": 531360,
+    "sha256": "e8de4071bb39b0ab4ed68019ef7b76682a5b4ae7fccd9480d9aa3c8be23e2c57"
+  },
+  {
+    "path": "3.对话与上下文/图片和附件/image.png",
+    "size": 339024,
+    "sha256": "adb08872e8946dbb7769fbb0ae2a9f313c9ce5ebd550779e1c8e62b6e43e6d19"
+  },
+  {
+    "path": "3.对话与上下文/图片和附件/image 2.png",
+    "size": 556412,
+    "sha256": "a194e7d09c4d2df59abfc639423df30eb35fd04caae9e3fd22260645e5db13bd"
+  },
+  {
+    "path": "3.对话与上下文/图片和附件/image 1.png",
+    "size": 283262,
+    "sha256": "a07665bdebd2a49bf7f83ef53525623efa5b5c0fee568557f4ab13c66f8d7887"
+  },
+  {
+    "path": "6.运行/图片和附件/image 6.png",
+    "size": 334051,
+    "sha256": "aeb1a3385b85afc94ccede88424934fcf2563ca0f38854749f9c2237c519566c"
+  },
+  {
+    "path": "6.运行/图片和附件/image 7.png",
+    "size": 305287,
+    "sha256": "1f87cecd5daf817e3cd412c25bf3543b09cddafba7ac61212ff87c44b319b4a4"
+  },
+  {
+    "path": "6.运行/图片和附件/image 3.png",
+    "size": 320943,
+    "sha256": "5fc84a7aafb483b72ef04edd9bdd14c5b76264dcf2af5b30256d61cae1b8abd4"
+  },
+  {
+    "path": "6.运行/图片和附件/image 4.png",
+    "size": 293666,
+    "sha256": "aa1f98a744daf89a6c13b77c8148f5409b07af695790063f2c526dee94e1c2aa"
+  },
+  {
+    "path": "6.运行/图片和附件/image.png",
+    "size": 319166,
+    "sha256": "d7fbbff0ec4bde84c83807c381aefe2a6525cd30bf68a698d89456dde615b3ee"
+  },
+  {
+    "path": "6.运行/图片和附件/image 2.png",
+    "size": 316309,
+    "sha256": "d77c8a70e2770e2576a246aa0852f95583e9fa887da6d356b17667edb3953f7c"
+  },
+  {
+    "path": "6.运行/图片和附件/image 5.png",
+    "size": 384916,
+    "sha256": "80fc528fe7f828e8fe5dd7d27cc5287c011fbbeea98ccf467a92751c4826b2bc"
+  },
+  {
+    "path": "6.运行/图片和附件/image 1.png",
+    "size": 368272,
+    "sha256": "59e76b131bba68c9d8a7ffef6d9950a2e78a1c17942b83fb0cee487a436d3efc"
+  }
+]
